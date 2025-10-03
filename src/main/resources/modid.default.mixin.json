@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.example.modid.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "client": [
+    "MinecraftMixin"
+  ],
+  "mixins": [],
+  "server": [],
+  "setSourceFile": true,
+  "minVersion": "0.8.7"
+}

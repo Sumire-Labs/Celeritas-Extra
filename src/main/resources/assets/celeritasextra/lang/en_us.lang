@@ -1,0 +1,96 @@
+# Celeritas Extra - English Translation
+# Based on Embeddium Extra translations
+
+# Option Pages
+celeritasextra.option.page.animations=Animations
+celeritasextra.option.page.particles=Particles
+celeritasextra.option.page.details=Details
+celeritasextra.option.page.render=Render
+celeritasextra.option.page.extra=Extras
+
+# Animation Options
+celeritasextra.option.animations.all=Animations
+celeritasextra.option.animations.all.tooltip=If enabled, animations are processed.
+celeritasextra.option.animations.water=Water
+celeritasextra.option.animations.water.tooltip=If enabled, water animations are processed.
+celeritasextra.option.animations.lava=Lava
+celeritasextra.option.animations.lava.tooltip=If enabled, lava animations are processed.
+celeritasextra.option.animations.fire=Fire
+celeritasextra.option.animations.fire.tooltip=If enabled, fire animations are processed.
+celeritasextra.option.animations.portal=Portal
+celeritasextra.option.animations.portal.tooltip=If enabled, portal animations are processed.
+celeritasextra.option.animations.block=Block Animations
+celeritasextra.option.animations.block.tooltip=If enabled, block animations are processed.
+
+# Particle Options
+celeritasextra.option.particles.all=Particles
+celeritasextra.option.particles.all.tooltip=If enabled, particles are processed.
+celeritasextra.option.particles.rain_splash=Rain Splash
+celeritasextra.option.particles.rain_splash.tooltip=If enabled, rain splash particles are rendered.
+celeritasextra.option.particles.block_break=Block Break
+celeritasextra.option.particles.block_break.tooltip=If enabled, block break particles are processed.
+celeritasextra.option.particles.block_breaking=Block Breaking
+celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
+
+# Detail Options
+celeritasextra.option.details.sky=Sky
+celeritasextra.option.details.sky.tooltip=If enabled, the sky will be rendered.
+celeritasextra.option.details.stars=Stars
+celeritasextra.option.details.stars.tooltip=If enabled, the stars will be rendered.
+celeritasextra.option.details.sun_moon=Sun & Moon
+celeritasextra.option.details.sun_moon.tooltip=If enabled, the sun and moon will be rendered.
+celeritasextra.option.details.rain_snow=Rain & Snow
+celeritasextra.option.details.rain_snow.tooltip=If enabled, rain & snow are rendered.
+celeritasextra.option.details.biome_colors=Biome Colors
+celeritasextra.option.details.biome_colors.tooltip=If enabled, biome-specific colors are used for grass, water, and foliage. When disabled, default colors are used.
+
+# Render Options
+celeritasextra.option.render.fog=Fog
+celeritasextra.option.render.fog.tooltip=If enabled, fog will be rendered.
+celeritasextra.option.render.fog_start=Fog Start Distance
+celeritasextra.option.render.fog_start.tooltip=Controls how far away fog starts. 100% is default, lower values make fog appear closer, higher values push it further away.
+celeritasextra.option.render.prevent_shaders=Prevent Shaders
+celeritasextra.option.render.prevent_shaders.tooltip=If enabled, prevents accidental shader activation (Super Secret Settings).
+celeritasextra.option.render.clouds=Clouds
+celeritasextra.option.render.clouds.tooltip=If enabled, clouds are rendered.
+celeritasextra.option.render.cloud_height=Cloud Height
+celeritasextra.option.render.cloud_height.tooltip=Controls the height of clouds that are rendered.
+celeritasextra.option.render.item_frames=Item Frames
+celeritasextra.option.render.item_frames.tooltip=If enabled, item frames are rendered.
+celeritasextra.option.render.armor_stands=Armor Stands
+celeritasextra.option.render.armor_stands.tooltip=If enabled, armor stands are rendered.
+celeritasextra.option.render.paintings=Paintings
+celeritasextra.option.render.paintings.tooltip=If enabled, paintings are rendered.
+celeritasextra.option.render.pistons=Pistons
+celeritasextra.option.render.pistons.tooltip=If enabled, piston extending animations are rendered.
+celeritasextra.option.render.beacons=Beacon Beam
+celeritasextra.option.render.beacons.tooltip=If enabled, beacon beams are rendered.
+celeritasextra.option.render.enchanting_books=Enchanting Table Book
+celeritasextra.option.render.enchanting_books.tooltip=If enabled, enchanting table books are rendered.
+celeritasextra.option.render.player_name_tag=Player Name Tag
+celeritasextra.option.render.player_name_tag.tooltip=If enabled, player name tags will be visible.
+celeritasextra.option.render.item_frame_name_tag=Item Frame Name Tag
+celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame name tags will be visible.
+
+# Extra Options
+celeritasextra.option.extra.fps=Show FPS
+celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
+celeritasextra.option.extra.coords=Show Coordinates
+celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
+celeritasextra.option.extra.reduced_motion=Reduced Motion
+celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
+celeritasextra.option.extra.instant_sneak=Instant Sneak
+celeritasextra.option.extra.instant_sneak.tooltip=If enabled, the camera will not lerp upon sneaking.
+celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
+celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
+celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
+
+# Option Groups
+celeritasextra.option.group.general=General
+celeritasextra.option.group.textures=Textures
+celeritasextra.option.group.effects=Effects
+celeritasextra.option.group.entities=Entities
+celeritasextra.option.group.blocks=Block Entities
+celeritasextra.option.group.environment=Environment
+celeritasextra.option.group.overlays=Overlays

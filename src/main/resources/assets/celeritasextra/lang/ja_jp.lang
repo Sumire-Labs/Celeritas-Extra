@@ -1,0 +1,95 @@
+# Celeritas Extra - 日本語翻訳
+
+# オプションページ
+celeritasextra.option.page.animations=アニメーション
+celeritasextra.option.page.particles=パーティクル
+celeritasextra.option.page.details=詳細
+celeritasextra.option.page.render=描画
+celeritasextra.option.page.extra=追加の機能
+
+# アニメーションオプション
+celeritasextra.option.animations.all=全てのアニメーション
+celeritasextra.option.animations.all.tooltip=有効にした場合、すべてのアニメーションの処理は実行されます。
+celeritasextra.option.animations.water=水
+celeritasextra.option.animations.water.tooltip=有効にした場合、水のアニメーションの処理は実行されます。
+celeritasextra.option.animations.lava=溶岩
+celeritasextra.option.animations.lava.tooltip=有効にした場合、溶岩のアニメーションの処理は実行されます。
+celeritasextra.option.animations.fire=火
+celeritasextra.option.animations.fire.tooltip=有効にした場合、炎のアニメーションの処理は実行されます。
+celeritasextra.option.animations.portal=ポータル
+celeritasextra.option.animations.portal.tooltip=有効にした場合、ネザーポータルのアニメーションの処理は実行されます。
+celeritasextra.option.animations.block=ブロックアニメーション
+celeritasextra.option.animations.block.tooltip=有効にした場合、ブロックアニメーションの処理は実行されます。
+
+# パーティクルオプション
+celeritasextra.option.particles.all=全てのパーティクル
+celeritasextra.option.particles.all.tooltip=有効にした場合、全てのパーティクルの処理は実行されます。
+celeritasextra.option.particles.rain_splash=雨の水しぶき
+celeritasextra.option.particles.rain_splash.tooltip=有効にした場合、雨の水しぶきのパーティクルは描画されます。
+celeritasextra.option.particles.block_break=ブロックが破壊される
+celeritasextra.option.particles.block_break.tooltip=有効にした場合、ブロックが破壊されたときのパーティクルの処理は実行されます。
+celeritasextra.option.particles.block_breaking=ブロックが採掘される
+celeritasextra.option.particles.block_breaking.tooltip=有効にした場合、ブロックが破壊されているときのパーティクルの処理は実行されます。
+
+# 詳細オプション
+celeritasextra.option.details.sky=空
+celeritasextra.option.details.sky.tooltip=有効にした場合、空は描画されます。
+celeritasextra.option.details.stars=星
+celeritasextra.option.details.stars.tooltip=有効にした場合、星は描画されます。
+celeritasextra.option.details.sun_moon=太陽と月
+celeritasextra.option.details.sun_moon.tooltip=有効にした場合、太陽と月は描画されます。
+celeritasextra.option.details.rain_snow=雨と雪
+celeritasextra.option.details.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
+celeritasextra.option.details.biome_colors=バイオームごとの色
+celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオーム固有の色が草、水、葉に使用されます。無効にした場合、デフォルトの色が使用されます。
+
+# レンダリングオプション
+celeritasextra.option.render.fog=霧
+celeritasextra.option.render.fog.tooltip=有効にした場合、霧は描画されます。
+celeritasextra.option.render.fog_start=霧の開始距離
+celeritasextra.option.render.fog_start.tooltip=霧が始まる距離を制御します。100%がデフォルト、低い値は霧を近くに、高い値は霧を遠くに押し出します。
+celeritasextra.option.render.prevent_shaders=シェーダーを防止
+celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、誤ってシェーダーが有効化されることを防ぎます（スーパーシークレット設定）。
+celeritasextra.option.render.clouds=雲
+celeritasextra.option.render.clouds.tooltip=有効にした場合、雲は描画されます。
+celeritasextra.option.render.cloud_height=雲の高さ
+celeritasextra.option.render.cloud_height.tooltip=描画される雲の高さを制御します。
+celeritasextra.option.render.item_frames=額縁
+celeritasextra.option.render.item_frames.tooltip=有効にした場合、額縁は描画されます。
+celeritasextra.option.render.armor_stands=防具立て
+celeritasextra.option.render.armor_stands.tooltip=有効にした場合、防具立ては描画されます。
+celeritasextra.option.render.paintings=絵画
+celeritasextra.option.render.paintings.tooltip=有効にした場合、絵画は描画されます。
+celeritasextra.option.render.pistons=ピストン
+celeritasextra.option.render.pistons.tooltip=有効にした場合、ピストンの伸びるアニメーションは描画されます。
+celeritasextra.option.render.beacons=ビーコンのビーム
+celeritasextra.option.render.beacons.tooltip=有効にした場合、ビーコンのビームは描画されます。
+celeritasextra.option.render.enchanting_books=エンチャントテーブルの本
+celeritasextra.option.render.enchanting_books.tooltip=有効にした場合、エンチャントテーブルの本は描画されます。
+celeritasextra.option.render.player_name_tag=プレイヤーネームタグ
+celeritasextra.option.render.player_name_tag.tooltip=有効にした場合、プレイヤーのネームタグは表示されます。
+celeritasextra.option.render.item_frame_name_tag=額縁のネームタグ
+celeritasextra.option.render.item_frame_name_tag.tooltip=有効にした場合、額縁のネームタグは描画されます。
+
+# 追加オプション
+celeritasextra.option.extra.fps=FPSの表示
+celeritasextra.option.extra.fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
+celeritasextra.option.extra.coords=座標の表示
+celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。
+celeritasextra.option.extra.reduced_motion=モーション軽減
+celeritasextra.option.extra.reduced_motion.tooltip=アクセシビリティのためにモーション効果を軽減します。
+celeritasextra.option.extra.instant_sneak=インスタントスニーク
+celeritasextra.option.extra.instant_sneak.tooltip=有効にした場合、スニーク時の視点の移動は瞬間的に行われます。
+celeritasextra.option.extra.steady_debug_hud=安定したF3デバッグHUD
+celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、F3デバッグ画面の更新頻度が減少し、CPU使用率が下がり、FPSが向上します。
+celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD更新間隔
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=F3デバッグ画面の更新間隔をtick単位で制御します。高い値=更新頻度が低い=パフォーマンス向上。デフォルトは20tick（1秒）です。
+
+# オプショングループ
+celeritasextra.option.group.general=全般
+celeritasextra.option.group.textures=テクスチャ
+celeritasextra.option.group.effects=エフェクト
+celeritasextra.option.group.entities=エンティティ
+celeritasextra.option.group.blocks=ブロックエンティティ
+celeritasextra.option.group.environment=環境
+celeritasextra.option.group.overlays=オーバーレイ

@@ -1,0 +1,66 @@
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.settings/
+.metadata/
+.classpath
+.project
+bin/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Fabric
+run/
+
+# Misc
+*.log
+*.swp
+*.swo
+*~
+.cache/
+
+# Minecraft/Forge
+logs/
+crash-reports/
+screenshots/
+saves/
+resourcepacks/
+shaderpacks/
+.mixin.out/
+config/
+options.txt
+servers.dat
+usercache.json
+usernamecache.json
+
+# CleanroomLoader
+# Note: libs/celeritas-forge-mc12.2-*.jar should be committed as a dependency
+# Uncomment below if you want to exclude it:
+# /libs/*.jar
+*.jar.cache
+
+# Config files (generated at runtime)
+/config/*.json
+
+# Debug/Crash logs
+debug.log
+*.log
+crash-*.txt
+hs_err_*.log
+
+# Gradle wrapper (optional - uncomment if you want to commit wrapper)
+# !gradle/wrapper/gradle-wrapper.jar

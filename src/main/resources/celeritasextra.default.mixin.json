@@ -1,0 +1,38 @@
+{
+  "required": true,
+  "priority": 1001,
+  "package": "jp.s12kuma01.celeritasextra.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "mixins": [
+  ],
+  "minVersion": "0.8.7",
+  "setSourceFile": true,
+  "server": [],
+  "client": [
+    "animation.MixinTextureMap",
+    "particle.MixinParticleManager",
+    "particle.MixinParticleFirework",
+    "particle.MixinRenderGlobal",
+    "render.entity.MixinRenderItemFrame",
+    "render.entity.MixinRenderPainting",
+    "render.entity.MixinRenderArmorStand",
+    "render.entity.MixinRenderLivingBase",
+    "render.block_entity.MixinTileEntityBeaconRenderer",
+    "render.block_entity.MixinTileEntityEnchantmentTableRenderer",
+    "render.block_entity.MixinTileEntityPistonRenderer",
+    "render.weather.MixinEntityRenderer",
+    "render.sky.MixinRenderGlobalClouds",
+    "render.sky.MixinRenderGlobalSky",
+    "render.sky.MixinRenderGlobalStars",
+    "render.sky.MixinRenderGlobalSunMoon",
+    "render.fog.MixinEntityRendererFog",
+    "render.fog.MixinEntityRendererFogFalloff",
+    "prevent_shaders.MixinEntityRenderer",
+    "biome_colors.MixinBiomeColorHelper",
+    "profiler.MixinTileEntityRendererDispatcher",
+    "profiler.MixinRenderManager",
+    "steady_debug_hud.MixinForgeGuiDebugOverlay",
+    "instant_sneak.MixinEntityRenderer"
+  ]
+}
