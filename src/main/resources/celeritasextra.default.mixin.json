@@ -23,7 +23,6 @@
     "render.block_entity.MixinTileEntityPistonRenderer",
     "render.weather.MixinEntityRenderer",
     "render.sky.MixinRenderGlobalClouds",
-    "render.sky.MixinRenderGlobalCloudDistance",
     "render.sky.MixinWorldProvider",
     "render.sky.MixinRenderGlobalSky",
     "render.sky.MixinRenderGlobalStars",
