@@ -30,6 +30,7 @@ celeritasextra.option.particles.block_break=ブロックが破壊される
 celeritasextra.option.particles.block_break.tooltip=有効にした場合、ブロックが破壊されたときのパーティクルの処理は実行されます。
 celeritasextra.option.particles.block_breaking=ブロックが採掘される
 celeritasextra.option.particles.block_breaking.tooltip=有効にした場合、ブロックが破壊されているときのパーティクルの処理は実行されます。
+celeritasextra.option.particles.other.tooltip=有効にした場合、%sパーティクルは描画されます。
 
 # 詳細オプション
 celeritasextra.option.details.sky=空

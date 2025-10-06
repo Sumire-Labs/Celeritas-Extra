@@ -139,6 +139,9 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
+        // NOTE: Individual particle type control is currently disabled due to mixin implementation issues
+        // Only basic particle controls (rain splash, block break, block breaking) are available
+
         return new OptionPage(CeleritasExtraOptionPages.PARTICLE, TextComponent.literal(I18n.format("celeritasextra.option.page.particles")), ImmutableList.copyOf(groups));
     }
 

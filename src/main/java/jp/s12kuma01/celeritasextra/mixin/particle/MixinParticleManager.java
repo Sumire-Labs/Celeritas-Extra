@@ -2,7 +2,6 @@ package jp.s12kuma01.celeritasextra.mixin.particle;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -39,4 +38,8 @@ public class MixinParticleManager {
             ci.cancel();
         }
     }
+
+    // NOTE: Individual particle type control is currently disabled due to mixin signature issues
+    // The varargs parameter conflicts with the Callback parameter ordering in Mixin
+    // This feature may be re-implemented in the future using a different approach
 }

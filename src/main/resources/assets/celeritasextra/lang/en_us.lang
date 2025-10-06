@@ -31,6 +31,7 @@ celeritasextra.option.particles.block_break=Block Break
 celeritasextra.option.particles.block_break.tooltip=If enabled, block break particles are processed.
 celeritasextra.option.particles.block_breaking=Block Breaking
 celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
+celeritasextra.option.particles.other.tooltip=If enabled, %s particles are rendered.
 
 # Detail Options
 celeritasextra.option.details.sky=Sky
