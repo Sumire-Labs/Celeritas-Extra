@@ -101,7 +101,7 @@ public class CeleritasExtraGameOptions {
         public int fogStart = 100;
         public boolean clouds = true;
         public boolean multiDimensionalClouds = true;
-        public double cloudHeight = 192.0D;
+        public int cloudHeight = 192;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public boolean armorStands = true;

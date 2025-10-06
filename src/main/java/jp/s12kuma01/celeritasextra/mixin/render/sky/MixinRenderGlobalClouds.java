@@ -5,12 +5,12 @@ import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls cloud rendering and height
+ * Controls cloud rendering
  * RenderGlobal is the 1.12.2 equivalent of WorldRenderer from 1.20.1
+ * Cloud height is controlled via MixinWorldProvider
  */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalClouds {
@@ -27,19 +27,5 @@ public class MixinRenderGlobalClouds {
         if (!CeleritasExtraClientMod.options().renderSettings.clouds) {
             ci.cancel();
         }
-    }
-
-    /**
-     * Modify cloud height
-     * In 1.12.2, the y parameter is passed to renderClouds and used for cloud positioning
-     */
-    @ModifyVariable(
-        method = "renderClouds",
-        at = @At("HEAD"),
-        ordinal = 1,
-        argsOnly = true
-    )
-    private double modifyCloudHeight(double y) {
-        return CeleritasExtraClientMod.options().renderSettings.cloudHeight;
     }
 }

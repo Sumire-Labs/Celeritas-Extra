@@ -242,7 +242,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.cloud_height.tooltip")))
                         .setControl(option -> new SliderControl(option, 0, 384, 16, ControlValueFormatter.number()))
                         .setBinding((opts, value) -> opts.renderSettings.cloudHeight = value,
-                                   opts -> (int) opts.renderSettings.cloudHeight)
+                                   opts -> opts.renderSettings.cloudHeight)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
