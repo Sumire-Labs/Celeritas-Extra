@@ -8,8 +8,6 @@ There may be insufficient code and various issues throughout, but forks, pull re
 This mod is still in early development and doesn't have many features implemented yet.
 Also, the code is probably very spaghetti.
 
-Note: I'm not confident enough in my code quality to publish this on CurseForge or Modrinth at this time. I tend to be quite self-critical.
-
 ## Description
 
 Celeritas Extra enables some features from Embeddium Extra and other additional features to work with Celeritas.
