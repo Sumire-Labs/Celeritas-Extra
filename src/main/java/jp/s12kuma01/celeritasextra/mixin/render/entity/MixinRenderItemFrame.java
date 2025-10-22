@@ -9,10 +9,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * Controls item frame rendering and name tags
- * Ported from MixinItemFrameEntityRenderer in Embeddium Extra 1.20.1
- */
 @Mixin(RenderItemFrame.class)
 public class MixinRenderItemFrame {
 
@@ -27,10 +23,6 @@ public class MixinRenderItemFrame {
         }
     }
 
-    /**
-     * Controls item frame name tag rendering
-     * In 1.12.2, RenderItemFrame inherits from Render which has canRenderName method
-     */
     @Inject(
         method = "canRenderName(Lnet/minecraft/entity/item/EntityItemFrame;)Z",
         at = @At("HEAD"),

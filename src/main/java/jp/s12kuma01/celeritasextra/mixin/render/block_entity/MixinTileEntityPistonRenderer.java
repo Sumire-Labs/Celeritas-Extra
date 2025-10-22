@@ -8,10 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Controls piston rendering
- * Ported from MixinPistonBlockEntityRenderer in Embeddium Extra 1.20.1
- */
 @Mixin(TileEntityPistonRenderer.class)
 public class MixinTileEntityPistonRenderer {
 

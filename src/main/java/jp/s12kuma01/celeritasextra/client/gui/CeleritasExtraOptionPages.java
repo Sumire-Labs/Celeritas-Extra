@@ -3,9 +3,10 @@ package jp.s12kuma01.celeritasextra.client.gui;
 import org.taumc.celeritas.api.options.OptionIdentifier;
 
 /**
- * Defines option page identifiers for Celeritas Extra
+ * Defines option page identifiers for Celeritas Extra GUI.
  */
 public class CeleritasExtraOptionPages {
+
     public static final OptionIdentifier<Void> ANIMATION = OptionIdentifier.create("celeritasextra", "animation");
     public static final OptionIdentifier<Void> PARTICLE = OptionIdentifier.create("celeritasextra", "particle");
     public static final OptionIdentifier<Void> DETAILS = OptionIdentifier.create("celeritasextra", "details");

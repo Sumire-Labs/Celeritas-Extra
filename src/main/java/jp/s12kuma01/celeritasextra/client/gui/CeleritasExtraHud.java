@@ -1,6 +1,10 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -11,12 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Renders FPS and coordinates overlay
- * In 1.12.2, we use RenderGameOverlayEvent.Text
+ * Renders HUD overlays for FPS and coordinates display.
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
@@ -24,21 +24,23 @@ public class CeleritasExtraHud {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
 
+    /**
+     * Renders custom overlay text (FPS, coordinates) if debug screen is not shown.
+     */
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Text event) {
+        // Don't render if F3 debug screen is active
         if (mc.gameSettings.showDebugInfo) {
-            return; // Don't render when F3 debug screen is open
+            return;
         }
 
         List<String> lines = new ArrayList<>();
 
-        // FPS display
         if (CeleritasExtraClientMod.options().extraSettings.showFps) {
             int fps = Minecraft.getDebugFPS();
             lines.add(String.format("%d FPS", fps));
         }
 
-        // Coordinates display
         if (CeleritasExtraClientMod.options().extraSettings.showCoords && !mc.gameSettings.reducedDebugInfo) {
             EntityPlayer player = mc.player;
             if (player != null) {
@@ -56,12 +58,11 @@ public class CeleritasExtraHud {
         FontRenderer fontRenderer = mc.fontRenderer;
         ScaledResolution resolution = event.getResolution();
 
-        int y = 2; // Start from top
+        int y = 2;
 
         for (String line : lines) {
-            int x = 2; // Left side
+            int x = 2;
 
-            // Draw shadow background for better visibility
             fontRenderer.drawStringWithShadow(line, x, y, 0xFFFFFF);
 
             y += fontRenderer.FONT_HEIGHT + 2;

@@ -7,17 +7,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Controls cloud rendering
- * RenderGlobal is the 1.12.2 equivalent of WorldRenderer from 1.20.1
- * Cloud height is controlled via MixinWorldProvider
- */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalClouds {
 
-    /**
-     * Control cloud rendering
-     */
     @Inject(
         method = "renderClouds",
         at = @At("HEAD"),

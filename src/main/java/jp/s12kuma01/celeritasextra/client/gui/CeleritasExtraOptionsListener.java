@@ -1,18 +1,22 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
+
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 
 /**
- * Listens for Celeritas Options GUI construction events
- * and adds Celeritas Extra option pages
+ * Listener for Celeritas GUI construction events.
+ * Registers Celeritas Extra option pages to Celeritas settings menu.
  */
 public class CeleritasExtraOptionsListener {
 
+    /**
+     * Called when Celeritas GUI is being constructed.
+     * Adds all Celeritas Extra option pages to the GUI.
+     */
     public static void onCeleritasOptionsConstruct(OptionGUIConstructionEvent event) {
         CeleritasExtraMod.LOGGER.info("Registering Celeritas Extra options pages");
 
-        // Register all Celeritas Extra option pages
         event.addPage(CeleritasExtraGameOptionPages.animation());
         event.addPage(CeleritasExtraGameOptionPages.particle());
         event.addPage(CeleritasExtraGameOptionPages.details());
