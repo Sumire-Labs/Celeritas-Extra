@@ -11,9 +11,17 @@ import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+/**
+ * Controls sun and moon rendering
+ * In 1.12.2, sun and moon are rendered using texture binding in renderSky
+ */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalSunMoon {
 
+    /**
+     * Control sun rendering by wrapping the bindTexture call for sun texture
+     * In 1.12.2, the sun texture path is "textures/environment/sun.png"
+     */
     @WrapOperation(
         method = "renderSky(FI)V",
         at = @At(
@@ -28,6 +36,10 @@ public class MixinRenderGlobalSunMoon {
         }
     }
 
+    /**
+     * Control moon rendering by wrapping the bindTexture call for moon texture
+     * In 1.12.2, the moon texture path is "textures/environment/moon_phases.png"
+     */
     @WrapOperation(
         method = "renderSky(FI)V",
         at = @At(

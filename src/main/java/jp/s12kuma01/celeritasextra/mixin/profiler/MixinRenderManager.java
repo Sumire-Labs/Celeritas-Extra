@@ -13,6 +13,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.WeakHashMap;
 
+/**
+ * Add profiler sections for entity rendering
+ * Port of embeddium-extra's profiler.MixinEntityRenderDispatcher
+ *
+ * In 1.20.1: EntityRenderDispatcher.render()
+ * In 1.12.2: RenderManager.renderEntity()
+ *
+ * This helps identify rendering performance bottlenecks in F3 profiler
+ */
 @Mixin(RenderManager.class)
 public abstract class MixinRenderManager {
 
@@ -22,6 +31,9 @@ public abstract class MixinRenderManager {
     @Unique
     private static final WeakHashMap<Class<?>, String> celeritasExtra$names = new WeakHashMap<>();
 
+    /**
+     * Push profiler section before rendering entity
+     */
     @Inject(
         method = "renderEntity",
         at = @At("HEAD")
@@ -39,6 +51,9 @@ public abstract class MixinRenderManager {
         }
     }
 
+    /**
+     * Pop profiler section after rendering entity
+     */
     @Inject(
         method = "renderEntity",
         at = @At("TAIL")

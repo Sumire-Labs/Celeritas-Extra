@@ -1,19 +1,20 @@
 package jp.s12kuma01.celeritasextra;
 
-import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
-import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener;
-
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 
+/**
+ * Celeritas Extra - A port of Embeddium Extra to Celeritas 1.12.2
+ *
+ * @author Karnatour (port), FlashyReese (original)
+ */
 @Mod(modid = CeleritasExtraMod.MOD_ID, name = CeleritasExtraMod.MOD_NAME, version = CeleritasExtraMod.VERSION,
      clientSideOnly = true, acceptableRemoteVersions = "*")
 public class CeleritasExtraMod {
@@ -26,19 +27,13 @@ public class CeleritasExtraMod {
     @Mod.Instance
     public static CeleritasExtraMod INSTANCE;
 
-    /**
-     * Construction phase - registers Celeritas Extra options with Celeritas GUI.
-     * Checks for Celeritas 2.4.0+ compatibility by verifying OptionGUIConstructionEvent exists.
-     */
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
         if (Loader.isModLoaded("celeritas")) {
             try {
-                // Verify Celeritas version is 2.4.0 or newer by checking for API class
                 Class.forName("org.taumc.celeritas.api.OptionGUIConstructionEvent");
-
-                // Register our options listener to Celeritas GUI system
-                OptionGUIConstructionEvent.BUS.addListener(CeleritasExtraOptionsListener::onCeleritasOptionsConstruct);
+                // Register option GUI construction listener
+                OptionGUIConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onCeleritasOptionsConstruct);
                 LOGGER.info("Successfully registered Celeritas Extra with Celeritas GUI");
             } catch (Throwable t) {
                 if (t instanceof NoClassDefFoundError) {
@@ -57,14 +52,10 @@ public class CeleritasExtraMod {
         LOGGER.info("Celeritas Extra pre-initialization");
     }
 
-    /**
-     * Initialization phase - initializes client-side configuration.
-     */
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        // Only initialize on client side (this is a client-only mod)
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
-            CeleritasExtraClientMod.onClientInit();
+        if (net.minecraftforge.fml.common.FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+            jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod.onClientInit();
         }
         LOGGER.info("Celeritas Extra initialized");
     }

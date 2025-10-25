@@ -8,9 +8,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Controls sky rendering (sky box)
+ * RenderGlobal is the 1.12.2 equivalent of WorldRenderer from 1.20.1
+ */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalSky {
 
+    /**
+     * Control sky rendering
+     * In 1.12.2, sky rendering is in renderSky method
+     */
     @Inject(
         method = "renderSky(FI)V",
         at = @At("HEAD"),

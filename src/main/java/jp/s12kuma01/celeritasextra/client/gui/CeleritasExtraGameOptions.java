@@ -1,22 +1,19 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 
 /**
- * Main configuration class for Celeritas Extra.
- * Stores all game options and settings, serialized to JSON.
+ * Main configuration class for Celeritas Extra
+ * Stores all game options and settings
  */
 public class CeleritasExtraGameOptions {
 
@@ -34,13 +31,6 @@ public class CeleritasExtraGameOptions {
 
     private File file;
 
-    /**
-     * Loads configuration from the specified file.
-     * Falls back to defaults if file doesn't exist or parsing fails.
-     *
-     * @param file Configuration file path
-     * @return Loaded configuration instance
-     */
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions config;
 
@@ -61,9 +51,6 @@ public class CeleritasExtraGameOptions {
         return config;
     }
 
-    /**
-     * Writes current configuration to disk.
-     */
     public void writeChanges() {
         File dir = this.file.getParentFile();
 
@@ -82,7 +69,7 @@ public class CeleritasExtraGameOptions {
         }
     }
 
-    /** Animation settings for textures. */
+    // Settings classes
     public static class AnimationSettings {
         public boolean animation = true;
         public boolean water = true;
@@ -93,16 +80,14 @@ public class CeleritasExtraGameOptions {
         public boolean sculkSensor = true;
     }
 
-    /** Particle rendering settings. */
     public static class ParticleSettings {
         public boolean particles = true;
         public boolean rainSplash = true;
         public boolean blockBreak = true;
         public boolean blockBreaking = true;
-        public Map<String, Boolean> otherMap = new HashMap<>();
+        public java.util.Map<String, Boolean> otherMap = new java.util.HashMap<>();
     }
 
-    /** World detail settings (sky, weather, biome colors). */
     public static class DetailSettings {
         public boolean sky = true;
         public boolean stars = true;
@@ -111,7 +96,6 @@ public class CeleritasExtraGameOptions {
         public boolean biomeColors = true;
     }
 
-    /** Rendering optimizations and entity rendering controls. */
     public static class RenderSettings {
         public boolean fog = true;
         public int fogStart = 100;
@@ -131,7 +115,6 @@ public class CeleritasExtraGameOptions {
         public boolean preventShaders = false;
     }
 
-    /** Extra features (overlays, HUD, accessibility). */
     public static class ExtraSettings {
         public boolean showFps = false;
         public boolean showCoords = false;

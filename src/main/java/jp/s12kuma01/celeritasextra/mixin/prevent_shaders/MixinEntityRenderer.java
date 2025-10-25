@@ -8,9 +8,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Prevent accidental shader activation
+ * Port of embeddium-extra's prevent_shaders.MixinGameRenderer
+ *
+ * In 1.20.1: GameRenderer.togglePostProcessorEnabled() / loadPostProcessor()
+ * In 1.12.2: EntityRenderer.loadShader() / switchUseShader()
+ */
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
 
+    /**
+     * Prevent loading shaders
+     */
     @Inject(
         method = "loadShader",
         at = @At("HEAD"),
@@ -22,6 +32,9 @@ public class MixinEntityRenderer {
         }
     }
 
+    /**
+     * Prevent toggling shader use
+     */
     @Inject(
         method = "switchUseShader",
         at = @At("HEAD"),
