@@ -1,97 +1,97 @@
-# Celeritas Extra - English Translation
-# Based on Embeddium Extra translations
+# Celeritas Extra - 简体中文翻译
+# 基于 Embeddium Extra 的翻译
 
-# Option Pages
-celeritasextra.option.page.animations=Animations
-celeritasextra.option.page.particles=Particles
-celeritasextra.option.page.details=Details
-celeritasextra.option.page.render=Render
-celeritasextra.option.page.extra=Extras
+# 选项页面
+celeritasextra.option.page.animations=动画
+celeritasextra.option.page.particles=粒子
+celeritasextra.option.page.details=细节
+celeritasextra.option.page.render=渲染
+celeritasextra.option.page.extra=额外
 
-# Animation Options
-celeritasextra.option.animations.all=Animations
-celeritasextra.option.animations.all.tooltip=If enabled, animations are processed.
-celeritasextra.option.animations.water=Water
-celeritasextra.option.animations.water.tooltip=If enabled, water animations are processed.
-celeritasextra.option.animations.lava=Lava
-celeritasextra.option.animations.lava.tooltip=If enabled, lava animations are processed.
-celeritasextra.option.animations.fire=Fire
-celeritasextra.option.animations.fire.tooltip=If enabled, fire animations are processed.
-celeritasextra.option.animations.portal=Portal
-celeritasextra.option.animations.portal.tooltip=If enabled, portal animations are processed.
-celeritasextra.option.animations.block=Block Animations
-celeritasextra.option.animations.block.tooltip=If enabled, block animations are processed.
+# 动画选项
+celeritasextra.option.animations.all=动画
+celeritasextra.option.animations.all.tooltip=若启用，将处理动画。
+celeritasextra.option.animations.water=水
+celeritasextra.option.animations.water.tooltip=若启用，将处理水动画。
+celeritasextra.option.animations.lava=熔岩
+celeritasextra.option.animations.lava.tooltip=若启用，将处理熔岩动画。
+celeritasextra.option.animations.fire=火
+celeritasextra.option.animations.fire.tooltip=若启用，将处理火动画。
+celeritasextra.option.animations.portal=传送门
+celeritasextra.option.animations.portal.tooltip=若启用，将处理传送门动画。
+celeritasextra.option.animations.block=方块动画
+celeritasextra.option.animations.block.tooltip=若启用，将处理方块动画。
 
-# Particle Options
-celeritasextra.option.particles.all=Particles
-celeritasextra.option.particles.all.tooltip=If enabled, particles are processed.
-celeritasextra.option.particles.rain_splash=Rain Splash
-celeritasextra.option.particles.rain_splash.tooltip=If enabled, rain splash particles are rendered.
-celeritasextra.option.particles.block_break=Block Break
-celeritasextra.option.particles.block_break.tooltip=If enabled, block break particles are processed.
-celeritasextra.option.particles.block_breaking=Block Breaking
-celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
-celeritasextra.option.particles.other.tooltip=If enabled, %s particles are rendered.
+# 粒子选项
+celeritasextra.option.particles.all=粒子
+celeritasextra.option.particles.all.tooltip=若启用，将处理粒子效果。
+celeritasextra.option.particles.rain_splash=雨滴飞溅
+celeritasextra.option.particles.rain_splash.tooltip=若启用，将渲染雨滴飞溅粒子。
+celeritasextra.option.particles.block_break=方块破坏
+celeritasextra.option.particles.block_break.tooltip=若启用，将处理方块破坏粒子。
+celeritasextra.option.particles.block_breaking=方块破坏中
+celeritasextra.option.particles.block_breaking.tooltip=若启用，将处理方块破坏过程中的粒子。
+celeritasextra.option.particles.other.tooltip=若启用，将渲染 %s 粒子。
 
-# Detail Options
-celeritasextra.option.details.sky=Sky
-celeritasextra.option.details.sky.tooltip=If enabled, the sky will be rendered.
-celeritasextra.option.details.stars=Stars
-celeritasextra.option.details.stars.tooltip=If enabled, the stars will be rendered.
-celeritasextra.option.details.sun_moon=Sun & Moon
-celeritasextra.option.details.sun_moon.tooltip=If enabled, the sun and moon will be rendered.
-celeritasextra.option.details.rain_snow=Rain & Snow
-celeritasextra.option.details.rain_snow.tooltip=If enabled, rain & snow are rendered.
-celeritasextra.option.details.biome_colors=Biome Colors
-celeritasextra.option.details.biome_colors.tooltip=If enabled, biome-specific colors are used for grass, water, and foliage. When disabled, default colors are used.
+# 细节选项
+celeritasextra.option.details.sky=天空
+celeritasextra.option.details.sky.tooltip=若启用，将渲染天空。
+celeritasextra.option.details.stars=星星
+celeritasextra.option.details.stars.tooltip=若启用，将渲染星星。
+celeritasextra.option.details.sun_moon=太阳与月亮
+celeritasextra.option.details.sun_moon.tooltip=若启用，将渲染太阳与月亮。
+celeritasextra.option.details.rain_snow=雨和雪
+celeritasextra.option.details.rain_snow.tooltip=若启用，将渲染雨和雪。
+celeritasextra.option.details.biome_colors=生物群系颜色
+celeritasextra.option.details.biome_colors.tooltip=若启用，将为草、水和树叶使用生物群系特定颜色。禁用时，使用默认颜色。
 
-# Render Options
-celeritasextra.option.render.fog=Fog
-celeritasextra.option.render.fog.tooltip=If enabled, fog will be rendered.
-celeritasextra.option.render.fog_start=Fog Start Distance
-celeritasextra.option.render.fog_start.tooltip=Controls how far away fog starts. 100% is default, lower values make fog appear closer, higher values push it further away.
-celeritasextra.option.render.prevent_shaders=Prevent Shaders
-celeritasextra.option.render.prevent_shaders.tooltip=If enabled, prevents accidental shader activation (Super Secret Settings).
-celeritasextra.option.render.clouds=Clouds
-celeritasextra.option.render.clouds.tooltip=If enabled, clouds are rendered.
-celeritasextra.option.render.cloud_height=Cloud Height
-celeritasextra.option.render.cloud_height.tooltip=Controls the height of clouds that are rendered.
-celeritasextra.option.render.item_frames=Item Frames
-celeritasextra.option.render.item_frames.tooltip=If enabled, item frames are rendered.
-celeritasextra.option.render.armor_stands=Armor Stands
-celeritasextra.option.render.armor_stands.tooltip=If enabled, armor stands are rendered.
-celeritasextra.option.render.paintings=Paintings
-celeritasextra.option.render.paintings.tooltip=If enabled, paintings are rendered.
-celeritasextra.option.render.pistons=Pistons
-celeritasextra.option.render.pistons.tooltip=If enabled, piston extending animations are rendered.
-celeritasextra.option.render.beacons=Beacon Beam
-celeritasextra.option.render.beacons.tooltip=If enabled, beacon beams are rendered.
-celeritasextra.option.render.enchanting_books=Enchanting Table Book
-celeritasextra.option.render.enchanting_books.tooltip=If enabled, enchanting table books are rendered.
-celeritasextra.option.render.player_name_tag=Player Name Tag
-celeritasextra.option.render.player_name_tag.tooltip=If enabled, player name tags will be visible.
-celeritasextra.option.render.item_frame_name_tag=Item Frame Name Tag
-celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame name tags will be visible.
+# 渲染选项
+celeritasextra.option.render.fog=雾
+celeritasextra.option.render.fog.tooltip=若启用，将渲染雾。
+celeritasextra.option.render.fog_start=雾起始距离
+celeritasextra.option.render.fog_start.tooltip=控制雾的起始距离。100% 为默认值，较低的值使雾更近，较高的值使雾更远。
+celeritasextra.option.render.prevent_shaders=禁用光影
+celeritasextra.option.render.prevent_shaders.tooltip=若启用，可防止意外激活光影（超级秘密设置）。
+celeritasextra.option.render.clouds=云
+celeritasextra.option.render.clouds.tooltip=若启用，将渲染云。
+celeritasextra.option.render.cloud_height=云层高度
+celeritasextra.option.render.cloud_height.tooltip=控制渲染云层的高度。
+celeritasextra.option.render.item_frames=物品展示框
+celeritasextra.option.render.item_frames.tooltip=若启用，将渲染物品展示框。
+celeritasextra.option.render.armor_stands=盔甲架
+celeritasextra.option.render.armor_stands.tooltip=若启用，将渲染盔甲架。
+celeritasextra.option.render.paintings=画
+celeritasextra.option.render.paintings.tooltip=若启用，将渲染画。
+celeritasextra.option.render.pistons=活塞
+celeritasextra.option.render.pistons.tooltip=若启用，将渲染活塞伸出动画。
+celeritasextra.option.render.beacons=信标光束
+celeritasextra.option.render.beacons.tooltip=若启用，将渲染信标光束。
+celeritasextra.option.render.enchanting_books=附魔台的书
+celeritasextra.option.render.enchanting_books.tooltip=若启用，将渲染附魔台的书。
+celeritasextra.option.render.player_name_tag=玩家名称标签
+celeritasextra.option.render.player_name_tag.tooltip=若启用，玩家名称标签将可见。
+celeritasextra.option.render.item_frame_name_tag=物品展示框名称标签
+celeritasextra.option.render.item_frame_name_tag.tooltip=若启用，物品展示框名称标签将可见。
 
-# Extra Options
-celeritasextra.option.extra.fps=Show FPS
-celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
-celeritasextra.option.extra.coords=Show Coordinates
-celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
-celeritasextra.option.extra.reduced_motion=Reduced Motion
-celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
-celeritasextra.option.extra.instant_sneak=Instant Sneak
-celeritasextra.option.extra.instant_sneak.tooltip=If enabled, the camera will not lerp upon sneaking.
-celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
-celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
-celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
+# 额外选项
+celeritasextra.option.extra.fps=显示 FPS
+celeritasextra.option.extra.fps.tooltip=在界面上显示当前游戏帧率（FPS）。
+celeritasextra.option.extra.coords=显示坐标
+celeritasextra.option.extra.coords.tooltip=在界面上显示玩家坐标。
+celeritasextra.option.extra.reduced_motion=减少动态效果
+celeritasextra.option.extra.reduced_motion.tooltip=为辅助功能减少动态效果。
+celeritasextra.option.extra.instant_sneak=瞬间潜行
+celeritasextra.option.extra.instant_sneak.tooltip=若启用，潜行时镜头不会平滑移动。
+celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
+celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面的更新频率将降低，以减少 CPU 使用并提高 FPS。
+celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
 
-# Option Groups
-celeritasextra.option.group.general=General
-celeritasextra.option.group.textures=Textures
-celeritasextra.option.group.effects=Effects
-celeritasextra.option.group.entities=Entities
-celeritasextra.option.group.blocks=Block Entities
-celeritasextra.option.group.environment=Environment
-celeritasextra.option.group.overlays=Overlays
+# 选项分组
+celeritasextra.option.group.general=通用
+celeritasextra.option.group.textures=纹理
+celeritasextra.option.group.effects=效果
+celeritasextra.option.group.entities=实体
+celeritasextra.option.group.blocks=方块实体
+celeritasextra.option.group.environment=环境
+celeritasextra.option.group.overlays=界面
