@@ -1,11 +1,12 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+
 import org.taumc.celeritas.api.options.structure.OptionStorage;
 
 /**
- * Option storage implementation for Celeritas Extra
- * Provides access to configuration options
+ * Bridges Celeritas Extra configuration with Celeritas GUI system.
+ * Provides access to configuration data and save functionality.
  */
 public class CeleritasExtraOptionsStorage implements OptionStorage<CeleritasExtraGameOptions> {
 

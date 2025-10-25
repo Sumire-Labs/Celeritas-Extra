@@ -15,20 +15,13 @@ import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Defines all option pages for Celeritas Extra
- */
 public class CeleritasExtraGameOptionPages {
 
     private static final CeleritasExtraOptionsStorage celeritasExtraOpts = new CeleritasExtraOptionsStorage();
 
-    /**
-     * Animation settings page
-     */
     public static OptionPage animation() {
         List<OptionGroup> groups = new ArrayList<>();
 
-        // All animations toggle
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.animations.all")))
@@ -41,7 +34,6 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // Individual animation controls
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.animations.water")))
@@ -93,13 +85,9 @@ public class CeleritasExtraGameOptionPages {
         return new OptionPage(CeleritasExtraOptionPages.ANIMATION, TextComponent.literal(I18n.format("celeritasextra.option.page.animations")), ImmutableList.copyOf(groups));
     }
 
-    /**
-     * Particle settings page
-     */
     public static OptionPage particle() {
         List<OptionGroup> groups = new ArrayList<>();
 
-        // All particles toggle
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.all")))
@@ -111,7 +99,6 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // Individual particle controls
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.rain_splash")))
@@ -139,15 +126,9 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // NOTE: Individual particle type control is currently disabled due to mixin implementation issues
-        // Only basic particle controls (rain splash, block break, block breaking) are available
-
         return new OptionPage(CeleritasExtraOptionPages.PARTICLE, TextComponent.literal(I18n.format("celeritasextra.option.page.particles")), ImmutableList.copyOf(groups));
     }
 
-    /**
-     * Detail settings page
-     */
     public static OptionPage details() {
         List<OptionGroup> groups = new ArrayList<>();
 
@@ -201,9 +182,6 @@ public class CeleritasExtraGameOptionPages {
         return new OptionPage(CeleritasExtraOptionPages.DETAILS, TextComponent.literal(I18n.format("celeritasextra.option.page.details")), ImmutableList.copyOf(groups));
     }
 
-    /**
-     * Render settings page
-     */
     public static OptionPage render() {
         List<OptionGroup> groups = new ArrayList<>();
 
@@ -317,9 +295,6 @@ public class CeleritasExtraGameOptionPages {
         return new OptionPage(CeleritasExtraOptionPages.RENDER, TextComponent.literal(I18n.format("celeritasextra.option.page.render")), ImmutableList.copyOf(groups));
     }
 
-    /**
-     * Extra settings page
-     */
     public static OptionPage extra() {
         List<OptionGroup> groups = new ArrayList<>();
 

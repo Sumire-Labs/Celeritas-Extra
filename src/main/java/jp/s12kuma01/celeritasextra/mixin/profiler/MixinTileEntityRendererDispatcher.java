@@ -12,24 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.WeakHashMap;
 
-/**
- * Add profiler sections for block entity rendering
- * Port of embeddium-extra's profiler.MixinBlockEntityRenderDispatcher
- *
- * In 1.20.1: BlockEntityRenderDispatcher.render()
- * In 1.12.2: TileEntityRendererDispatcher.render()
- *
- * This helps identify rendering performance bottlenecks in F3 profiler
- */
 @Mixin(TileEntityRendererDispatcher.class)
 public class MixinTileEntityRendererDispatcher {
 
     @Unique
     private static final WeakHashMap<Class<?>, String> celeritasExtra$names = new WeakHashMap<>();
 
-    /**
-     * Push profiler section before rendering block entity
-     */
     @Inject(
         method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
         at = @At("HEAD")
@@ -47,9 +35,6 @@ public class MixinTileEntityRendererDispatcher {
         }
     }
 
-    /**
-     * Pop profiler section after rendering block entity
-     */
     @Inject(
         method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
         at = @At("TAIL")

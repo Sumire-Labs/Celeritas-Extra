@@ -13,10 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * Controls living entity rendering and name tags
- * In 1.12.2, this is RenderLivingBase
- */
 @Mixin(RenderLivingBase.class)
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {
 
@@ -24,10 +20,6 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         super(renderManager);
     }
 
-    /**
-     * Control armor stand rendering
-     * Armor stands are already handled by MixinRenderArmorStand, but this adds label support
-     */
     @Inject(
         method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V",
         at = @At("HEAD"),
@@ -36,16 +28,12 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     private void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (entity instanceof EntityArmorStand && !CeleritasExtraClientMod.options().renderSettings.armorStands) {
             ci.cancel();
-            // Still render name tag if it has one
             if (this.canRenderName(entity)) {
                 this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 64);
             }
         }
     }
 
-    /**
-     * Control player name tags
-     */
     @Inject(
         method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z",
         at = @At("HEAD"),

@@ -13,10 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Implements instant sneak feature (no camera transition when sneaking)
- * In 1.12.2, camera height is handled in EntityRenderer
- */
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
 
@@ -24,10 +20,6 @@ public class MixinEntityRenderer {
     @Final
     private Minecraft mc;
 
-    /**
-     * Modify the eye height to remove the interpolation when sneaking
-     * This makes the camera snap instantly to sneak height
-     */
     @ModifyVariable(
         method = "orientCamera",
         at = @At(value = "STORE", ordinal = 0),

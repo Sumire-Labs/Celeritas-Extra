@@ -11,16 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Reduce F3 debug screen update frequency
- * Port of embeddium-extra's steady_debug_hud.MixinDebugHud
- *
- * In 1.20.1: Forge's ForgeGui$ForgeDebugScreenOverlay
- * In 1.12.2: Forge's GuiIngameForge (debug rendering is built into GuiIngame)
- *
- * This reduces CPU usage by caching debug strings and only updating them periodically
- * Default refresh interval is 20 ticks (1 second)
- */
 @Mixin(targets = "net.minecraftforge.client.GuiIngameForge")
 public abstract class MixinForgeGuiDebugOverlay {
 
