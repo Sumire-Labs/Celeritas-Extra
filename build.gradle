@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'com.gradleup.shadow' version '9.0.2'
+    id 'com.gradleup.shadow' version '9.2.2'
     id 'xyz.wagyourtail.unimined' version '1.4.5-kappa'
     id 'net.kyori.blossom'  version '2.1.0'
 }
@@ -105,6 +105,7 @@ unimined.minecraft {
 
     mods {
         remap(configurations.modCompileOnly)
+        remap(configurations.modRuntimeOnly)
     }
 }
 
