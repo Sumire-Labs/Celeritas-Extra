@@ -3,7 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'com.gradleup.shadow' version '9.0.2'
-    id 'xyz.wagyourtail.unimined' version '1.4.2-kappa'
+    id 'xyz.wagyourtail.unimined' version '1.4.5-kappa'
     id 'net.kyori.blossom'  version '2.1.0'
 }
 
@@ -66,7 +66,7 @@ unimined.minecraft {
         if (propertyBool('use_access_transformer')) {
             accessTransformer "${rootProject.projectDir}/src/main/resources/" +  propertyString('access_transformer_locations')
         }
-        loader "0.3.20-alpha"
+        loader "0.3.24-alpha"
         runs.auth.username = minecraft_username
         runs.all {
             var map = getSystemProperties()
