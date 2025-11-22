@@ -1,14 +1,14 @@
-# Celeritas Extra - Thai Translation
-# Based on Embeddium Extra translations
+# Celeritas Extra - การแปลภาษาไทย
+# อ้างอิงจากการแปลของ Embeddium Extra
 
-# Option Pages
+# หน้าตัวเลือก
 celeritasextra.option.page.animations=ภาพเคลื่อนไหว
 celeritasextra.option.page.particles=อนุภาค
 celeritasextra.option.page.details=รายละเอียด
 celeritasextra.option.page.render=การแสดงผล
 celeritasextra.option.page.extra=เพิ่มเติม
 
-# Animation Options
+# ตัวเลือกภาพเคลื่อนไหว
 celeritasextra.option.animations.all=ภาพเคลื่อนไหวทั้งหมด
 celeritasextra.option.animations.all.tooltip=หากเปิดใช้งาน ภาพเคลื่อนไหวจะถูกประมวลผล
 celeritasextra.option.animations.water=น้ำ
@@ -22,7 +22,7 @@ celeritasextra.option.animations.portal.tooltip=หากเปิดใช้�
 celeritasextra.option.animations.block=ภาพเคลื่อนไหวของบล็อก
 celeritasextra.option.animations.block.tooltip=หากเปิดใช้งาน ภาพเคลื่อนไหวของบล็อกจะถูกประมวลผล
 
-# Particle Options
+# ตัวเลือกอนุภาค
 celeritasextra.option.particles.all=อนุภาคทั้งหมด
 celeritasextra.option.particles.all.tooltip=หากเปิดใช้งาน อนุภาคจะถูกประมวลผล
 celeritasextra.option.particles.rain_splash=ละอองฝน
@@ -33,7 +33,7 @@ celeritasextra.option.particles.block_breaking=กำลังขุดบล็
 celeritasextra.option.particles.block_breaking.tooltip=หากเปิดใช้งาน อนุภาคขณะขุดบล็อกจะถูกประมวลผล
 celeritasextra.option.particles.other.tooltip=หากเปิดใช้งาน อนุภาค %s จะถูกแสดงผล
 
-# Detail Options
+# ตัวเลือกรายละเอียด
 celeritasextra.option.details.sky=ท้องฟ้า
 celeritasextra.option.details.sky.tooltip=หากเปิดใช้งาน ท้องฟ้าจะถูกแสดงผล
 celeritasextra.option.details.stars=ดวงดาว
@@ -45,7 +45,7 @@ celeritasextra.option.details.rain_snow.tooltip=หากเปิดใช้�
 celeritasextra.option.details.biome_colors=สีตามไบโอม
 celeritasextra.option.details.biome_colors.tooltip=หากเปิดใช้งาน จะใช้สีเฉพาะของไบโอมสำหรับหญ้า น้ำ และใบไม้ หากปิดใช้งาน จะใช้สีเริ่มต้น
 
-# Render Options
+# ตัวเลือกการแสดงผล
 celeritasextra.option.render.fog=หมอก
 celeritasextra.option.render.fog.tooltip=หากเปิดใช้งาน หมอกจะถูกแสดงผล
 celeritasextra.option.render.fog_start=ระยะเริ่มหมอก
@@ -73,7 +73,7 @@ celeritasextra.option.render.player_name_tag.tooltip=หากเปิดใช
 celeritasextra.option.render.item_frame_name_tag=ป้ายชื่อกรอบไอเทม
 celeritasextra.option.render.item_frame_name_tag.tooltip=หากเปิดใช้งาน ป้ายชื่อกรอบไอเทมจะมองเห็นได้
 
-# Extra Options
+# ตัวเลือกเพิ่มเติม
 celeritasextra.option.extra.fps=แสดง FPS
 celeritasextra.option.extra.fps.tooltip=แสดง FPS ปัจจุบันของเกมบนหน้าจอ
 celeritasextra.option.extra.coords=แสดงพิกัด
@@ -87,7 +87,7 @@ celeritasextra.option.extra.steady_debug_hud.tooltip=หากเปิดใช
 celeritasextra.option.extra.steady_debug_hud_refresh=ช่วงเวลาอัปเดต HUD F3
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=ควบคุมจำนวน tick ระหว่างการอัปเดตหน้าจอ Debug F3 ค่าสูง = อัปเดตน้อยลง = ประสิทธิภาพดีขึ้น ค่าเริ่มต้นคือ 20 tick (1 วินาที)
 
-# Option Groups
+# กลุ่มตัวเลือก
 celeritasextra.option.group.general=ทั่วไป
 celeritasextra.option.group.textures=พื้นผิว
 celeritasextra.option.group.effects=เอฟเฟกต์
