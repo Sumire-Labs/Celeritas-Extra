@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# Copyright © 2015-2021 the original authors.
+# Copyright © 2015 the original authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -114,9 +114,6 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
-CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
-
-
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
@@ -172,8 +169,6 @@ fi
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then
     APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
-    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
-
     JAVACMD=$( cygpath --unix "$JAVACMD" )
 
     # Now convert the arguments - kludge to limit ourselves to /bin/sh
@@ -212,8 +207,7 @@ DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
-        -classpath "$CLASSPATH" \
-        org.gradle.wrapper.GradleWrapperMain \
+        -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
         "$@"
 
 # Stop when "xargs" is not available.
