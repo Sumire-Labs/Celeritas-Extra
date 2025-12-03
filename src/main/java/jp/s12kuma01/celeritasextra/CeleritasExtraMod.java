@@ -13,7 +13,7 @@ import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 /**
  * Celeritas Extra - A port of Embeddium Extra to Celeritas 1.12.2
  *
- * @author Karnatour (port), FlashyReese (original)
+ * @author FlashyReese (original)
  */
 @Mod(modid = CeleritasExtraMod.MOD_ID, name = CeleritasExtraMod.MOD_NAME, version = CeleritasExtraMod.VERSION,
      clientSideOnly = true, acceptableRemoteVersions = "*")
