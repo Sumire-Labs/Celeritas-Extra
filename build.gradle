@@ -70,7 +70,7 @@ unimined.minecraft {
         runs.auth.username = minecraft_username
         runs.all {
             var map = getSystemProperties()
-            map.put("cleanroom.dev.mixin", "${mod_id}.default.mixin.json,${mod_id}.mod.mixin.json")
+            map.put("crl.dev.mixin", "${mod_id}.default.mixin.json,${mod_id}.mod.mixin.json")
             def extraArgs = propertyString('extra_jvm_args')
             if (extraArgs != null && !extraArgs.trim().isEmpty()) {
                 jvmArgs += extraArgs.split("\\s+").toList()
