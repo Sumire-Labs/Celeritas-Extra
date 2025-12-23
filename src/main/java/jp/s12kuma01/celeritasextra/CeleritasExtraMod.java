@@ -10,11 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 
-/**
- * Celeritas Extra - A port of Embeddium Extra to Celeritas 1.12.2
- *
- * @author FlashyReese (original)
- */
 @Mod(modid = CeleritasExtraMod.MOD_ID, name = CeleritasExtraMod.MOD_NAME, version = CeleritasExtraMod.VERSION,
      clientSideOnly = true, acceptableRemoteVersions = "*")
 public class CeleritasExtraMod {
