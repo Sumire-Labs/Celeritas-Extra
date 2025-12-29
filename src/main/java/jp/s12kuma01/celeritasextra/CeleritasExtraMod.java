@@ -10,14 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 
-@Mod(modid = CeleritasExtraMod.MOD_ID, name = CeleritasExtraMod.MOD_NAME, version = CeleritasExtraMod.VERSION,
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
      clientSideOnly = true, acceptableRemoteVersions = "*")
 public class CeleritasExtraMod {
-    public static final String MOD_ID = "@@MOD_ID@@";
-    public static final String MOD_NAME = "@@MOD_NAME@@";
-    public static final String VERSION = "@@MOD_VERSION@@";
 
-    public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
+    public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_NAME);
 
     @Mod.Instance
     public static CeleritasExtraMod INSTANCE;
