@@ -85,7 +85,7 @@ public class CeleritasExtraGameOptions {
         public boolean rainSplash = true;
         public boolean blockBreak = true;
         public boolean blockBreaking = true;
-        public java.util.Map<String, Boolean> otherMap = new java.util.HashMap<>();
+
     }
 
     public static class DetailSettings {
