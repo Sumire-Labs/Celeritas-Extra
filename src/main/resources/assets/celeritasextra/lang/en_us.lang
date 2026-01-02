@@ -80,8 +80,7 @@ celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
 celeritasextra.option.extra.reduced_motion=Reduced Motion
 celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
-celeritasextra.option.extra.instant_sneak=Instant Sneak
-celeritasextra.option.extra.instant_sneak.tooltip=If enabled, the camera will not lerp upon sneaking.
+
 celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
