@@ -119,7 +119,7 @@ public class CeleritasExtraGameOptions {
         public boolean showFps = false;
         public boolean showCoords = false;
         public boolean reducedMotion = false;
-        public boolean instantSneak = false;
+
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
         public int fpsOverlayColor = 0xFFFFFF;

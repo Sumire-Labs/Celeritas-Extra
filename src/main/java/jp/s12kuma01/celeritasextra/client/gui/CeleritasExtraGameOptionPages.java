@@ -348,14 +348,7 @@ public class CeleritasExtraGameOptionPages {
                                    opts -> opts.extraSettings.reducedMotion)
                         .build()
                 )
-                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.instant_sneak")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.instant_sneak.tooltip")))
-                        .setControl(TickBoxControl::new)
-                        .setBinding((opts, value) -> opts.extraSettings.instantSneak = value,
-                                   opts -> opts.extraSettings.instantSneak)
-                        .build()
-                )
+
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud.tooltip")))
