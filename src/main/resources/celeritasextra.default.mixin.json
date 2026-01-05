@@ -4,8 +4,7 @@
   "package": "jp.s12kuma01.celeritasextra.mixin",
   "compatibilityLevel": "JAVA_8",
   "target": "@env(DEFAULT)",
-  "mixins": [
-  ],
+  "mixins": [],
   "minVersion": "0.8.7",
   "setSourceFile": true,
   "server": [],
@@ -33,7 +32,6 @@
     "biome_colors.MixinBiomeColorHelper",
     "profiler.MixinTileEntityRendererDispatcher",
     "profiler.MixinRenderManager",
-    "steady_debug_hud.MixinForgeGuiDebugOverlay",
-    "instant_sneak.MixinEntityRenderer"
+    "steady_debug_hud.MixinForgeGuiDebugOverlay"
   ]
 }
