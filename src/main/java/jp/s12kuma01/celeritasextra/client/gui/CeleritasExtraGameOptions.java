@@ -85,7 +85,7 @@ public class CeleritasExtraGameOptions {
     public enum CullingPreset {
         FAST("celeritasextra.option.leaf_culling.preset.fast", 1, 0.0),
         BALANCED("celeritasextra.option.leaf_culling.preset.balanced", 2, 0.2),
-        FANCY("celeritasextra.option.leaf_culling.preset.fancy", 3, 0.1),
+        QUALITY("celeritasextra.option.leaf_culling.preset.quality", 3, 0.1),
         CUSTOM("celeritasextra.option.leaf_culling.preset.custom", 2, 0.2);
 
         private final String translationKey;

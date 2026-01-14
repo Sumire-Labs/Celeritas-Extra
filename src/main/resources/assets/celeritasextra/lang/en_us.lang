@@ -198,14 +198,13 @@ celeritasextra.option.group.environment=Environment
 celeritasextra.option.group.overlays=Overlays
 
 # Leaf Culling Options
-celeritasextra.option.page.leaf_culling=Leaf Culling
 celeritasextra.option.leaf_culling.enabled=Leaf Culling
 celeritasextra.option.leaf_culling.enabled.tooltip=Enable or disable leaf culling. When disabled, all leaf faces will be rendered (vanilla behavior).
 celeritasextra.option.leaf_culling.preset=Culling Mode
-celeritasextra.option.leaf_culling.preset.tooltip=Select a preset mode: Fast (max performance), Balanced (default), Fancy (best quality), or Custom (manual settings).
+celeritasextra.option.leaf_culling.preset.tooltip=Select a preset mode: Fast (max performance), Balanced (default), Quality (best quality), or Custom (manual settings).
 celeritasextra.option.leaf_culling.preset.fast=Fast
 celeritasextra.option.leaf_culling.preset.balanced=Balanced
-celeritasextra.option.leaf_culling.preset.fancy=Fancy
+celeritasextra.option.leaf_culling.preset.quality=Quality
 celeritasextra.option.leaf_culling.preset.custom=Custom
 celeritasextra.option.leaf_culling.depth=Culling Depth
 celeritasextra.option.leaf_culling.depth.tooltip=Maximum depth of visible leaf layers. Higher values show more leaves. Only active when mode is Custom.

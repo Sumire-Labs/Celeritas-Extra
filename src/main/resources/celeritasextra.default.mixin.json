@@ -33,7 +33,6 @@
     "profiler.MixinTileEntityRendererDispatcher",
     "profiler.MixinRenderManager",
     "steady_debug_hud.MixinForgeGuiDebugOverlay",
-    "leaf_culling.MixinBlock",
     "leaf_culling.MixinBlockLeaves"
   ]
 }

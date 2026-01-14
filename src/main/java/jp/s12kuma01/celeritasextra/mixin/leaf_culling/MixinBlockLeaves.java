@@ -9,20 +9,23 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Mixin to implement leaf culling for BlockLeaves
+ * Directly injects into BlockLeaves.shouldSideBeRendered to avoid Block class loading issues
  */
 @Mixin(BlockLeaves.class)
-public class MixinBlockLeaves implements ICullable {
+public class MixinBlockLeaves {
 
-    @Override
-    @Unique
-    public boolean celeritasextra$shouldCullSide(IBlockState state, IBlockAccess access,
-                                                  BlockPos pos, EnumFacing facing) {
+    @Inject(method = "shouldSideBeRendered", at = @At("HEAD"), cancellable = true)
+    private void celeritasextra$onShouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess,
+                                                        BlockPos pos, EnumFacing side,
+                                                        CallbackInfoReturnable<Boolean> cir) {
         if (!CeleritasExtraClientMod.options().leafCullingSettings.enabled) {
-            return false; // Culling disabled, render all sides
+            return; // Culling disabled, let vanilla handle it
         }
 
         // Use different depth based on graphics settings
@@ -32,10 +35,14 @@ public class MixinBlockLeaves implements ICullable {
             ? CeleritasExtraClientMod.options().leafCullingSettings.getEffectiveDepth()
             : 1;
 
-        return LeafCullingHelper.shouldCullSide(
+        boolean shouldCull = LeafCullingHelper.shouldCullSide(
             effectiveDepth,
-            pos, access, facing,
+            pos, blockAccess, side,
             block -> block instanceof BlockLeaves
         );
+
+        if (shouldCull) {
+            cir.setReturnValue(false);
+        }
     }
 }

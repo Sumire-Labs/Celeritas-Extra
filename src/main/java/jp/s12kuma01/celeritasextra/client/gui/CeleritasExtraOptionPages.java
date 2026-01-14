@@ -11,5 +11,4 @@ public class CeleritasExtraOptionPages {
     public static final OptionIdentifier<Void> DETAILS = OptionIdentifier.create("celeritasextra", "details");
     public static final OptionIdentifier<Void> RENDER = OptionIdentifier.create("celeritasextra", "render");
     public static final OptionIdentifier<Void> EXTRA = OptionIdentifier.create("celeritasextra", "extra");
-    public static final OptionIdentifier<Void> LEAF_CULLING = OptionIdentifier.create("celeritasextra", "leaf_culling");
 }

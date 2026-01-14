@@ -198,14 +198,13 @@ celeritasextra.option.group.environment=環境
 celeritasextra.option.group.overlays=オーバーレイ
 
 # 葉のカリングオプション
-celeritasextra.option.page.leaf_culling=葉のカリング
 celeritasextra.option.leaf_culling.enabled=葉のカリング
 celeritasextra.option.leaf_culling.enabled.tooltip=葉のカリングを有効化/無効化します。無効にすると、すべての葉の面がレンダリングされます(バニラの動作)。
 celeritasextra.option.leaf_culling.preset=カリングモード
 celeritasextra.option.leaf_culling.preset.tooltip=プリセットモードを選択: 高速(最高パフォーマンス)、バランス(デフォルト)、高画質(最高品質)、カスタム(手動設定)。
 celeritasextra.option.leaf_culling.preset.fast=高速
 celeritasextra.option.leaf_culling.preset.balanced=バランス
-celeritasextra.option.leaf_culling.preset.fancy=高画質
+celeritasextra.option.leaf_culling.preset.quality=高画質
 celeritasextra.option.leaf_culling.preset.custom=カスタム
 celeritasextra.option.leaf_culling.depth=カリング深度
 celeritasextra.option.leaf_culling.depth.tooltip=表示される葉の層の最大深度。高いほど多くの葉が表示されます。カスタムモード選択時のみ有効。
