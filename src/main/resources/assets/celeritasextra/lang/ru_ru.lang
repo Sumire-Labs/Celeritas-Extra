@@ -77,7 +77,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=Если включен
 # Extra Options
 celeritasextra.option.extra.fps=Отоброжать FPS
 celeritasextra.option.extra.fps.tooltip=Отображает текущее значение FPS.
-celeritasextra.option.extra.fps_extended=Расширенная статистика FPS
+celeritasextra.option.extra.fps_extended=Расширенное отображение FPS
 celeritasextra.option.extra.fps_extended.tooltip=Если включено, показывает максимальный, средний и минимальный FPS в дополнение к текущему.
 celeritasextra.option.extra.coords=Отоброжать координаты
 celeritasextra.option.extra.coords.tooltip=Отображает координаты игрока.

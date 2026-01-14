@@ -75,7 +75,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=有効にした場合�
 # 追加オプション
 celeritasextra.option.extra.fps=FPSの表示
 celeritasextra.option.extra.fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
-celeritasextra.option.extra.fps_extended=拡張FPS統計
+celeritasextra.option.extra.fps_extended=FPSの拡張表示
 celeritasextra.option.extra.fps_extended.tooltip=有効にした場合、現在のFPSに加えて最高、平均、最低FPSを表示します。
 celeritasextra.option.extra.coords=座標の表示
 celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。

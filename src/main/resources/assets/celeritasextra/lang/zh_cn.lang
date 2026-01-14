@@ -76,7 +76,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=若启用，物品展�
 # 额外选项
 celeritasextra.option.extra.fps=显示 FPS
 celeritasextra.option.extra.fps.tooltip=在界面上显示当前游戏帧率（FPS）。
-celeritasextra.option.extra.fps_extended=扩展 FPS 统计
+celeritasextra.option.extra.fps_extended=FPS 扩展显示
 celeritasextra.option.extra.fps_extended.tooltip=若启用，除当前 FPS 外，还会显示最高、平均和最低 FPS。
 celeritasextra.option.extra.coords=显示坐标
 celeritasextra.option.extra.coords.tooltip=在界面上显示玩家坐标。

@@ -76,7 +76,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame 
 # Extra Options
 celeritasextra.option.extra.fps=Show FPS
 celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
-celeritasextra.option.extra.fps_extended=Extended FPS Stats
+celeritasextra.option.extra.fps_extended=FPS Extended Display
 celeritasextra.option.extra.fps_extended.tooltip=If enabled, shows highest, average, and lowest FPS in addition to current FPS.
 celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
