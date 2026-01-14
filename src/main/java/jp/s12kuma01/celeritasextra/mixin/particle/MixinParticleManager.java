@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.mixin.particle;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -9,6 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Controls particle rendering and spawning
@@ -39,7 +41,16 @@ public class MixinParticleManager {
         }
     }
 
-    // NOTE: Individual particle type control is currently disabled due to mixin signature issues
-    // The varargs parameter conflicts with the Callback parameter ordering in Mixin
-    // This feature may be re-implemented in the future using a different approach
+    /**
+     * Control individual particle types by their EnumParticleTypes ID
+     * This intercepts the main particle spawning method
+     */
+    @Inject(method = "spawnEffectParticle", at = @At("HEAD"), cancellable = true)
+    public void spawnEffectParticle(int particleId, double x, double y, double z,
+                                     double xSpeed, double ySpeed, double zSpeed,
+                                     int[] parameters, CallbackInfoReturnable<Particle> cir) {
+        if (!CeleritasExtraClientMod.options().particleSettings.isParticleEnabled(particleId)) {
+            cir.setReturnValue(null);
+        }
+    }
 }

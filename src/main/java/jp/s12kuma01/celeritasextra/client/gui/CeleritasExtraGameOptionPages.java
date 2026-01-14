@@ -111,7 +111,7 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // Individual particle controls
+        // Basic particle controls
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.rain_splash")))
@@ -139,8 +139,261 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // NOTE: Individual particle type control is currently disabled due to mixin implementation issues
-        // Only basic particle controls (rain splash, block break, block breaking) are available
+        // Individual particle type controls - Combat & Effects
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.explosion")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.explosion.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.explosion = value,
+                                   opts -> opts.particleSettings.explosion)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.crit")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.crit.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.crit = value,
+                                   opts -> opts.particleSettings.crit)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.damage_indicator")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.damage_indicator.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.damageIndicator = value,
+                                   opts -> opts.particleSettings.damageIndicator)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.sweep_attack")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.sweep_attack.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.sweepAttack = value,
+                                   opts -> opts.particleSettings.sweepAttack)
+                        .build()
+                )
+                .build());
+
+        // Individual particle type controls - Magic & Spells
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.spell")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.spell.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.spell = value,
+                                   opts -> opts.particleSettings.spell)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.enchantment_table")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.enchantment_table.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.enchantmentTable = value,
+                                   opts -> opts.particleSettings.enchantmentTable)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.portal")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.portal.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.portal = value,
+                                   opts -> opts.particleSettings.portal)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.end_rod")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.end_rod.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.endRod = value,
+                                   opts -> opts.particleSettings.endRod)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.totem")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.totem.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.totem = value,
+                                   opts -> opts.particleSettings.totem)
+                        .build()
+                )
+                .build());
+
+        // Individual particle type controls - Environment
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.water")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.water.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.water = value,
+                                   opts -> opts.particleSettings.water)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.drip")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.drip.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.drip = value,
+                                   opts -> opts.particleSettings.drip)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.smoke")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.smoke.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.smoke = value,
+                                   opts -> opts.particleSettings.smoke)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.flame")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.flame.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.flame = value,
+                                   opts -> opts.particleSettings.flame)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.cloud")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.cloud.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.cloud = value,
+                                   opts -> opts.particleSettings.cloud)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.falling_dust")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.falling_dust.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.fallingDust = value,
+                                   opts -> opts.particleSettings.fallingDust)
+                        .build()
+                )
+                .build());
+
+        // Individual particle type controls - Decorative
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.fireworks")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.fireworks.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.fireworks = value,
+                                   opts -> opts.particleSettings.fireworks)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.note")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.note.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.note = value,
+                                   opts -> opts.particleSettings.note)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.heart")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.heart.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.heart = value,
+                                   opts -> opts.particleSettings.heart)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.villager")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.villager.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.villager = value,
+                                   opts -> opts.particleSettings.villager)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.redstone")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.redstone.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.redstone = value,
+                                   opts -> opts.particleSettings.redstone)
+                        .build()
+                )
+                .build());
+
+        // Individual particle type controls - Miscellaneous
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.suspended")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.suspended.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.suspended = value,
+                                   opts -> opts.particleSettings.suspended)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.town_aura")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.town_aura.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.townAura = value,
+                                   opts -> opts.particleSettings.townAura)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.snowball")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.snowball.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.snowball = value,
+                                   opts -> opts.particleSettings.snowball)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.slime")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.slime.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.slime = value,
+                                   opts -> opts.particleSettings.slime)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.item_crack")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.item_crack.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.itemCrack = value,
+                                   opts -> opts.particleSettings.itemCrack)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.barrier")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.barrier.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.barrier = value,
+                                   opts -> opts.particleSettings.barrier)
+                        .build()
+                )
+                .build());
+
+        // Individual particle type controls - Mobs
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.dragon_breath")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.dragon_breath.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.dragonBreath = value,
+                                   opts -> opts.particleSettings.dragonBreath)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.mob_appearance")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.mob_appearance.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.mobAppearance = value,
+                                   opts -> opts.particleSettings.mobAppearance)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.particles.spit")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.spit.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.particleSettings.spit = value,
+                                   opts -> opts.particleSettings.spit)
+                        .build()
+                )
+                .build());
 
         return new OptionPage(CeleritasExtraOptionPages.PARTICLE, TextComponent.literal(I18n.format("celeritasextra.option.page.particles")), ImmutableList.copyOf(groups));
     }

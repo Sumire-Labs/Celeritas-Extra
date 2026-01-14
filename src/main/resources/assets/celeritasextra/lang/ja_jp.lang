@@ -32,6 +32,76 @@ celeritasextra.option.particles.block_breaking=ブロックが採掘される
 celeritasextra.option.particles.block_breaking.tooltip=有効にした場合、ブロックが破壊されているときのパーティクルの処理は実行されます。
 celeritasextra.option.particles.other.tooltip=有効にした場合、%sパーティクルは描画されます。
 
+# 個別パーティクルタイプオプション - 戦闘・エフェクト
+celeritasextra.option.particles.explosion=爆発
+celeritasextra.option.particles.explosion.tooltip=有効にした場合、爆発パーティクルは描画されます。
+celeritasextra.option.particles.crit=クリティカルヒット
+celeritasextra.option.particles.crit.tooltip=有効にした場合、クリティカルヒットのパーティクルは描画されます。
+celeritasextra.option.particles.damage_indicator=ダメージ表示
+celeritasextra.option.particles.damage_indicator.tooltip=有効にした場合、ダメージ表示パーティクルは描画されます。
+celeritasextra.option.particles.sweep_attack=スイープアタック
+celeritasextra.option.particles.sweep_attack.tooltip=有効にした場合、スイープアタックのパーティクルは描画されます。
+
+# 個別パーティクルタイプオプション - 魔法・呪文
+celeritasextra.option.particles.spell=呪文
+celeritasextra.option.particles.spell.tooltip=有効にした場合、呪文パーティクル（ポーション効果）は描画されます。
+celeritasextra.option.particles.enchantment_table=エンチャントテーブル
+celeritasextra.option.particles.enchantment_table.tooltip=有効にした場合、エンチャントテーブルのパーティクルは描画されます。
+celeritasextra.option.particles.portal=ポータル
+celeritasextra.option.particles.portal.tooltip=有効にした場合、ポータルパーティクルは描画されます。
+celeritasextra.option.particles.end_rod=エンドロッド
+celeritasextra.option.particles.end_rod.tooltip=有効にした場合、エンドロッドのパーティクルは描画されます。
+celeritasextra.option.particles.totem=不死のトーテム
+celeritasextra.option.particles.totem.tooltip=有効にした場合、不死のトーテムのパーティクルは描画されます。
+
+# 個別パーティクルタイプオプション - 環境
+celeritasextra.option.particles.water=水
+celeritasextra.option.particles.water.tooltip=有効にした場合、水のパーティクル（泡、しぶき、波）は描画されます。
+celeritasextra.option.particles.drip=滴る液体
+celeritasextra.option.particles.drip.tooltip=有効にした場合、滴る水と溶岩のパーティクルは描画されます。
+celeritasextra.option.particles.smoke=煙
+celeritasextra.option.particles.smoke.tooltip=有効にした場合、煙のパーティクルは描画されます。
+celeritasextra.option.particles.flame=炎
+celeritasextra.option.particles.flame.tooltip=有効にした場合、炎と溶岩のパーティクルは描画されます。
+celeritasextra.option.particles.cloud=雲
+celeritasextra.option.particles.cloud.tooltip=有効にした場合、雲のパーティクルは描画されます。
+celeritasextra.option.particles.falling_dust=落下する粉塵
+celeritasextra.option.particles.falling_dust.tooltip=有効にした場合、落下する粉塵のパーティクル（落下する砂など）は描画されます。
+
+# 個別パーティクルタイプオプション - 装飾
+celeritasextra.option.particles.fireworks=花火
+celeritasextra.option.particles.fireworks.tooltip=有効にした場合、花火のパーティクルは描画されます。
+celeritasextra.option.particles.note=音符ブロック
+celeritasextra.option.particles.note.tooltip=有効にした場合、音符ブロックのパーティクルは描画されます。
+celeritasextra.option.particles.heart=ハート
+celeritasextra.option.particles.heart.tooltip=有効にした場合、ハートパーティクル（繁殖、回復）は描画されます。
+celeritasextra.option.particles.villager=村人
+celeritasextra.option.particles.villager.tooltip=有効にした場合、村人のパーティクル（幸せ/怒り）は描画されます。
+celeritasextra.option.particles.redstone=レッドストーン
+celeritasextra.option.particles.redstone.tooltip=有効にした場合、レッドストーンのパーティクルは描画されます。
+
+# 個別パーティクルタイプオプション - その他
+celeritasextra.option.particles.suspended=浮遊
+celeritasextra.option.particles.suspended.tooltip=有効にした場合、水中の浮遊パーティクルは描画されます。
+celeritasextra.option.particles.town_aura=タウンオーラ
+celeritasextra.option.particles.town_aura.tooltip=有効にした場合、菌糸のパーティクルは描画されます。
+celeritasextra.option.particles.snowball=雪玉
+celeritasextra.option.particles.snowball.tooltip=有効にした場合、雪玉のパーティクルは描画されます。
+celeritasextra.option.particles.slime=スライム
+celeritasextra.option.particles.slime.tooltip=有効にした場合、スライムのパーティクルは描画されます。
+celeritasextra.option.particles.item_crack=アイテムの破片
+celeritasextra.option.particles.item_crack.tooltip=有効にした場合、アイテムが壊れたときのパーティクルは描画されます。
+celeritasextra.option.particles.barrier=バリア
+celeritasextra.option.particles.barrier.tooltip=有効にした場合、バリアブロックのパーティクルは描画されます。
+
+# 個別パーティクルタイプオプション - モブ
+celeritasextra.option.particles.dragon_breath=ドラゴンブレス
+celeritasextra.option.particles.dragon_breath.tooltip=有効にした場合、ドラゴンブレスのパーティクルは描画されます。
+celeritasextra.option.particles.mob_appearance=エルダーガーディアン
+celeritasextra.option.particles.mob_appearance.tooltip=有効にした場合、エルダーガーディアンのモブ出現エフェクトは描画されます。
+celeritasextra.option.particles.spit=ラマのつば
+celeritasextra.option.particles.spit.tooltip=有効にした場合、ラマのつばのパーティクルは描画されます。
+
 # 詳細オプション
 celeritasextra.option.details.sky=空
 celeritasextra.option.details.sky.tooltip=有効にした場合、空は描画されます。

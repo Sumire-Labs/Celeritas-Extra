@@ -33,6 +33,76 @@ celeritasextra.option.particles.block_breaking=Block Breaking
 celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
 celeritasextra.option.particles.other.tooltip=If enabled, %s particles are rendered.
 
+# Individual Particle Type Options - Combat & Effects
+celeritasextra.option.particles.explosion=Explosions
+celeritasextra.option.particles.explosion.tooltip=If enabled, explosion particles are rendered.
+celeritasextra.option.particles.crit=Critical Hits
+celeritasextra.option.particles.crit.tooltip=If enabled, critical hit particles are rendered.
+celeritasextra.option.particles.damage_indicator=Damage Indicator
+celeritasextra.option.particles.damage_indicator.tooltip=If enabled, damage indicator particles are rendered.
+celeritasextra.option.particles.sweep_attack=Sweep Attack
+celeritasextra.option.particles.sweep_attack.tooltip=If enabled, sweep attack particles are rendered.
+
+# Individual Particle Type Options - Magic & Spells
+celeritasextra.option.particles.spell=Spells
+celeritasextra.option.particles.spell.tooltip=If enabled, spell particles (potion effects) are rendered.
+celeritasextra.option.particles.enchantment_table=Enchantment Table
+celeritasextra.option.particles.enchantment_table.tooltip=If enabled, enchantment table particles are rendered.
+celeritasextra.option.particles.portal=Portal
+celeritasextra.option.particles.portal.tooltip=If enabled, portal particles are rendered.
+celeritasextra.option.particles.end_rod=End Rod
+celeritasextra.option.particles.end_rod.tooltip=If enabled, end rod particles are rendered.
+celeritasextra.option.particles.totem=Totem of Undying
+celeritasextra.option.particles.totem.tooltip=If enabled, totem of undying particles are rendered.
+
+# Individual Particle Type Options - Environment
+celeritasextra.option.particles.water=Water
+celeritasextra.option.particles.water.tooltip=If enabled, water particles (bubbles, splash, wake) are rendered.
+celeritasextra.option.particles.drip=Dripping Liquids
+celeritasextra.option.particles.drip.tooltip=If enabled, dripping water and lava particles are rendered.
+celeritasextra.option.particles.smoke=Smoke
+celeritasextra.option.particles.smoke.tooltip=If enabled, smoke particles are rendered.
+celeritasextra.option.particles.flame=Flames
+celeritasextra.option.particles.flame.tooltip=If enabled, flame and lava particles are rendered.
+celeritasextra.option.particles.cloud=Clouds
+celeritasextra.option.particles.cloud.tooltip=If enabled, cloud particles are rendered.
+celeritasextra.option.particles.falling_dust=Falling Dust
+celeritasextra.option.particles.falling_dust.tooltip=If enabled, falling dust particles (e.g., from falling sand) are rendered.
+
+# Individual Particle Type Options - Decorative
+celeritasextra.option.particles.fireworks=Fireworks
+celeritasextra.option.particles.fireworks.tooltip=If enabled, firework particles are rendered.
+celeritasextra.option.particles.note=Note Blocks
+celeritasextra.option.particles.note.tooltip=If enabled, note block particles are rendered.
+celeritasextra.option.particles.heart=Hearts
+celeritasextra.option.particles.heart.tooltip=If enabled, heart particles (breeding, healing) are rendered.
+celeritasextra.option.particles.villager=Villager
+celeritasextra.option.particles.villager.tooltip=If enabled, villager particles (happy/angry) are rendered.
+celeritasextra.option.particles.redstone=Redstone
+celeritasextra.option.particles.redstone.tooltip=If enabled, redstone particles are rendered.
+
+# Individual Particle Type Options - Miscellaneous
+celeritasextra.option.particles.suspended=Suspended
+celeritasextra.option.particles.suspended.tooltip=If enabled, underwater suspended particles are rendered.
+celeritasextra.option.particles.town_aura=Town Aura
+celeritasextra.option.particles.town_aura.tooltip=If enabled, mycelium particles are rendered.
+celeritasextra.option.particles.snowball=Snowball
+celeritasextra.option.particles.snowball.tooltip=If enabled, snowball particles are rendered.
+celeritasextra.option.particles.slime=Slime
+celeritasextra.option.particles.slime.tooltip=If enabled, slime particles are rendered.
+celeritasextra.option.particles.item_crack=Item Crack
+celeritasextra.option.particles.item_crack.tooltip=If enabled, item breaking particles are rendered.
+celeritasextra.option.particles.barrier=Barrier
+celeritasextra.option.particles.barrier.tooltip=If enabled, barrier block particles are rendered.
+
+# Individual Particle Type Options - Mobs
+celeritasextra.option.particles.dragon_breath=Dragon Breath
+celeritasextra.option.particles.dragon_breath.tooltip=If enabled, dragon breath particles are rendered.
+celeritasextra.option.particles.mob_appearance=Elder Guardian
+celeritasextra.option.particles.mob_appearance.tooltip=If enabled, elder guardian mob appearance effect is rendered.
+celeritasextra.option.particles.spit=Llama Spit
+celeritasextra.option.particles.spit.tooltip=If enabled, llama spit particles are rendered.
+
 # Detail Options
 celeritasextra.option.details.sky=Sky
 celeritasextra.option.details.sky.tooltip=If enabled, the sky will be rendered.

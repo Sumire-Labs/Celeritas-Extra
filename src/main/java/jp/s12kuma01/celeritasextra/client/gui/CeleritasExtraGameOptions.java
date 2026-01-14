@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main configuration class for Celeritas Extra
@@ -126,6 +128,110 @@ public class CeleritasExtraGameOptions {
         public boolean blockBreak = true;
         public boolean blockBreaking = true;
 
+        // Individual particle type controls
+        // These correspond to EnumParticleTypes in 1.12.2
+        public boolean explosion = true;       // EXPLOSION_NORMAL, EXPLOSION_LARGE, EXPLOSION_HUGE
+        public boolean fireworks = true;       // FIREWORKS_SPARK
+        public boolean water = true;           // WATER_BUBBLE, WATER_SPLASH, WATER_WAKE, WATER_DROP
+        public boolean suspended = true;       // SUSPENDED, SUSPENDED_DEPTH
+        public boolean crit = true;            // CRIT, CRIT_MAGIC
+        public boolean smoke = true;           // SMOKE_NORMAL, SMOKE_LARGE
+        public boolean spell = true;           // SPELL, SPELL_INSTANT, SPELL_MOB, SPELL_MOB_AMBIENT, SPELL_WITCH
+        public boolean drip = true;            // DRIP_WATER, DRIP_LAVA
+        public boolean villager = true;        // VILLAGER_ANGRY, VILLAGER_HAPPY
+        public boolean townAura = true;        // TOWN_AURA
+        public boolean note = true;            // NOTE
+        public boolean portal = true;          // PORTAL
+        public boolean enchantmentTable = true;// ENCHANTMENT_TABLE
+        public boolean flame = true;           // FLAME, LAVA
+        public boolean cloud = true;           // CLOUD
+        public boolean redstone = true;        // REDSTONE
+        public boolean snowball = true;        // SNOWBALL, SNOW_SHOVEL
+        public boolean slime = true;           // SLIME
+        public boolean heart = true;           // HEART
+        public boolean barrier = true;         // BARRIER
+        public boolean itemCrack = true;       // ITEM_CRACK
+        public boolean mobAppearance = true;   // MOB_APPEARANCE
+        public boolean dragonBreath = true;    // DRAGON_BREATH
+        public boolean endRod = true;          // END_ROD
+        public boolean damageIndicator = true; // DAMAGE_INDICATOR
+        public boolean sweepAttack = true;     // SWEEP_ATTACK
+        public boolean fallingDust = true;     // FALLING_DUST
+        public boolean totem = true;           // TOTEM
+        public boolean spit = true;            // SPIT
+
+        // Map for storing custom particle settings by name (for future extensibility)
+        public Map<String, Boolean> customParticles = new HashMap<>();
+
+        /**
+         * Check if a particle type should be rendered based on its EnumParticleTypes ID
+         */
+        public boolean isParticleEnabled(int particleId) {
+            if (!particles) return false;
+
+            switch (particleId) {
+                case 0: case 1: case 2:   // EXPLOSION_NORMAL, EXPLOSION_LARGE, EXPLOSION_HUGE
+                    return explosion;
+                case 3:                    // FIREWORKS_SPARK
+                    return fireworks;
+                case 4: case 5: case 6: case 39: // WATER_BUBBLE, WATER_SPLASH, WATER_WAKE, WATER_DROP
+                    return water;
+                case 7: case 8:            // SUSPENDED, SUSPENDED_DEPTH
+                    return suspended;
+                case 9: case 10:           // CRIT, CRIT_MAGIC
+                    return crit;
+                case 11: case 12:          // SMOKE_NORMAL, SMOKE_LARGE
+                    return smoke;
+                case 13: case 14: case 15: case 16: case 17: // SPELL variants
+                    return spell;
+                case 18: case 19:          // DRIP_WATER, DRIP_LAVA
+                    return drip;
+                case 20: case 21:          // VILLAGER_ANGRY, VILLAGER_HAPPY
+                    return villager;
+                case 22:                   // TOWN_AURA
+                    return townAura;
+                case 23:                   // NOTE
+                    return note;
+                case 24:                   // PORTAL
+                    return portal;
+                case 25:                   // ENCHANTMENT_TABLE
+                    return enchantmentTable;
+                case 26: case 27:          // FLAME, LAVA
+                    return flame;
+                case 29:                   // CLOUD
+                    return cloud;
+                case 30:                   // REDSTONE
+                    return redstone;
+                case 31: case 32:          // SNOWBALL, SNOW_SHOVEL
+                    return snowball;
+                case 33:                   // SLIME
+                    return slime;
+                case 34:                   // HEART
+                    return heart;
+                case 35:                   // BARRIER
+                    return barrier;
+                case 36:                   // ITEM_CRACK
+                    return itemCrack;
+                case 41:                   // MOB_APPEARANCE
+                    return mobAppearance;
+                case 42:                   // DRAGON_BREATH
+                    return dragonBreath;
+                case 43:                   // END_ROD
+                    return endRod;
+                case 44:                   // DAMAGE_INDICATOR
+                    return damageIndicator;
+                case 45:                   // SWEEP_ATTACK
+                    return sweepAttack;
+                case 46:                   // FALLING_DUST
+                    return fallingDust;
+                case 47:                   // TOTEM
+                    return totem;
+                case 48:                   // SPIT
+                    return spit;
+                default:
+                    return true; // Allow unknown particles by default
+            }
+        }
     }
 
     public static class DetailSettings {
