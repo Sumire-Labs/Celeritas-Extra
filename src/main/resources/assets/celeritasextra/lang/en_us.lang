@@ -1,5 +1,5 @@
 # Celeritas Extra - English Translation
-# Based on Embeddium Extra translations
+# Based on Rubidium Extra translations
 
 # Option Pages
 celeritasextra.option.page.animations=Animations
@@ -31,7 +31,7 @@ celeritasextra.option.particles.block_break=Block Break
 celeritasextra.option.particles.block_break.tooltip=If enabled, block break particles are processed.
 celeritasextra.option.particles.block_breaking=Block Breaking
 celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
-celeritasextra.option.particles.other.tooltip=If enabled, %s particles are rendered.
+celeritasextra.option.particles.other.tooltip=If enabled, %s particles are processed.
 
 # Individual Particle Type Options - Combat & Effects
 celeritasextra.option.particles.explosion=Explosions
@@ -113,13 +113,13 @@ celeritasextra.option.details.sun_moon.tooltip=If enabled, the sun and moon will
 celeritasextra.option.details.rain_snow=Rain & Snow
 celeritasextra.option.details.rain_snow.tooltip=If enabled, rain & snow are rendered.
 celeritasextra.option.details.biome_colors=Biome Colors
-celeritasextra.option.details.biome_colors.tooltip=If enabled, biome-specific colors are used for grass, water, and foliage. When disabled, default colors are used.
+celeritasextra.option.details.biome_colors.tooltip=If enabled, biome colors are changed based on the biome.
 
 # Render Options
 celeritasextra.option.render.fog=Fog
 celeritasextra.option.render.fog.tooltip=If enabled, fog will be rendered.
-celeritasextra.option.render.fog_start=Fog Start Distance
-celeritasextra.option.render.fog_start.tooltip=Controls how far away fog starts. 100% is default, lower values make fog appear closer, higher values push it further away.
+celeritasextra.option.render.fog_start=Fog Start Multiplier
+celeritasextra.option.render.fog_start.tooltip=Adjusts when the terrain fog begins to render for the player.
 celeritasextra.option.render.fog_distance=Fog Distance
 celeritasextra.option.render.fog_distance.tooltip=Controls the fog render distance in chunks. 0 = Default (uses render distance).
 celeritasextra.option.render.fog_type=Fog Type
@@ -127,7 +127,7 @@ celeritasextra.option.render.fog_type.tooltip=Controls how fog is applied. Defau
 celeritasextra.option.fog_type.default=Default
 celeritasextra.option.fog_type.off=Off
 celeritasextra.option.render.prevent_shaders=Prevent Shaders
-celeritasextra.option.render.prevent_shaders.tooltip=If enabled, prevents accidental shader activation (Super Secret Settings).
+celeritasextra.option.render.prevent_shaders.tooltip=If enabled, any type of vanilla shaders will be prevented from loading. For example, the distorted view when spectating from a spider's point of view.
 celeritasextra.option.render.clouds=Clouds
 celeritasextra.option.render.clouds.tooltip=If enabled, clouds are rendered.
 celeritasextra.option.render.cloud_height=Cloud Height
@@ -143,7 +143,7 @@ celeritasextra.option.render.pistons.tooltip=If enabled, piston extending animat
 celeritasextra.option.render.beacons=Beacon Beam
 celeritasextra.option.render.beacons.tooltip=If enabled, beacon beams are rendered.
 celeritasextra.option.render.limit_beacon_beam_height=Limit Beacon Beam Height
-celeritasextra.option.render.limit_beacon_beam_height.tooltip=If enabled, beacon beams will only render up to the world height instead of infinitely upward.
+celeritasextra.option.render.limit_beacon_beam_height.tooltip=If enabled, beacon beams will be limited to the maximum height of the world.
 celeritasextra.option.render.enchanting_books=Enchanting Table Book
 celeritasextra.option.render.enchanting_books.tooltip=If enabled, enchanting table books are rendered.
 celeritasextra.option.render.player_name_tag=Player Name Tag
@@ -154,23 +154,22 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame 
 # Extra Options
 celeritasextra.option.extra.fps=Show FPS
 celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
-celeritasextra.option.extra.fps_extended=FPS Extended Display
-celeritasextra.option.extra.fps_extended.tooltip=If enabled, shows highest, average, and lowest FPS in addition to current FPS.
+celeritasextra.option.extra.fps_extended=Show FPS Extended
+celeritasextra.option.extra.fps_extended.tooltip=Displays in additional information (max, average, and min FPS) alongside current FPS on the overlay.
 celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
 celeritasextra.option.extra.ignore_reduced_debug_info=Ignore Reduced Debug Info
 celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=If enabled, coordinates will be shown even when reduced debug info is active (e.g., on servers with reducedDebugInfo gamerule).
-celeritasextra.option.extra.overlay_corner=Overlay Position
-celeritasextra.option.extra.overlay_corner.tooltip=Choose which corner of the screen the FPS and coordinate overlay appears in.
+celeritasextra.option.extra.overlay_corner=Overlay Corner
+celeritasextra.option.extra.overlay_corner.tooltip=Determines which corner of the screen the overlay (FPS and Coordinates) will be rendered.
 celeritasextra.option.extra.text_contrast=Text Contrast
-celeritasextra.option.extra.text_contrast.tooltip=Controls how the overlay text is rendered for better readability.
+celeritasextra.option.extra.text_contrast.tooltip=Adjusts the contrast of the FPS/Coordinates counter.\n- None: Default plain white text\n- Background: Renders a background to the text like the debug menu\n- Shadow: Plain white text with shadow
 celeritasextra.option.extra.reduced_motion=Reduced Motion
 celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
-
-celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
-celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
-celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
+celeritasextra.option.extra.steady_debug_hud=Steady Debug Hud
+celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the debug hud will be refreshed at a certain amount of ticks configured by the Steady Debug Hud Refresh Rate.
+celeritasextra.option.extra.steady_debug_hud_refresh=Steady Debug Hud Refresh Interval
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Adjusts the interval of when the debug hud will be refreshed in ticks.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Top Left
@@ -184,10 +183,10 @@ celeritasextra.option.text_contrast.background=Background
 celeritasextra.option.text_contrast.shadow=Shadow
 
 # Overlay Text
-celeritasextra.overlay.fps=%d FPS
-celeritasextra.overlay.fps_extended=(High: %d, Avg: %d, Low: %d)
+celeritasextra.overlay.fps=%s FPS
+celeritasextra.overlay.fps_extended=(max. %s / avg. %s / min. %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
-celeritasextra.overlay.light_updates=Light Updates Disabled
+celeritasextra.overlay.light_updates=Light updates disabled
 
 # Option Groups
 celeritasextra.option.group.general=General

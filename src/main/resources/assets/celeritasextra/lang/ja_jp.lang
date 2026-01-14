@@ -1,4 +1,5 @@
 # Celeritas Extra - 日本語翻訳
+# Based on Rubidium Extra translations
 
 # オプションページ
 celeritasextra.option.page.animations=アニメーション
@@ -8,7 +9,7 @@ celeritasextra.option.page.render=描画
 celeritasextra.option.page.extra=追加の機能
 
 # アニメーションオプション
-celeritasextra.option.animations.all=全てのアニメーション
+celeritasextra.option.animations.all=アニメーション
 celeritasextra.option.animations.all.tooltip=有効にした場合、すべてのアニメーションの処理は実行されます。
 celeritasextra.option.animations.water=水
 celeritasextra.option.animations.water.tooltip=有効にした場合、水のアニメーションの処理は実行されます。
@@ -22,7 +23,7 @@ celeritasextra.option.animations.block=ブロックアニメーション
 celeritasextra.option.animations.block.tooltip=有効にした場合、ブロックアニメーションの処理は実行されます。
 
 # パーティクルオプション
-celeritasextra.option.particles.all=全てのパーティクル
+celeritasextra.option.particles.all=パーティクル
 celeritasextra.option.particles.all.tooltip=有効にした場合、全てのパーティクルの処理は実行されます。
 celeritasextra.option.particles.rain_splash=雨の水しぶき
 celeritasextra.option.particles.rain_splash.tooltip=有効にした場合、雨の水しぶきのパーティクルは描画されます。
@@ -30,24 +31,24 @@ celeritasextra.option.particles.block_break=ブロックが破壊される
 celeritasextra.option.particles.block_break.tooltip=有効にした場合、ブロックが破壊されたときのパーティクルの処理は実行されます。
 celeritasextra.option.particles.block_breaking=ブロックが採掘される
 celeritasextra.option.particles.block_breaking.tooltip=有効にした場合、ブロックが破壊されているときのパーティクルの処理は実行されます。
-celeritasextra.option.particles.other.tooltip=有効にした場合、%sパーティクルは描画されます。
+celeritasextra.option.particles.other.tooltip=有効にした場合、%sのパーティクルの処理は実行されます。
 
 # 個別パーティクルタイプオプション - 戦闘・エフェクト
 celeritasextra.option.particles.explosion=爆発
 celeritasextra.option.particles.explosion.tooltip=有効にした場合、爆発パーティクルは描画されます。
-celeritasextra.option.particles.crit=クリティカルヒット
+celeritasextra.option.particles.crit=クリティカル攻撃
 celeritasextra.option.particles.crit.tooltip=有効にした場合、クリティカルヒットのパーティクルは描画されます。
-celeritasextra.option.particles.damage_indicator=ダメージ表示
+celeritasextra.option.particles.damage_indicator=ダメージインジケーター
 celeritasextra.option.particles.damage_indicator.tooltip=有効にした場合、ダメージ表示パーティクルは描画されます。
-celeritasextra.option.particles.sweep_attack=スイープアタック
+celeritasextra.option.particles.sweep_attack=剣のなぎ払い攻撃
 celeritasextra.option.particles.sweep_attack.tooltip=有効にした場合、スイープアタックのパーティクルは描画されます。
 
 # 個別パーティクルタイプオプション - 魔法・呪文
-celeritasextra.option.particles.spell=呪文
+celeritasextra.option.particles.spell=ステータス効果
 celeritasextra.option.particles.spell.tooltip=有効にした場合、呪文パーティクル（ポーション効果）は描画されます。
-celeritasextra.option.particles.enchantment_table=エンチャントテーブル
+celeritasextra.option.particles.enchantment_table=エンチャント
 celeritasextra.option.particles.enchantment_table.tooltip=有効にした場合、エンチャントテーブルのパーティクルは描画されます。
-celeritasextra.option.particles.portal=ポータル
+celeritasextra.option.particles.portal=ネザーポータル
 celeritasextra.option.particles.portal.tooltip=有効にした場合、ポータルパーティクルは描画されます。
 celeritasextra.option.particles.end_rod=エンドロッド
 celeritasextra.option.particles.end_rod.tooltip=有効にした場合、エンドロッドのパーティクルは描画されます。
@@ -63,33 +64,33 @@ celeritasextra.option.particles.smoke=煙
 celeritasextra.option.particles.smoke.tooltip=有効にした場合、煙のパーティクルは描画されます。
 celeritasextra.option.particles.flame=炎
 celeritasextra.option.particles.flame.tooltip=有効にした場合、炎と溶岩のパーティクルは描画されます。
-celeritasextra.option.particles.cloud=雲
+celeritasextra.option.particles.cloud=クラウド
 celeritasextra.option.particles.cloud.tooltip=有効にした場合、雲のパーティクルは描画されます。
-celeritasextra.option.particles.falling_dust=落下する粉塵
+celeritasextra.option.particles.falling_dust=落下している塵
 celeritasextra.option.particles.falling_dust.tooltip=有効にした場合、落下する粉塵のパーティクル（落下する砂など）は描画されます。
 
 # 個別パーティクルタイプオプション - 装飾
 celeritasextra.option.particles.fireworks=花火
 celeritasextra.option.particles.fireworks.tooltip=有効にした場合、花火のパーティクルは描画されます。
-celeritasextra.option.particles.note=音符ブロック
+celeritasextra.option.particles.note=音符
 celeritasextra.option.particles.note.tooltip=有効にした場合、音符ブロックのパーティクルは描画されます。
 celeritasextra.option.particles.heart=ハート
 celeritasextra.option.particles.heart.tooltip=有効にした場合、ハートパーティクル（繁殖、回復）は描画されます。
 celeritasextra.option.particles.villager=村人
 celeritasextra.option.particles.villager.tooltip=有効にした場合、村人のパーティクル（幸せ/怒り）は描画されます。
-celeritasextra.option.particles.redstone=レッドストーン
+celeritasextra.option.particles.redstone=レッドストーンの赤い塵
 celeritasextra.option.particles.redstone.tooltip=有効にした場合、レッドストーンのパーティクルは描画されます。
 
 # 個別パーティクルタイプオプション - その他
 celeritasextra.option.particles.suspended=浮遊
 celeritasextra.option.particles.suspended.tooltip=有効にした場合、水中の浮遊パーティクルは描画されます。
-celeritasextra.option.particles.town_aura=タウンオーラ
+celeritasextra.option.particles.town_aura=菌糸
 celeritasextra.option.particles.town_aura.tooltip=有効にした場合、菌糸のパーティクルは描画されます。
 celeritasextra.option.particles.snowball=雪玉
 celeritasextra.option.particles.snowball.tooltip=有効にした場合、雪玉のパーティクルは描画されます。
 celeritasextra.option.particles.slime=スライム
 celeritasextra.option.particles.slime.tooltip=有効にした場合、スライムのパーティクルは描画されます。
-celeritasextra.option.particles.item_crack=アイテムの破片
+celeritasextra.option.particles.item_crack=アイテム
 celeritasextra.option.particles.item_crack.tooltip=有効にした場合、アイテムが壊れたときのパーティクルは描画されます。
 celeritasextra.option.particles.barrier=バリア
 celeritasextra.option.particles.barrier.tooltip=有効にした場合、バリアブロックのパーティクルは描画されます。
@@ -99,7 +100,7 @@ celeritasextra.option.particles.dragon_breath=ドラゴンブレス
 celeritasextra.option.particles.dragon_breath.tooltip=有効にした場合、ドラゴンブレスのパーティクルは描画されます。
 celeritasextra.option.particles.mob_appearance=エルダーガーディアン
 celeritasextra.option.particles.mob_appearance.tooltip=有効にした場合、エルダーガーディアンのモブ出現エフェクトは描画されます。
-celeritasextra.option.particles.spit=ラマのつば
+celeritasextra.option.particles.spit=つば
 celeritasextra.option.particles.spit.tooltip=有効にした場合、ラマのつばのパーティクルは描画されます。
 
 # 詳細オプション
@@ -111,22 +112,22 @@ celeritasextra.option.details.sun_moon=太陽と月
 celeritasextra.option.details.sun_moon.tooltip=有効にした場合、太陽と月は描画されます。
 celeritasextra.option.details.rain_snow=雨と雪
 celeritasextra.option.details.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
-celeritasextra.option.details.biome_colors=バイオームごとの色
-celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオーム固有の色が草、水、葉に使用されます。無効にした場合、デフォルトの色が使用されます。
+celeritasextra.option.details.biome_colors=バイオームの色
+celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオームの色はそれぞれのバイオームに基づいて変更されます。
 
 # レンダリングオプション
 celeritasextra.option.render.fog=霧
 celeritasextra.option.render.fog.tooltip=有効にした場合、霧は描画されます。
-celeritasextra.option.render.fog_start=霧の開始距離
-celeritasextra.option.render.fog_start.tooltip=霧が始まる距離を制御します。100%がデフォルト、低い値は霧を近くに、高い値は霧を遠くに押し出します。
+celeritasextra.option.render.fog_start=霧の開始地点の倍数
+celeritasextra.option.render.fog_start.tooltip=プレイヤーのために地形上の霧の描画の開始地点を調整します。
 celeritasextra.option.render.fog_distance=霧の距離
 celeritasextra.option.render.fog_distance.tooltip=霧の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
 celeritasextra.option.render.fog_type=霧のタイプ
 celeritasextra.option.render.fog_type.tooltip=霧の適用方法を制御します。デフォルトは通常の霧を適用し、オフは霧の描画を無効にします。
 celeritasextra.option.fog_type.default=デフォルト
 celeritasextra.option.fog_type.off=オフ
-celeritasextra.option.render.prevent_shaders=シェーダーを防止
-celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、誤ってシェーダーが有効化されることを防ぎます（スーパーシークレット設定）。
+celeritasextra.option.render.prevent_shaders=シェーダー読み込みの防止
+celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、あらゆるタイプのバニラのシェーダーがロードされなくなります。具体的には、スペクテイターモードで蜘蛛の視点に乗り移った時の視界の歪みなどです。
 celeritasextra.option.render.clouds=雲
 celeritasextra.option.render.clouds.tooltip=有効にした場合、雲は描画されます。
 celeritasextra.option.render.cloud_height=雲の高さ
@@ -154,21 +155,21 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=有効にした場合�
 celeritasextra.option.extra.fps=FPSの表示
 celeritasextra.option.extra.fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
 celeritasextra.option.extra.fps_extended=FPSの拡張表示
-celeritasextra.option.extra.fps_extended.tooltip=有効にした場合、現在のFPSに加えて最高、平均、最低FPSを表示します。
+celeritasextra.option.extra.fps_extended.tooltip=オーバーレイのFPSの表示の横に追加の情報 (最大、平均、最小のFPS) を表示します。
 celeritasextra.option.extra.coords=座標の表示
 celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。
 celeritasextra.option.extra.ignore_reduced_debug_info=デバッグ情報制限を無視
 celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=有効にした場合、デバッグ情報が制限されている場合（例：reducedDebugInfoゲームルールが有効なサーバー）でも座標が表示されます。
 celeritasextra.option.extra.overlay_corner=オーバーレイの位置
-celeritasextra.option.extra.overlay_corner.tooltip=FPSと座標のオーバーレイを表示する画面のコーナーを選択します。
-celeritasextra.option.extra.text_contrast=テキストコントラスト
-celeritasextra.option.extra.text_contrast.tooltip=オーバーレイテキストの見やすさを向上させる描画方法を制御します。
+celeritasextra.option.extra.overlay_corner.tooltip=オーバーレイ (FPSと座標) を描画する位置を指定します。
+celeritasextra.option.extra.text_contrast=文字のコントラスト
+celeritasextra.option.extra.text_contrast.tooltip=FPS/Coordinates カウンターのコントラストを調整します。\n- 無し　デフォルトの文字を描画します。\n- 背景　文字にデバッグメニューのような背景を描画します。\n- 影　　デフォルトの文字に影を描画します。
 celeritasextra.option.extra.reduced_motion=モーション軽減
 celeritasextra.option.extra.reduced_motion.tooltip=アクセシビリティのためにモーション効果を軽減します。
-celeritasextra.option.extra.steady_debug_hud=安定したF3デバッグHUD
-celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、F3デバッグ画面の更新頻度が減少し、CPU使用率が下がり、FPSが向上します。
-celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD更新間隔
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=F3デバッグ画面の更新間隔をtick単位で制御します。高い値=更新頻度が低い=パフォーマンス向上。デフォルトは20tick（1秒）です。
+celeritasextra.option.extra.steady_debug_hud=安定したデバック画面
+celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、デバック画面は安定したデバック画面の更新間隔によって設定された一定量のティックで更新されます。
+celeritasextra.option.extra.steady_debug_hud_refresh=安定したデバック画面の更新間隔
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=デバック画面の更新間隔をティックで調整します。
 
 # オーバーレイ位置オプション
 celeritasextra.option.overlay_corner.top_left=左上
@@ -177,15 +178,15 @@ celeritasextra.option.overlay_corner.bottom_left=左下
 celeritasextra.option.overlay_corner.bottom_right=右下
 
 # テキストコントラストオプション
-celeritasextra.option.text_contrast.none=なし
+celeritasextra.option.text_contrast.none=無し
 celeritasextra.option.text_contrast.background=背景
 celeritasextra.option.text_contrast.shadow=影
 
 # オーバーレイテキスト
-celeritasextra.overlay.fps=%d FPS
-celeritasextra.overlay.fps_extended=(最高: %d, 平均: %d, 最低: %d)
+celeritasextra.overlay.fps=%s FPS
+celeritasextra.overlay.fps_extended=(最大 %s / 平均 %s / 最小 %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
-celeritasextra.overlay.light_updates=ライトアップデート無効
+celeritasextra.overlay.light_updates=光の状態更新が無効
 
 # オプショングループ
 celeritasextra.option.group.general=全般
