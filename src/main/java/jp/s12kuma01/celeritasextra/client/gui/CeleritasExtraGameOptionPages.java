@@ -281,6 +281,14 @@ public class CeleritasExtraGameOptionPages {
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.limit_beacon_beam_height")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.limit_beacon_beam_height.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.renderSettings.limitBeaconBeamHeight = value,
+                                   opts -> opts.renderSettings.limitBeaconBeamHeight)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.pistons")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.pistons.tooltip")))
                         .setControl(TickBoxControl::new)
@@ -356,6 +364,15 @@ public class CeleritasExtraGameOptionPages {
                                 CeleritasExtraGameOptions.OverlayCorner.values()))
                         .setBinding((opts, value) -> opts.extraSettings.overlayCorner = value,
                                    opts -> opts.extraSettings.overlayCorner)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.TextContrast.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.text_contrast")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.text_contrast.tooltip")))
+                        .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
+                                CeleritasExtraGameOptions.TextContrast.values()))
+                        .setBinding((opts, value) -> opts.extraSettings.textContrast = value,
+                                   opts -> opts.extraSettings.textContrast)
                         .build()
                 )
                 .build());

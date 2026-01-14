@@ -38,6 +38,25 @@ public class CeleritasExtraGameOptions {
         }
     }
 
+    /**
+     * Text contrast options for overlay readability
+     */
+    public enum TextContrast {
+        NONE("celeritasextra.option.text_contrast.none"),
+        BACKGROUND("celeritasextra.option.text_contrast.background"),
+        SHADOW("celeritasextra.option.text_contrast.shadow");
+
+        private final String translationKey;
+
+        TextContrast(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
     private static final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .setPrettyPrinting()
@@ -129,6 +148,7 @@ public class CeleritasExtraGameOptions {
         public boolean paintings = true;
         public boolean pistons = true;
         public boolean beacons = true;
+        public boolean limitBeaconBeamHeight = false;
         public boolean enchantingTableBooks = true;
         public boolean playerNameTag = true;
         public boolean itemFrameNameTag = true;
@@ -142,6 +162,7 @@ public class CeleritasExtraGameOptions {
         public boolean showCoords = false;
         public boolean reducedMotion = false;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
+        public TextContrast textContrast = TextContrast.SHADOW;
 
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;

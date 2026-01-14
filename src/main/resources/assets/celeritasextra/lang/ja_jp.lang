@@ -65,6 +65,8 @@ celeritasextra.option.render.pistons=ピストン
 celeritasextra.option.render.pistons.tooltip=有効にした場合、ピストンの伸びるアニメーションは描画されます。
 celeritasextra.option.render.beacons=ビーコンのビーム
 celeritasextra.option.render.beacons.tooltip=有効にした場合、ビーコンのビームは描画されます。
+celeritasextra.option.render.limit_beacon_beam_height=ビーコンビームの高さを制限
+celeritasextra.option.render.limit_beacon_beam_height.tooltip=有効にした場合、ビーコンのビームは無限に上に伸びる代わりに、ワールドの高さまでしか描画されません。
 celeritasextra.option.render.enchanting_books=エンチャントテーブルの本
 celeritasextra.option.render.enchanting_books.tooltip=有効にした場合、エンチャントテーブルの本は描画されます。
 celeritasextra.option.render.player_name_tag=プレイヤーネームタグ
@@ -81,6 +83,8 @@ celeritasextra.option.extra.coords=座標の表示
 celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。
 celeritasextra.option.extra.overlay_corner=オーバーレイの位置
 celeritasextra.option.extra.overlay_corner.tooltip=FPSと座標のオーバーレイを表示する画面のコーナーを選択します。
+celeritasextra.option.extra.text_contrast=テキストコントラスト
+celeritasextra.option.extra.text_contrast.tooltip=オーバーレイテキストの見やすさを向上させる描画方法を制御します。
 celeritasextra.option.extra.reduced_motion=モーション軽減
 celeritasextra.option.extra.reduced_motion.tooltip=アクセシビリティのためにモーション効果を軽減します。
 celeritasextra.option.extra.steady_debug_hud=安定したF3デバッグHUD
@@ -93,6 +97,11 @@ celeritasextra.option.overlay_corner.top_left=左上
 celeritasextra.option.overlay_corner.top_right=右上
 celeritasextra.option.overlay_corner.bottom_left=左下
 celeritasextra.option.overlay_corner.bottom_right=右下
+
+# テキストコントラストオプション
+celeritasextra.option.text_contrast.none=なし
+celeritasextra.option.text_contrast.background=背景
+celeritasextra.option.text_contrast.shadow=影
 
 # オーバーレイテキスト
 celeritasextra.overlay.fps=%d FPS

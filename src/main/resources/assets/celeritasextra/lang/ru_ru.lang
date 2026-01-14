@@ -66,6 +66,8 @@ celeritasextra.option.render.pistons=Поршни
 celeritasextra.option.render.pistons.tooltip=Если включено, отображаются анимации выдвижения поршней.
 celeritasextra.option.render.beacons=Луч Маяка
 celeritasextra.option.render.beacons.tooltip=Если этот параметр включен, отображается лучи маяка.
+celeritasextra.option.render.limit_beacon_beam_height=Ограничить высоту луча маяка
+celeritasextra.option.render.limit_beacon_beam_height.tooltip=Если включено, луч маяка будет отображаться только до высоты мира, а не бесконечно вверх.
 celeritasextra.option.render.enchanting_books=Книга на столе зачарования
 celeritasextra.option.render.enchanting_books.tooltip=Если включено, книги на столе зачарования отображаются.
 celeritasextra.option.render.player_name_tag=Тег С Именем Игрока
@@ -83,6 +85,8 @@ celeritasextra.option.extra.coords=Отоброжать координаты
 celeritasextra.option.extra.coords.tooltip=Отображает координаты игрока.
 celeritasextra.option.extra.overlay_corner=Положение оверлея
 celeritasextra.option.extra.overlay_corner.tooltip=Выберите угол экрана для отображения оверлея FPS и координат.
+celeritasextra.option.extra.text_contrast=Контраст текста
+celeritasextra.option.extra.text_contrast.tooltip=Контролирует способ отображения текста оверлея для лучшей читаемости.
 celeritasextra.option.extra.reduced_motion=Сокращённая анимация
 celeritasextra.option.extra.reduced_motion.tooltip=Уменьшает эффекты движения для удобства использования.
 celeritasextra.option.extra.steady_debug_hud=Частота Обновления F3 Debug HUD
@@ -95,6 +99,11 @@ celeritasextra.option.overlay_corner.top_left=Верхний левый
 celeritasextra.option.overlay_corner.top_right=Верхний правый
 celeritasextra.option.overlay_corner.bottom_left=Нижний левый
 celeritasextra.option.overlay_corner.bottom_right=Нижний правый
+
+# Text Contrast Options
+celeritasextra.option.text_contrast.none=Нет
+celeritasextra.option.text_contrast.background=Фон
+celeritasextra.option.text_contrast.shadow=Тень
 
 # Overlay Text
 celeritasextra.overlay.fps=%d FPS

@@ -66,6 +66,8 @@ celeritasextra.option.render.pistons=Pistons
 celeritasextra.option.render.pistons.tooltip=If enabled, piston extending animations are rendered.
 celeritasextra.option.render.beacons=Beacon Beam
 celeritasextra.option.render.beacons.tooltip=If enabled, beacon beams are rendered.
+celeritasextra.option.render.limit_beacon_beam_height=Limit Beacon Beam Height
+celeritasextra.option.render.limit_beacon_beam_height.tooltip=If enabled, beacon beams will only render up to the world height instead of infinitely upward.
 celeritasextra.option.render.enchanting_books=Enchanting Table Book
 celeritasextra.option.render.enchanting_books.tooltip=If enabled, enchanting table books are rendered.
 celeritasextra.option.render.player_name_tag=Player Name Tag
@@ -82,6 +84,8 @@ celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
 celeritasextra.option.extra.overlay_corner=Overlay Position
 celeritasextra.option.extra.overlay_corner.tooltip=Choose which corner of the screen the FPS and coordinate overlay appears in.
+celeritasextra.option.extra.text_contrast=Text Contrast
+celeritasextra.option.extra.text_contrast.tooltip=Controls how the overlay text is rendered for better readability.
 celeritasextra.option.extra.reduced_motion=Reduced Motion
 celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
 
@@ -95,6 +99,11 @@ celeritasextra.option.overlay_corner.top_left=Top Left
 celeritasextra.option.overlay_corner.top_right=Top Right
 celeritasextra.option.overlay_corner.bottom_left=Bottom Left
 celeritasextra.option.overlay_corner.bottom_right=Bottom Right
+
+# Text Contrast Options
+celeritasextra.option.text_contrast.none=None
+celeritasextra.option.text_contrast.background=Background
+celeritasextra.option.text_contrast.shadow=Shadow
 
 # Overlay Text
 celeritasextra.overlay.fps=%d FPS

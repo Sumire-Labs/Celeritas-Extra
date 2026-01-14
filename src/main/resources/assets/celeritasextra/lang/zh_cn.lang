@@ -66,6 +66,8 @@ celeritasextra.option.render.pistons=活塞
 celeritasextra.option.render.pistons.tooltip=若启用，将渲染活塞伸出动画。
 celeritasextra.option.render.beacons=信标光束
 celeritasextra.option.render.beacons.tooltip=若启用，将渲染信标光束。
+celeritasextra.option.render.limit_beacon_beam_height=限制信标光束高度
+celeritasextra.option.render.limit_beacon_beam_height.tooltip=若启用，信标光束将只渲染到世界高度，而不是无限向上延伸。
 celeritasextra.option.render.enchanting_books=附魔台的书
 celeritasextra.option.render.enchanting_books.tooltip=若启用，将渲染附魔台的书。
 celeritasextra.option.render.player_name_tag=玩家名称标签
@@ -82,6 +84,8 @@ celeritasextra.option.extra.coords=显示坐标
 celeritasextra.option.extra.coords.tooltip=在界面上显示玩家坐标。
 celeritasextra.option.extra.overlay_corner=界面位置
 celeritasextra.option.extra.overlay_corner.tooltip=选择 FPS 和坐标界面显示的屏幕角落。
+celeritasextra.option.extra.text_contrast=文字对比度
+celeritasextra.option.extra.text_contrast.tooltip=控制界面文字的渲染方式，以提高可读性。
 celeritasextra.option.extra.reduced_motion=减少动态效果
 celeritasextra.option.extra.reduced_motion.tooltip=为辅助功能减少动态效果。
 celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
@@ -94,6 +98,11 @@ celeritasextra.option.overlay_corner.top_left=左上
 celeritasextra.option.overlay_corner.top_right=右上
 celeritasextra.option.overlay_corner.bottom_left=左下
 celeritasextra.option.overlay_corner.bottom_right=右下
+
+# 文字对比度选项
+celeritasextra.option.text_contrast.none=无
+celeritasextra.option.text_contrast.background=背景
+celeritasextra.option.text_contrast.shadow=阴影
 
 # 界面文本
 celeritasextra.overlay.fps=%d FPS
