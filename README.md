@@ -1,7 +1,5 @@
 # Celeritas Extra
 
-A major update is forthcoming. (0.1.14 → 0.2.0)
-
 This is an unofficial backport of Sodium Extra for Celestis 12.2 (Cleanroom Loader).
 Additionally, several custom enhancements are being implemented.
 
