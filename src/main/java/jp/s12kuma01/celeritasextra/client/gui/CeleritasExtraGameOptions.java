@@ -293,10 +293,5 @@ public class CeleritasExtraGameOptions {
 
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
-
-        // Toast settings
-        public boolean toasts = true;           // Master toggle for all toasts
-        public boolean advancementToast = true; // Achievement/advancement toasts
-        public boolean recipeToast = true;      // Recipe unlock toasts
     }
 }

@@ -172,14 +172,6 @@ celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug sc
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
 
-# Toast Options
-celeritasextra.option.extra.toasts=Toasts
-celeritasextra.option.extra.toasts.tooltip=If enabled, toast notifications (popups in the top right) are shown.
-celeritasextra.option.extra.advancement_toast=Advancement Toasts
-celeritasextra.option.extra.advancement_toast.tooltip=If enabled, advancement/achievement toasts are shown.
-celeritasextra.option.extra.recipe_toast=Recipe Toasts
-celeritasextra.option.extra.recipe_toast.tooltip=If enabled, recipe unlock toasts are shown.
-
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Top Left
 celeritasextra.option.overlay_corner.top_right=Top Right

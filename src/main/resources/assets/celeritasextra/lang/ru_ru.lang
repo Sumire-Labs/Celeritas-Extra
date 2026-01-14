@@ -172,14 +172,6 @@ celeritasextra.option.extra.steady_debug_hud.tooltip=Если этот пара�
 celeritasextra.option.extra.steady_debug_hud_refresh=Интервал Обновления Дисплея F3 - HUD
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Определяет количество переходов между обновлениями экрана отладки по нажатию клавиши F3. Более высокие значения = меньшая частота обновлений = более высокая производительность. Значение по умолчанию - 20 тиков (1 секунда).
 
-# Опции уведомлений
-celeritasextra.option.extra.toasts=Уведомления
-celeritasextra.option.extra.toasts.tooltip=Если включено, отображаются уведомления (всплывающие окна в правом верхнем углу).
-celeritasextra.option.extra.advancement_toast=Уведомления о достижениях
-celeritasextra.option.extra.advancement_toast.tooltip=Если включено, отображаются уведомления о достижениях/прогрессе.
-celeritasextra.option.extra.recipe_toast=Уведомления о рецептах
-celeritasextra.option.extra.recipe_toast.tooltip=Если включено, отображаются уведомления о разблокированных рецептах.
-
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Верхний левый
 celeritasextra.option.overlay_corner.top_right=Верхний правый

@@ -170,14 +170,6 @@ celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、F3�
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD更新間隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=F3デバッグ画面の更新間隔をtick単位で制御します。高い値=更新頻度が低い=パフォーマンス向上。デフォルトは20tick（1秒）です。
 
-# トーストオプション
-celeritasextra.option.extra.toasts=トースト
-celeritasextra.option.extra.toasts.tooltip=有効にした場合、トースト通知（右上のポップアップ）が表示されます。
-celeritasextra.option.extra.advancement_toast=進捗トースト
-celeritasextra.option.extra.advancement_toast.tooltip=有効にした場合、進捗/実績のトーストが表示されます。
-celeritasextra.option.extra.recipe_toast=レシピトースト
-celeritasextra.option.extra.recipe_toast.tooltip=有効にした場合、レシピ解除のトーストが表示されます。
-
 # オーバーレイ位置オプション
 celeritasextra.option.overlay_corner.top_left=左上
 celeritasextra.option.overlay_corner.top_right=右上

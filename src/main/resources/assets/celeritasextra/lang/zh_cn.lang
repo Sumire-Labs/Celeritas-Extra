@@ -171,14 +171,6 @@ celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
 
-# 消息提示选项
-celeritasextra.option.extra.toasts=消息提示
-celeritasextra.option.extra.toasts.tooltip=若启用，将显示消息提示（右上角弹窗）。
-celeritasextra.option.extra.advancement_toast=进度提示
-celeritasextra.option.extra.advancement_toast.tooltip=若启用，将显示进度/成就提示。
-celeritasextra.option.extra.recipe_toast=配方提示
-celeritasextra.option.extra.recipe_toast.tooltip=若启用，将显示配方解锁提示。
-
 # 界面位置选项
 celeritasextra.option.overlay_corner.top_left=左上
 celeritasextra.option.overlay_corner.top_right=右上

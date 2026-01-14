@@ -686,34 +686,6 @@ public class CeleritasExtraGameOptionPages {
                 )
                 .build());
 
-        // Toast settings group
-        groups.add(OptionGroup.createBuilder()
-                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.toasts")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.toasts.tooltip")))
-                        .setControl(TickBoxControl::new)
-                        .setBinding((opts, value) -> opts.extraSettings.toasts = value,
-                                   opts -> opts.extraSettings.toasts)
-                        .build()
-                )
-                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.advancement_toast")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.advancement_toast.tooltip")))
-                        .setControl(TickBoxControl::new)
-                        .setBinding((opts, value) -> opts.extraSettings.advancementToast = value,
-                                   opts -> opts.extraSettings.advancementToast)
-                        .build()
-                )
-                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.recipe_toast")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.recipe_toast.tooltip")))
-                        .setControl(TickBoxControl::new)
-                        .setBinding((opts, value) -> opts.extraSettings.recipeToast = value,
-                                   opts -> opts.extraSettings.recipeToast)
-                        .build()
-                )
-                .build());
-
         return new OptionPage(CeleritasExtraOptionPages.EXTRA, TextComponent.literal(I18n.format("celeritasextra.option.page.extra")), ImmutableList.copyOf(groups));
     }
 }
