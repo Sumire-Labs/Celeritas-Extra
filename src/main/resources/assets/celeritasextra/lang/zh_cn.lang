@@ -33,6 +33,76 @@ celeritasextra.option.particles.block_breaking=方块破坏中
 celeritasextra.option.particles.block_breaking.tooltip=若启用，将处理方块破坏过程中的粒子。
 celeritasextra.option.particles.other.tooltip=若启用，将渲染 %s 粒子。
 
+# 个别粒子类型选项 - 战斗与效果
+celeritasextra.option.particles.explosion=爆炸
+celeritasextra.option.particles.explosion.tooltip=若启用，将渲染爆炸粒子。
+celeritasextra.option.particles.crit=暴击
+celeritasextra.option.particles.crit.tooltip=若启用，将渲染暴击粒子。
+celeritasextra.option.particles.damage_indicator=伤害指示
+celeritasextra.option.particles.damage_indicator.tooltip=若启用，将渲染伤害指示粒子。
+celeritasextra.option.particles.sweep_attack=横扫攻击
+celeritasextra.option.particles.sweep_attack.tooltip=若启用，将渲染横扫攻击粒子。
+
+# 个别粒子类型选项 - 魔法与法术
+celeritasextra.option.particles.spell=法术
+celeritasextra.option.particles.spell.tooltip=若启用，将渲染法术粒子（药水效果）。
+celeritasextra.option.particles.enchantment_table=附魔台
+celeritasextra.option.particles.enchantment_table.tooltip=若启用，将渲染附魔台粒子。
+celeritasextra.option.particles.portal=传送门
+celeritasextra.option.particles.portal.tooltip=若启用，将渲染传送门粒子。
+celeritasextra.option.particles.end_rod=末地烛
+celeritasextra.option.particles.end_rod.tooltip=若启用，将渲染末地烛粒子。
+celeritasextra.option.particles.totem=不死图腾
+celeritasextra.option.particles.totem.tooltip=若启用，将渲染不死图腾粒子。
+
+# 个别粒子类型选项 - 环境
+celeritasextra.option.particles.water=水
+celeritasextra.option.particles.water.tooltip=若启用，将渲染水粒子（气泡、飞溅、波纹）。
+celeritasextra.option.particles.drip=滴落液体
+celeritasextra.option.particles.drip.tooltip=若启用，将渲染滴落的水和熔岩粒子。
+celeritasextra.option.particles.smoke=烟雾
+celeritasextra.option.particles.smoke.tooltip=若启用，将渲染烟雾粒子。
+celeritasextra.option.particles.flame=火焰
+celeritasextra.option.particles.flame.tooltip=若启用，将渲染火焰和熔岩粒子。
+celeritasextra.option.particles.cloud=云
+celeritasextra.option.particles.cloud.tooltip=若启用，将渲染云粒子。
+celeritasextra.option.particles.falling_dust=落尘
+celeritasextra.option.particles.falling_dust.tooltip=若启用，将渲染落尘粒子（如落沙产生的粒子）。
+
+# 个别粒子类型选项 - 装饰
+celeritasextra.option.particles.fireworks=烟花
+celeritasextra.option.particles.fireworks.tooltip=若启用，将渲染烟花粒子。
+celeritasextra.option.particles.note=音符盒
+celeritasextra.option.particles.note.tooltip=若启用，将渲染音符盒粒子。
+celeritasextra.option.particles.heart=爱心
+celeritasextra.option.particles.heart.tooltip=若启用，将渲染爱心粒子（繁殖、治愈）。
+celeritasextra.option.particles.villager=村民
+celeritasextra.option.particles.villager.tooltip=若启用，将渲染村民粒子（高兴/愤怒）。
+celeritasextra.option.particles.redstone=红石
+celeritasextra.option.particles.redstone.tooltip=若启用，将渲染红石粒子。
+
+# 个别粒子类型选项 - 其他
+celeritasextra.option.particles.suspended=悬浮
+celeritasextra.option.particles.suspended.tooltip=若启用，将渲染水下悬浮粒子。
+celeritasextra.option.particles.town_aura=菌丝
+celeritasextra.option.particles.town_aura.tooltip=若启用，将渲染菌丝粒子。
+celeritasextra.option.particles.snowball=雪球
+celeritasextra.option.particles.snowball.tooltip=若启用，将渲染雪球粒子。
+celeritasextra.option.particles.slime=史莱姆
+celeritasextra.option.particles.slime.tooltip=若启用，将渲染史莱姆粒子。
+celeritasextra.option.particles.item_crack=物品碎裂
+celeritasextra.option.particles.item_crack.tooltip=若启用，将渲染物品破碎粒子。
+celeritasextra.option.particles.barrier=屏障
+celeritasextra.option.particles.barrier.tooltip=若启用，将渲染屏障方块粒子。
+
+# 个别粒子类型选项 - 生物
+celeritasextra.option.particles.dragon_breath=龙息
+celeritasextra.option.particles.dragon_breath.tooltip=若启用，将渲染龙息粒子。
+celeritasextra.option.particles.mob_appearance=远古守卫者
+celeritasextra.option.particles.mob_appearance.tooltip=若启用，将渲染远古守卫者出现效果。
+celeritasextra.option.particles.spit=羊驼口水
+celeritasextra.option.particles.spit.tooltip=若启用，将渲染羊驼口水粒子。
+
 # 细节选项
 celeritasextra.option.details.sky=天空
 celeritasextra.option.details.sky.tooltip=若启用，将渲染天空。

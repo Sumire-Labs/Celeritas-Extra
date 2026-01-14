@@ -33,6 +33,76 @@ celeritasextra.option.particles.block_breaking=Частицы Процесса �
 celeritasextra.option.particles.block_breaking.tooltip=Если включено, частицы процесса разрушения блока будут обрабатываться.
 celeritasextra.option.particles.other.tooltip=Если включено, %s отображаются частицы.
 
+# Отдельные типы частиц - Бой и эффекты
+celeritasextra.option.particles.explosion=Взрывы
+celeritasextra.option.particles.explosion.tooltip=Если включено, отображаются частицы взрывов.
+celeritasextra.option.particles.crit=Критические удары
+celeritasextra.option.particles.crit.tooltip=Если включено, отображаются частицы критических ударов.
+celeritasextra.option.particles.damage_indicator=Индикатор урона
+celeritasextra.option.particles.damage_indicator.tooltip=Если включено, отображаются частицы индикатора урона.
+celeritasextra.option.particles.sweep_attack=Размашистая атака
+celeritasextra.option.particles.sweep_attack.tooltip=Если включено, отображаются частицы размашистой атаки.
+
+# Отдельные типы частиц - Магия и заклинания
+celeritasextra.option.particles.spell=Заклинания
+celeritasextra.option.particles.spell.tooltip=Если включено, отображаются частицы заклинаний (эффекты зелий).
+celeritasextra.option.particles.enchantment_table=Стол зачарования
+celeritasextra.option.particles.enchantment_table.tooltip=Если включено, отображаются частицы стола зачарования.
+celeritasextra.option.particles.portal=Портал
+celeritasextra.option.particles.portal.tooltip=Если включено, отображаются частицы портала.
+celeritasextra.option.particles.end_rod=Стержень Энда
+celeritasextra.option.particles.end_rod.tooltip=Если включено, отображаются частицы стержня Энда.
+celeritasextra.option.particles.totem=Тотем бессмертия
+celeritasextra.option.particles.totem.tooltip=Если включено, отображаются частицы тотема бессмертия.
+
+# Отдельные типы частиц - Окружение
+celeritasextra.option.particles.water=Вода
+celeritasextra.option.particles.water.tooltip=Если включено, отображаются частицы воды (пузыри, брызги, волны).
+celeritasextra.option.particles.drip=Капающие жидкости
+celeritasextra.option.particles.drip.tooltip=Если включено, отображаются частицы капающей воды и лавы.
+celeritasextra.option.particles.smoke=Дым
+celeritasextra.option.particles.smoke.tooltip=Если включено, отображаются частицы дыма.
+celeritasextra.option.particles.flame=Пламя
+celeritasextra.option.particles.flame.tooltip=Если включено, отображаются частицы пламени и лавы.
+celeritasextra.option.particles.cloud=Облака
+celeritasextra.option.particles.cloud.tooltip=Если включено, отображаются частицы облаков.
+celeritasextra.option.particles.falling_dust=Падающая пыль
+celeritasextra.option.particles.falling_dust.tooltip=Если включено, отображаются частицы падающей пыли (например, от падающего песка).
+
+# Отдельные типы частиц - Декоративные
+celeritasextra.option.particles.fireworks=Фейерверки
+celeritasextra.option.particles.fireworks.tooltip=Если включено, отображаются частицы фейерверков.
+celeritasextra.option.particles.note=Нотные блоки
+celeritasextra.option.particles.note.tooltip=Если включено, отображаются частицы нотных блоков.
+celeritasextra.option.particles.heart=Сердца
+celeritasextra.option.particles.heart.tooltip=Если включено, отображаются частицы сердец (размножение, исцеление).
+celeritasextra.option.particles.villager=Жители
+celeritasextra.option.particles.villager.tooltip=Если включено, отображаются частицы жителей (довольные/злые).
+celeritasextra.option.particles.redstone=Редстоун
+celeritasextra.option.particles.redstone.tooltip=Если включено, отображаются частицы редстоуна.
+
+# Отдельные типы частиц - Разное
+celeritasextra.option.particles.suspended=Взвешенные
+celeritasextra.option.particles.suspended.tooltip=Если включено, отображаются взвешенные частицы под водой.
+celeritasextra.option.particles.town_aura=Аура города
+celeritasextra.option.particles.town_aura.tooltip=Если включено, отображаются частицы мицелия.
+celeritasextra.option.particles.snowball=Снежок
+celeritasextra.option.particles.snowball.tooltip=Если включено, отображаются частицы снежков.
+celeritasextra.option.particles.slime=Слизь
+celeritasextra.option.particles.slime.tooltip=Если включено, отображаются частицы слизи.
+celeritasextra.option.particles.item_crack=Разбитый предмет
+celeritasextra.option.particles.item_crack.tooltip=Если включено, отображаются частицы разбитых предметов.
+celeritasextra.option.particles.barrier=Барьер
+celeritasextra.option.particles.barrier.tooltip=Если включено, отображаются частицы барьерного блока.
+
+# Отдельные типы частиц - Мобы
+celeritasextra.option.particles.dragon_breath=Дыхание дракона
+celeritasextra.option.particles.dragon_breath.tooltip=Если включено, отображаются частицы дыхания дракона.
+celeritasextra.option.particles.mob_appearance=Древний страж
+celeritasextra.option.particles.mob_appearance.tooltip=Если включено, отображается эффект появления древнего стража.
+celeritasextra.option.particles.spit=Плевок ламы
+celeritasextra.option.particles.spit.tooltip=Если включено, отображаются частицы плевка ламы.
+
 # Detail Options
 celeritasextra.option.details.sky=Небо
 celeritasextra.option.details.sky.tooltip=Если этот параметр включен, то будет отображаться небо.
