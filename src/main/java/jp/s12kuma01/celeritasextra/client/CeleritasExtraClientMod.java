@@ -25,7 +25,7 @@ public class CeleritasExtraClientMod {
         if (!configDir.exists()) {
             configDir.mkdirs();
         }
-        File configFile = new File(configDir, "celeritas-extra-options.json");
+        File configFile = new File(configDir, "celeritas-extra.cfg");
         return CeleritasExtraGameOptions.load(configFile);
     }
 
