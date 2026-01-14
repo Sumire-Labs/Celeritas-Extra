@@ -4,6 +4,7 @@ import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.ClientTickHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Renders FPS and coordinates overlay with configurable position
+ * Renders FPS and coordinates overlay with configurable position and text contrast
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
@@ -76,6 +77,7 @@ public class CeleritasExtraHud {
         FontRenderer fontRenderer = mc.fontRenderer;
         ScaledResolution resolution = event.getResolution();
         CeleritasExtraGameOptions.OverlayCorner corner = settings.overlayCorner;
+        CeleritasExtraGameOptions.TextContrast textContrast = settings.textContrast;
 
         int screenWidth = resolution.getScaledWidth();
         int screenHeight = resolution.getScaledHeight();
@@ -93,8 +95,7 @@ public class CeleritasExtraHud {
             int textWidth = fontRenderer.getStringWidth(line);
             int x = isRight ? screenWidth - textWidth - 2 : 2;
 
-            // Draw with shadow for visibility
-            fontRenderer.drawStringWithShadow(line, x, y, 0xFFFFFF);
+            drawString(fontRenderer, line, x, y, textContrast);
 
             // Move to next line (up or down depending on corner)
             if (isBottom) {
@@ -102,6 +103,31 @@ public class CeleritasExtraHud {
             } else {
                 y += lineHeight;
             }
+        }
+    }
+
+    /**
+     * Draws a string with the specified text contrast mode
+     */
+    private static void drawString(FontRenderer fontRenderer, String text, int x, int y, CeleritasExtraGameOptions.TextContrast textContrast) {
+        int textColor = 0xFFFFFF;
+
+        switch (textContrast) {
+            case BACKGROUND:
+                // Draw semi-transparent background
+                int textWidth = fontRenderer.getStringWidth(text);
+                Gui.drawRect(x - 1, y - 1, x + textWidth + 1, y + fontRenderer.FONT_HEIGHT + 1, 0x90505050);
+                fontRenderer.drawString(text, x, y, textColor);
+                break;
+            case SHADOW:
+                // Draw with shadow (default Minecraft style)
+                fontRenderer.drawStringWithShadow(text, x, y, textColor);
+                break;
+            case NONE:
+            default:
+                // Draw without any contrast enhancement
+                fontRenderer.drawString(text, x, y, textColor);
+                break;
         }
     }
 }
