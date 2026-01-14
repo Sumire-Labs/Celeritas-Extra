@@ -477,6 +477,26 @@ public class CeleritasExtraGameOptionPages {
                                    opts -> opts.renderSettings.fogStart)
                         .build()
                 )
+                .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_distance")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_distance.tooltip")))
+                        .setControl(option -> new SliderControl(option, 0, 32, 1, ControlValueFormatter.quantityOrDisabled("chunks", "Default")))
+                        .setBinding((opts, value) -> opts.renderSettings.fogDistance = value,
+                                   opts -> opts.renderSettings.fogDistance)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.FogType.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_type")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_type.tooltip")))
+                        .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.FogType.class,
+                                new TextComponent[] {
+                                    TextComponent.literal(CeleritasExtraGameOptions.FogType.DEFAULT.getLocalizedName()),
+                                    TextComponent.literal(CeleritasExtraGameOptions.FogType.OFF.getLocalizedName())
+                                }))
+                        .setBinding((opts, value) -> opts.renderSettings.fogType = value,
+                                   opts -> opts.renderSettings.fogType)
+                        .build()
+                )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.prevent_shaders")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.prevent_shaders.tooltip")))
@@ -662,6 +682,34 @@ public class CeleritasExtraGameOptionPages {
                         .setControl(option -> new SliderControl(option, 1, 60, 1, ControlValueFormatter.number()))
                         .setBinding((opts, value) -> opts.extraSettings.steadyDebugHudRefreshInterval = value,
                                    opts -> opts.extraSettings.steadyDebugHudRefreshInterval)
+                        .build()
+                )
+                .build());
+
+        // Toast settings group
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.toasts")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.toasts.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.extraSettings.toasts = value,
+                                   opts -> opts.extraSettings.toasts)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.advancement_toast")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.advancement_toast.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.extraSettings.advancementToast = value,
+                                   opts -> opts.extraSettings.advancementToast)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.recipe_toast")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.recipe_toast.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.extraSettings.recipeToast = value,
+                                   opts -> opts.extraSettings.recipeToast)
                         .build()
                 )
                 .build());
