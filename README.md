@@ -1,24 +1,26 @@
 # Celeritas Extra
 
-A comprehensive unofficial backport for Cleanroom Loader and Celeritas, including [Embeddium(Rubidium)Extra](https://github.com/embeddedt/rubidium-extra) and various other features.
-As it uses Claude Code, the code may be problematic.
+A major update is forthcoming. (0.1.14 → 0.2.0)
+
+This is an unofficial backport of Sodium Extra for Celestis 12.2 (Cleanroom Loader).
+Additionally, several custom enhancements are being implemented.
 
 ## Description
 
-Celeritas Extra enables the integration of some features from Embeddium Extra and other additional functionalities with Celeritas.
+Celeritas Extra is a comprehensive unofficial backport of Sodium Extra/Embeddium Extra, specifically targeting Celestis 1.12.2, along with several additional features.
 
 ## Requirements
 
 * **CleanroomLoader**
 * **Celeritas**
 
-## Licence
+## License
 
-LGPL-3.0 - See LICENSE.md for details
+LGPL-3.0 - For details, please refer to the LICENSE.md file.
 
 ## Credits
 
-* **dima_dencep** - Author of Embeddium (Rubidium) Extra (a Forge port of Sodium Extra)
-* **embeddedt** - Developer of Celeritas. Made the creation of Celeritas Extra possible
-* **Cleanroom Team** - Built using CleanroomModTemplate
-* Thanks to everyone who provided translations in various languages
+* **dima_dencep** - Creator of Embeddium Extra.
+* **embeddedt** - Creator of Celestis.
+* **CleanroomMC** - This mod utilizes the Cleanroom Mod Template.
+* All contributors who provided translation keys for their languages
