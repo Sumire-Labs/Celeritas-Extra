@@ -59,6 +59,24 @@ public class CeleritasExtraGameOptions {
         }
     }
 
+    /**
+     * Fog type options for mod compatibility
+     */
+    public enum FogType {
+        DEFAULT("celeritasextra.option.fog_type.default"),
+        OFF("celeritasextra.option.fog_type.off");
+
+        private final String translationKey;
+
+        FogType(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
     private static final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .setPrettyPrinting()
@@ -245,6 +263,8 @@ public class CeleritasExtraGameOptions {
     public static class RenderSettings {
         public boolean fog = true;
         public int fogStart = 100;
+        public int fogDistance = 0; // 0 = default (use render distance), 1-32 = chunks
+        public FogType fogType = FogType.DEFAULT;
         public boolean clouds = true;
         public boolean multiDimensionalClouds = true;
         public int cloudHeight = 192;
@@ -273,5 +293,10 @@ public class CeleritasExtraGameOptions {
 
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
+
+        // Toast settings
+        public boolean toasts = true;           // Master toggle for all toasts
+        public boolean advancementToast = true; // Achievement/advancement toasts
+        public boolean recipeToast = true;      // Recipe unlock toasts
     }
 }
