@@ -23,14 +23,12 @@ bin/
 # macOS
 .DS_Store
 
-# Fabric
-run/
-
 # Misc
 *.log
 *.swp
 *.swo
 *~
+archive/
 .cache/
 
 # Minecraft/Forge
