@@ -18,7 +18,8 @@ public class CeleritasExtraOptionsListener {
         event.addPage(CeleritasExtraGameOptionPages.details());
         event.addPage(CeleritasExtraGameOptionPages.render());
         event.addPage(CeleritasExtraGameOptionPages.extra());
+        event.addPage(CeleritasExtraGameOptionPages.leafCulling());
 
-        CeleritasExtraMod.LOGGER.info("Successfully registered {} Celeritas Extra option pages", 5);
+        CeleritasExtraMod.LOGGER.info("Successfully registered {} Celeritas Extra option pages", 6);
     }
 }

@@ -688,4 +688,67 @@ public class CeleritasExtraGameOptionPages {
 
         return new OptionPage(CeleritasExtraOptionPages.EXTRA, TextComponent.literal(I18n.format("celeritasextra.option.page.extra")), ImmutableList.copyOf(groups));
     }
+
+    /**
+     * Leaf culling settings page
+     */
+    public static OptionPage leafCulling() {
+        List<OptionGroup> groups = new ArrayList<>();
+
+        // Enable/disable toggle
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.enabled")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.enabled.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.leafCullingSettings.enabled = value,
+                                   opts -> opts.leafCullingSettings.enabled)
+                        .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                        .build()
+                )
+                .build());
+
+        // Preset selection
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.CullingPreset.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset.tooltip")))
+                        .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.CullingPreset.class,
+                                new TextComponent[] {
+                                    TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset.fast")),
+                                    TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset.balanced")),
+                                    TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset.fancy")),
+                                    TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.preset.custom"))
+                                }))
+                        .setBinding((opts, value) -> opts.leafCullingSettings.preset = value,
+                                   opts -> opts.leafCullingSettings.preset)
+                        .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                        .build()
+                )
+                .build());
+
+        // Custom settings (depth and random rejection)
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.depth")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.depth.tooltip")))
+                        .setControl(option -> new SliderControl(option, 0, 5, 1, ControlValueFormatter.number()))
+                        .setBinding((opts, value) -> opts.leafCullingSettings.customDepth = value,
+                                   opts -> opts.leafCullingSettings.customDepth)
+                        .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.random_rejection")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.leaf_culling.random_rejection.tooltip")))
+                        .setControl(option -> new SliderControl(option, 0, 50, 1, ControlValueFormatter.percentage()))
+                        .setBinding((opts, value) -> opts.leafCullingSettings.customRandomRejection = value,
+                                   opts -> opts.leafCullingSettings.customRandomRejection)
+                        .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                        .build()
+                )
+                .build());
+
+        return new OptionPage(CeleritasExtraOptionPages.LEAF_CULLING, TextComponent.literal(I18n.format("celeritasextra.option.page.leaf_culling")), ImmutableList.copyOf(groups));
+    }
 }

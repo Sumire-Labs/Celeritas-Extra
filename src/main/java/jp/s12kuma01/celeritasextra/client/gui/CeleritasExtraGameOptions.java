@@ -20,6 +20,7 @@ public class CeleritasExtraGameOptions {
     private static final String CAT_DETAIL = "detail";
     private static final String CAT_RENDER = "render";
     private static final String CAT_EXTRA = "extra";
+    private static final String CAT_LEAF_CULLING = "leaf_culling";
 
     /**
      * Overlay corner positions for FPS/coordinate display
@@ -78,6 +79,30 @@ public class CeleritasExtraGameOptions {
         }
     }
 
+    /**
+     * Leaf culling preset modes
+     */
+    public enum CullingPreset {
+        FAST("celeritasextra.option.leaf_culling.preset.fast", 1, 0.0),
+        BALANCED("celeritasextra.option.leaf_culling.preset.balanced", 2, 0.2),
+        FANCY("celeritasextra.option.leaf_culling.preset.fancy", 3, 0.1),
+        CUSTOM("celeritasextra.option.leaf_culling.preset.custom", 2, 0.2);
+
+        private final String translationKey;
+        public final int depth;
+        public final double randomRejection;
+
+        CullingPreset(String translationKey, int depth, double randomRejection) {
+            this.translationKey = translationKey;
+            this.depth = depth;
+            this.randomRejection = randomRejection;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
     private Configuration config;
 
     public final AnimationSettings animationSettings = new AnimationSettings();
@@ -85,6 +110,7 @@ public class CeleritasExtraGameOptions {
     public final DetailSettings detailSettings = new DetailSettings();
     public final RenderSettings renderSettings = new RenderSettings();
     public final ExtraSettings extraSettings = new ExtraSettings();
+    public final LeafCullingSettings leafCullingSettings = new LeafCullingSettings();
 
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions options = new CeleritasExtraGameOptions();
@@ -186,6 +212,12 @@ public class CeleritasExtraGameOptions {
         extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0, TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
         extraSettings.steadyDebugHud = config.getBoolean("steadyDebugHud", CAT_EXTRA, false, "Reduce F3 debug screen update frequency");
         extraSettings.steadyDebugHudRefreshInterval = config.getInt("steadyDebugHudRefreshInterval", CAT_EXTRA, 20, 1, 60, "F3 debug screen refresh interval in ticks");
+
+        // Leaf culling settings
+        leafCullingSettings.enabled = config.getBoolean("enabled", CAT_LEAF_CULLING, true, "Enable/disable leaf culling");
+        leafCullingSettings.preset = CullingPreset.values()[config.getInt("preset", CAT_LEAF_CULLING, 1, 0, CullingPreset.values().length - 1, "Culling preset (0=Fast, 1=Balanced, 2=Fancy, 3=Custom)")];
+        leafCullingSettings.customDepth = config.getInt("customDepth", CAT_LEAF_CULLING, 2, 0, 5, "Custom culling depth (only used when preset is Custom)");
+        leafCullingSettings.customRandomRejection = config.getInt("customRandomRejection", CAT_LEAF_CULLING, 20, 0, 50, "Custom random rejection percentage (only used when preset is Custom)");
     }
 
     public void writeChanges() {
@@ -270,6 +302,12 @@ public class CeleritasExtraGameOptions {
         config.get(CAT_EXTRA, "textContrast", 2).set(extraSettings.textContrast.ordinal());
         config.get(CAT_EXTRA, "steadyDebugHud", false).set(extraSettings.steadyDebugHud);
         config.get(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20).set(extraSettings.steadyDebugHudRefreshInterval);
+
+        // Leaf culling settings
+        config.get(CAT_LEAF_CULLING, "enabled", true).set(leafCullingSettings.enabled);
+        config.get(CAT_LEAF_CULLING, "preset", 1).set(leafCullingSettings.preset.ordinal());
+        config.get(CAT_LEAF_CULLING, "customDepth", 2).set(leafCullingSettings.customDepth);
+        config.get(CAT_LEAF_CULLING, "customRandomRejection", 20).set(leafCullingSettings.customRandomRejection);
 
         config.save();
     }
@@ -430,5 +468,28 @@ public class CeleritasExtraGameOptions {
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
+    }
+
+    public static class LeafCullingSettings {
+        public boolean enabled = true;
+        public CullingPreset preset = CullingPreset.BALANCED;
+        public int customDepth = 2;
+        public int customRandomRejection = 20; // percentage (0-50)
+
+        /**
+         * Get effective depth based on current preset
+         */
+        public int getEffectiveDepth() {
+            if (!enabled) return 0;
+            return preset == CullingPreset.CUSTOM ? customDepth : preset.depth;
+        }
+
+        /**
+         * Get effective random rejection based on current preset (as float 0.0-1.0)
+         */
+        public float getEffectiveRandomRejection() {
+            if (!enabled) return 0.0f;
+            return (float) (preset == CullingPreset.CUSTOM ? customRandomRejection / 100.0 : preset.randomRejection);
+        }
     }
 }
