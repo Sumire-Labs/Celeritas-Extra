@@ -119,6 +119,12 @@ celeritasextra.option.render.fog=霧
 celeritasextra.option.render.fog.tooltip=有効にした場合、霧は描画されます。
 celeritasextra.option.render.fog_start=霧の開始距離
 celeritasextra.option.render.fog_start.tooltip=霧が始まる距離を制御します。100%がデフォルト、低い値は霧を近くに、高い値は霧を遠くに押し出します。
+celeritasextra.option.render.fog_distance=霧の距離
+celeritasextra.option.render.fog_distance.tooltip=霧の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
+celeritasextra.option.render.fog_type=霧のタイプ
+celeritasextra.option.render.fog_type.tooltip=霧の適用方法を制御します。デフォルトは通常の霧を適用し、オフは霧の描画を無効にします。
+celeritasextra.option.fog_type.default=デフォルト
+celeritasextra.option.fog_type.off=オフ
 celeritasextra.option.render.prevent_shaders=シェーダーを防止
 celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、誤ってシェーダーが有効化されることを防ぎます（スーパーシークレット設定）。
 celeritasextra.option.render.clouds=雲
@@ -163,6 +169,14 @@ celeritasextra.option.extra.steady_debug_hud=安定したF3デバッグHUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、F3デバッグ画面の更新頻度が減少し、CPU使用率が下がり、FPSが向上します。
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD更新間隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=F3デバッグ画面の更新間隔をtick単位で制御します。高い値=更新頻度が低い=パフォーマンス向上。デフォルトは20tick（1秒）です。
+
+# トーストオプション
+celeritasextra.option.extra.toasts=トースト
+celeritasextra.option.extra.toasts.tooltip=有効にした場合、トースト通知（右上のポップアップ）が表示されます。
+celeritasextra.option.extra.advancement_toast=進捗トースト
+celeritasextra.option.extra.advancement_toast.tooltip=有効にした場合、進捗/実績のトーストが表示されます。
+celeritasextra.option.extra.recipe_toast=レシピトースト
+celeritasextra.option.extra.recipe_toast.tooltip=有効にした場合、レシピ解除のトーストが表示されます。
 
 # オーバーレイ位置オプション
 celeritasextra.option.overlay_corner.top_left=左上

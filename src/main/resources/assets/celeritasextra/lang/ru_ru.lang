@@ -120,6 +120,12 @@ celeritasextra.option.render.fog=Туман
 celeritasextra.option.render.fog.tooltip=Если этот параметр включен, то будет отображаться туман.
 celeritasextra.option.render.fog_start=Удалённость Тумана
 celeritasextra.option.render.fog_start.tooltip=Определяет, на каком расстоянии начинается туман. Значение по умолчанию - 100%, при меньших значениях туман кажется ближе, при больших - отдаляется.
+celeritasextra.option.render.fog_distance=Дистанция тумана
+celeritasextra.option.render.fog_distance.tooltip=Контролирует дистанцию рендеринга тумана в чанках. 0 = По умолчанию (использует дистанцию рендеринга).
+celeritasextra.option.render.fog_type=Тип тумана
+celeritasextra.option.render.fog_type.tooltip=Контролирует способ применения тумана. По умолчанию применяет обычный туман, Выкл отключает рендеринг тумана.
+celeritasextra.option.fog_type.default=По умолчанию
+celeritasextra.option.fog_type.off=Выкл
 celeritasextra.option.render.prevent_shaders=Блокировать шейдеры
 celeritasextra.option.render.prevent_shaders.tooltip=Если включено, предотвращает случайное включение шейдеров (Супер Секретные Настройки).
 celeritasextra.option.render.clouds=Облака
@@ -165,6 +171,14 @@ celeritasextra.option.extra.steady_debug_hud=Частота Обновления
 celeritasextra.option.extra.steady_debug_hud.tooltip=Если этот параметр включен, экран отладки F3 будет обновляться реже, чтобы снизить нагрузку на процессор и повысить частоту кадров в секунду.
 celeritasextra.option.extra.steady_debug_hud_refresh=Интервал Обновления Дисплея F3 - HUD
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Определяет количество переходов между обновлениями экрана отладки по нажатию клавиши F3. Более высокие значения = меньшая частота обновлений = более высокая производительность. Значение по умолчанию - 20 тиков (1 секунда).
+
+# Опции уведомлений
+celeritasextra.option.extra.toasts=Уведомления
+celeritasextra.option.extra.toasts.tooltip=Если включено, отображаются уведомления (всплывающие окна в правом верхнем углу).
+celeritasextra.option.extra.advancement_toast=Уведомления о достижениях
+celeritasextra.option.extra.advancement_toast.tooltip=Если включено, отображаются уведомления о достижениях/прогрессе.
+celeritasextra.option.extra.recipe_toast=Уведомления о рецептах
+celeritasextra.option.extra.recipe_toast.tooltip=Если включено, отображаются уведомления о разблокированных рецептах.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Верхний левый

@@ -120,6 +120,12 @@ celeritasextra.option.render.fog=雾
 celeritasextra.option.render.fog.tooltip=若启用，将渲染雾。
 celeritasextra.option.render.fog_start=雾起始距离
 celeritasextra.option.render.fog_start.tooltip=控制雾的起始距离。100% 为默认值，较低的值使雾更近，较高的值使雾更远。
+celeritasextra.option.render.fog_distance=雾距离
+celeritasextra.option.render.fog_distance.tooltip=以区块为单位控制雾渲染距离。0 = 默认（使用渲染距离）。
+celeritasextra.option.render.fog_type=雾类型
+celeritasextra.option.render.fog_type.tooltip=控制雾的应用方式。默认应用正常雾效，关闭禁用雾渲染。
+celeritasextra.option.fog_type.default=默认
+celeritasextra.option.fog_type.off=关闭
 celeritasextra.option.render.prevent_shaders=禁用光影
 celeritasextra.option.render.prevent_shaders.tooltip=若启用，可防止意外激活光影（超级秘密设置）。
 celeritasextra.option.render.clouds=云
@@ -164,6 +170,14 @@ celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
 celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面的更新频率将降低，以减少 CPU 使用并提高 FPS。
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
+
+# 消息提示选项
+celeritasextra.option.extra.toasts=消息提示
+celeritasextra.option.extra.toasts.tooltip=若启用，将显示消息提示（右上角弹窗）。
+celeritasextra.option.extra.advancement_toast=进度提示
+celeritasextra.option.extra.advancement_toast.tooltip=若启用，将显示进度/成就提示。
+celeritasextra.option.extra.recipe_toast=配方提示
+celeritasextra.option.extra.recipe_toast.tooltip=若启用，将显示配方解锁提示。
 
 # 界面位置选项
 celeritasextra.option.overlay_corner.top_left=左上

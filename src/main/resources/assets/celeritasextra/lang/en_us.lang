@@ -120,6 +120,12 @@ celeritasextra.option.render.fog=Fog
 celeritasextra.option.render.fog.tooltip=If enabled, fog will be rendered.
 celeritasextra.option.render.fog_start=Fog Start Distance
 celeritasextra.option.render.fog_start.tooltip=Controls how far away fog starts. 100% is default, lower values make fog appear closer, higher values push it further away.
+celeritasextra.option.render.fog_distance=Fog Distance
+celeritasextra.option.render.fog_distance.tooltip=Controls the fog render distance in chunks. 0 = Default (uses render distance).
+celeritasextra.option.render.fog_type=Fog Type
+celeritasextra.option.render.fog_type.tooltip=Controls how fog is applied. Default applies normal fog, Off disables fog rendering.
+celeritasextra.option.fog_type.default=Default
+celeritasextra.option.fog_type.off=Off
 celeritasextra.option.render.prevent_shaders=Prevent Shaders
 celeritasextra.option.render.prevent_shaders.tooltip=If enabled, prevents accidental shader activation (Super Secret Settings).
 celeritasextra.option.render.clouds=Clouds
@@ -165,6 +171,14 @@ celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
+
+# Toast Options
+celeritasextra.option.extra.toasts=Toasts
+celeritasextra.option.extra.toasts.tooltip=If enabled, toast notifications (popups in the top right) are shown.
+celeritasextra.option.extra.advancement_toast=Advancement Toasts
+celeritasextra.option.extra.advancement_toast.tooltip=If enabled, advancement/achievement toasts are shown.
+celeritasextra.option.extra.recipe_toast=Recipe Toasts
+celeritasextra.option.extra.recipe_toast.tooltip=If enabled, recipe unlock toasts are shown.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Top Left
