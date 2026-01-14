@@ -76,8 +76,12 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame 
 # Extra Options
 celeritasextra.option.extra.fps=Show FPS
 celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
+celeritasextra.option.extra.fps_extended=Extended FPS Stats
+celeritasextra.option.extra.fps_extended.tooltip=If enabled, shows highest, average, and lowest FPS in addition to current FPS.
 celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
+celeritasextra.option.extra.overlay_corner=Overlay Position
+celeritasextra.option.extra.overlay_corner.tooltip=Choose which corner of the screen the FPS and coordinate overlay appears in.
 celeritasextra.option.extra.reduced_motion=Reduced Motion
 celeritasextra.option.extra.reduced_motion.tooltip=Reduce motion effects for accessibility.
 
@@ -85,6 +89,18 @@ celeritasextra.option.extra.steady_debug_hud=Steady F3 Debug HUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the F3 debug screen will update less frequently to reduce CPU usage and improve FPS.
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD Refresh Interval
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Controls how many ticks between F3 debug screen updates. Higher values = less frequent updates = better performance. Default is 20 ticks (1 second).
+
+# Overlay Corner Options
+celeritasextra.option.overlay_corner.top_left=Top Left
+celeritasextra.option.overlay_corner.top_right=Top Right
+celeritasextra.option.overlay_corner.bottom_left=Bottom Left
+celeritasextra.option.overlay_corner.bottom_right=Bottom Right
+
+# Overlay Text
+celeritasextra.overlay.fps=%d FPS
+celeritasextra.overlay.fps_extended=(High: %d, Avg: %d, Low: %d)
+celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+celeritasextra.overlay.light_updates=Light Updates Disabled
 
 # Option Groups
 celeritasextra.option.group.general=General

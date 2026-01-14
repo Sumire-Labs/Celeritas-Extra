@@ -75,16 +75,30 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=有効にした場合�
 # 追加オプション
 celeritasextra.option.extra.fps=FPSの表示
 celeritasextra.option.extra.fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
+celeritasextra.option.extra.fps_extended=拡張FPS統計
+celeritasextra.option.extra.fps_extended.tooltip=有効にした場合、現在のFPSに加えて最高、平均、最低FPSを表示します。
 celeritasextra.option.extra.coords=座標の表示
 celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。
+celeritasextra.option.extra.overlay_corner=オーバーレイの位置
+celeritasextra.option.extra.overlay_corner.tooltip=FPSと座標のオーバーレイを表示する画面のコーナーを選択します。
 celeritasextra.option.extra.reduced_motion=モーション軽減
 celeritasextra.option.extra.reduced_motion.tooltip=アクセシビリティのためにモーション効果を軽減します。
-celeritasextra.option.extra.instant_sneak=インスタントスニーク
-celeritasextra.option.extra.instant_sneak.tooltip=有効にした場合、スニーク時の視点の移動は瞬間的に行われます。
 celeritasextra.option.extra.steady_debug_hud=安定したF3デバッグHUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、F3デバッグ画面の更新頻度が減少し、CPU使用率が下がり、FPSが向上します。
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 HUD更新間隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=F3デバッグ画面の更新間隔をtick単位で制御します。高い値=更新頻度が低い=パフォーマンス向上。デフォルトは20tick（1秒）です。
+
+# オーバーレイ位置オプション
+celeritasextra.option.overlay_corner.top_left=左上
+celeritasextra.option.overlay_corner.top_right=右上
+celeritasextra.option.overlay_corner.bottom_left=左下
+celeritasextra.option.overlay_corner.bottom_right=右下
+
+# オーバーレイテキスト
+celeritasextra.overlay.fps=%d FPS
+celeritasextra.overlay.fps_extended=(最高: %d, 平均: %d, 最低: %d)
+celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+celeritasextra.overlay.light_updates=ライトアップデート無効
 
 # オプショングループ
 celeritasextra.option.group.general=全般

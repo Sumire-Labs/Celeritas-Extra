@@ -77,16 +77,30 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=Если включен
 # Extra Options
 celeritasextra.option.extra.fps=Отоброжать FPS
 celeritasextra.option.extra.fps.tooltip=Отображает текущее значение FPS.
+celeritasextra.option.extra.fps_extended=Расширенная статистика FPS
+celeritasextra.option.extra.fps_extended.tooltip=Если включено, показывает максимальный, средний и минимальный FPS в дополнение к текущему.
 celeritasextra.option.extra.coords=Отоброжать координаты
 celeritasextra.option.extra.coords.tooltip=Отображает координаты игрока.
+celeritasextra.option.extra.overlay_corner=Положение оверлея
+celeritasextra.option.extra.overlay_corner.tooltip=Выберите угол экрана для отображения оверлея FPS и координат.
 celeritasextra.option.extra.reduced_motion=Сокращённая анимация
 celeritasextra.option.extra.reduced_motion.tooltip=Уменьшает эффекты движения для удобства использования.
-celeritasextra.option.extra.instant_sneak=Мнгновеный Присят
-celeritasextra.option.extra.instant_sneak.tooltip=Если включено, камера не будет плавно перемещаться при приседании.
 celeritasextra.option.extra.steady_debug_hud=Частота Обновления F3 Debug HUD
 celeritasextra.option.extra.steady_debug_hud.tooltip=Если этот параметр включен, экран отладки F3 будет обновляться реже, чтобы снизить нагрузку на процессор и повысить частоту кадров в секунду.
 celeritasextra.option.extra.steady_debug_hud_refresh=Интервал Обновления Дисплея F3 - HUD
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Определяет количество переходов между обновлениями экрана отладки по нажатию клавиши F3. Более высокие значения = меньшая частота обновлений = более высокая производительность. Значение по умолчанию - 20 тиков (1 секунда).
+
+# Overlay Corner Options
+celeritasextra.option.overlay_corner.top_left=Верхний левый
+celeritasextra.option.overlay_corner.top_right=Верхний правый
+celeritasextra.option.overlay_corner.bottom_left=Нижний левый
+celeritasextra.option.overlay_corner.bottom_right=Нижний правый
+
+# Overlay Text
+celeritasextra.overlay.fps=%d FPS
+celeritasextra.overlay.fps_extended=(Макс: %d, Сред: %d, Мин: %d)
+celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+celeritasextra.overlay.light_updates=Обновление освещения отключено
 
 # Option Groups
 celeritasextra.option.group.general=Общие Настройки

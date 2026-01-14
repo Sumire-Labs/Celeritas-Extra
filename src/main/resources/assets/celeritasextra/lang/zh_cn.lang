@@ -76,16 +76,30 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=若启用，物品展�
 # 额外选项
 celeritasextra.option.extra.fps=显示 FPS
 celeritasextra.option.extra.fps.tooltip=在界面上显示当前游戏帧率（FPS）。
+celeritasextra.option.extra.fps_extended=扩展 FPS 统计
+celeritasextra.option.extra.fps_extended.tooltip=若启用，除当前 FPS 外，还会显示最高、平均和最低 FPS。
 celeritasextra.option.extra.coords=显示坐标
 celeritasextra.option.extra.coords.tooltip=在界面上显示玩家坐标。
+celeritasextra.option.extra.overlay_corner=界面位置
+celeritasextra.option.extra.overlay_corner.tooltip=选择 FPS 和坐标界面显示的屏幕角落。
 celeritasextra.option.extra.reduced_motion=减少动态效果
 celeritasextra.option.extra.reduced_motion.tooltip=为辅助功能减少动态效果。
-celeritasextra.option.extra.instant_sneak=瞬间潜行
-celeritasextra.option.extra.instant_sneak.tooltip=若启用，潜行时镜头不会平滑移动。
 celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
 celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面的更新频率将降低，以减少 CPU 使用并提高 FPS。
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
+
+# 界面位置选项
+celeritasextra.option.overlay_corner.top_left=左上
+celeritasextra.option.overlay_corner.top_right=右上
+celeritasextra.option.overlay_corner.bottom_left=左下
+celeritasextra.option.overlay_corner.bottom_right=右下
+
+# 界面文本
+celeritasextra.overlay.fps=%d FPS
+celeritasextra.overlay.fps_extended=(最高: %d, 平均: %d, 最低: %d)
+celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+celeritasextra.overlay.light_updates=光照更新已禁用
 
 # 选项分组
 celeritasextra.option.group.general=通用
