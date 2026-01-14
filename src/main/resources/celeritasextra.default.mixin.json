@@ -32,6 +32,9 @@
     "biome_colors.MixinBiomeColorHelper",
     "profiler.MixinTileEntityRendererDispatcher",
     "profiler.MixinRenderManager",
-    "steady_debug_hud.MixinForgeGuiDebugOverlay"
+    "steady_debug_hud.MixinForgeGuiDebugOverlay",
+    "toasts.MixinGuiToast",
+    "toasts.MixinAdvancementToast",
+    "toasts.MixinRecipeToast"
   ]
 }
