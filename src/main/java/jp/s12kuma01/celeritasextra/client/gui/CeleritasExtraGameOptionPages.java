@@ -323,6 +323,7 @@ public class CeleritasExtraGameOptionPages {
     public static OptionPage extra() {
         List<OptionGroup> groups = new ArrayList<>();
 
+        // Overlay settings group
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.fps")))
@@ -333,6 +334,14 @@ public class CeleritasExtraGameOptionPages {
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.fps_extended")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.fps_extended.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, value) -> opts.extraSettings.showFPSExtended = value,
+                                   opts -> opts.extraSettings.showFPSExtended)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.coords")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.coords.tooltip")))
                         .setControl(TickBoxControl::new)
@@ -340,6 +349,19 @@ public class CeleritasExtraGameOptionPages {
                                    opts -> opts.extraSettings.showCoords)
                         .build()
                 )
+                .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.overlay_corner")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.overlay_corner.tooltip")))
+                        .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.OverlayCorner.class,
+                                CeleritasExtraGameOptions.OverlayCorner.values()))
+                        .setBinding((opts, value) -> opts.extraSettings.overlayCorner = value,
+                                   opts -> opts.extraSettings.overlayCorner)
+                        .build()
+                )
+                .build());
+
+        // Other settings group
+        groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.reduced_motion")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.reduced_motion.tooltip")))
@@ -348,7 +370,6 @@ public class CeleritasExtraGameOptionPages {
                                    opts -> opts.extraSettings.reducedMotion)
                         .build()
                 )
-
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud.tooltip")))

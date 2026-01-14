@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
+import net.minecraft.client.resources.I18n;
 
 import java.io.File;
 import java.io.FileReader;
@@ -16,6 +17,26 @@ import java.lang.reflect.Modifier;
  * Stores all game options and settings
  */
 public class CeleritasExtraGameOptions {
+
+    /**
+     * Overlay corner positions for FPS/coordinate display
+     */
+    public enum OverlayCorner {
+        TOP_LEFT("celeritasextra.option.overlay_corner.top_left"),
+        TOP_RIGHT("celeritasextra.option.overlay_corner.top_right"),
+        BOTTOM_LEFT("celeritasextra.option.overlay_corner.bottom_left"),
+        BOTTOM_RIGHT("celeritasextra.option.overlay_corner.bottom_right");
+
+        private final String translationKey;
+
+        OverlayCorner(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
 
     private static final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -117,14 +138,12 @@ public class CeleritasExtraGameOptions {
 
     public static class ExtraSettings {
         public boolean showFps = false;
+        public boolean showFPSExtended = true;
         public boolean showCoords = false;
         public boolean reducedMotion = false;
+        public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
 
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
-        public int fpsOverlayColor = 0xFFFFFF;
-        public int fpsCounterFontScale = 100;
-        public int overlayXPos = 0;
-        public int overlayYPos = 0;
     }
 }
