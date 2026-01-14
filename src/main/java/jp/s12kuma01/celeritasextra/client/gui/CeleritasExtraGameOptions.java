@@ -160,6 +160,7 @@ public class CeleritasExtraGameOptions {
         public boolean showFps = false;
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
+        public boolean ignoreReducedDebugInfo = false;
         public boolean reducedMotion = false;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
         public TextContrast textContrast = TextContrast.SHADOW;

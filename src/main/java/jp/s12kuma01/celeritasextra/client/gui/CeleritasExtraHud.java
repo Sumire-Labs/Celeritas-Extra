@@ -52,7 +52,7 @@ public class CeleritasExtraHud {
         }
 
         // Coordinates display
-        if (settings.showCoords && !mc.gameSettings.reducedDebugInfo) {
+        if (settings.showCoords && (settings.ignoreReducedDebugInfo || !mc.gameSettings.reducedDebugInfo)) {
             EntityPlayer player = mc.player;
             if (player != null) {
                 double x = player.posX;
