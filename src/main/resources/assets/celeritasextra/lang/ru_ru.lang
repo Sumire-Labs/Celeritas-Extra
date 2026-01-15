@@ -1,5 +1,5 @@
 # Celeritas Extra - Российская Локолизация 🪆
-# Based on Embeddium Extra translations
+# Based on Rubidium Extra translations
 
 # Option Pages
 celeritasextra.option.page.animations=Анимации
@@ -151,7 +151,6 @@ celeritasextra.option.render.player_name_tag.tooltip=Если этот пара�
 celeritasextra.option.render.item_frame_name_tag=Имя Рамки Предмета
 celeritasextra.option.render.item_frame_name_tag.tooltip=Если включено, ммя рамок с предметами будут видны.
 
-
 # Extra Options
 celeritasextra.option.extra.fps=Отоброжать FPS
 celeritasextra.option.extra.fps.tooltip=Отображает текущее значение FPS.
@@ -184,8 +183,8 @@ celeritasextra.option.text_contrast.background=Фон
 celeritasextra.option.text_contrast.shadow=Тень
 
 # Overlay Text
-celeritasextra.overlay.fps=%d FPS
-celeritasextra.overlay.fps_extended=(Макс: %d, Сред: %d, Мин: %d)
+celeritasextra.overlay.fps=%s FPS
+celeritasextra.overlay.fps_extended=(Макс: %s, Сред: %s, Мин: %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Обновление освещения отключено
 
@@ -197,3 +196,17 @@ celeritasextra.option.group.entities=Сущности
 celeritasextra.option.group.blocks=Болочьные Сущности
 celeritasextra.option.group.environment=Окружающая среда
 celeritasextra.option.group.overlays=Оверлей
+
+# Настройки Отсечения Листвы
+celeritasextra.option.leaf_culling.enabled=Отсечение листьев
+celeritasextra.option.leaf_culling.enabled.tooltip=Включить или отключить отсечение листьев. Если отключено, будут отрисовываться все стороны (грани) листвы (поведение как в ваниле).
+celeritasextra.option.leaf_culling.preset=Режим отсечения
+celeritasextra.option.leaf_culling.preset.tooltip=Выберите предустановленный режим: Быстро (максимальная производительность), Сбалансированный (по умолчанию), Качество (наилучшее качество) или Пользовательский (ручные настройки).
+celeritasextra.option.leaf_culling.preset.fast=Быстро
+celeritasextra.option.leaf_culling.preset.balanced=Сбалансированный
+celeritasextra.option.leaf_culling.preset.quality=Качество
+celeritasextra.option.leaf_culling.preset.custom=Пользовательский
+celeritasextra.option.leaf_culling.depth=Глубина отсечения
+celeritasextra.option.leaf_culling.depth.tooltip=Максимальная глубина видимых слоёв листвы. Чем выше значение, тем больше листьев отображается. Активно только в Пользовательском режиме.
+celeritasextra.option.leaf_culling.random_rejection=Случайное отбрасывание
+celeritasextra.option.leaf_culling.random_rejection.tooltip=Вероятность случайного отображения скрытых листьев для более естественного вида. Активно только в Пользовательском режиме.
