@@ -15,7 +15,7 @@ import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 public class CeleritasExtraMod {
     public static final String MOD_ID = "celeritasextra";
     public static final String MOD_NAME = "Celeritas Extra";
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.2.1";
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
