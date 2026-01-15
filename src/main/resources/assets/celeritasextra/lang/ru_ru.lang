@@ -1,5 +1,5 @@
 # Celeritas Extra - Российская Локолизация 🪆
-# Based on Embeddium Extra translations
+# Based on Rubidium Extra translations
 
 # Option Pages
 celeritasextra.option.page.animations=Анимации
@@ -183,8 +183,8 @@ celeritasextra.option.text_contrast.background=Фон
 celeritasextra.option.text_contrast.shadow=Тень
 
 # Overlay Text
-celeritasextra.overlay.fps=%d FPS
-celeritasextra.overlay.fps_extended=(Макс: %d, Сред: %d, Мин: %d)
+celeritasextra.overlay.fps=%s FPS
+celeritasextra.overlay.fps_extended=(Макс: %s, Сред: %s, Мин: %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Обновление освещения отключено
 
@@ -198,7 +198,7 @@ celeritasextra.option.group.environment=Окружающая среда
 celeritasextra.option.group.overlays=Оверлей
 
 # Настройки Отсечения Листвы
-celeritasextra.option.leaf_culling.enabled=отсечение листьев
+celeritasextra.option.leaf_culling.enabled=Отсечение листьев
 celeritasextra.option.leaf_culling.enabled.tooltip=Включить или отключить отсечение листьев. Если отключено, будут отрисовываться все стороны (грани) листвы (поведение как в ваниле).
 celeritasextra.option.leaf_culling.preset=Режим отсечения
 celeritasextra.option.leaf_culling.preset.tooltip=Выберите предустановленный режим: Быстро (максимальная производительность), Сбалансированный (по умолчанию), Качество (наилучшее качество) или Пользовательский (ручные настройки).
