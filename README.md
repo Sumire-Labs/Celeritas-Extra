@@ -1,6 +1,6 @@
 # Celeritas Extra
 
-This is an unofficial backport of Sodium Extra for Celestis 12.2 (Cleanroom Loader).
+This is an unofficial backport of Sodium Extra for Celeritas 12.2 (Cleanroom Loader).
 Additionally, several custom enhancements are being implemented.
 
 ## Description
