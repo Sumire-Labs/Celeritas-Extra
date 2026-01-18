@@ -10,6 +10,7 @@
   "server": [],
   "client": [
     "animation.MixinTextureMap",
+    "light_updates.MixinWorld",
     "particle.MixinParticleManager",
     "particle.MixinParticleFirework",
     "particle.MixinRenderGlobal",
