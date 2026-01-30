@@ -198,17 +198,3 @@ celeritasextra.option.group.entities=Сущности
 celeritasextra.option.group.blocks=Болочьные Сущности
 celeritasextra.option.group.environment=Окружающая среда
 celeritasextra.option.group.overlays=Оверлей
-
-# Настройки Отсечения Листвы
-celeritasextra.option.leaf_culling.enabled=Отсечение листьев
-celeritasextra.option.leaf_culling.enabled.tooltip=Включить или отключить отсечение листьев. Если отключено, будут отрисовываться все стороны (грани) листвы (поведение как в ваниле).
-celeritasextra.option.leaf_culling.preset=Режим отсечения
-celeritasextra.option.leaf_culling.preset.tooltip=Выберите предустановленный режим: Быстро (максимальная производительность), Сбалансированный (по умолчанию), Качество (наилучшее качество) или Пользовательский (ручные настройки).
-celeritasextra.option.leaf_culling.preset.fast=Быстро
-celeritasextra.option.leaf_culling.preset.balanced=Сбалансированный
-celeritasextra.option.leaf_culling.preset.quality=Качество
-celeritasextra.option.leaf_culling.preset.custom=Пользовательский
-celeritasextra.option.leaf_culling.depth=Глубина отсечения
-celeritasextra.option.leaf_culling.depth.tooltip=Максимальная глубина видимых слоёв листвы. Чем выше значение, тем больше листьев отображается. Активно только в Пользовательском режиме.
-celeritasextra.option.leaf_culling.random_rejection=Случайное отбрасывание
-celeritasextra.option.leaf_culling.random_rejection.tooltip=Вероятность случайного отображения скрытых листьев для более естественного вида. Активно только в Пользовательском режиме.
