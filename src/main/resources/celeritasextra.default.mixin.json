@@ -33,7 +33,6 @@
     "biome_colors.MixinBiomeColorHelper",
     "profiler.MixinTileEntityRendererDispatcher",
     "profiler.MixinRenderManager",
-    "steady_debug_hud.MixinForgeGuiDebugOverlay",
-    "leaf_culling.MixinBlockLeaves"
+    "steady_debug_hud.MixinForgeGuiDebugOverlay"
   ]
 }
