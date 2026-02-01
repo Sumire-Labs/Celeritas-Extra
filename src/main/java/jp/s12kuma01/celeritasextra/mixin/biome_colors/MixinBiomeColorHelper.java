@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * Biome color control - disable biome-specific colors
  * Port of embeddium-extra's biome_colors.MixinBiomeColors
- *
+ * <p>
  * In 1.20.1: BiomeColors class
  * In 1.12.2: BiomeColorHelper class
- *
+ * <p>
  * Default colors:
  * - Grass: 9551193 (0x91BD59)
  * - Water: 4159204 (0x3F76E4)
@@ -26,9 +26,9 @@ public class MixinBiomeColorHelper {
      * Override grass color with default value when biome colors are disabled
      */
     @Inject(
-        method = "getGrassColorAtPos",
-        at = @At("RETURN"),
-        cancellable = true
+            method = "getGrassColorAtPos",
+            at = @At("RETURN"),
+            cancellable = true
     )
     private static void overrideGrassColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
@@ -40,9 +40,9 @@ public class MixinBiomeColorHelper {
      * Override water color with default value when biome colors are disabled
      */
     @Inject(
-        method = "getWaterColorAtPos",
-        at = @At("RETURN"),
-        cancellable = true
+            method = "getWaterColorAtPos",
+            at = @At("RETURN"),
+            cancellable = true
     )
     private static void overrideWaterColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
@@ -54,9 +54,9 @@ public class MixinBiomeColorHelper {
      * Override foliage color with default value when biome colors are disabled
      */
     @Inject(
-        method = "getFoliageColorAtPos",
-        at = @At("RETURN"),
-        cancellable = true
+            method = "getFoliageColorAtPos",
+            at = @At("RETURN"),
+            cancellable = true
     )
     private static void overrideFoliageColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {

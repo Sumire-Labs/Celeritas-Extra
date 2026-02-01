@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Reduce F3 debug screen update frequency
  * Port of embeddium-extra's steady_debug_hud.MixinDebugHud
- *
+ * <p>
  * In 1.20.1: Forge's ForgeGui$ForgeDebugScreenOverlay
  * In 1.12.2: Forge's GuiIngameForge (debug rendering is built into GuiIngame)
- *
+ * <p>
  * This reduces CPU usage by caching debug strings and only updating them periodically
  * Default refresh interval is 20 ticks (1 second)
  */
@@ -37,9 +37,9 @@ public abstract class MixinForgeGuiDebugOverlay {
      * Control when to rebuild debug text
      */
     @Inject(
-        method = "renderDebugInfo",
-        at = @At("HEAD"),
-        remap = false
+            method = "renderDebugInfo",
+            at = @At("HEAD"),
+            remap = false
     )
     private void beforeRenderDebugInfo(int width, CallbackInfo ci) {
         if (CeleritasExtraClientMod.options().extraSettings.steadyDebugHud) {
@@ -47,7 +47,7 @@ public abstract class MixinForgeGuiDebugOverlay {
             if (currentTime > this.celeritasExtra$nextTime) {
                 this.celeritasExtra$rebuild = true;
                 this.celeritasExtra$nextTime = currentTime +
-                    (CeleritasExtraClientMod.options().extraSettings.steadyDebugHudRefreshInterval * 50L);
+                        (CeleritasExtraClientMod.options().extraSettings.steadyDebugHudRefreshInterval * 50L);
             } else {
                 this.celeritasExtra$rebuild = false;
             }
@@ -60,10 +60,10 @@ public abstract class MixinForgeGuiDebugOverlay {
      * Cache left side debug text
      */
     @Inject(
-        method = "getDebugInfoLeft",
-        at = @At("HEAD"),
-        cancellable = true,
-        remap = false
+            method = "getDebugInfoLeft",
+            at = @At("HEAD"),
+            cancellable = true,
+            remap = false
     )
     private void beforeGetLeftDebugText(CallbackInfoReturnable<List<String>> cir) {
         if (!this.celeritasExtra$rebuild) {
@@ -72,9 +72,9 @@ public abstract class MixinForgeGuiDebugOverlay {
     }
 
     @Inject(
-        method = "getDebugInfoLeft",
-        at = @At("RETURN"),
-        remap = false
+            method = "getDebugInfoLeft",
+            at = @At("RETURN"),
+            remap = false
     )
     private void afterGetLeftDebugText(CallbackInfoReturnable<List<String>> cir) {
         if (this.celeritasExtra$rebuild) {
@@ -87,10 +87,10 @@ public abstract class MixinForgeGuiDebugOverlay {
      * Cache right side debug text
      */
     @Inject(
-        method = "getDebugInfoRight",
-        at = @At("HEAD"),
-        cancellable = true,
-        remap = false
+            method = "getDebugInfoRight",
+            at = @At("HEAD"),
+            cancellable = true,
+            remap = false
     )
     private void beforeGetRightDebugText(CallbackInfoReturnable<List<String>> cir) {
         if (!this.celeritasExtra$rebuild) {
@@ -99,9 +99,9 @@ public abstract class MixinForgeGuiDebugOverlay {
     }
 
     @Inject(
-        method = "getDebugInfoRight",
-        at = @At("RETURN"),
-        remap = false
+            method = "getDebugInfoRight",
+            at = @At("RETURN"),
+            remap = false
     )
     private void afterGetRightDebugText(CallbackInfoReturnable<List<String>> cir) {
         if (this.celeritasExtra$rebuild) {

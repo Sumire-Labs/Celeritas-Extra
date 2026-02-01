@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 /**
  * Fog falloff control - adjusts fog start and end distances
  * Port of embeddium-extra's fog_falloff.MixinBackgroundRenderer
- *
+ * <p>
  * In 1.20.1: RenderSystem.setShaderFogStart/End()
  * In 1.12.2: GlStateManager.setFogStart/End()
  */
@@ -24,12 +24,12 @@ public class MixinEntityRendererFogFalloff {
      * fogStart > 100 means fog starts farther (less foggy)
      */
     @ModifyArg(
-        method = "setupFog",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GlStateManager;setFogStart(F)V"
-        ),
-        index = 0
+            method = "setupFog",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/GlStateManager;setFogStart(F)V"
+            ),
+            index = 0
     )
     private float modifyFogStart(float original) {
         // If fog type is OFF, push fog start very far
@@ -55,12 +55,12 @@ public class MixinEntityRendererFogFalloff {
      * fogDistance > 0 means use specified chunk distance
      */
     @ModifyArg(
-        method = "setupFog",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GlStateManager;setFogEnd(F)V"
-        ),
-        index = 0
+            method = "setupFog",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/GlStateManager;setFogEnd(F)V"
+            ),
+            index = 0
     )
     private float modifyFogEnd(float original) {
         // If fog type is OFF, push fog end very far

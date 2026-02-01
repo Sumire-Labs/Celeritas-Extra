@@ -25,7 +25,7 @@ public class MixinParticleManager {
     @Inject(method = "addBlockDestroyEffects", at = @At("HEAD"), cancellable = true)
     public void addBlockDestroyEffects(BlockPos pos, IBlockState state, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles ||
-            !CeleritasExtraClientMod.options().particleSettings.blockBreak) {
+                !CeleritasExtraClientMod.options().particleSettings.blockBreak) {
             ci.cancel();
         }
     }
@@ -36,7 +36,7 @@ public class MixinParticleManager {
     @Inject(method = "addBlockHitEffects(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;)V", at = @At("HEAD"), cancellable = true)
     public void addBlockHitEffects(BlockPos pos, EnumFacing side, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles ||
-            !CeleritasExtraClientMod.options().particleSettings.blockBreaking) {
+                !CeleritasExtraClientMod.options().particleSettings.blockBreaking) {
             ci.cancel();
         }
     }
@@ -47,8 +47,8 @@ public class MixinParticleManager {
      */
     @Inject(method = "spawnEffectParticle", at = @At("HEAD"), cancellable = true)
     public void spawnEffectParticle(int particleId, double x, double y, double z,
-                                     double xSpeed, double ySpeed, double zSpeed,
-                                     int[] parameters, CallbackInfoReturnable<Particle> cir) {
+                                    double xSpeed, double ySpeed, double zSpeed,
+                                    int[] parameters, CallbackInfoReturnable<Particle> cir) {
         if (!CeleritasExtraClientMod.options().particleSettings.isParticleEnabled(particleId)) {
             cir.setReturnValue(null);
         }

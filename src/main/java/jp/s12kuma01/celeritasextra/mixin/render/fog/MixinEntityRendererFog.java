@@ -20,9 +20,9 @@ public class MixinEntityRendererFog {
      * This cancels the fog setup, effectively disabling fog
      */
     @Inject(
-        method = "setupFog",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "setupFog",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void setupFog(int startCoords, float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.fog) {

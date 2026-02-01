@@ -12,7 +12,8 @@ You can obtain Celeritas from this AutoBuild repository maintained by kappa-main
 
 ## Description
 
-Celeritas Extra is a comprehensive unofficial backport of Sodium Extra/Embeddium Extra, specifically targeting Celeritas 1.12.2, along with several additional features.
+Celeritas Extra is a comprehensive unofficial backport of Sodium Extra/Embeddium Extra, specifically targeting Celeritas
+1.12.2, along with several additional features.
 
 ## Requirements
 

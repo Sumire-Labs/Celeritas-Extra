@@ -20,11 +20,11 @@ public class MixinRenderGlobalStars {
      * In 1.12.2, stars are rendered based on getStarBrightness
      */
     @WrapOperation(
-        method = "renderSky(FI)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/World;getStarBrightness(F)F"
-        )
+            method = "renderSky(FI)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;getStarBrightness(F)F"
+            )
     )
     private float wrapGetStarBrightness(World world, float partialTicks, Operation<Float> original) {
         if (!CeleritasExtraClientMod.options().detailSettings.stars) {

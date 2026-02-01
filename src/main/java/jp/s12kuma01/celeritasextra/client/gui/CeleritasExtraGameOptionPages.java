@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.client.gui;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
+import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.options.control.ControlValueFormatter;
 import org.taumc.celeritas.api.options.control.CyclingControl;
 import org.taumc.celeritas.api.options.control.SliderControl;
@@ -10,7 +11,6 @@ import org.taumc.celeritas.api.options.structure.OptionFlag;
 import org.taumc.celeritas.api.options.structure.OptionGroup;
 import org.taumc.celeritas.api.options.structure.OptionImpl;
 import org.taumc.celeritas.api.options.structure.OptionPage;
-import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.all.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.animation = value,
-                                   opts -> opts.animationSettings.animation)
+                                opts -> opts.animationSettings.animation)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -48,7 +48,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.water.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.water = value,
-                                   opts -> opts.animationSettings.water)
+                                opts -> opts.animationSettings.water)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -57,7 +57,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.lava.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.lava = value,
-                                   opts -> opts.animationSettings.lava)
+                                opts -> opts.animationSettings.lava)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -66,7 +66,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.fire.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.fire = value,
-                                   opts -> opts.animationSettings.fire)
+                                opts -> opts.animationSettings.fire)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -75,7 +75,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.portal.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.portal = value,
-                                   opts -> opts.animationSettings.portal)
+                                opts -> opts.animationSettings.portal)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -84,7 +84,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.block.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.animationSettings.blockAnimations = value,
-                                   opts -> opts.animationSettings.blockAnimations)
+                                opts -> opts.animationSettings.blockAnimations)
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                         .build()
                 )
@@ -106,7 +106,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.all.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.particles = value,
-                                   opts -> opts.particleSettings.particles)
+                                opts -> opts.particleSettings.particles)
                         .build()
                 )
                 .build());
@@ -118,7 +118,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.rain_splash.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.rainSplash = value,
-                                   opts -> opts.particleSettings.rainSplash)
+                                opts -> opts.particleSettings.rainSplash)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -126,7 +126,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.block_break.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.blockBreak = value,
-                                   opts -> opts.particleSettings.blockBreak)
+                                opts -> opts.particleSettings.blockBreak)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -134,7 +134,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.block_breaking.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.blockBreaking = value,
-                                   opts -> opts.particleSettings.blockBreaking)
+                                opts -> opts.particleSettings.blockBreaking)
                         .build()
                 )
                 .build());
@@ -146,7 +146,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.explosion.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.explosion = value,
-                                   opts -> opts.particleSettings.explosion)
+                                opts -> opts.particleSettings.explosion)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -154,7 +154,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.crit.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.crit = value,
-                                   opts -> opts.particleSettings.crit)
+                                opts -> opts.particleSettings.crit)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -162,7 +162,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.damage_indicator.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.damageIndicator = value,
-                                   opts -> opts.particleSettings.damageIndicator)
+                                opts -> opts.particleSettings.damageIndicator)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -170,7 +170,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.sweep_attack.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.sweepAttack = value,
-                                   opts -> opts.particleSettings.sweepAttack)
+                                opts -> opts.particleSettings.sweepAttack)
                         .build()
                 )
                 .build());
@@ -182,7 +182,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.spell.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.spell = value,
-                                   opts -> opts.particleSettings.spell)
+                                opts -> opts.particleSettings.spell)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -190,7 +190,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.enchantment_table.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.enchantmentTable = value,
-                                   opts -> opts.particleSettings.enchantmentTable)
+                                opts -> opts.particleSettings.enchantmentTable)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -198,7 +198,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.portal.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.portal = value,
-                                   opts -> opts.particleSettings.portal)
+                                opts -> opts.particleSettings.portal)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -206,7 +206,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.end_rod.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.endRod = value,
-                                   opts -> opts.particleSettings.endRod)
+                                opts -> opts.particleSettings.endRod)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -214,7 +214,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.totem.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.totem = value,
-                                   opts -> opts.particleSettings.totem)
+                                opts -> opts.particleSettings.totem)
                         .build()
                 )
                 .build());
@@ -226,7 +226,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.water.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.water = value,
-                                   opts -> opts.particleSettings.water)
+                                opts -> opts.particleSettings.water)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -234,7 +234,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.drip.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.drip = value,
-                                   opts -> opts.particleSettings.drip)
+                                opts -> opts.particleSettings.drip)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -242,7 +242,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.smoke.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.smoke = value,
-                                   opts -> opts.particleSettings.smoke)
+                                opts -> opts.particleSettings.smoke)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -250,7 +250,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.flame.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.flame = value,
-                                   opts -> opts.particleSettings.flame)
+                                opts -> opts.particleSettings.flame)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -258,7 +258,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.cloud.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.cloud = value,
-                                   opts -> opts.particleSettings.cloud)
+                                opts -> opts.particleSettings.cloud)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -266,7 +266,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.falling_dust.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.fallingDust = value,
-                                   opts -> opts.particleSettings.fallingDust)
+                                opts -> opts.particleSettings.fallingDust)
                         .build()
                 )
                 .build());
@@ -278,7 +278,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.fireworks.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.fireworks = value,
-                                   opts -> opts.particleSettings.fireworks)
+                                opts -> opts.particleSettings.fireworks)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -286,7 +286,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.note.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.note = value,
-                                   opts -> opts.particleSettings.note)
+                                opts -> opts.particleSettings.note)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -294,7 +294,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.heart.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.heart = value,
-                                   opts -> opts.particleSettings.heart)
+                                opts -> opts.particleSettings.heart)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -302,7 +302,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.villager.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.villager = value,
-                                   opts -> opts.particleSettings.villager)
+                                opts -> opts.particleSettings.villager)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -310,7 +310,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.redstone.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.redstone = value,
-                                   opts -> opts.particleSettings.redstone)
+                                opts -> opts.particleSettings.redstone)
                         .build()
                 )
                 .build());
@@ -322,7 +322,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.suspended.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.suspended = value,
-                                   opts -> opts.particleSettings.suspended)
+                                opts -> opts.particleSettings.suspended)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -330,7 +330,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.town_aura.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.townAura = value,
-                                   opts -> opts.particleSettings.townAura)
+                                opts -> opts.particleSettings.townAura)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -338,7 +338,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.snowball.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.snowball = value,
-                                   opts -> opts.particleSettings.snowball)
+                                opts -> opts.particleSettings.snowball)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -346,7 +346,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.slime.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.slime = value,
-                                   opts -> opts.particleSettings.slime)
+                                opts -> opts.particleSettings.slime)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -354,7 +354,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.item_crack.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.itemCrack = value,
-                                   opts -> opts.particleSettings.itemCrack)
+                                opts -> opts.particleSettings.itemCrack)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -362,7 +362,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.barrier.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.barrier = value,
-                                   opts -> opts.particleSettings.barrier)
+                                opts -> opts.particleSettings.barrier)
                         .build()
                 )
                 .build());
@@ -374,7 +374,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.dragon_breath.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.dragonBreath = value,
-                                   opts -> opts.particleSettings.dragonBreath)
+                                opts -> opts.particleSettings.dragonBreath)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -382,7 +382,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.mob_appearance.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.mobAppearance = value,
-                                   opts -> opts.particleSettings.mobAppearance)
+                                opts -> opts.particleSettings.mobAppearance)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -390,7 +390,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.particles.spit.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.particleSettings.spit = value,
-                                   opts -> opts.particleSettings.spit)
+                                opts -> opts.particleSettings.spit)
                         .build()
                 )
                 .build());
@@ -410,7 +410,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.details.sky.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.detailSettings.sky = value,
-                                   opts -> opts.detailSettings.sky)
+                                opts -> opts.detailSettings.sky)
                         .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                         .build()
                 )
@@ -419,7 +419,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.details.stars.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.detailSettings.stars = value,
-                                   opts -> opts.detailSettings.stars)
+                                opts -> opts.detailSettings.stars)
                         .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                         .build()
                 )
@@ -428,7 +428,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.details.sun_moon.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.detailSettings.sunMoon = value,
-                                   opts -> opts.detailSettings.sunMoon)
+                                opts -> opts.detailSettings.sunMoon)
                         .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                         .build()
                 )
@@ -437,7 +437,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.details.rain_snow.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.detailSettings.rainSnow = value,
-                                   opts -> opts.detailSettings.rainSnow)
+                                opts -> opts.detailSettings.rainSnow)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -445,7 +445,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.details.biome_colors.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.detailSettings.biomeColors = value,
-                                   opts -> opts.detailSettings.biomeColors)
+                                opts -> opts.detailSettings.biomeColors)
                         .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                         .build()
                 )
@@ -466,7 +466,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.fog = value,
-                                   opts -> opts.renderSettings.fog)
+                                opts -> opts.renderSettings.fog)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
@@ -474,7 +474,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_start.tooltip")))
                         .setControl(option -> new SliderControl(option, 0, 200, 10, ControlValueFormatter.percentage()))
                         .setBinding((opts, value) -> opts.renderSettings.fogStart = value,
-                                   opts -> opts.renderSettings.fogStart)
+                                opts -> opts.renderSettings.fogStart)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
@@ -482,19 +482,19 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_distance.tooltip")))
                         .setControl(option -> new SliderControl(option, 0, 32, 1, ControlValueFormatter.quantityOrDisabled("chunks", "Default")))
                         .setBinding((opts, value) -> opts.renderSettings.fogDistance = value,
-                                   opts -> opts.renderSettings.fogDistance)
+                                opts -> opts.renderSettings.fogDistance)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.FogType.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_type")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.fog_type.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.FogType.class,
-                                new TextComponent[] {
-                                    TextComponent.literal(CeleritasExtraGameOptions.FogType.DEFAULT.getLocalizedName()),
-                                    TextComponent.literal(CeleritasExtraGameOptions.FogType.OFF.getLocalizedName())
+                                new TextComponent[]{
+                                        TextComponent.literal(CeleritasExtraGameOptions.FogType.DEFAULT.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.FogType.OFF.getLocalizedName())
                                 }))
                         .setBinding((opts, value) -> opts.renderSettings.fogType = value,
-                                   opts -> opts.renderSettings.fogType)
+                                opts -> opts.renderSettings.fogType)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -502,7 +502,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.prevent_shaders.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.preventShaders = value,
-                                   opts -> opts.renderSettings.preventShaders)
+                                opts -> opts.renderSettings.preventShaders)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -510,7 +510,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.clouds.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.clouds = value,
-                                   opts -> opts.renderSettings.clouds)
+                                opts -> opts.renderSettings.clouds)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
@@ -518,7 +518,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.cloud_height.tooltip")))
                         .setControl(option -> new SliderControl(option, 0, 384, 16, ControlValueFormatter.number()))
                         .setBinding((opts, value) -> opts.renderSettings.cloudHeight = value,
-                                   opts -> opts.renderSettings.cloudHeight)
+                                opts -> opts.renderSettings.cloudHeight)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -526,7 +526,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.light_updates.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.lightUpdates = value,
-                                   opts -> opts.renderSettings.lightUpdates)
+                                opts -> opts.renderSettings.lightUpdates)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -534,7 +534,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.item_frames.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.itemFrames = value,
-                                   opts -> opts.renderSettings.itemFrames)
+                                opts -> opts.renderSettings.itemFrames)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -542,7 +542,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.armor_stands.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.armorStands = value,
-                                   opts -> opts.renderSettings.armorStands)
+                                opts -> opts.renderSettings.armorStands)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -550,7 +550,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.paintings.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.paintings = value,
-                                   opts -> opts.renderSettings.paintings)
+                                opts -> opts.renderSettings.paintings)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -558,7 +558,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.beacons.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.beacons = value,
-                                   opts -> opts.renderSettings.beacons)
+                                opts -> opts.renderSettings.beacons)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -566,7 +566,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.limit_beacon_beam_height.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.limitBeaconBeamHeight = value,
-                                   opts -> opts.renderSettings.limitBeaconBeamHeight)
+                                opts -> opts.renderSettings.limitBeaconBeamHeight)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -574,7 +574,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.pistons.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.pistons = value,
-                                   opts -> opts.renderSettings.pistons)
+                                opts -> opts.renderSettings.pistons)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -582,7 +582,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.enchanting_books.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.enchantingTableBooks = value,
-                                   opts -> opts.renderSettings.enchantingTableBooks)
+                                opts -> opts.renderSettings.enchantingTableBooks)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -590,7 +590,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.player_name_tag.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.playerNameTag = value,
-                                   opts -> opts.renderSettings.playerNameTag)
+                                opts -> opts.renderSettings.playerNameTag)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -598,7 +598,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.item_frame_name_tag.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.renderSettings.itemFrameNameTag = value,
-                                   opts -> opts.renderSettings.itemFrameNameTag)
+                                opts -> opts.renderSettings.itemFrameNameTag)
                         .build()
                 )
                 .build());
@@ -619,7 +619,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.fps.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.showFps = value,
-                                   opts -> opts.extraSettings.showFps)
+                                opts -> opts.extraSettings.showFps)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -627,7 +627,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.fps_extended.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.showFPSExtended = value,
-                                   opts -> opts.extraSettings.showFPSExtended)
+                                opts -> opts.extraSettings.showFPSExtended)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -635,7 +635,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.coords.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.showCoords = value,
-                                   opts -> opts.extraSettings.showCoords)
+                                opts -> opts.extraSettings.showCoords)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -643,7 +643,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.ignore_reduced_debug_info.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.ignoreReducedDebugInfo = value,
-                                   opts -> opts.extraSettings.ignoreReducedDebugInfo)
+                                opts -> opts.extraSettings.ignoreReducedDebugInfo)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
@@ -652,7 +652,7 @@ public class CeleritasExtraGameOptionPages {
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.OverlayCorner.class,
                                 CeleritasExtraGameOptions.OverlayCorner.values()))
                         .setBinding((opts, value) -> opts.extraSettings.overlayCorner = value,
-                                   opts -> opts.extraSettings.overlayCorner)
+                                opts -> opts.extraSettings.overlayCorner)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.TextContrast.class, celeritasExtraOpts)
@@ -661,7 +661,7 @@ public class CeleritasExtraGameOptionPages {
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
                                 CeleritasExtraGameOptions.TextContrast.values()))
                         .setBinding((opts, value) -> opts.extraSettings.textContrast = value,
-                                   opts -> opts.extraSettings.textContrast)
+                                opts -> opts.extraSettings.textContrast)
                         .build()
                 )
                 .build());
@@ -673,7 +673,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.reduced_motion.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.reducedMotion = value,
-                                   opts -> opts.extraSettings.reducedMotion)
+                                opts -> opts.extraSettings.reducedMotion)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
@@ -681,7 +681,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud.tooltip")))
                         .setControl(TickBoxControl::new)
                         .setBinding((opts, value) -> opts.extraSettings.steadyDebugHud = value,
-                                   opts -> opts.extraSettings.steadyDebugHud)
+                                opts -> opts.extraSettings.steadyDebugHud)
                         .build()
                 )
                 .add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
@@ -689,7 +689,7 @@ public class CeleritasExtraGameOptionPages {
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.steady_debug_hud_refresh.tooltip")))
                         .setControl(option -> new SliderControl(option, 1, 60, 1, ControlValueFormatter.number()))
                         .setBinding((opts, value) -> opts.extraSettings.steadyDebugHudRefreshInterval = value,
-                                   opts -> opts.extraSettings.steadyDebugHudRefreshInterval)
+                                opts -> opts.extraSettings.steadyDebugHudRefreshInterval)
                         .build()
                 )
                 .build());

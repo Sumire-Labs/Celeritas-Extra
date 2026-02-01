@@ -2,7 +2,6 @@ package jp.s12kuma01.celeritasextra.mixin.render.weather;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,9 +19,9 @@ public class MixinEntityRenderer {
      * Method signature for 1.12.2: renderRainSnow(float partialTicks)
      */
     @Inject(
-        method = "renderRainSnow",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "renderRainSnow",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void renderRainSnow(float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().detailSettings.rainSnow) {

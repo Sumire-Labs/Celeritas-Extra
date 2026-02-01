@@ -1,6 +1,5 @@
 package jp.s12kuma01.celeritasextra;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -11,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 
 @Mod(modid = CeleritasExtraMod.MOD_ID, name = CeleritasExtraMod.MOD_NAME, version = CeleritasExtraMod.VERSION,
-     clientSideOnly = true, acceptableRemoteVersions = "*")
+        clientSideOnly = true, acceptableRemoteVersions = "*")
 public class CeleritasExtraMod {
     public static final String MOD_ID = "celeritasextra";
     public static final String MOD_NAME = "Celeritas Extra";

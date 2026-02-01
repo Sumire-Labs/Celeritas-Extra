@@ -16,9 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderPainting {
 
     @Inject(
-        method = "doRender(Lnet/minecraft/entity/item/EntityPainting;DDDFF)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "doRender(Lnet/minecraft/entity/item/EntityPainting;DDDFF)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     public void doRender(EntityPainting entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.paintings) {

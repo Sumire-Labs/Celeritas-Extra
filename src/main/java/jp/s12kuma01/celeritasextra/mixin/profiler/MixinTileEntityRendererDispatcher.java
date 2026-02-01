@@ -1,7 +1,7 @@
 package jp.s12kuma01.celeritasextra.mixin.profiler;
 
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,10 +15,10 @@ import java.util.WeakHashMap;
 /**
  * Add profiler sections for block entity rendering
  * Port of embeddium-extra's profiler.MixinBlockEntityRenderDispatcher
- *
+ * <p>
  * In 1.20.1: BlockEntityRenderDispatcher.render()
  * In 1.12.2: TileEntityRendererDispatcher.render()
- *
+ * <p>
  * This helps identify rendering performance bottlenecks in F3 profiler
  */
 @Mixin(TileEntityRendererDispatcher.class)
@@ -31,8 +31,8 @@ public class MixinTileEntityRendererDispatcher {
      * Push profiler section before rendering block entity
      */
     @Inject(
-        method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
-        at = @At("HEAD")
+            method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
+            at = @At("HEAD")
     )
     private void beforeRender(TileEntity tileEntity, double x, double y, double z, float partialTicks, int destroyStage, CallbackInfo ci) {
         World world = tileEntity.getWorld();
@@ -51,8 +51,8 @@ public class MixinTileEntityRendererDispatcher {
      * Pop profiler section after rendering block entity
      */
     @Inject(
-        method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
-        at = @At("TAIL")
+            method = "render(Lnet/minecraft/tileentity/TileEntity;DDDFI)V",
+            at = @At("TAIL")
     )
     private void afterRender(TileEntity tileEntity, double x, double y, double z, float partialTicks, int destroyStage, CallbackInfo ci) {
         World world = tileEntity.getWorld();
