@@ -20,7 +20,7 @@ public class MixinRenderGlobal {
     @Inject(method = "addRainParticles", at = @At("HEAD"), cancellable = true)
     private void addRainParticles(CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles ||
-            !CeleritasExtraClientMod.options().particleSettings.rainSplash) {
+                !CeleritasExtraClientMod.options().particleSettings.rainSplash) {
             ci.cancel();
         }
     }

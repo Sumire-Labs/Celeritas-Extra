@@ -19,9 +19,9 @@ public class MixinRenderGlobalSky {
      * In 1.12.2, sky rendering is in renderSky method
      */
     @Inject(
-        method = "renderSky(FI)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "renderSky(FI)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void renderSky(float partialTicks, int pass, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().detailSettings.sky) {

@@ -19,71 +19,12 @@ public class CeleritasExtraGameOptions {
     private static final String CAT_DETAIL = "detail";
     private static final String CAT_RENDER = "render";
     private static final String CAT_EXTRA = "extra";
-
-    /**
-     * Overlay corner positions for FPS/coordinate display
-     */
-    public enum OverlayCorner {
-        TOP_LEFT("celeritasextra.option.overlay_corner.top_left"),
-        TOP_RIGHT("celeritasextra.option.overlay_corner.top_right"),
-        BOTTOM_LEFT("celeritasextra.option.overlay_corner.bottom_left"),
-        BOTTOM_RIGHT("celeritasextra.option.overlay_corner.bottom_right");
-
-        private final String translationKey;
-
-        OverlayCorner(String translationKey) {
-            this.translationKey = translationKey;
-        }
-
-        public String getLocalizedName() {
-            return I18n.format(this.translationKey);
-        }
-    }
-
-    /**
-     * Text contrast options for overlay readability
-     */
-    public enum TextContrast {
-        NONE("celeritasextra.option.text_contrast.none"),
-        BACKGROUND("celeritasextra.option.text_contrast.background"),
-        SHADOW("celeritasextra.option.text_contrast.shadow");
-
-        private final String translationKey;
-
-        TextContrast(String translationKey) {
-            this.translationKey = translationKey;
-        }
-
-        public String getLocalizedName() {
-            return I18n.format(this.translationKey);
-        }
-    }
-
-    /**
-     * Fog type options for mod compatibility
-     */
-    public enum FogType {
-        DEFAULT("celeritasextra.option.fog_type.default"),
-        OFF("celeritasextra.option.fog_type.off");
-
-        private final String translationKey;
-
-        FogType(String translationKey) {
-            this.translationKey = translationKey;
-        }
-
-        public String getLocalizedName() {
-            return I18n.format(this.translationKey);
-        }
-    }
-
-    private Configuration config;
-
     public final AnimationSettings animationSettings = new AnimationSettings();
     public final ParticleSettings particleSettings = new ParticleSettings();
     public final DetailSettings detailSettings = new DetailSettings();
     public final RenderSettings renderSettings = new RenderSettings();
     public final ExtraSettings extraSettings = new ExtraSettings();
+    private Configuration config;
 
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions options = new CeleritasExtraGameOptions();
@@ -273,6 +214,63 @@ public class CeleritasExtraGameOptions {
         config.save();
     }
 
+    /**
+     * Overlay corner positions for FPS/coordinate display
+     */
+    public enum OverlayCorner {
+        TOP_LEFT("celeritasextra.option.overlay_corner.top_left"),
+        TOP_RIGHT("celeritasextra.option.overlay_corner.top_right"),
+        BOTTOM_LEFT("celeritasextra.option.overlay_corner.bottom_left"),
+        BOTTOM_RIGHT("celeritasextra.option.overlay_corner.bottom_right");
+
+        private final String translationKey;
+
+        OverlayCorner(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
+    /**
+     * Text contrast options for overlay readability
+     */
+    public enum TextContrast {
+        NONE("celeritasextra.option.text_contrast.none"),
+        BACKGROUND("celeritasextra.option.text_contrast.background"),
+        SHADOW("celeritasextra.option.text_contrast.shadow");
+
+        private final String translationKey;
+
+        TextContrast(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
+    /**
+     * Fog type options for mod compatibility
+     */
+    public enum FogType {
+        DEFAULT("celeritasextra.option.fog_type.default"),
+        OFF("celeritasextra.option.fog_type.off");
+
+        private final String translationKey;
+
+        FogType(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
     // Settings classes
     public static class AnimationSettings {
         public boolean animation = true;
@@ -327,23 +325,37 @@ public class CeleritasExtraGameOptions {
             if (!particles) return false;
 
             switch (particleId) {
-                case 0: case 1: case 2:
+                case 0:
+                case 1:
+                case 2:
                     return explosion;
                 case 3:
                     return fireworks;
-                case 4: case 5: case 6: case 39:
+                case 4:
+                case 5:
+                case 6:
+                case 39:
                     return water;
-                case 7: case 8:
+                case 7:
+                case 8:
                     return suspended;
-                case 9: case 10:
+                case 9:
+                case 10:
                     return crit;
-                case 11: case 12:
+                case 11:
+                case 12:
                     return smoke;
-                case 13: case 14: case 15: case 16: case 17:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
                     return spell;
-                case 18: case 19:
+                case 18:
+                case 19:
                     return drip;
-                case 20: case 21:
+                case 20:
+                case 21:
                     return villager;
                 case 22:
                     return townAura;
@@ -353,13 +365,15 @@ public class CeleritasExtraGameOptions {
                     return portal;
                 case 25:
                     return enchantmentTable;
-                case 26: case 27:
+                case 26:
+                case 27:
                     return flame;
                 case 29:
                     return cloud;
                 case 30:
                     return redstone;
-                case 31: case 32:
+                case 31:
+                case 32:
                     return snowball;
                 case 33:
                     return slime;

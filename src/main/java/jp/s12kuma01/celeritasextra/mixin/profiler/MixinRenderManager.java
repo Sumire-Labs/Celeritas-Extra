@@ -16,27 +16,27 @@ import java.util.WeakHashMap;
 /**
  * Add profiler sections for entity rendering
  * Port of embeddium-extra's profiler.MixinEntityRenderDispatcher
- *
+ * <p>
  * In 1.20.1: EntityRenderDispatcher.render()
  * In 1.12.2: RenderManager.renderEntity()
- *
+ * <p>
  * This helps identify rendering performance bottlenecks in F3 profiler
  */
 @Mixin(RenderManager.class)
 public abstract class MixinRenderManager {
 
-    @Shadow
-    public abstract <T extends Entity> Render<T> getEntityRenderObject(Entity entity);
-
     @Unique
     private static final WeakHashMap<Class<?>, String> celeritasExtra$names = new WeakHashMap<>();
+
+    @Shadow
+    public abstract <T extends Entity> Render<T> getEntityRenderObject(Entity entity);
 
     /**
      * Push profiler section before rendering entity
      */
     @Inject(
-        method = "renderEntity",
-        at = @At("HEAD")
+            method = "renderEntity",
+            at = @At("HEAD")
     )
     private void beforeRenderEntity(Entity entity, double x, double y, double z, float yaw, float partialTicks, boolean debug, CallbackInfo ci) {
         World world = entity.world;
@@ -55,8 +55,8 @@ public abstract class MixinRenderManager {
      * Pop profiler section after rendering entity
      */
     @Inject(
-        method = "renderEntity",
-        at = @At("TAIL")
+            method = "renderEntity",
+            at = @At("TAIL")
     )
     private void afterRenderEntity(Entity entity, double x, double y, double z, float yaw, float partialTicks, boolean debug, CallbackInfo ci) {
         World world = entity.world;

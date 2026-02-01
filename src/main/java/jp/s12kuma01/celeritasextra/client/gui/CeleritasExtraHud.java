@@ -85,9 +85,9 @@ public class CeleritasExtraHud {
 
         // Calculate starting Y position based on corner
         boolean isBottom = corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_LEFT ||
-                          corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
+                corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
         boolean isRight = corner == CeleritasExtraGameOptions.OverlayCorner.TOP_RIGHT ||
-                         corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
+                corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
 
         int y = isBottom ? screenHeight - fontRenderer.FONT_HEIGHT - 2 : 2;
 

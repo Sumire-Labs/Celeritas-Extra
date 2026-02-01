@@ -19,9 +19,9 @@ public class MixinEntityRenderer {
      * Method signature for 1.12.2: renderRainSnow(float partialTicks)
      */
     @Inject(
-        method = "renderRainSnow",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "renderRainSnow",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void renderRainSnow(float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().detailSettings.rainSnow) {

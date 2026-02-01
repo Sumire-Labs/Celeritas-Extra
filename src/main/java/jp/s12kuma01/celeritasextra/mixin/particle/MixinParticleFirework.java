@@ -19,9 +19,9 @@ public class MixinParticleFirework {
      * In 1.12.2, this is in the Starter inner class
      */
     @Inject(
-        method = "onUpdate",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "onUpdate",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void onUpdate(CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles) {

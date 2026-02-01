@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Core loading plugin for Celeritas Extra.
  * Required for early class loading to ensure mixins can be applied to Block classes.
- *
+ * <p>
  * Note: MixinBooter's IEarlyMixinLoader is deprecated in CleanroomLoader.
  * Mixin configs are loaded via the MixinConfigs manifest attribute instead.
  */

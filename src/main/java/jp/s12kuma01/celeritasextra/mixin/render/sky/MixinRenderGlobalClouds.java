@@ -19,9 +19,9 @@ public class MixinRenderGlobalClouds {
      * Control cloud rendering
      */
     @Inject(
-        method = "renderClouds",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "renderClouds",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void renderClouds(float partialTicks, int pass, double x, double y, double z, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.clouds) {

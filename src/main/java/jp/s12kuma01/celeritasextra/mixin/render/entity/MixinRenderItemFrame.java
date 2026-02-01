@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinRenderItemFrame {
 
     @Inject(
-        method = "doRender(Lnet/minecraft/entity/item/EntityItemFrame;DDDFF)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "doRender(Lnet/minecraft/entity/item/EntityItemFrame;DDDFF)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.itemFrames) {
@@ -32,9 +32,9 @@ public class MixinRenderItemFrame {
      * In 1.12.2, RenderItemFrame inherits from Render which has canRenderName method
      */
     @Inject(
-        method = "canRenderName(Lnet/minecraft/entity/item/EntityItemFrame;)Z",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "canRenderName(Lnet/minecraft/entity/item/EntityItemFrame;)Z",
+            at = @At("HEAD"),
+            cancellable = true
     )
     protected void canRenderName(EntityItemFrame entity, CallbackInfoReturnable<Boolean> cir) {
         if (!CeleritasExtraClientMod.options().renderSettings.itemFrameNameTag) {

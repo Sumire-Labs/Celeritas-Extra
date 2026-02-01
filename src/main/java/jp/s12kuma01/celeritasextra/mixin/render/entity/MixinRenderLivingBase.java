@@ -29,9 +29,9 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
      * Armor stands are already handled by MixinRenderArmorStand, but this adds label support
      */
     @Inject(
-        method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (entity instanceof EntityArmorStand && !CeleritasExtraClientMod.options().renderSettings.armorStands) {
@@ -47,9 +47,9 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
      * Control player name tags
      */
     @Inject(
-        method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z",
+            at = @At("HEAD"),
+            cancellable = true
     )
     protected void canRenderName(T entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof AbstractClientPlayer && !CeleritasExtraClientMod.options().renderSettings.playerNameTag) {

@@ -34,11 +34,11 @@ public abstract class MixinTextureMap {
      * Wrap the updateAnimation call on individual sprites to control which ones should animate
      */
     @WrapOperation(
-        method = "updateAnimations",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;updateAnimation()V"
-        )
+            method = "updateAnimations",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;updateAnimation()V"
+            )
     )
     private void celeritasExtra$controlIndividualAnimations(TextureAtlasSprite sprite, Operation<Void> original) {
         // Check if animations are globally disabled
@@ -92,37 +92,37 @@ public abstract class MixinTextureMap {
 
         // Water textures
         map.put(
-            () -> CeleritasExtraClientMod.options().animationSettings.water,
-            List.of("water_still", "water_flow")
+                () -> CeleritasExtraClientMod.options().animationSettings.water,
+                List.of("water_still", "water_flow")
         );
 
         // Lava textures
         map.put(
-            () -> CeleritasExtraClientMod.options().animationSettings.lava,
-            List.of("lava_still", "lava_flow")
+                () -> CeleritasExtraClientMod.options().animationSettings.lava,
+                List.of("lava_still", "lava_flow")
         );
 
         // Portal textures
         map.put(
-            () -> CeleritasExtraClientMod.options().animationSettings.portal,
-            List.of("portal")
+                () -> CeleritasExtraClientMod.options().animationSettings.portal,
+                List.of("portal")
         );
 
         // Fire textures
         map.put(
-            () -> CeleritasExtraClientMod.options().animationSettings.fire,
-            List.of("fire_layer_0", "fire_layer_1")
+                () -> CeleritasExtraClientMod.options().animationSettings.fire,
+                List.of("fire_layer_0", "fire_layer_1")
         );
 
         // Block animations (various animated blocks)
         map.put(
-            () -> CeleritasExtraClientMod.options().animationSettings.blockAnimations,
-            List.of(
-                "magma",
-                "sea_lantern",
-                "prismarine",
-                "kelp"
-            )
+                () -> CeleritasExtraClientMod.options().animationSettings.blockAnimations,
+                List.of(
+                        "magma",
+                        "sea_lantern",
+                        "prismarine",
+                        "kelp"
+                )
         );
 
         return map;

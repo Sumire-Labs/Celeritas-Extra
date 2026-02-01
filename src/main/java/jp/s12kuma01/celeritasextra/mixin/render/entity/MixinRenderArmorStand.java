@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderArmorStand {
 
     @Inject(
-        method = "doRender(Lnet/minecraft/entity/item/EntityArmorStand;DDDFF)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "doRender(Lnet/minecraft/entity/item/EntityArmorStand;DDDFF)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     public void doRender(EntityArmorStand entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.armorStands) {

@@ -22,9 +22,9 @@ public class MixinTileEntityBeaconRenderer {
     private static TileEntityBeacon currentBeacon;
 
     @Inject(
-        method = "render(Lnet/minecraft/tileentity/TileEntityBeacon;DDDFIF)V",
-        at = @At("HEAD"),
-        cancellable = true
+            method = "render(Lnet/minecraft/tileentity/TileEntityBeacon;DDDFIF)V",
+            at = @At("HEAD"),
+            cancellable = true
     )
     public void onRenderHead(TileEntityBeacon te, double x, double y, double z, float partialTicks, int destroyStage, float alpha, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.beacons) {
@@ -42,9 +42,9 @@ public class MixinTileEntityBeaconRenderer {
      * We modify this to limit it to the world height instead.
      */
     @ModifyVariable(
-        method = "render(Lnet/minecraft/tileentity/TileEntityBeacon;DDDFIF)V",
-        at = @At(value = "STORE"),
-        ordinal = 1  // j1 is the second int variable (height)
+            method = "render(Lnet/minecraft/tileentity/TileEntityBeacon;DDDFIF)V",
+            at = @At(value = "STORE"),
+            ordinal = 1  // j1 is the second int variable (height)
     )
     private int modifyBeamHeight(int originalHeight) {
         if (!CeleritasExtraClientMod.options().renderSettings.limitBeaconBeamHeight) {
