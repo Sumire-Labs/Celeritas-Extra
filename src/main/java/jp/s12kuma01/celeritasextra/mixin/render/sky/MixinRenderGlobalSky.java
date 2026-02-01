@@ -1,7 +1,6 @@
 package jp.s12kuma01.celeritasextra.mixin.render.sky;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

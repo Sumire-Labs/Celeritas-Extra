@@ -2,7 +2,6 @@ package jp.s12kuma01.celeritasextra.mixin.render.weather;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

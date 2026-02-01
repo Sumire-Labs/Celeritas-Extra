@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.client.gui;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
+import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.options.control.ControlValueFormatter;
 import org.taumc.celeritas.api.options.control.CyclingControl;
 import org.taumc.celeritas.api.options.control.SliderControl;
@@ -10,7 +11,6 @@ import org.taumc.celeritas.api.options.structure.OptionFlag;
 import org.taumc.celeritas.api.options.structure.OptionGroup;
 import org.taumc.celeritas.api.options.structure.OptionImpl;
 import org.taumc.celeritas.api.options.structure.OptionPage;
-import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;

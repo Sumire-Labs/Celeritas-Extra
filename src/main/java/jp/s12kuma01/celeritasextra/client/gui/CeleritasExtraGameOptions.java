@@ -3,7 +3,6 @@ package jp.s12kuma01.celeritasextra.client.gui;
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 
