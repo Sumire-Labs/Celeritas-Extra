@@ -32,8 +32,9 @@ public class MixinEntityRendererFogFalloff {
             index = 0
     )
     private float modifyFogStart(float original) {
-        // If fog type is OFF, push fog start very far
-        if (CeleritasExtraClientMod.options().renderSettings.fogType == CeleritasExtraGameOptions.FogType.OFF) {
+        // If fog is disabled, push fog start very far
+        if (!CeleritasExtraClientMod.options().renderSettings.fog
+                || CeleritasExtraClientMod.options().renderSettings.fogType == CeleritasExtraGameOptions.FogType.OFF) {
             return Float.MAX_VALUE;
         }
 
@@ -63,8 +64,9 @@ public class MixinEntityRendererFogFalloff {
             index = 0
     )
     private float modifyFogEnd(float original) {
-        // If fog type is OFF, push fog end very far
-        if (CeleritasExtraClientMod.options().renderSettings.fogType == CeleritasExtraGameOptions.FogType.OFF) {
+        // If fog is disabled, push fog end very far
+        if (!CeleritasExtraClientMod.options().renderSettings.fog
+                || CeleritasExtraClientMod.options().renderSettings.fogType == CeleritasExtraGameOptions.FogType.OFF) {
             return Float.MAX_VALUE;
         }
 
