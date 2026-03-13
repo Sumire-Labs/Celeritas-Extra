@@ -2,10 +2,13 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'com.gradleup.shadow' version '9.3.0'
-    id 'xyz.wagyourtail.unimined' version '1.4.10-kappa'
+    id 'com.gradleup.shadow' version '9.3.2'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
+    id 'xyz.wagyourtail.unimined' version '1.4.14-kappa'
     id 'net.kyori.blossom' version '2.2.0'
 }
+
+import org.jetbrains.gradle.ext.Gradle
 
 apply from: 'gradle/scripts/helpers.gradle'
 
@@ -28,13 +31,13 @@ version = propertyString('mod_version')
 group = propertyString('root_package')
 
 base {
-    archivesName.set(propertyString('mod_id'))
+    archivesName = propertyString('mod_id')
 }
 
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion = JavaLanguageVersion.of(21)
     }
     if (propertyBool('generate_sources_jar')) {
         withSourcesJar()
@@ -45,15 +48,15 @@ java {
 }
 
 configurations {
-    embed
     contain
-    implementation.extendsFrom(embed)
     implementation.extendsFrom(contain)
     modCompileOnly
     compileOnly.extendsFrom(modCompileOnly)
     modRuntimeOnly
     runtimeOnly.extendsFrom(modRuntimeOnly)
 }
+
+String remapTaskName = propertyBool('enable_shadow') ? "remapShadowJar" : "remapJar"
 
 unimined.minecraft {
     version "1.12.2"
@@ -66,18 +69,20 @@ unimined.minecraft {
         if (propertyBool('use_access_transformer')) {
             accessTransformer "${rootProject.projectDir}/src/main/resources/${propertyString('access_transformer_locations')}"
         }
-        loader "0.3.35-alpha"
+        loader "0.4.4-alpha"
         runs.auth.username = minecraft_username
         runs.all {
-            var map = getSystemProperties()
-            map.put("crl.dev.mixin", "${mod_id}.default.mixin.json,${mod_id}.mod.mixin.json")
+            systemProperty("crl.dev.mixin", "${mod_id}.default.mixin.json,${mod_id}.mod.mixin.json")
             def extraArgs = propertyString('extra_jvm_args')
             if (extraArgs != null && !extraArgs.trim().isEmpty()) {
                 jvmArgs += extraArgs.split { "\\s+" }.toList()
             }
             if (propertyBool('enable_foundation_debug')) {
-                map.put("foundation.dump", "true")
-                map.put("foundation.verbose", "true")
+                systemProperty("foundation.dump", "true")
+                systemProperty("foundation.verbose", "true")
+            }
+            if (propertyBool('is_coremod')) {
+                systemProperty("fml.coreMods.load", propertyString('coremod_plugin_class_name'))
             }
             return
         }
@@ -85,21 +90,12 @@ unimined.minecraft {
 
     defaultRemapJar = false
 
-    if (propertyBool('enable_shadow')) {
-        remap(tasks.shadowJar) {
-            mixinRemap {
-                enableBaseMixin()
-                enableMixinExtra()
-                disableRefmap()
-            }
-        }
-    } else {
-        remap(tasks.jar) {
-            mixinRemap {
-                enableBaseMixin()
-                enableMixinExtra()
-                disableRefmap()
-            }
+    String jarTaskName = propertyBool('enable_shadow') ? "shadowJar" : "jar"
+
+    remap(tasks.named(jarTaskName).get()) {
+        mixinRemap {
+            enableBaseMixin()
+            enableMixinExtra()
         }
     }
 
@@ -122,33 +118,6 @@ dependencies {
 apply from: 'gradle/scripts/dependencies.gradle'
 
 processResources {
-
-    inputs.property 'mod_id', propertyString('mod_id')
-    inputs.property 'mod_name', propertyString('mod_name')
-    inputs.property 'mod_version', propertyString('mod_version')
-    inputs.property 'mod_description', propertyString('mod_description')
-    inputs.property 'mod_authors', "${propertyStringList('mod_authors', ',').join(', ')}"
-    inputs.property 'mod_credits', propertyString('mod_credits')
-    inputs.property 'mod_url', propertyString('mod_url')
-    inputs.property 'mod_update_json', propertyString('mod_update_json')
-    inputs.property 'mod_logo_path', propertyString('mod_logo_path')
-
-    def filterList = ['mcmod.info', 'pack.mcmeta']
-
-    filesMatching(filterList) { fcd ->
-        fcd.expand(
-                'mod_id': propertyString('mod_id'),
-                'mod_name': propertyString('mod_name'),
-                'mod_version': propertyString('mod_version'),
-                'mod_description': propertyString('mod_description'),
-                'mod_authors': "${propertyStringList('mod_authors', ',').join(', ')}",
-                'mod_credits': propertyString('mod_credits'),
-                'mod_url': propertyString('mod_url'),
-                'mod_update_json': propertyString('mod_update_json'),
-                'mod_logo_path': propertyString('mod_logo_path'),
-        )
-    }
-
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
@@ -161,6 +130,46 @@ sourceSets {
                 property('mod_version', propertyString('mod_version'))
                 property('package', "${root_package}.${mod_id}")
             }
+            resources {
+                property('mod_id', propertyString('mod_id'))
+                property('mod_name', propertyString('mod_name'))
+                property('mod_version', propertyString('mod_version'))
+                property('mod_description', propertyString('mod_description'))
+                property('mod_authors', propertyStringList('mod_authors', ',').collect {it.strip()}.join('", "'))
+                property('mod_credits', propertyString('mod_credits'))
+                property('mod_url', propertyString('mod_url'))
+                property('mod_update_json', propertyString('mod_update_json'))
+                property('mod_logo_path', propertyString('mod_logo_path'))
+            }
+        }
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+    project {
+        settings {
+            runConfigurations {
+                '1. Build'(Gradle) {
+                    taskNames = ["build"]
+                }
+                '2. Run Client'(Gradle) {
+                    taskNames = ["runClient"]
+                }
+                '3. Run Server'(Gradle) {
+                    taskNames = ["runServer"]
+                }
+            }
+            compiler.javac {
+                afterEvaluate {
+                    javacAdditionalOptions = '-encoding utf8'
+                    moduleJavacAdditionalOptions = [
+                            (project.name + '.main'): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
+                    ]
+                }
+            }
         }
     }
 }
@@ -169,7 +178,12 @@ if (!propertyBool('enable_shadow')) {
     shadowJar.enabled = false
 }
 
+compileJava {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
+}
+
 jar {
+    archiveClassifier = 'dev'
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     if (configurations.contain.size() > 0) {
         into('/') {
@@ -197,11 +211,7 @@ jar {
             attributes(attribute_map)
         }
     }
-    if (propertyBool('enable_shadow')) {
-        finalizedBy(tasks.named("remapShadowJar"))
-    } else {
-        finalizedBy(tasks.named("remapJar"))
-    }
+    finalizedBy(tasks.named(remapTaskName).get())
 }
 
 
@@ -210,7 +220,8 @@ shadowJar {
     archiveClassifier = "shadow"
 }
 
-remapJar {
+
+tasks.named(remapTaskName).configure {
     doFirst {
         logging.captureStandardOutput LogLevel.INFO
     }
