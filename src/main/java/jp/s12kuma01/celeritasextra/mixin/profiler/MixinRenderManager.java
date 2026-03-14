@@ -1,5 +1,6 @@
 package jp.s12kuma01.celeritasextra.mixin.profiler;
 
+import jp.s12kuma01.celeritasextra.client.ProfilerHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;

@@ -1,4 +1,4 @@
-package jp.s12kuma01.celeritasextra.mixin.profiler;
+package jp.s12kuma01.celeritasextra.client;
 
 import net.minecraft.world.World;
 

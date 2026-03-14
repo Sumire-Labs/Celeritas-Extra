@@ -1,5 +1,6 @@
 package jp.s12kuma01.celeritasextra.mixin.profiler;
 
+import jp.s12kuma01.celeritasextra.client.ProfilerHelper;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;
