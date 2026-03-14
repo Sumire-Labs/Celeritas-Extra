@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
+import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 
@@ -15,7 +16,7 @@ public class CeleritasExtraGameOptions {
     // Category names
     private static final String CAT_ANIMATION = "animation";
     private static final String CAT_PARTICLE = "particle";
-    private static final String CAT_PARTICLE_TYPES = "particle_types";
+    private static final String CAT_PARTICLE_CLASSES = "particle_classes";
     private static final String CAT_DETAIL = "detail";
     private static final String CAT_RENDER = "render";
     private static final String CAT_EXTRA = "extra";
@@ -59,36 +60,15 @@ public class CeleritasExtraGameOptions {
         particleSettings.blockBreak = config.getBoolean("blockBreak", CAT_PARTICLE, true, "Enable/disable block break particles");
         particleSettings.blockBreaking = config.getBoolean("blockBreaking", CAT_PARTICLE, true, "Enable/disable block breaking particles");
 
-        // Particle settings - individual types
-        particleSettings.explosion = config.getBoolean("explosion", CAT_PARTICLE_TYPES, true, "Enable/disable explosion particles");
-        particleSettings.fireworks = config.getBoolean("fireworks", CAT_PARTICLE_TYPES, true, "Enable/disable firework particles");
-        particleSettings.water = config.getBoolean("water", CAT_PARTICLE_TYPES, true, "Enable/disable water particles");
-        particleSettings.suspended = config.getBoolean("suspended", CAT_PARTICLE_TYPES, true, "Enable/disable suspended particles");
-        particleSettings.crit = config.getBoolean("crit", CAT_PARTICLE_TYPES, true, "Enable/disable critical hit particles");
-        particleSettings.smoke = config.getBoolean("smoke", CAT_PARTICLE_TYPES, true, "Enable/disable smoke particles");
-        particleSettings.spell = config.getBoolean("spell", CAT_PARTICLE_TYPES, true, "Enable/disable spell particles");
-        particleSettings.drip = config.getBoolean("drip", CAT_PARTICLE_TYPES, true, "Enable/disable dripping particles");
-        particleSettings.villager = config.getBoolean("villager", CAT_PARTICLE_TYPES, true, "Enable/disable villager particles");
-        particleSettings.townAura = config.getBoolean("townAura", CAT_PARTICLE_TYPES, true, "Enable/disable town aura particles");
-        particleSettings.note = config.getBoolean("note", CAT_PARTICLE_TYPES, true, "Enable/disable note particles");
-        particleSettings.portal = config.getBoolean("portal", CAT_PARTICLE_TYPES, true, "Enable/disable portal particles");
-        particleSettings.enchantmentTable = config.getBoolean("enchantmentTable", CAT_PARTICLE_TYPES, true, "Enable/disable enchantment table particles");
-        particleSettings.flame = config.getBoolean("flame", CAT_PARTICLE_TYPES, true, "Enable/disable flame particles");
-        particleSettings.cloud = config.getBoolean("cloud", CAT_PARTICLE_TYPES, true, "Enable/disable cloud particles");
-        particleSettings.redstone = config.getBoolean("redstone", CAT_PARTICLE_TYPES, true, "Enable/disable redstone particles");
-        particleSettings.snowball = config.getBoolean("snowball", CAT_PARTICLE_TYPES, true, "Enable/disable snowball particles");
-        particleSettings.slime = config.getBoolean("slime", CAT_PARTICLE_TYPES, true, "Enable/disable slime particles");
-        particleSettings.heart = config.getBoolean("heart", CAT_PARTICLE_TYPES, true, "Enable/disable heart particles");
-        particleSettings.barrier = config.getBoolean("barrier", CAT_PARTICLE_TYPES, true, "Enable/disable barrier particles");
-        particleSettings.itemCrack = config.getBoolean("itemCrack", CAT_PARTICLE_TYPES, true, "Enable/disable item crack particles");
-        particleSettings.mobAppearance = config.getBoolean("mobAppearance", CAT_PARTICLE_TYPES, true, "Enable/disable mob appearance particles");
-        particleSettings.dragonBreath = config.getBoolean("dragonBreath", CAT_PARTICLE_TYPES, true, "Enable/disable dragon breath particles");
-        particleSettings.endRod = config.getBoolean("endRod", CAT_PARTICLE_TYPES, true, "Enable/disable end rod particles");
-        particleSettings.damageIndicator = config.getBoolean("damageIndicator", CAT_PARTICLE_TYPES, true, "Enable/disable damage indicator particles");
-        particleSettings.sweepAttack = config.getBoolean("sweepAttack", CAT_PARTICLE_TYPES, true, "Enable/disable sweep attack particles");
-        particleSettings.fallingDust = config.getBoolean("fallingDust", CAT_PARTICLE_TYPES, true, "Enable/disable falling dust particles");
-        particleSettings.totem = config.getBoolean("totem", CAT_PARTICLE_TYPES, true, "Enable/disable totem particles");
-        particleSettings.spit = config.getBoolean("spit", CAT_PARTICLE_TYPES, true, "Enable/disable llama spit particles");
+        // Particle settings - class-based filter
+        String[] disabledClasses = config.getStringList("disabledClasses", CAT_PARTICLE_CLASSES,
+                new String[0], "List of disabled particle class names");
+        ParticleClassRegistry.getInstance().loadDisabledClasses(disabledClasses);
+
+        // Load previously discovered particle classes so they appear in settings before spawning
+        String[] discoveredClasses = config.getStringList("discoveredClasses", CAT_PARTICLE_CLASSES,
+                new String[0], "Cached list of discovered particle classes (auto-populated)");
+        ParticleClassRegistry.getInstance().loadDiscoveredClasses(discoveredClasses);
 
         // Detail settings
         detailSettings.sky = config.getBoolean("sky", CAT_DETAIL, true, "Enable/disable sky rendering");
@@ -143,36 +123,13 @@ public class CeleritasExtraGameOptions {
         config.get(CAT_PARTICLE, "blockBreak", true).set(particleSettings.blockBreak);
         config.get(CAT_PARTICLE, "blockBreaking", true).set(particleSettings.blockBreaking);
 
-        // Particle settings - individual types
-        config.get(CAT_PARTICLE_TYPES, "explosion", true).set(particleSettings.explosion);
-        config.get(CAT_PARTICLE_TYPES, "fireworks", true).set(particleSettings.fireworks);
-        config.get(CAT_PARTICLE_TYPES, "water", true).set(particleSettings.water);
-        config.get(CAT_PARTICLE_TYPES, "suspended", true).set(particleSettings.suspended);
-        config.get(CAT_PARTICLE_TYPES, "crit", true).set(particleSettings.crit);
-        config.get(CAT_PARTICLE_TYPES, "smoke", true).set(particleSettings.smoke);
-        config.get(CAT_PARTICLE_TYPES, "spell", true).set(particleSettings.spell);
-        config.get(CAT_PARTICLE_TYPES, "drip", true).set(particleSettings.drip);
-        config.get(CAT_PARTICLE_TYPES, "villager", true).set(particleSettings.villager);
-        config.get(CAT_PARTICLE_TYPES, "townAura", true).set(particleSettings.townAura);
-        config.get(CAT_PARTICLE_TYPES, "note", true).set(particleSettings.note);
-        config.get(CAT_PARTICLE_TYPES, "portal", true).set(particleSettings.portal);
-        config.get(CAT_PARTICLE_TYPES, "enchantmentTable", true).set(particleSettings.enchantmentTable);
-        config.get(CAT_PARTICLE_TYPES, "flame", true).set(particleSettings.flame);
-        config.get(CAT_PARTICLE_TYPES, "cloud", true).set(particleSettings.cloud);
-        config.get(CAT_PARTICLE_TYPES, "redstone", true).set(particleSettings.redstone);
-        config.get(CAT_PARTICLE_TYPES, "snowball", true).set(particleSettings.snowball);
-        config.get(CAT_PARTICLE_TYPES, "slime", true).set(particleSettings.slime);
-        config.get(CAT_PARTICLE_TYPES, "heart", true).set(particleSettings.heart);
-        config.get(CAT_PARTICLE_TYPES, "barrier", true).set(particleSettings.barrier);
-        config.get(CAT_PARTICLE_TYPES, "itemCrack", true).set(particleSettings.itemCrack);
-        config.get(CAT_PARTICLE_TYPES, "mobAppearance", true).set(particleSettings.mobAppearance);
-        config.get(CAT_PARTICLE_TYPES, "dragonBreath", true).set(particleSettings.dragonBreath);
-        config.get(CAT_PARTICLE_TYPES, "endRod", true).set(particleSettings.endRod);
-        config.get(CAT_PARTICLE_TYPES, "damageIndicator", true).set(particleSettings.damageIndicator);
-        config.get(CAT_PARTICLE_TYPES, "sweepAttack", true).set(particleSettings.sweepAttack);
-        config.get(CAT_PARTICLE_TYPES, "fallingDust", true).set(particleSettings.fallingDust);
-        config.get(CAT_PARTICLE_TYPES, "totem", true).set(particleSettings.totem);
-        config.get(CAT_PARTICLE_TYPES, "spit", true).set(particleSettings.spit);
+        // Particle settings - class-based filter
+        config.get(CAT_PARTICLE_CLASSES, "disabledClasses", new String[0])
+                .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
+
+        // Persist discovered particle classes for next session
+        config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
+                .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
 
         // Detail settings
         config.get(CAT_DETAIL, "sky", true).set(detailSettings.sky);
@@ -286,123 +243,6 @@ public class CeleritasExtraGameOptions {
         public boolean rainSplash = true;
         public boolean blockBreak = true;
         public boolean blockBreaking = true;
-
-        // Individual particle type controls
-        public boolean explosion = true;
-        public boolean fireworks = true;
-        public boolean water = true;
-        public boolean suspended = true;
-        public boolean crit = true;
-        public boolean smoke = true;
-        public boolean spell = true;
-        public boolean drip = true;
-        public boolean villager = true;
-        public boolean townAura = true;
-        public boolean note = true;
-        public boolean portal = true;
-        public boolean enchantmentTable = true;
-        public boolean flame = true;
-        public boolean cloud = true;
-        public boolean redstone = true;
-        public boolean snowball = true;
-        public boolean slime = true;
-        public boolean heart = true;
-        public boolean barrier = true;
-        public boolean itemCrack = true;
-        public boolean mobAppearance = true;
-        public boolean dragonBreath = true;
-        public boolean endRod = true;
-        public boolean damageIndicator = true;
-        public boolean sweepAttack = true;
-        public boolean fallingDust = true;
-        public boolean totem = true;
-        public boolean spit = true;
-
-        /**
-         * Check if a particle type should be rendered based on its EnumParticleTypes ID
-         */
-        public boolean isParticleEnabled(int particleId) {
-            if (!particles) return false;
-
-            switch (particleId) {
-                case 0:
-                case 1:
-                case 2:
-                    return explosion;
-                case 3:
-                    return fireworks;
-                case 4:
-                case 5:
-                case 6:
-                case 39:
-                    return water;
-                case 7:
-                case 8:
-                    return suspended;
-                case 9:
-                case 10:
-                    return crit;
-                case 11:
-                case 12:
-                    return smoke;
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                    return spell;
-                case 18:
-                case 19:
-                    return drip;
-                case 20:
-                case 21:
-                    return villager;
-                case 22:
-                    return townAura;
-                case 23:
-                    return note;
-                case 24:
-                    return portal;
-                case 25:
-                    return enchantmentTable;
-                case 26:
-                case 27:
-                    return flame;
-                case 29:
-                    return cloud;
-                case 30:
-                    return redstone;
-                case 31:
-                case 32:
-                    return snowball;
-                case 33:
-                    return slime;
-                case 34:
-                    return heart;
-                case 35:
-                    return barrier;
-                case 36:
-                    return itemCrack;
-                case 41:
-                    return mobAppearance;
-                case 42:
-                    return dragonBreath;
-                case 43:
-                    return endRod;
-                case 44:
-                    return damageIndicator;
-                case 45:
-                    return sweepAttack;
-                case 46:
-                    return fallingDust;
-                case 47:
-                    return totem;
-                case 48:
-                    return spit;
-                default:
-                    return true;
-            }
-        }
     }
 
     public static class DetailSettings {

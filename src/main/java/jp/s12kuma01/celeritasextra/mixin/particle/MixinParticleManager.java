@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.mixin.particle;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
@@ -10,7 +11,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Controls particle rendering and spawning
@@ -42,15 +42,23 @@ public class MixinParticleManager {
     }
 
     /**
-     * Control individual particle types by their EnumParticleTypes ID
-     * This intercepts the main particle spawning method
+     * Intercept all particle additions via addEffect.
+     * Records discovered particle classes and filters by global toggle + per-class disabled set.
      */
-    @Inject(method = "spawnEffectParticle", at = @At("HEAD"), cancellable = true)
-    public void spawnEffectParticle(int particleId, double x, double y, double z,
-                                    double xSpeed, double ySpeed, double zSpeed,
-                                    int[] parameters, CallbackInfoReturnable<Particle> cir) {
-        if (!CeleritasExtraClientMod.options().particleSettings.isParticleEnabled(particleId)) {
-            cir.setReturnValue(null);
+    @Inject(method = "addEffect", at = @At("HEAD"), cancellable = true)
+    public void onAddEffect(Particle effect, CallbackInfo ci) {
+        if (effect == null) return;
+
+        String fullClassName = effect.getClass().getName();
+        ParticleClassRegistry.getInstance().recordClass(fullClassName, effect.getClass().getSimpleName());
+
+        if (!CeleritasExtraClientMod.options().particleSettings.particles) {
+            ci.cancel();
+            return;
+        }
+
+        if (ParticleClassRegistry.getInstance().isClassDisabled(fullClassName)) {
+            ci.cancel();
         }
     }
 }
