@@ -30,8 +30,6 @@ public class CeleritasExtraGameOptions {
     public final DetailSettings detailSettings = new DetailSettings();
     public final RenderSettings renderSettings = new RenderSettings();
     public final ExtraSettings extraSettings = new ExtraSettings();
-    private Configuration config;
-
     private final List<BooleanProperty> booleanProperties = Arrays.asList(
             // Animation settings
             new BooleanProperty(CAT_ANIMATION, "animation", true, "Enable/disable all animations",
@@ -107,7 +105,6 @@ public class CeleritasExtraGameOptions {
             new BooleanProperty(CAT_EXTRA, "steadyDebugHud", false, "Reduce F3 debug screen update frequency",
                     v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud)
     );
-
     private final List<IntProperty> intProperties = Arrays.asList(
             new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
                     v -> renderSettings.fogStart = v, () -> renderSettings.fogStart),
@@ -118,6 +115,7 @@ public class CeleritasExtraGameOptions {
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
                     v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval)
     );
+    private Configuration config;
 
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions options = new CeleritasExtraGameOptions();

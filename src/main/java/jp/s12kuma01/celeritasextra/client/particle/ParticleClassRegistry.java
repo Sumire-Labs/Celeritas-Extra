@@ -44,6 +44,15 @@ public class ParticleClassRegistry {
         return INSTANCE;
     }
 
+    private static String toSimpleName(String fullName) {
+        String name = fullName.substring(fullName.lastIndexOf('.') + 1);
+        int dollar = name.lastIndexOf('$');
+        if (dollar >= 0) {
+            name = name.substring(dollar + 1);
+        }
+        return name;
+    }
+
     public void recordClass(String fullName, String simpleName) {
         discoveredClasses.putIfAbsent(fullName, simpleName);
     }
@@ -234,7 +243,7 @@ public class ParticleClassRegistry {
     }
 
     private void scanJarForSuperclasses(File jarFile, Map<String, String> superMap,
-                                         Map<String, String> classToModName, String modName) {
+                                        Map<String, String> classToModName, String modName) {
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> entries = jar.entries();
             while (entries.hasMoreElements()) {
@@ -253,7 +262,7 @@ public class ParticleClassRegistry {
     }
 
     private void scanDirectoryForSuperclasses(File dir, Map<String, String> superMap,
-                                               Map<String, String> classToModName, String modName) {
+                                              Map<String, String> classToModName, String modName) {
         Path root = dir.toPath();
         try {
             Files.walkFileTree(root, new SimpleFileVisitor<Path>() {
@@ -273,15 +282,6 @@ public class ParticleClassRegistry {
             });
         } catch (IOException ignored) {
         }
-    }
-
-    private static String toSimpleName(String fullName) {
-        String name = fullName.substring(fullName.lastIndexOf('.') + 1);
-        int dollar = name.lastIndexOf('$');
-        if (dollar >= 0) {
-            name = name.substring(dollar + 1);
-        }
-        return name;
     }
 
     private void rebuildSnapshot() {

@@ -18,9 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BiomeColorHelper.class)
 public class MixinBiomeColorHelper {
 
-    @Unique private static final int DEFAULT_GRASS_COLOR = 0x91BD59;
-    @Unique private static final int DEFAULT_WATER_COLOR = 0x3F76E4;
-    @Unique private static final int DEFAULT_FOLIAGE_COLOR = 0x59AE30;
+    @Unique
+    private static final int DEFAULT_GRASS_COLOR = 0x91BD59;
+    @Unique
+    private static final int DEFAULT_WATER_COLOR = 0x3F76E4;
+    @Unique
+    private static final int DEFAULT_FOLIAGE_COLOR = 0x59AE30;
 
     /**
      * Override grass color with default value when biome colors are disabled

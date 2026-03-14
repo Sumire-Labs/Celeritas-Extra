@@ -12,7 +12,8 @@ public final class ProfilerHelper {
 
     private static final WeakHashMap<Class<?>, String> NAME_CACHE = new WeakHashMap<>();
 
-    private ProfilerHelper() {}
+    private ProfilerHelper() {
+    }
 
     public static void startSection(World world, Object renderer) {
         if (world != null && renderer != null) {
