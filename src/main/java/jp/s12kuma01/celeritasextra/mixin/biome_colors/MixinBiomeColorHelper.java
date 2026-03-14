@@ -3,6 +3,7 @@ package jp.s12kuma01.celeritasextra.mixin.biome_colors;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.world.biome.BiomeColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -13,14 +14,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * <p>
  * In 1.20.1: BiomeColors class
  * In 1.12.2: BiomeColorHelper class
- * <p>
- * Default colors:
- * - Grass: 9551193 (0x91BD59)
- * - Water: 4159204 (0x3F76E4)
- * - Foliage: 5877296 (0x59AE30)
  */
 @Mixin(BiomeColorHelper.class)
 public class MixinBiomeColorHelper {
+
+    @Unique private static final int DEFAULT_GRASS_COLOR = 0x91BD59;
+    @Unique private static final int DEFAULT_WATER_COLOR = 0x3F76E4;
+    @Unique private static final int DEFAULT_FOLIAGE_COLOR = 0x59AE30;
 
     /**
      * Override grass color with default value when biome colors are disabled
@@ -32,7 +32,7 @@ public class MixinBiomeColorHelper {
     )
     private static void overrideGrassColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
-            cir.setReturnValue(9551193);
+            cir.setReturnValue(DEFAULT_GRASS_COLOR);
         }
     }
 
@@ -46,7 +46,7 @@ public class MixinBiomeColorHelper {
     )
     private static void overrideWaterColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
-            cir.setReturnValue(4159204);
+            cir.setReturnValue(DEFAULT_WATER_COLOR);
         }
     }
 
@@ -60,7 +60,7 @@ public class MixinBiomeColorHelper {
     )
     private static void overrideFoliageColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
-            cir.setReturnValue(5877296);
+            cir.setReturnValue(DEFAULT_FOLIAGE_COLOR);
         }
     }
 }

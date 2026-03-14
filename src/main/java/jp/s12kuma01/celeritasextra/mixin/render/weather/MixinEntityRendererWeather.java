@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * EntityRenderer in 1.12.2 contains the weather rendering code
  */
 @Mixin(EntityRenderer.class)
-public class MixinEntityRenderer {
+public class MixinEntityRendererWeather {
 
     /**
      * Control rain and snow rendering

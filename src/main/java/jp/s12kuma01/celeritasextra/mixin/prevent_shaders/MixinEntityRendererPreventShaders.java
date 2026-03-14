@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * In 1.12.2: EntityRenderer.loadShader() / switchUseShader()
  */
 @Mixin(EntityRenderer.class)
-public class MixinEntityRenderer {
+public class MixinEntityRendererPreventShaders {
 
     /**
      * Prevent loading shaders

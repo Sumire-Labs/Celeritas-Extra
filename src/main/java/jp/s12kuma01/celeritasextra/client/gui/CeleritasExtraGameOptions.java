@@ -6,6 +6,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Main configuration class for Celeritas Extra
@@ -20,12 +24,100 @@ public class CeleritasExtraGameOptions {
     private static final String CAT_DETAIL = "detail";
     private static final String CAT_RENDER = "render";
     private static final String CAT_EXTRA = "extra";
+
     public final AnimationSettings animationSettings = new AnimationSettings();
     public final ParticleSettings particleSettings = new ParticleSettings();
     public final DetailSettings detailSettings = new DetailSettings();
     public final RenderSettings renderSettings = new RenderSettings();
     public final ExtraSettings extraSettings = new ExtraSettings();
     private Configuration config;
+
+    private final List<BooleanProperty> booleanProperties = Arrays.asList(
+            // Animation settings
+            new BooleanProperty(CAT_ANIMATION, "animation", true, "Enable/disable all animations",
+                    v -> animationSettings.animation = v, () -> animationSettings.animation),
+            new BooleanProperty(CAT_ANIMATION, "water", true, "Enable/disable water animations",
+                    v -> animationSettings.water = v, () -> animationSettings.water),
+            new BooleanProperty(CAT_ANIMATION, "lava", true, "Enable/disable lava animations",
+                    v -> animationSettings.lava = v, () -> animationSettings.lava),
+            new BooleanProperty(CAT_ANIMATION, "fire", true, "Enable/disable fire animations",
+                    v -> animationSettings.fire = v, () -> animationSettings.fire),
+            new BooleanProperty(CAT_ANIMATION, "portal", true, "Enable/disable portal animations",
+                    v -> animationSettings.portal = v, () -> animationSettings.portal),
+            new BooleanProperty(CAT_ANIMATION, "blockAnimations", true, "Enable/disable block animations",
+                    v -> animationSettings.blockAnimations = v, () -> animationSettings.blockAnimations),
+            // Particle settings
+            new BooleanProperty(CAT_PARTICLE, "particles", true, "Enable/disable all particles",
+                    v -> particleSettings.particles = v, () -> particleSettings.particles),
+            new BooleanProperty(CAT_PARTICLE, "rainSplash", true, "Enable/disable rain splash particles",
+                    v -> particleSettings.rainSplash = v, () -> particleSettings.rainSplash),
+            new BooleanProperty(CAT_PARTICLE, "blockBreak", true, "Enable/disable block break particles",
+                    v -> particleSettings.blockBreak = v, () -> particleSettings.blockBreak),
+            new BooleanProperty(CAT_PARTICLE, "blockBreaking", true, "Enable/disable block breaking particles",
+                    v -> particleSettings.blockBreaking = v, () -> particleSettings.blockBreaking),
+            // Detail settings
+            new BooleanProperty(CAT_DETAIL, "sky", true, "Enable/disable sky rendering",
+                    v -> detailSettings.sky = v, () -> detailSettings.sky),
+            new BooleanProperty(CAT_DETAIL, "stars", true, "Enable/disable star rendering",
+                    v -> detailSettings.stars = v, () -> detailSettings.stars),
+            new BooleanProperty(CAT_DETAIL, "sunMoon", true, "Enable/disable sun and moon rendering",
+                    v -> detailSettings.sunMoon = v, () -> detailSettings.sunMoon),
+            new BooleanProperty(CAT_DETAIL, "rainSnow", true, "Enable/disable rain and snow rendering",
+                    v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
+            new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
+                    v -> detailSettings.biomeColors = v, () -> detailSettings.biomeColors),
+            // Render settings
+            new BooleanProperty(CAT_RENDER, "fog", true, "Enable/disable fog rendering",
+                    v -> renderSettings.fog = v, () -> renderSettings.fog),
+            new BooleanProperty(CAT_RENDER, "clouds", true, "Enable/disable cloud rendering",
+                    v -> renderSettings.clouds = v, () -> renderSettings.clouds),
+            new BooleanProperty(CAT_RENDER, "lightUpdates", true, "Enable/disable light updates",
+                    v -> renderSettings.lightUpdates = v, () -> renderSettings.lightUpdates),
+            new BooleanProperty(CAT_RENDER, "itemFrames", true, "Enable/disable item frame rendering",
+                    v -> renderSettings.itemFrames = v, () -> renderSettings.itemFrames),
+            new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
+                    v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),
+            new BooleanProperty(CAT_RENDER, "paintings", true, "Enable/disable painting rendering",
+                    v -> renderSettings.paintings = v, () -> renderSettings.paintings),
+            new BooleanProperty(CAT_RENDER, "pistons", true, "Enable/disable piston animation rendering",
+                    v -> renderSettings.pistons = v, () -> renderSettings.pistons),
+            new BooleanProperty(CAT_RENDER, "beacons", true, "Enable/disable beacon beam rendering",
+                    v -> renderSettings.beacons = v, () -> renderSettings.beacons),
+            new BooleanProperty(CAT_RENDER, "limitBeaconBeamHeight", false, "Limit beacon beam to world height",
+                    v -> renderSettings.limitBeaconBeamHeight = v, () -> renderSettings.limitBeaconBeamHeight),
+            new BooleanProperty(CAT_RENDER, "enchantingTableBooks", true, "Enable/disable enchanting table book rendering",
+                    v -> renderSettings.enchantingTableBooks = v, () -> renderSettings.enchantingTableBooks),
+            new BooleanProperty(CAT_RENDER, "playerNameTag", true, "Enable/disable player name tag rendering",
+                    v -> renderSettings.playerNameTag = v, () -> renderSettings.playerNameTag),
+            new BooleanProperty(CAT_RENDER, "itemFrameNameTag", true, "Enable/disable item frame name tag rendering",
+                    v -> renderSettings.itemFrameNameTag = v, () -> renderSettings.itemFrameNameTag),
+            new BooleanProperty(CAT_RENDER, "preventShaders", false, "Prevent accidental shader activation",
+                    v -> renderSettings.preventShaders = v, () -> renderSettings.preventShaders),
+            // Extra settings
+            new BooleanProperty(CAT_EXTRA, "showFps", false, "Show FPS overlay",
+                    v -> extraSettings.showFps = v, () -> extraSettings.showFps),
+            new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (high/avg/low)",
+                    v -> extraSettings.showFPSExtended = v, () -> extraSettings.showFPSExtended),
+            new BooleanProperty(CAT_EXTRA, "showCoords", false, "Show coordinates overlay",
+                    v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
+            new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
+                    v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
+            new BooleanProperty(CAT_EXTRA, "reducedMotion", false, "Reduce motion effects for accessibility",
+                    v -> extraSettings.reducedMotion = v, () -> extraSettings.reducedMotion),
+            new BooleanProperty(CAT_EXTRA, "steadyDebugHud", false, "Reduce F3 debug screen update frequency",
+                    v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud)
+    );
+
+    private final List<IntProperty> intProperties = Arrays.asList(
+            new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
+                    v -> renderSettings.fogStart = v, () -> renderSettings.fogStart),
+            new IntProperty(CAT_RENDER, "fogDistance", 0, 0, 32, "Fog distance in chunks (0 = use render distance)",
+                    v -> renderSettings.fogDistance = v, () -> renderSettings.fogDistance),
+            new IntProperty(CAT_RENDER, "cloudHeight", 192, 0, 384, "Cloud height",
+                    v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
+            new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
+                    v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval)
+    );
 
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions options = new CeleritasExtraGameOptions();
@@ -46,127 +138,38 @@ public class CeleritasExtraGameOptions {
     }
 
     private void loadFromConfig() {
-        // Animation settings
-        animationSettings.animation = config.getBoolean("animation", CAT_ANIMATION, true, "Enable/disable all animations");
-        animationSettings.water = config.getBoolean("water", CAT_ANIMATION, true, "Enable/disable water animations");
-        animationSettings.lava = config.getBoolean("lava", CAT_ANIMATION, true, "Enable/disable lava animations");
-        animationSettings.fire = config.getBoolean("fire", CAT_ANIMATION, true, "Enable/disable fire animations");
-        animationSettings.portal = config.getBoolean("portal", CAT_ANIMATION, true, "Enable/disable portal animations");
-        animationSettings.blockAnimations = config.getBoolean("blockAnimations", CAT_ANIMATION, true, "Enable/disable block animations");
+        booleanProperties.forEach(p -> p.load(config));
+        intProperties.forEach(p -> p.load(config));
 
-        // Particle settings - basic
-        particleSettings.particles = config.getBoolean("particles", CAT_PARTICLE, true, "Enable/disable all particles");
-        particleSettings.rainSplash = config.getBoolean("rainSplash", CAT_PARTICLE, true, "Enable/disable rain splash particles");
-        particleSettings.blockBreak = config.getBoolean("blockBreak", CAT_PARTICLE, true, "Enable/disable block break particles");
-        particleSettings.blockBreaking = config.getBoolean("blockBreaking", CAT_PARTICLE, true, "Enable/disable block breaking particles");
+        // Enum properties
+        renderSettings.fogType = FogType.values()[config.getInt("fogType", CAT_RENDER, 0, 0, FogType.values().length - 1, "Fog type (0 = Default, 1 = Off)")];
+        extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0, OverlayCorner.values().length - 1, "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
+        extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0, TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
 
-        // Particle settings - class-based filter
+        // Particle class filter
         String[] disabledClasses = config.getStringList("disabledClasses", CAT_PARTICLE_CLASSES,
                 new String[0], "List of disabled particle class names");
         ParticleClassRegistry.getInstance().loadDisabledClasses(disabledClasses);
 
-        // Load previously discovered particle classes so they appear in settings before spawning
         String[] discoveredClasses = config.getStringList("discoveredClasses", CAT_PARTICLE_CLASSES,
                 new String[0], "Cached list of discovered particle classes (auto-populated)");
         ParticleClassRegistry.getInstance().loadDiscoveredClasses(discoveredClasses);
-
-        // Detail settings
-        detailSettings.sky = config.getBoolean("sky", CAT_DETAIL, true, "Enable/disable sky rendering");
-        detailSettings.stars = config.getBoolean("stars", CAT_DETAIL, true, "Enable/disable star rendering");
-        detailSettings.sunMoon = config.getBoolean("sunMoon", CAT_DETAIL, true, "Enable/disable sun and moon rendering");
-        detailSettings.rainSnow = config.getBoolean("rainSnow", CAT_DETAIL, true, "Enable/disable rain and snow rendering");
-        detailSettings.biomeColors = config.getBoolean("biomeColors", CAT_DETAIL, true, "Enable/disable biome-specific colors");
-
-        // Render settings
-        renderSettings.fog = config.getBoolean("fog", CAT_RENDER, true, "Enable/disable fog rendering");
-        renderSettings.fogStart = config.getInt("fogStart", CAT_RENDER, 100, 0, 200, "Fog start distance percentage (100 = default)");
-        renderSettings.fogDistance = config.getInt("fogDistance", CAT_RENDER, 0, 0, 32, "Fog distance in chunks (0 = use render distance)");
-        renderSettings.fogType = FogType.values()[config.getInt("fogType", CAT_RENDER, 0, 0, FogType.values().length - 1, "Fog type (0 = Default, 1 = Off)")];
-        renderSettings.clouds = config.getBoolean("clouds", CAT_RENDER, true, "Enable/disable cloud rendering");
-        renderSettings.cloudHeight = config.getInt("cloudHeight", CAT_RENDER, 192, 0, 384, "Cloud height");
-        renderSettings.lightUpdates = config.getBoolean("lightUpdates", CAT_RENDER, true, "Enable/disable light updates");
-        renderSettings.itemFrames = config.getBoolean("itemFrames", CAT_RENDER, true, "Enable/disable item frame rendering");
-        renderSettings.armorStands = config.getBoolean("armorStands", CAT_RENDER, true, "Enable/disable armor stand rendering");
-        renderSettings.paintings = config.getBoolean("paintings", CAT_RENDER, true, "Enable/disable painting rendering");
-        renderSettings.pistons = config.getBoolean("pistons", CAT_RENDER, true, "Enable/disable piston animation rendering");
-        renderSettings.beacons = config.getBoolean("beacons", CAT_RENDER, true, "Enable/disable beacon beam rendering");
-        renderSettings.limitBeaconBeamHeight = config.getBoolean("limitBeaconBeamHeight", CAT_RENDER, false, "Limit beacon beam to world height");
-        renderSettings.enchantingTableBooks = config.getBoolean("enchantingTableBooks", CAT_RENDER, true, "Enable/disable enchanting table book rendering");
-        renderSettings.playerNameTag = config.getBoolean("playerNameTag", CAT_RENDER, true, "Enable/disable player name tag rendering");
-        renderSettings.itemFrameNameTag = config.getBoolean("itemFrameNameTag", CAT_RENDER, true, "Enable/disable item frame name tag rendering");
-        renderSettings.preventShaders = config.getBoolean("preventShaders", CAT_RENDER, false, "Prevent accidental shader activation");
-
-        // Extra settings
-        extraSettings.showFps = config.getBoolean("showFps", CAT_EXTRA, false, "Show FPS overlay");
-        extraSettings.showFPSExtended = config.getBoolean("showFPSExtended", CAT_EXTRA, true, "Show extended FPS info (high/avg/low)");
-        extraSettings.showCoords = config.getBoolean("showCoords", CAT_EXTRA, false, "Show coordinates overlay");
-        extraSettings.ignoreReducedDebugInfo = config.getBoolean("ignoreReducedDebugInfo", CAT_EXTRA, false, "Ignore reduced debug info gamerule");
-        extraSettings.reducedMotion = config.getBoolean("reducedMotion", CAT_EXTRA, false, "Reduce motion effects for accessibility");
-        extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0, OverlayCorner.values().length - 1, "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
-        extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0, TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
-        extraSettings.steadyDebugHud = config.getBoolean("steadyDebugHud", CAT_EXTRA, false, "Reduce F3 debug screen update frequency");
-        extraSettings.steadyDebugHudRefreshInterval = config.getInt("steadyDebugHudRefreshInterval", CAT_EXTRA, 20, 1, 60, "F3 debug screen refresh interval in ticks");
     }
 
     public void writeChanges() {
-        // Animation settings
-        config.get(CAT_ANIMATION, "animation", true).set(animationSettings.animation);
-        config.get(CAT_ANIMATION, "water", true).set(animationSettings.water);
-        config.get(CAT_ANIMATION, "lava", true).set(animationSettings.lava);
-        config.get(CAT_ANIMATION, "fire", true).set(animationSettings.fire);
-        config.get(CAT_ANIMATION, "portal", true).set(animationSettings.portal);
-        config.get(CAT_ANIMATION, "blockAnimations", true).set(animationSettings.blockAnimations);
+        booleanProperties.forEach(p -> p.save(config));
+        intProperties.forEach(p -> p.save(config));
 
-        // Particle settings - basic
-        config.get(CAT_PARTICLE, "particles", true).set(particleSettings.particles);
-        config.get(CAT_PARTICLE, "rainSplash", true).set(particleSettings.rainSplash);
-        config.get(CAT_PARTICLE, "blockBreak", true).set(particleSettings.blockBreak);
-        config.get(CAT_PARTICLE, "blockBreaking", true).set(particleSettings.blockBreaking);
-
-        // Particle settings - class-based filter
-        config.get(CAT_PARTICLE_CLASSES, "disabledClasses", new String[0])
-                .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
-
-        // Persist discovered particle classes for next session
-        config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
-                .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
-
-        // Detail settings
-        config.get(CAT_DETAIL, "sky", true).set(detailSettings.sky);
-        config.get(CAT_DETAIL, "stars", true).set(detailSettings.stars);
-        config.get(CAT_DETAIL, "sunMoon", true).set(detailSettings.sunMoon);
-        config.get(CAT_DETAIL, "rainSnow", true).set(detailSettings.rainSnow);
-        config.get(CAT_DETAIL, "biomeColors", true).set(detailSettings.biomeColors);
-
-        // Render settings
-        config.get(CAT_RENDER, "fog", true).set(renderSettings.fog);
-        config.get(CAT_RENDER, "fogStart", 100).set(renderSettings.fogStart);
-        config.get(CAT_RENDER, "fogDistance", 0).set(renderSettings.fogDistance);
+        // Enum properties
         config.get(CAT_RENDER, "fogType", 0).set(renderSettings.fogType.ordinal());
-        config.get(CAT_RENDER, "clouds", true).set(renderSettings.clouds);
-        config.get(CAT_RENDER, "cloudHeight", 192).set(renderSettings.cloudHeight);
-        config.get(CAT_RENDER, "lightUpdates", true).set(renderSettings.lightUpdates);
-        config.get(CAT_RENDER, "itemFrames", true).set(renderSettings.itemFrames);
-        config.get(CAT_RENDER, "armorStands", true).set(renderSettings.armorStands);
-        config.get(CAT_RENDER, "paintings", true).set(renderSettings.paintings);
-        config.get(CAT_RENDER, "pistons", true).set(renderSettings.pistons);
-        config.get(CAT_RENDER, "beacons", true).set(renderSettings.beacons);
-        config.get(CAT_RENDER, "limitBeaconBeamHeight", false).set(renderSettings.limitBeaconBeamHeight);
-        config.get(CAT_RENDER, "enchantingTableBooks", true).set(renderSettings.enchantingTableBooks);
-        config.get(CAT_RENDER, "playerNameTag", true).set(renderSettings.playerNameTag);
-        config.get(CAT_RENDER, "itemFrameNameTag", true).set(renderSettings.itemFrameNameTag);
-        config.get(CAT_RENDER, "preventShaders", false).set(renderSettings.preventShaders);
-
-        // Extra settings
-        config.get(CAT_EXTRA, "showFps", false).set(extraSettings.showFps);
-        config.get(CAT_EXTRA, "showFPSExtended", true).set(extraSettings.showFPSExtended);
-        config.get(CAT_EXTRA, "showCoords", false).set(extraSettings.showCoords);
-        config.get(CAT_EXTRA, "ignoreReducedDebugInfo", false).set(extraSettings.ignoreReducedDebugInfo);
-        config.get(CAT_EXTRA, "reducedMotion", false).set(extraSettings.reducedMotion);
         config.get(CAT_EXTRA, "overlayCorner", 0).set(extraSettings.overlayCorner.ordinal());
         config.get(CAT_EXTRA, "textContrast", 2).set(extraSettings.textContrast.ordinal());
-        config.get(CAT_EXTRA, "steadyDebugHud", false).set(extraSettings.steadyDebugHud);
-        config.get(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20).set(extraSettings.steadyDebugHudRefreshInterval);
+
+        // Particle class filter
+        config.get(CAT_PARTICLE_CLASSES, "disabledClasses", new String[0])
+                .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
+        config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
+                .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
 
         config.save();
     }
@@ -283,5 +286,63 @@ public class CeleritasExtraGameOptions {
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
+    }
+
+    private static class BooleanProperty {
+        final String category;
+        final String key;
+        final boolean defaultValue;
+        final String comment;
+        final Consumer<Boolean> setter;
+        final Supplier<Boolean> getter;
+
+        BooleanProperty(String category, String key, boolean defaultValue, String comment,
+                        Consumer<Boolean> setter, Supplier<Boolean> getter) {
+            this.category = category;
+            this.key = key;
+            this.defaultValue = defaultValue;
+            this.comment = comment;
+            this.setter = setter;
+            this.getter = getter;
+        }
+
+        void load(Configuration config) {
+            setter.accept(config.getBoolean(key, category, defaultValue, comment));
+        }
+
+        void save(Configuration config) {
+            config.get(category, key, defaultValue).set(getter.get());
+        }
+    }
+
+    private static class IntProperty {
+        final String category;
+        final String key;
+        final int defaultValue;
+        final int min;
+        final int max;
+        final String comment;
+        final Consumer<Integer> setter;
+        final Supplier<Integer> getter;
+
+        IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
+                    Consumer<Integer> setter, Supplier<Integer> getter) {
+            this.category = category;
+            this.key = key;
+            this.defaultValue = defaultValue;
+            this.min = min;
+            this.max = max;
+            this.comment = comment;
+            this.setter = setter;
+            this.getter = getter;
+        }
+
+        void load(Configuration config) {
+            setter.accept(config.getInt(key, category, defaultValue, min, max, comment));
+        }
+
+        void save(Configuration config) {
+            config.get(category, key, defaultValue).set(getter.get());
+        }
     }
 }
