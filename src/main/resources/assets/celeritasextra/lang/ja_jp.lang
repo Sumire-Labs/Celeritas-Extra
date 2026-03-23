@@ -96,6 +96,8 @@ celeritasextra.option.extra.overlay_corner=オーバーレイの位置
 celeritasextra.option.extra.overlay_corner.tooltip=オーバーレイ (FPSと座標) を描画する位置を指定します。
 celeritasextra.option.extra.text_contrast=文字のコントラスト
 celeritasextra.option.extra.text_contrast.tooltip=FPS/Coordinates カウンターのコントラストを調整します。\n- 無し　デフォルトの文字を描画します。\n- 背景　文字にデバッグメニューのような背景を描画します。\n- 影　　デフォルトの文字に影を描画します。
+celeritasextra.option.extra.vertical_sync=垂直同期
+celeritasextra.option.extra.vertical_sync.tooltip=垂直同期のモードを制御します。\n- オフ: 垂直同期を無効にします。画面のティアリングが発生する場合があります。\n- オン: 標準の垂直同期。FPSをモニターのリフレッシュレートに制限します。\n- アダプティブ: FPSがリフレッシュレートを上回る場合に垂直同期を有効にし、下回る場合に無効にしてカクつきを軽減します。GPUドライバーがサポートしている場合のみ利用可能です。
 celeritasextra.option.extra.reduced_motion=モーション軽減
 celeritasextra.option.extra.reduced_motion.tooltip=アクセシビリティのためにモーション効果を軽減します。
 celeritasextra.option.extra.steady_debug_hud=安定したデバック画面
@@ -113,6 +115,11 @@ celeritasextra.option.overlay_corner.bottom_right=右下
 celeritasextra.option.text_contrast.none=無し
 celeritasextra.option.text_contrast.background=背景
 celeritasextra.option.text_contrast.shadow=影
+
+# 垂直同期オプション
+celeritasextra.option.vertical_sync.off=オフ
+celeritasextra.option.vertical_sync.on=オン
+celeritasextra.option.vertical_sync.adaptive=アダプティブ
 
 # オーバーレイテキスト
 celeritasextra.overlay.fps=%s FPS

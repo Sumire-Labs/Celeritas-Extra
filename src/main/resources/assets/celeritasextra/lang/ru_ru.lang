@@ -96,6 +96,8 @@ celeritasextra.option.extra.overlay_corner=Положение оверлея
 celeritasextra.option.extra.overlay_corner.tooltip=Выберите угол экрана для отображения оверлея FPS и координат.
 celeritasextra.option.extra.text_contrast=Контраст текста
 celeritasextra.option.extra.text_contrast.tooltip=Контролирует способ отображения текста оверлея для лучшей читаемости.
+celeritasextra.option.extra.vertical_sync=Вертикальная синхронизация
+celeritasextra.option.extra.vertical_sync.tooltip=Управляет режимом вертикальной синхронизации.\n- Выкл: VSync отключён, возможны разрывы изображения\n- Вкл: Стандартная VSync, ограничивает FPS частотой обновления\n- Адаптивная: Включает VSync выше частоты обновления, отключает ниже для уменьшения подёргиваний. Доступна только при поддержке драйвера GPU.
 celeritasextra.option.extra.reduced_motion=Сокращённая анимация
 celeritasextra.option.extra.reduced_motion.tooltip=Уменьшает эффекты движения для удобства использования.
 celeritasextra.option.extra.steady_debug_hud=Частота Обновления F3 Debug HUD
@@ -113,6 +115,11 @@ celeritasextra.option.overlay_corner.bottom_right=Нижний правый
 celeritasextra.option.text_contrast.none=Нет
 celeritasextra.option.text_contrast.background=Фон
 celeritasextra.option.text_contrast.shadow=Тень
+
+# Варианты VSync
+celeritasextra.option.vertical_sync.off=Выкл
+celeritasextra.option.vertical_sync.on=Вкл
+celeritasextra.option.vertical_sync.adaptive=Адаптивная
 
 # Overlay Text
 celeritasextra.overlay.fps=%s FPS

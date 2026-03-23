@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
+import org.taumc.celeritas.api.OptionGroupConstructionEvent;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
         clientSideOnly = true, acceptableRemoteVersions = "*")
@@ -25,6 +26,7 @@ public class CeleritasExtraMod {
                 Class.forName("org.taumc.celeritas.api.OptionGUIConstructionEvent");
                 // Register option GUI construction listener
                 OptionGUIConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onCeleritasOptionsConstruct);
+                OptionGroupConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onOptionGroupConstruct);
                 LOGGER.info("Successfully registered Celeritas Extra with Celeritas GUI");
             } catch (Throwable t) {
                 if (t instanceof NoClassDefFoundError) {

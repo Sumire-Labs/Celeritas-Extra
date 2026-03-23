@@ -96,6 +96,8 @@ celeritasextra.option.extra.overlay_corner=界面位置
 celeritasextra.option.extra.overlay_corner.tooltip=选择 FPS 和坐标界面显示的屏幕角落。
 celeritasextra.option.extra.text_contrast=文字对比度
 celeritasextra.option.extra.text_contrast.tooltip=控制界面文字的渲染方式，以提高可读性。
+celeritasextra.option.extra.vertical_sync=垂直同步
+celeritasextra.option.extra.vertical_sync.tooltip=控制垂直同步模式。\n- 关闭：禁用垂直同步，可能导致画面撕裂\n- 开启：标准垂直同步，将帧率限制为刷新率\n- 自适应：帧率高于刷新率时启用，低于时禁用以减少卡顿。仅在GPU驱动支持时可用。
 celeritasextra.option.extra.reduced_motion=减少动态效果
 celeritasextra.option.extra.reduced_motion.tooltip=为辅助功能减少动态效果。
 celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
@@ -113,6 +115,11 @@ celeritasextra.option.overlay_corner.bottom_right=右下
 celeritasextra.option.text_contrast.none=无
 celeritasextra.option.text_contrast.background=背景
 celeritasextra.option.text_contrast.shadow=阴影
+
+# 垂直同步选项
+celeritasextra.option.vertical_sync.off=关闭
+celeritasextra.option.vertical_sync.on=开启
+celeritasextra.option.vertical_sync.adaptive=自适应
 
 # 界面文本
 celeritasextra.overlay.fps=%d FPS

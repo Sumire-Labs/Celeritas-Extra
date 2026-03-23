@@ -1,9 +1,13 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
+import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.Display;
 
 import java.io.File;
 import java.util.Arrays;
@@ -103,7 +107,9 @@ public class CeleritasExtraGameOptions {
             new BooleanProperty(CAT_EXTRA, "reducedMotion", false, "Reduce motion effects for accessibility",
                     v -> extraSettings.reducedMotion = v, () -> extraSettings.reducedMotion),
             new BooleanProperty(CAT_EXTRA, "steadyDebugHud", false, "Reduce F3 debug screen update frequency",
-                    v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud)
+                    v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud),
+            new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
+                    v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync)
     );
     private final List<IntProperty> intProperties = Arrays.asList(
             new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
@@ -212,6 +218,76 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
+     * Vertical sync options
+     */
+    public enum VerticalSyncOption {
+        OFF("celeritasextra.option.vertical_sync.off"),
+        ON("celeritasextra.option.vertical_sync.on"),
+        ADAPTIVE("celeritasextra.option.vertical_sync.adaptive");
+
+        private final String translationKey;
+
+        VerticalSyncOption(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+
+        /**
+         * Returns only the VSync options supported by the current GPU/driver.
+         * ADAPTIVE requires GLX_EXT_swap_control_tear or WGL_EXT_swap_control_tear.
+         */
+        public static VerticalSyncOption[] getAvailableOptions() {
+            boolean adaptiveSupported = GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
+                    || GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear");
+            if (adaptiveSupported) {
+                return values();
+            } else {
+                return new VerticalSyncOption[]{OFF, ON};
+            }
+        }
+    }
+
+    /**
+     * Gets the current VSync mode from the two underlying booleans.
+     */
+    public static VerticalSyncOption getVerticalSyncOption(CeleritasExtraGameOptions opts) {
+        if (opts.extraSettings.useAdaptiveSync) {
+            return VerticalSyncOption.ADAPTIVE;
+        } else if (Minecraft.getMinecraft().gameSettings.enableVsync) {
+            return VerticalSyncOption.ON;
+        } else {
+            return VerticalSyncOption.OFF;
+        }
+    }
+
+    /**
+     * Sets the VSync mode by updating the two underlying booleans and applying immediately.
+     */
+    public static void setVerticalSyncOption(CeleritasExtraGameOptions opts, VerticalSyncOption value) {
+        Minecraft mc = Minecraft.getMinecraft();
+        switch (value) {
+            case OFF:
+                opts.extraSettings.useAdaptiveSync = false;
+                mc.gameSettings.enableVsync = false;
+                break;
+            case ON:
+                opts.extraSettings.useAdaptiveSync = false;
+                mc.gameSettings.enableVsync = true;
+                break;
+            case ADAPTIVE:
+                opts.extraSettings.useAdaptiveSync = true;
+                mc.gameSettings.enableVsync = true;
+                break;
+        }
+        // Trigger VSync update - our mixin intercepts this when adaptive is enabled
+        Display.setVSyncEnabled(mc.gameSettings.enableVsync);
+        mc.gameSettings.saveOptions();
+    }
+
+    /**
      * Fog type options for mod compatibility
      */
     public enum FogType {
@@ -280,6 +356,7 @@ public class CeleritasExtraGameOptions {
         public boolean showCoords = false;
         public boolean ignoreReducedDebugInfo = false;
         public boolean reducedMotion = false;
+        public boolean useAdaptiveSync = false;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = false;
