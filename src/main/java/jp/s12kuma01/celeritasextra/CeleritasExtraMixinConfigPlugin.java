@@ -15,7 +15,6 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        // No initialization needed
     }
 
     @Override
@@ -25,14 +24,11 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        // Add conditional mixin loading based on mod compatibility here
-        // For example, only load certain mixins if specific mods are present
         return true;
     }
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-        // No target filtering needed
     }
 
     @Override
@@ -42,11 +38,9 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        // No pre-apply logic needed
     }
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        // No post-apply logic needed
     }
 }

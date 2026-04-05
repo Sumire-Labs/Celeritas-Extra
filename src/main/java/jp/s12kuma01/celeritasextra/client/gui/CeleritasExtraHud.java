@@ -29,7 +29,7 @@ public class CeleritasExtraHud {
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         if (mc.gameSettings.showDebugInfo || mc.gameSettings.hideGUI) {
-            return; // Don't render when F3 debug screen is open or GUI is hidden
+            return;
         }
 
         List<String> lines = new ArrayList<>();
@@ -113,21 +113,13 @@ public class CeleritasExtraHud {
         int textColor = 0xFFFFFF;
 
         switch (textContrast) {
-            case BACKGROUND:
-                // Draw semi-transparent background
+            case BACKGROUND -> {
                 int textWidth = fontRenderer.getStringWidth(text);
                 Gui.drawRect(x - 1, y - 1, x + textWidth + 1, y + fontRenderer.FONT_HEIGHT + 1, 0x90505050);
                 fontRenderer.drawString(text, x, y, textColor);
-                break;
-            case SHADOW:
-                // Draw with shadow (default Minecraft style)
-                fontRenderer.drawStringWithShadow(text, x, y, textColor);
-                break;
-            case NONE:
-            default:
-                // Draw without any contrast enhancement
-                fontRenderer.drawString(text, x, y, textColor);
-                break;
+            }
+            case SHADOW -> fontRenderer.drawStringWithShadow(text, x, y, textColor);
+            default -> fontRenderer.drawString(text, x, y, textColor);
         }
     }
 }

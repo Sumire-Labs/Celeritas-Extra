@@ -29,10 +29,9 @@ public class CeleritasExtraMod {
                 OptionGroupConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onOptionGroupConstruct);
                 LOGGER.info("Successfully registered Celeritas Extra with Celeritas GUI");
             } catch (Throwable t) {
-                if (t instanceof NoClassDefFoundError) {
-                    LOGGER.error("Celeritas version is too old, use 2.4.0 or newer");
-                } else {
-                    LOGGER.error("Unable to check if Celeritas is up-to-date", t);
+                switch (t) {
+                    case NoClassDefFoundError _ -> LOGGER.error("Celeritas version is too old, use 2.4.0 or newer");
+                    default -> LOGGER.error("Unable to check if Celeritas is up-to-date", t);
                 }
             }
         } else {

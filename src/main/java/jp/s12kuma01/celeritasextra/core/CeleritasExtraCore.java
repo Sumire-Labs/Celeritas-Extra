@@ -34,7 +34,6 @@ public class CeleritasExtraCore implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        // No data injection needed
     }
 
     @Override

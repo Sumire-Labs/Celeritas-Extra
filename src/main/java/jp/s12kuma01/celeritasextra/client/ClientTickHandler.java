@@ -33,13 +33,11 @@ public class ClientTickHandler {
 
         int currentFPS = Minecraft.getDebugFPS();
 
-        // Add current FPS to queue
         if (fpsQueue.size() >= QUEUE_SIZE) {
             fpsQueue.pollFirst();
         }
         fpsQueue.addLast(currentFPS);
 
-        // Calculate statistics
         if (!fpsQueue.isEmpty()) {
             int sum = 0;
             int min = Integer.MAX_VALUE;

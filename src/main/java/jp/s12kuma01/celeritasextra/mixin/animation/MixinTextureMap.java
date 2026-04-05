@@ -74,7 +74,7 @@ public abstract class MixinTextureMap {
         }
 
         // Check each category of animated textures
-        for (Map.Entry<Supplier<Boolean>, List<String>> entry : celeritasExtra$animatedSprites.entrySet()) {
+        for (var entry : celeritasExtra$animatedSprites.entrySet()) {
             for (String textureName : entry.getValue()) {
                 if (iconName.contains(textureName)) {
                     return entry.getKey().get();

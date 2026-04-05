@@ -20,7 +20,6 @@ public class MixinWorld {
     @Inject(method = "checkLightFor", at = @At("HEAD"), cancellable = true)
     private void celeritasExtra$onCheckLightFor(EnumSkyBlock lightType, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         World self = (World) (Object) this;
-        // Only apply on client side
         if (self.isRemote && !CeleritasExtraClientMod.options().renderSettings.lightUpdates) {
             cir.setReturnValue(false);
         }
@@ -29,7 +28,6 @@ public class MixinWorld {
     @Inject(method = "checkLight", at = @At("HEAD"), cancellable = true)
     private void celeritasExtra$onCheckLight(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         World self = (World) (Object) this;
-        // Only apply on client side
         if (self.isRemote && !CeleritasExtraClientMod.options().renderSettings.lightUpdates) {
             cir.setReturnValue(false);
         }

@@ -21,7 +21,6 @@ import java.util.function.Supplier;
  */
 public class CeleritasExtraGameOptions {
 
-    // Category names
     private static final String CAT_ANIMATION = "animation";
     private static final String CAT_PARTICLE = "particle";
     private static final String CAT_PARTICLE_CLASSES = "particle_classes";
@@ -269,18 +268,18 @@ public class CeleritasExtraGameOptions {
     public static void setVerticalSyncOption(CeleritasExtraGameOptions opts, VerticalSyncOption value) {
         Minecraft mc = Minecraft.getMinecraft();
         switch (value) {
-            case OFF:
+            case OFF -> {
                 opts.extraSettings.useAdaptiveSync = false;
                 mc.gameSettings.enableVsync = false;
-                break;
-            case ON:
+            }
+            case ON -> {
                 opts.extraSettings.useAdaptiveSync = false;
                 mc.gameSettings.enableVsync = true;
-                break;
-            case ADAPTIVE:
+            }
+            case ADAPTIVE -> {
                 opts.extraSettings.useAdaptiveSync = true;
                 mc.gameSettings.enableVsync = true;
-                break;
+            }
         }
         // Trigger VSync update - our mixin intercepts this when adaptive is enabled
         Display.setVSyncEnabled(mc.gameSettings.enableVsync);
@@ -305,7 +304,6 @@ public class CeleritasExtraGameOptions {
         }
     }
 
-    // Settings classes
     public static class AnimationSettings {
         public boolean animation = true;
         public boolean water = true;
@@ -363,24 +361,8 @@ public class CeleritasExtraGameOptions {
         public int steadyDebugHudRefreshInterval = 20;
     }
 
-    private static class BooleanProperty {
-        final String category;
-        final String key;
-        final boolean defaultValue;
-        final String comment;
-        final Consumer<Boolean> setter;
-        final Supplier<Boolean> getter;
-
-        BooleanProperty(String category, String key, boolean defaultValue, String comment,
-                        Consumer<Boolean> setter, Supplier<Boolean> getter) {
-            this.category = category;
-            this.key = key;
-            this.defaultValue = defaultValue;
-            this.comment = comment;
-            this.setter = setter;
-            this.getter = getter;
-        }
-
+    private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
+                                    Consumer<Boolean> setter, Supplier<Boolean> getter) {
         void load(Configuration config) {
             setter.accept(config.getBoolean(key, category, defaultValue, comment));
         }
@@ -390,28 +372,8 @@ public class CeleritasExtraGameOptions {
         }
     }
 
-    private static class IntProperty {
-        final String category;
-        final String key;
-        final int defaultValue;
-        final int min;
-        final int max;
-        final String comment;
-        final Consumer<Integer> setter;
-        final Supplier<Integer> getter;
-
-        IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
-                    Consumer<Integer> setter, Supplier<Integer> getter) {
-            this.category = category;
-            this.key = key;
-            this.defaultValue = defaultValue;
-            this.min = min;
-            this.max = max;
-            this.comment = comment;
-            this.setter = setter;
-            this.getter = getter;
-        }
-
+    private record IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
+                                Consumer<Integer> setter, Supplier<Integer> getter) {
         void load(Configuration config) {
             setter.accept(config.getInt(key, category, defaultValue, min, max, comment));
         }
