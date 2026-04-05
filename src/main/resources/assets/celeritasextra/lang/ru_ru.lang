@@ -133,3 +133,4 @@ celeritasextra.overlay.fps=%s FPS
 celeritasextra.overlay.fps_extended=(Сред: %s, 1%% Low: %s, 0.1%% Low: %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Обновление освещения отключено
+celeritasextra.overlay.hei_hidden=Введите для поиска...

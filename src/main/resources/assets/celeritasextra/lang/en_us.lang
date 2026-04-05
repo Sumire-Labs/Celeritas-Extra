@@ -133,3 +133,4 @@ celeritasextra.overlay.fps=%s FPS
 celeritasextra.overlay.fps_extended=(avg. %s / 1%% low %s / 0.1%% low %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Light updates disabled
+celeritasextra.overlay.hei_hidden=Type to search...

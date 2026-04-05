@@ -133,3 +133,4 @@ celeritasextra.overlay.fps=%s FPS
 celeritasextra.overlay.fps_extended=(平均 %s / 1%% Low %s / 0.1%% Low %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=光の状態更新が無効
+celeritasextra.overlay.hei_hidden=検索して表示...

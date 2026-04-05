@@ -6,6 +6,8 @@ import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import mezz.jei.config.Config;
 import mezz.jei.gui.overlay.IngredientGridWithNavigation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -29,6 +31,14 @@ public class MixinIngredientListOverlay {
         if (!CeleritasExtraClientMod.options().extraSettings.hideHeiUntilSearch
                 || !Config.getFilterText().isEmpty()) {
             original.call(contents, minecraft, mouseX, mouseY, partialTicks);
+        } else {
+            var resolution = new ScaledResolution(minecraft);
+            int screenWidth = resolution.getScaledWidth();
+            var hint = I18n.format("celeritasextra.overlay.hei_hidden");
+            int textWidth = minecraft.fontRenderer.getStringWidth(hint);
+            int x = screenWidth - textWidth - 10;
+            int y = resolution.getScaledHeight() / 2;
+            minecraft.fontRenderer.drawStringWithShadow(hint, x, y, 0x80FFFFFF);
         }
     }
 }
