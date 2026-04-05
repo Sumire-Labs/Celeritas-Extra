@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.common.ForgeEarlyConfig;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 import org.taumc.celeritas.api.OptionGroupConstructionEvent;
@@ -71,8 +72,8 @@ public class CeleritasExtraOptionsListener {
                 .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.retina_framebuffer.tooltip")))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (opts, v) -> net.minecraftforge.common.ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER = v,
-                        opts -> net.minecraftforge.common.ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER)
+                        (opts, v) -> ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER = v,
+                        opts -> ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER)
                 .setEnabledPredicate(() -> IS_MAC)
                 .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
                 .build();
@@ -90,8 +91,8 @@ public class CeleritasExtraOptionsListener {
                                 TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.BORDERLESS.getLocalizedName()),
                                 TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.FULLSCREEN.getLocalizedName())
                         }))
-                .setBinding(CeleritasExtraGameOptions::setScreenMode,
-                        CeleritasExtraGameOptions::getScreenMode)
+                .setBinding(CeleritasExtraGameOptions.ScreenMode::apply,
+                        CeleritasExtraGameOptions.ScreenMode::getCurrent)
                 .build();
     }
 

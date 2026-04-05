@@ -30,12 +30,7 @@ public class CeleritasExtraGameOptionPages {
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
             Function<CeleritasExtraGameOptions, Boolean> getter) {
-        return OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                .setName(TextComponent.literal(I18n.format(translationKey)))
-                .setTooltip(TextComponent.literal(I18n.format(translationKey + ".tooltip")))
-                .setControl(TickBoxControl::new)
-                .setBinding(setter, getter)
-                .build();
+        return booleanOption(translationKey, setter, getter, null, null);
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
@@ -43,13 +38,7 @@ public class CeleritasExtraGameOptionPages {
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
             Function<CeleritasExtraGameOptions, Boolean> getter,
             OptionImpact impact) {
-        return OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                .setName(TextComponent.literal(I18n.format(translationKey)))
-                .setTooltip(TextComponent.literal(I18n.format(translationKey + ".tooltip")))
-                .setControl(TickBoxControl::new)
-                .setBinding(setter, getter)
-                .setImpact(impact)
-                .build();
+        return booleanOption(translationKey, setter, getter, null, impact);
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
@@ -57,13 +46,23 @@ public class CeleritasExtraGameOptionPages {
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
             Function<CeleritasExtraGameOptions, Boolean> getter,
             OptionFlag flag) {
-        return OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+        return booleanOption(translationKey, setter, getter, flag, null);
+    }
+
+    private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
+            String translationKey,
+            BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
+            Function<CeleritasExtraGameOptions, Boolean> getter,
+            OptionFlag flag,
+            OptionImpact impact) {
+        var builder = OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                 .setName(TextComponent.literal(I18n.format(translationKey)))
                 .setTooltip(TextComponent.literal(I18n.format(translationKey + ".tooltip")))
                 .setControl(TickBoxControl::new)
-                .setBinding(setter, getter)
-                .setFlags(flag)
-                .build();
+                .setBinding(setter, getter);
+        if (flag != null) builder.setFlags(flag);
+        if (impact != null) builder.setImpact(impact);
+        return builder.build();
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, Integer> sliderOption(
@@ -87,15 +86,10 @@ public class CeleritasExtraGameOptionPages {
         List<OptionGroup> groups = new ArrayList<>();
 
         groups.add(OptionGroup.createBuilder()
-                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.animations.all")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.all.tooltip")))
-                        .setControl(TickBoxControl::new)
-                        .setBinding((opts, v) -> opts.animationSettings.animation = v,
-                                opts -> opts.animationSettings.animation)
-                        .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
-                        .setImpact(OptionImpact.MEDIUM)
-                        .build())
+                .add(booleanOption("celeritasextra.option.animations.all",
+                        (opts, v) -> opts.animationSettings.animation = v,
+                        opts -> opts.animationSettings.animation,
+                        OptionFlag.REQUIRES_ASSET_RELOAD, OptionImpact.MEDIUM))
                 .build());
 
         groups.add(OptionGroup.createBuilder()

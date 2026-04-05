@@ -1,7 +1,7 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
-import jp.s12kuma01.celeritasextra.client.ClientTickHandler;
+import jp.s12kuma01.celeritasextra.client.FrameCounter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -25,6 +25,8 @@ import java.util.List;
 public class CeleritasExtraHud {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
+    private static final int HUD_TEXT_COLOR = 0xFFFFFF;
+    private static final int HUD_BACKGROUND_COLOR = HUD_BACKGROUND_COLOR;
 
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Text event) {
@@ -42,9 +44,9 @@ public class CeleritasExtraHud {
 
             if (settings.showFPSExtended) {
                 String extendedText = I18n.format("celeritasextra.overlay.fps_extended",
-                        ClientTickHandler.getAverageFps(),
-                        ClientTickHandler.getOnePercentLowFps(),
-                        ClientTickHandler.getPointOnePercentLowFps());
+                        FrameCounter.getAverageFps(),
+                        FrameCounter.getOnePercentLowFps(),
+                        FrameCounter.getPointOnePercentLowFps());
                 fpsText = fpsText + " " + extendedText;
             }
 
@@ -110,12 +112,12 @@ public class CeleritasExtraHud {
      * Draws a string with the specified text contrast mode
      */
     private static void drawString(FontRenderer fontRenderer, String text, int x, int y, CeleritasExtraGameOptions.TextContrast textContrast) {
-        int textColor = 0xFFFFFF;
+        int textColor = HUD_TEXT_COLOR;
 
         switch (textContrast) {
             case BACKGROUND -> {
                 int textWidth = fontRenderer.getStringWidth(text);
-                Gui.drawRect(x - 1, y - 1, x + textWidth + 1, y + fontRenderer.FONT_HEIGHT + 1, 0x90505050);
+                Gui.drawRect(x - 1, y - 1, x + textWidth + 1, y + fontRenderer.FONT_HEIGHT + 1, HUD_BACKGROUND_COLOR);
                 fontRenderer.drawString(text, x, y, textColor);
             }
             case SHADOW -> fontRenderer.drawStringWithShadow(text, x, y, textColor);

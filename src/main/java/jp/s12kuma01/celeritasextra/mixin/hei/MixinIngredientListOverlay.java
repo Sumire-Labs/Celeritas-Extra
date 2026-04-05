@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(targets = "mezz.jei.gui.overlay.IngredientListOverlay")
 public class MixinIngredientListOverlay {
 
+    private static final int HINT_TEXT_COLOR = 0x80FFFFFF;
+
     @WrapOperation(
             method = "drawScreen",
             at = @At(value = "INVOKE",
@@ -38,7 +40,7 @@ public class MixinIngredientListOverlay {
             int textWidth = minecraft.fontRenderer.getStringWidth(hint);
             int x = screenWidth - textWidth - 10;
             int y = resolution.getScaledHeight() / 2;
-            minecraft.fontRenderer.drawStringWithShadow(hint, x, y, 0x80FFFFFF);
+            minecraft.fontRenderer.drawStringWithShadow(hint, x, y, HINT_TEXT_COLOR);
         }
     }
 }

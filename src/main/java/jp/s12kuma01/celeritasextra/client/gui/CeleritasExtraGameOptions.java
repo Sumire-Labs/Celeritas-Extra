@@ -5,6 +5,7 @@ import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.common.ForgeEarlyConfig;
 import net.minecraftforge.common.config.Configuration;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.Display;
@@ -297,6 +298,8 @@ public class CeleritasExtraGameOptions {
         BORDERLESS("celeritasextra.option.screen_mode.borderless"),
         FULLSCREEN("celeritasextra.option.screen_mode.fullscreen");
 
+        private static ScreenMode current = null;
+
         private final String translationKey;
 
         ScreenMode(String translationKey) {
@@ -306,52 +309,48 @@ public class CeleritasExtraGameOptions {
         public String getLocalizedName() {
             return I18n.format(this.translationKey);
         }
-    }
 
-    private static ScreenMode currentScreenMode = null;
-
-    /**
-     * Gets the current screen mode. Uses cached state to avoid timing issues with mc.isFullScreen().
-     */
-    public static ScreenMode getScreenMode(CeleritasExtraGameOptions opts) {
-        if (currentScreenMode == null) {
-            Minecraft mc = Minecraft.getMinecraft();
-            if (!mc.isFullScreen()) {
-                currentScreenMode = ScreenMode.WINDOWED;
-            } else if (net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN) {
-                currentScreenMode = ScreenMode.BORDERLESS;
-            } else {
-                currentScreenMode = ScreenMode.FULLSCREEN;
+        /**
+         * Gets the current screen mode. Uses cached state to avoid timing issues with mc.isFullScreen().
+         */
+        public static ScreenMode getCurrent(CeleritasExtraGameOptions opts) {
+            if (current == null) {
+                var mc = Minecraft.getMinecraft();
+                if (!mc.isFullScreen()) {
+                    current = WINDOWED;
+                } else if (ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN) {
+                    current = BORDERLESS;
+                } else {
+                    current = FULLSCREEN;
+                }
             }
-        }
-        return currentScreenMode;
-    }
-
-    /**
-     * Sets the screen mode by updating Cleanroom's ForgeEarlyConfig and toggling fullscreen as needed.
-     */
-    public static void setScreenMode(CeleritasExtraGameOptions opts, ScreenMode mode) {
-        Minecraft mc = Minecraft.getMinecraft();
-        var previous = getScreenMode(opts);
-        currentScreenMode = mode;
-
-        if (previous == mode) return;
-
-        // Exit current mode if in any fullscreen
-        if (previous != ScreenMode.WINDOWED) {
-            mc.toggleFullscreen();
+            return current;
         }
 
-        // Enter new mode
-        switch (mode) {
-            case WINDOWED -> net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
-            case BORDERLESS -> {
-                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = true;
+        /**
+         * Sets the screen mode by updating Cleanroom's ForgeEarlyConfig and toggling fullscreen as needed.
+         */
+        public static void apply(CeleritasExtraGameOptions opts, ScreenMode mode) {
+            var mc = Minecraft.getMinecraft();
+            var previous = getCurrent(opts);
+            current = mode;
+
+            if (previous == mode) return;
+
+            if (previous != WINDOWED) {
                 mc.toggleFullscreen();
             }
-            case FULLSCREEN -> {
-                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
-                mc.toggleFullscreen();
+
+            switch (mode) {
+                case WINDOWED -> ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
+                case BORDERLESS -> {
+                    ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = true;
+                    mc.toggleFullscreen();
+                }
+                case FULLSCREEN -> {
+                    ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
+                    mc.toggleFullscreen();
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
-public class ClientTickHandler {
+public class FrameCounter {
 
     private static final long WINDOW_NS = 5_000_000_000L;
     private static final long CACHE_INTERVAL_NS = 500_000_000L;
