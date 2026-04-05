@@ -66,7 +66,11 @@ public class CeleritasExtraOptionsListener {
                 .setTooltip(TextComponent.literal(
                         I18n.format("celeritasextra.option.screen_mode.tooltip")))
                 .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
-                        CeleritasExtraGameOptions.ScreenMode.values()))
+                        new TextComponent[]{
+                                TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.WINDOWED.getLocalizedName()),
+                                TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.BORDERLESS.getLocalizedName()),
+                                TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.FULLSCREEN.getLocalizedName())
+                        }))
                 .setBinding(CeleritasExtraGameOptions::setScreenMode,
                         CeleritasExtraGameOptions::getScreenMode)
                 .build();
@@ -78,8 +82,14 @@ public class CeleritasExtraOptionsListener {
                 .setName(TextComponent.translatable("options.vsync"))
                 .setTooltip(TextComponent.literal(
                         I18n.format("celeritasextra.option.extra.vertical_sync.tooltip")))
-                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class,
-                        CeleritasExtraGameOptions.VerticalSyncOption.getAvailableOptions()))
+                .setControl(option -> {
+                    var available = CeleritasExtraGameOptions.VerticalSyncOption.getAvailableOptions();
+                    var names = new TextComponent[available.length];
+                    for (int i = 0; i < available.length; i++) {
+                        names[i] = TextComponent.literal(available[i].getLocalizedName());
+                    }
+                    return new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class, names);
+                })
                 .setBinding(CeleritasExtraGameOptions::setVerticalSyncOption,
                         CeleritasExtraGameOptions::getVerticalSyncOption)
                 .setImpact(OptionImpact.VARIES)

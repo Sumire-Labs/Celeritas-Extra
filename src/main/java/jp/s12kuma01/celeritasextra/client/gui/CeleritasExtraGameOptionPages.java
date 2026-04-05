@@ -303,7 +303,12 @@ public class CeleritasExtraGameOptionPages {
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.overlay_corner")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.overlay_corner.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.OverlayCorner.class,
-                                CeleritasExtraGameOptions.OverlayCorner.values()))
+                                new TextComponent[]{
+                                        TextComponent.literal(CeleritasExtraGameOptions.OverlayCorner.TOP_LEFT.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.OverlayCorner.TOP_RIGHT.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.OverlayCorner.BOTTOM_LEFT.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT.getLocalizedName())
+                                }))
                         .setBinding((opts, value) -> opts.extraSettings.overlayCorner = value,
                                 opts -> opts.extraSettings.overlayCorner)
                         .build())
@@ -311,7 +316,11 @@ public class CeleritasExtraGameOptionPages {
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.extra.text_contrast")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.extra.text_contrast.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
-                                CeleritasExtraGameOptions.TextContrast.values()))
+                                new TextComponent[]{
+                                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.NONE.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.BACKGROUND.getLocalizedName()),
+                                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.SHADOW.getLocalizedName())
+                                }))
                         .setBinding((opts, value) -> opts.extraSettings.textContrast = value,
                                 opts -> opts.extraSettings.textContrast)
                         .build())
