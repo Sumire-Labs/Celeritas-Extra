@@ -287,6 +287,73 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
+     * Screen mode options: Windowed, Borderless Fullscreen, Exclusive Fullscreen.
+     * Borderless uses Cleanroom's built-in Display.toggleBorderless() via ForgeEarlyConfig.
+     */
+    public enum ScreenMode {
+        WINDOWED("celeritasextra.option.screen_mode.windowed"),
+        BORDERLESS("celeritasextra.option.screen_mode.borderless"),
+        FULLSCREEN("celeritasextra.option.screen_mode.fullscreen");
+
+        private final String translationKey;
+
+        ScreenMode(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
+    /**
+     * Gets the current screen mode from Minecraft's fullscreen state and Cleanroom's borderless config.
+     */
+    public static ScreenMode getScreenMode() {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (!mc.isFullScreen()) {
+            return ScreenMode.WINDOWED;
+        }
+        if (net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN) {
+            return ScreenMode.BORDERLESS;
+        }
+        return ScreenMode.FULLSCREEN;
+    }
+
+    /**
+     * Sets the screen mode by updating Cleanroom's ForgeEarlyConfig and toggling fullscreen as needed.
+     */
+    public static void setScreenMode(ScreenMode mode) {
+        Minecraft mc = Minecraft.getMinecraft();
+        boolean isCurrentlyFullscreen = mc.isFullScreen();
+
+        switch (mode) {
+            case WINDOWED -> {
+                if (isCurrentlyFullscreen) {
+                    mc.toggleFullscreen();
+                }
+                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
+            }
+            case BORDERLESS -> {
+                if (isCurrentlyFullscreen) {
+                    // Exit current fullscreen mode first (exclusive or borderless)
+                    mc.toggleFullscreen();
+                }
+                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = true;
+                mc.toggleFullscreen();
+            }
+            case FULLSCREEN -> {
+                if (isCurrentlyFullscreen) {
+                    // Exit current fullscreen mode first (exclusive or borderless)
+                    mc.toggleFullscreen();
+                }
+                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
+                mc.toggleFullscreen();
+            }
+        }
+    }
+
+    /**
      * Fog type options for mod compatibility
      */
     public enum FogType {
