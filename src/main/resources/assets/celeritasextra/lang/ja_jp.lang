@@ -109,6 +109,8 @@ celeritasextra.option.extra.steady_debug_hud=安定したデバック画面
 celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、デバック画面は安定したデバック画面の更新間隔によって設定された一定量のティックで更新されます。
 celeritasextra.option.extra.steady_debug_hud_refresh=安定したデバック画面の更新間隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=デバック画面の更新間隔をティックで調整します。
+celeritasextra.option.extra.hide_hei=検索時までHEIを非表示
+celeritasextra.option.extra.hide_hei.tooltip=有効にすると、検索バーに入力するまでHEIのアイテムリストが非表示になります。検索バーは常に表示されます。
 
 # オーバーレイ位置オプション
 celeritasextra.option.overlay_corner.top_left=左上

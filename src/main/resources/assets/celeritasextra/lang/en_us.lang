@@ -109,6 +109,8 @@ celeritasextra.option.extra.steady_debug_hud=Steady Debug Hud
 celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the debug hud will be refreshed at a certain amount of ticks configured by the Steady Debug Hud Refresh Rate.
 celeritasextra.option.extra.steady_debug_hud_refresh=Steady Debug Hud Refresh Interval
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Adjusts the interval of when the debug hud will be refreshed in ticks.
+celeritasextra.option.extra.hide_hei=Hide HEI Until Searching
+celeritasextra.option.extra.hide_hei.tooltip=If enabled, the HEI item list will be hidden until you type in the search bar. The search bar remains visible.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Top Left

@@ -109,6 +109,8 @@ celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
 celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面的更新频率将降低，以减少 CPU 使用并提高 FPS。
 celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
+celeritasextra.option.extra.hide_hei=搜索前隐藏 HEI
+celeritasextra.option.extra.hide_hei.tooltip=启用后，HEI 物品列表将在搜索栏输入内容前保持隐藏。搜索栏始终可见。
 
 # 界面位置选项
 celeritasextra.option.overlay_corner.top_left=左上

@@ -108,7 +108,9 @@ public class CeleritasExtraGameOptions {
             new BooleanProperty(CAT_EXTRA, "steadyDebugHud", false, "Reduce F3 debug screen update frequency",
                     v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud),
             new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
-                    v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync)
+                    v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync),
+            new BooleanProperty(CAT_EXTRA, "hideHeiUntilSearch", false, "Hide HEI item list until searching",
+                    v -> extraSettings.hideHeiUntilSearch = v, () -> extraSettings.hideHeiUntilSearch)
     );
     private final List<IntProperty> intProperties = Arrays.asList(
             new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
@@ -426,6 +428,7 @@ public class CeleritasExtraGameOptions {
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
+        public boolean hideHeiUntilSearch = false;
     }
 
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,

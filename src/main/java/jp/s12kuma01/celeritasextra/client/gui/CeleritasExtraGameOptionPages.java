@@ -341,6 +341,9 @@ public class CeleritasExtraGameOptionPages {
                         1, 60, 1, ControlValueFormatter.number(),
                         (opts, v) -> opts.extraSettings.steadyDebugHudRefreshInterval = v,
                         opts -> opts.extraSettings.steadyDebugHudRefreshInterval))
+                .add(booleanOption("celeritasextra.option.extra.hide_hei",
+                        (opts, v) -> opts.extraSettings.hideHeiUntilSearch = v,
+                        opts -> opts.extraSettings.hideHeiUntilSearch))
                 .build());
 
         return new OptionPage(CeleritasExtraOptionPages.EXTRA, TextComponent.literal(I18n.format("celeritasextra.option.page.extra")), ImmutableList.copyOf(groups));

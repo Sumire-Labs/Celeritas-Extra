@@ -109,6 +109,8 @@ celeritasextra.option.extra.steady_debug_hud=Частота Обновления
 celeritasextra.option.extra.steady_debug_hud.tooltip=Если этот параметр включен, экран отладки F3 будет обновляться реже, чтобы снизить нагрузку на процессор и повысить частоту кадров в секунду.
 celeritasextra.option.extra.steady_debug_hud_refresh=Интервал Обновления Дисплея F3 - HUD
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Определяет количество переходов между обновлениями экрана отладки по нажатию клавиши F3. Более высокие значения = меньшая частота обновлений = более высокая производительность. Значение по умолчанию - 20 тиков (1 секунда).
+celeritasextra.option.extra.hide_hei=Скрыть HEI до поиска
+celeritasextra.option.extra.hide_hei.tooltip=Если включено, список предметов HEI будет скрыт, пока вы не введёте текст в строке поиска. Строка поиска остаётся видимой.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Верхний левый

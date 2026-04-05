@@ -24,7 +24,19 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        if (mixinClassName.contains(".hei.")) {
+            return isClassPresent("mezz.jei.gui.overlay.IngredientListOverlay");
+        }
         return true;
+    }
+
+    private static boolean isClassPresent(String className) {
+        try {
+            Class.forName(className, false, CeleritasExtraMixinConfigPlugin.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException _) {
+            return false;
+        }
     }
 
     @Override
