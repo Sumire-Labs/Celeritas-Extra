@@ -1,11 +1,6 @@
 package jp.s12kuma01.celeritasextra.client.particle;
 
-import jp.s12kuma01.celeritasextra.mixin.particle.IMixinParticleManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import org.objectweb.asm.ClassReader;
@@ -13,7 +8,6 @@ import org.objectweb.asm.ClassReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,57 +122,6 @@ public class ParticleClassRegistry {
     }
 
     /**
-     * Scan ParticleManager's registered factories to discover particle classes.
-     * Uses three strategies:
-     * 1. Enclosing class - for inner class factories (e.g. ParticleFlame.Factory)
-     * 2. Covariant return type - for factories that declare a specific Particle subclass return type
-     * 3. Trial creation - if a world is available, create a temporary particle to discover its class
-     */
-    public void scanFactories(ParticleManager particleManager) {
-        Map<Integer, IParticleFactory> factories = ((IMixinParticleManager) particleManager).getParticleTypes();
-        World world = Minecraft.getMinecraft().world;
-
-        for (Map.Entry<Integer, IParticleFactory> entry : factories.entrySet()) {
-            int particleId = entry.getKey();
-            IParticleFactory factory = entry.getValue();
-            Class<?> factoryClass = factory.getClass();
-
-            // Strategy 1: Enclosing class (inner class factories)
-            Class<?> enclosingClass = factoryClass.getEnclosingClass();
-            if (enclosingClass != null && Particle.class.isAssignableFrom(enclosingClass)) {
-                recordClass(enclosingClass.getName(), enclosingClass.getSimpleName());
-                continue;
-            }
-
-            // Strategy 2: Covariant return type analysis
-            boolean found = false;
-            try {
-                for (Method method : factoryClass.getDeclaredMethods()) {
-                    Class<?> returnType = method.getReturnType();
-                    if (returnType != Particle.class && Particle.class.isAssignableFrom(returnType)) {
-                        recordClass(returnType.getName(), returnType.getSimpleName());
-                        found = true;
-                        break;
-                    }
-                }
-            } catch (Throwable ignored) {
-            }
-            if (found) continue;
-
-            // Strategy 3: Trial creation (only when a world is available)
-            if (world != null) {
-                try {
-                    Particle p = factory.createParticle(particleId, world, 0, -999, 0, 0, 0, 0);
-                    if (p != null) {
-                        recordClass(p.getClass().getName(), p.getClass().getSimpleName());
-                    }
-                } catch (Throwable ignored) {
-                }
-            }
-        }
-    }
-
-    /**
      * Scan all mod jar files using ASM to discover Particle subclasses
      * without loading or instantiating them. Uses bytecode superclass analysis
      * to find classes that extend Particle or any known Particle subclass.
@@ -210,7 +153,7 @@ public class ParticleClassRegistry {
             }
         }
 
-        // Assign mod names to already-discovered classes (from factory scan)
+        // Assign mod names to already-discovered classes (from config or runtime recording)
         for (String fullName : discoveredClasses.keySet()) {
             String internalName = fullName.replace('.', '/');
             String modName = classToModName.get(internalName);
