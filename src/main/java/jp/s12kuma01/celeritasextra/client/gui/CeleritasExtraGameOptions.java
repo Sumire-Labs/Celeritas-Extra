@@ -313,7 +313,7 @@ public class CeleritasExtraGameOptions {
     /**
      * Gets the current screen mode. Uses cached state to avoid timing issues with mc.isFullScreen().
      */
-    public static ScreenMode getScreenMode() {
+    public static ScreenMode getScreenMode(CeleritasExtraGameOptions opts) {
         if (currentScreenMode == null) {
             Minecraft mc = Minecraft.getMinecraft();
             if (!mc.isFullScreen()) {
@@ -330,7 +330,7 @@ public class CeleritasExtraGameOptions {
     /**
      * Sets the screen mode by updating Cleanroom's ForgeEarlyConfig and toggling fullscreen as needed.
      */
-    public static void setScreenMode(ScreenMode mode) {
+    public static void setScreenMode(CeleritasExtraGameOptions opts, ScreenMode mode) {
         Minecraft mc = Minecraft.getMinecraft();
         var previous = getScreenMode();
         currentScreenMode = mode;
