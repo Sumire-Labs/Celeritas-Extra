@@ -1,6 +1,6 @@
 # Celeritas Extra
 
-This is an unofficial backport of Sodium Extra for Celeritas 12.2 (Cleanroom Loader).
+This is an unofficial backport of Sodium Extra for Celeritas 1.12.2 (Cleanroom Loader).
 Additionally, several custom enhancements are being implemented.
 
 For improved QoL, you may also want to check out these additional mods:
@@ -53,7 +53,7 @@ Celeritas Extra is a comprehensive unofficial backport of Sodium Extra/Embeddium
 
 ## Requirements
 
-* **CleanroomLoader**
+* **CleanroomLoader 0.5.7 or later**
 * **Celeritas**
 
 ## License
