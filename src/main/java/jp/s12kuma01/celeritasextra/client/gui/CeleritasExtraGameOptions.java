@@ -1,7 +1,6 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
-import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -250,43 +249,36 @@ public class CeleritasExtraGameOptions {
                 return new VerticalSyncOption[]{OFF, ON};
             }
         }
-    }
 
-    /**
-     * Gets the current VSync mode from the two underlying booleans.
-     */
-    public static VerticalSyncOption getVerticalSyncOption(CeleritasExtraGameOptions opts) {
-        if (opts.extraSettings.useAdaptiveSync) {
-            return VerticalSyncOption.ADAPTIVE;
-        } else if (Minecraft.getMinecraft().gameSettings.enableVsync) {
-            return VerticalSyncOption.ON;
-        } else {
-            return VerticalSyncOption.OFF;
-        }
-    }
-
-    /**
-     * Sets the VSync mode by updating the two underlying booleans and applying immediately.
-     */
-    public static void setVerticalSyncOption(CeleritasExtraGameOptions opts, VerticalSyncOption value) {
-        Minecraft mc = Minecraft.getMinecraft();
-        switch (value) {
-            case OFF -> {
-                opts.extraSettings.useAdaptiveSync = false;
-                mc.gameSettings.enableVsync = false;
-            }
-            case ON -> {
-                opts.extraSettings.useAdaptiveSync = false;
-                mc.gameSettings.enableVsync = true;
-            }
-            case ADAPTIVE -> {
-                opts.extraSettings.useAdaptiveSync = true;
-                mc.gameSettings.enableVsync = true;
+        public static VerticalSyncOption getCurrent(CeleritasExtraGameOptions opts) {
+            if (opts.extraSettings.useAdaptiveSync) {
+                return ADAPTIVE;
+            } else if (Minecraft.getMinecraft().gameSettings.enableVsync) {
+                return ON;
+            } else {
+                return OFF;
             }
         }
-        // Trigger VSync update - our mixin intercepts this when adaptive is enabled
-        Display.setVSyncEnabled(mc.gameSettings.enableVsync);
-        mc.gameSettings.saveOptions();
+
+        public static void apply(CeleritasExtraGameOptions opts, VerticalSyncOption value) {
+            var mc = Minecraft.getMinecraft();
+            switch (value) {
+                case OFF -> {
+                    opts.extraSettings.useAdaptiveSync = false;
+                    mc.gameSettings.enableVsync = false;
+                }
+                case ON -> {
+                    opts.extraSettings.useAdaptiveSync = false;
+                    mc.gameSettings.enableVsync = true;
+                }
+                case ADAPTIVE -> {
+                    opts.extraSettings.useAdaptiveSync = true;
+                    mc.gameSettings.enableVsync = true;
+                }
+            }
+            Display.setVSyncEnabled(mc.gameSettings.enableVsync);
+            mc.gameSettings.saveOptions();
+        }
     }
 
     /**

@@ -110,8 +110,8 @@ public class CeleritasExtraOptionsListener {
                     }
                     return new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class, names);
                 })
-                .setBinding(CeleritasExtraGameOptions::setVerticalSyncOption,
-                        CeleritasExtraGameOptions::getVerticalSyncOption)
+                .setBinding(CeleritasExtraGameOptions.VerticalSyncOption::apply,
+                        CeleritasExtraGameOptions.VerticalSyncOption::getCurrent)
                 .setImpact(OptionImpact.VARIES)
                 .build();
     }
