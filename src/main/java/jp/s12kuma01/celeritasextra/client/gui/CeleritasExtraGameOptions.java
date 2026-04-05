@@ -308,18 +308,23 @@ public class CeleritasExtraGameOptions {
         }
     }
 
+    private static ScreenMode currentScreenMode = null;
+
     /**
-     * Gets the current screen mode from Minecraft's fullscreen state and Cleanroom's borderless config.
+     * Gets the current screen mode. Uses cached state to avoid timing issues with mc.isFullScreen().
      */
     public static ScreenMode getScreenMode() {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (!mc.isFullScreen()) {
-            return ScreenMode.WINDOWED;
+        if (currentScreenMode == null) {
+            Minecraft mc = Minecraft.getMinecraft();
+            if (!mc.isFullScreen()) {
+                currentScreenMode = ScreenMode.WINDOWED;
+            } else if (net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN) {
+                currentScreenMode = ScreenMode.BORDERLESS;
+            } else {
+                currentScreenMode = ScreenMode.FULLSCREEN;
+            }
         }
-        if (net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN) {
-            return ScreenMode.BORDERLESS;
-        }
-        return ScreenMode.FULLSCREEN;
+        return currentScreenMode;
     }
 
     /**
@@ -327,28 +332,24 @@ public class CeleritasExtraGameOptions {
      */
     public static void setScreenMode(ScreenMode mode) {
         Minecraft mc = Minecraft.getMinecraft();
-        boolean isCurrentlyFullscreen = mc.isFullScreen();
+        var previous = getScreenMode();
+        currentScreenMode = mode;
 
+        if (previous == mode) return;
+
+        // Exit current mode if in any fullscreen
+        if (previous != ScreenMode.WINDOWED) {
+            mc.toggleFullscreen();
+        }
+
+        // Enter new mode
         switch (mode) {
-            case WINDOWED -> {
-                if (isCurrentlyFullscreen) {
-                    mc.toggleFullscreen();
-                }
-                net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
-            }
+            case WINDOWED -> net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
             case BORDERLESS -> {
-                if (isCurrentlyFullscreen) {
-                    // Exit current fullscreen mode first (exclusive or borderless)
-                    mc.toggleFullscreen();
-                }
                 net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = true;
                 mc.toggleFullscreen();
             }
             case FULLSCREEN -> {
-                if (isCurrentlyFullscreen) {
-                    // Exit current fullscreen mode first (exclusive or borderless)
-                    mc.toggleFullscreen();
-                }
                 net.minecraftforge.common.ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
                 mc.toggleFullscreen();
             }

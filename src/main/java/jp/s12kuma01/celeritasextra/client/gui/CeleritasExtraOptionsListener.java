@@ -35,8 +35,9 @@ public class CeleritasExtraOptionsListener {
     }
 
     /**
-     * Replaces the vanilla VSync boolean toggle in the WINDOW group
-     * with a 3-way cycling control (Off / On / Adaptive).
+     * Replaces vanilla boolean toggles in the WINDOW group with enhanced cycling controls:
+     * - Fullscreen → 3-way Screen Mode (Windowed / Borderless / Fullscreen)
+     * - VSync → 3-way VSync (Off / On / Adaptive)
      */
     public static void onOptionGroupConstruct(OptionGroupConstructionEvent event) {
         if (!event.getId().matches(StandardOptions.Group.WINDOW)) {
@@ -46,12 +47,29 @@ public class CeleritasExtraOptionsListener {
         List<Option<?>> options = event.getOptions();
         for (int i = 0; i < options.size(); i++) {
             Option<?> option = options.get(i);
-            if (option.getId() != null && option.getId().matches(StandardOptions.Option.VSYNC)) {
+            if (option.getId() == null) continue;
+
+            if (option.getId().matches(StandardOptions.Option.FULLSCREEN)) {
+                options.set(i, createScreenModeOption());
+                CeleritasExtraMod.LOGGER.debug("Replaced Fullscreen option with screen mode control");
+            } else if (option.getId().matches(StandardOptions.Option.VSYNC)) {
                 options.set(i, createVSyncOption());
                 CeleritasExtraMod.LOGGER.debug("Replaced VSync option with adaptive VSync control");
-                break;
             }
         }
+    }
+
+    private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.ScreenMode> createScreenModeOption() {
+        return OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
+                .setId(StandardOptions.Option.FULLSCREEN.cast())
+                .setName(TextComponent.literal(I18n.format("celeritasextra.option.screen_mode")))
+                .setTooltip(TextComponent.literal(
+                        I18n.format("celeritasextra.option.screen_mode.tooltip")))
+                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
+                        CeleritasExtraGameOptions.ScreenMode.values()))
+                .setBinding(CeleritasExtraGameOptions::setScreenMode,
+                        CeleritasExtraGameOptions::getScreenMode)
+                .build();
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.VerticalSyncOption> createVSyncOption() {

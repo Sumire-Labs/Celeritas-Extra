@@ -317,18 +317,6 @@ public class CeleritasExtraGameOptionPages {
                         .build())
                 .build());
 
-        // Screen mode
-        groups.add(OptionGroup.createBuilder()
-                .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
-                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.screen_mode")))
-                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.screen_mode.tooltip")))
-                        .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
-                                CeleritasExtraGameOptions.ScreenMode.values()))
-                        .setBinding((opts, value) -> CeleritasExtraGameOptions.setScreenMode(value),
-                                opts -> CeleritasExtraGameOptions.getScreenMode())
-                        .build())
-                .build());
-
         // Other settings group
         groups.add(OptionGroup.createBuilder()
                 .add(booleanOption("celeritasextra.option.extra.reduced_motion",
