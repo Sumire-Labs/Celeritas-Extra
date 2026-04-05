@@ -152,7 +152,7 @@ public class CeleritasExtraGameOptionPages {
                 for (Map.Entry<String, String> classEntry : classEntries) {
                     String fullClassName = classEntry.getKey();
                     String simpleClassName = classEntry.getValue();
-                    String displayName = modId + "." + simpleClassName;
+                    String displayName = simpleClassName + " (" + modId + ")";
 
                     groupBuilder.add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                             .setName(TextComponent.literal(displayName))
