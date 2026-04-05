@@ -26,7 +26,7 @@ public class CeleritasExtraHud {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final int HUD_TEXT_COLOR = 0xFFFFFF;
-    private static final int HUD_BACKGROUND_COLOR = HUD_BACKGROUND_COLOR;
+    private static final int HUD_BACKGROUND_COLOR = 0x90505050;
 
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Text event) {
