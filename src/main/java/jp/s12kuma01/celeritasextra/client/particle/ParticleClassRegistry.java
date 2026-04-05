@@ -166,7 +166,7 @@ public class ParticleClassRegistry {
         boolean changed = true;
         while (changed) {
             changed = false;
-            for (Map.Entry<String, String> entry : superMap.entrySet()) {
+            for (var entry : superMap.entrySet()) {
                 String className = entry.getKey();
                 String superName = entry.getValue();
                 if (knownParticleNames.contains(className)) continue;
@@ -197,10 +197,10 @@ public class ParticleClassRegistry {
                     String className = cr.getClassName();
                     superMap.put(className, cr.getSuperName());
                     classToModName.put(className, modName);
-                } catch (Throwable ignored) {
+                } catch (Throwable _) {
                 }
             }
-        } catch (Throwable ignored) {
+        } catch (Throwable _) {
         }
     }
 
@@ -217,7 +217,7 @@ public class ParticleClassRegistry {
                             String className = cr.getClassName();
                             superMap.put(className, cr.getSuperName());
                             classToModName.put(className, modName);
-                        } catch (Throwable ignored) {
+                        } catch (Throwable _) {
                         }
                     }
                     return FileVisitResult.CONTINUE;

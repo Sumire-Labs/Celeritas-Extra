@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TileEntityBeaconRenderer.class)
 public class MixinTileEntityBeaconRenderer {
 
-    // Store the beacon being rendered for use in height calculation
     private static TileEntityBeacon currentBeacon;
 
     @Inject(
@@ -31,7 +30,6 @@ public class MixinTileEntityBeaconRenderer {
             ci.cancel();
             return;
         }
-        // Store the current beacon for height limit calculation
         currentBeacon = te;
     }
 

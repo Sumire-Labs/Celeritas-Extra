@@ -131,10 +131,10 @@ public class CeleritasExtraGameOptionPages {
         ParticleClassRegistry.getInstance().scanModJars();
 
         // Dynamic particle class controls - grouped by mod name
-        Map<String, String> discovered = ParticleClassRegistry.getInstance().getDiscoveredClasses();
+        var discovered = ParticleClassRegistry.getInstance().getDiscoveredClasses();
         if (!discovered.isEmpty()) {
-            Map<String, List<Map.Entry<String, String>>> byMod = new TreeMap<>();
-            for (Map.Entry<String, String> entry : discovered.entrySet()) {
+            var byMod = new TreeMap<String, List<Map.Entry<String, String>>>();
+            for (var entry : discovered.entrySet()) {
                 String fullName = entry.getKey();
                 String modId = ParticleClassRegistry.getInstance().getModName(fullName);
                 if (modId == null) {
@@ -143,15 +143,15 @@ public class CeleritasExtraGameOptionPages {
                 byMod.computeIfAbsent(modId, k -> new ArrayList<>()).add(entry);
             }
 
-            for (Map.Entry<String, List<Map.Entry<String, String>>> modEntry : byMod.entrySet()) {
-                String modId = modEntry.getKey();
-                OptionGroup.Builder groupBuilder = OptionGroup.createBuilder();
-                List<Map.Entry<String, String>> classEntries = modEntry.getValue();
+            for (var modEntry : byMod.entrySet()) {
+                var modId = modEntry.getKey();
+                var groupBuilder = OptionGroup.createBuilder();
+                var classEntries = modEntry.getValue();
                 classEntries.sort(Comparator.comparing(Map.Entry::getValue));
 
-                for (Map.Entry<String, String> classEntry : classEntries) {
-                    String fullClassName = classEntry.getKey();
-                    String simpleClassName = classEntry.getValue();
+                for (var classEntry : classEntries) {
+                    var fullClassName = classEntry.getKey();
+                    var simpleClassName = classEntry.getValue();
                     String displayName = simpleClassName + " (" + modId + ")";
 
                     groupBuilder.add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)

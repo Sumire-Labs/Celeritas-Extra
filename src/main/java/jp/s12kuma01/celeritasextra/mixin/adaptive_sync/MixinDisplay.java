@@ -38,9 +38,7 @@ public class MixinDisplay {
                 CeleritasExtraMod.LOGGER.warn("Adaptive VSync not supported, falling back to normal VSync.");
                 CeleritasExtraClientMod.options().extraSettings.useAdaptiveSync = false;
                 CeleritasExtraClientMod.options().writeChanges();
-                // Don't cancel - let the original setVSyncEnabled run with normal VSync
             }
         }
-        // If useAdaptiveSync is false or enable is false, pass through to original
     }
 }

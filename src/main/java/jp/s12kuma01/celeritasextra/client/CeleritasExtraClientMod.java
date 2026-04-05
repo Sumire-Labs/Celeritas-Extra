@@ -32,7 +32,6 @@ public class CeleritasExtraClientMod {
     public static void onClientInit() {
         if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
             CeleritasExtraMod.LOGGER.info("Initializing Celeritas Extra client...");
-            // Load configuration
             options();
         }
     }
