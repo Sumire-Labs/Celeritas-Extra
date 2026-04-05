@@ -8,12 +8,7 @@ import org.taumc.celeritas.api.options.control.ControlValueFormatter;
 import org.taumc.celeritas.api.options.control.CyclingControl;
 import org.taumc.celeritas.api.options.control.SliderControl;
 import org.taumc.celeritas.api.options.control.TickBoxControl;
-import org.taumc.celeritas.api.options.structure.OptionFlag;
-import org.taumc.celeritas.api.options.structure.OptionGroup;
-import org.taumc.celeritas.api.options.structure.OptionImpl;
-import org.taumc.celeritas.api.options.structure.OptionPage;
-
-import org.taumc.celeritas.api.options.structure.OptionImpact;
+import org.taumc.celeritas.api.options.structure.*;
 
 import java.util.*;
 import java.util.function.BiConsumer;

@@ -28,8 +28,8 @@ public class MixinIngredientListOverlay {
             remap = false
     )
     private void celeritasExtra$wrapContentsDraw(IngredientGridWithNavigation contents,
-                                                  Minecraft minecraft, int mouseX, int mouseY, float partialTicks,
-                                                  Operation<Void> original) {
+                                                 Minecraft minecraft, int mouseX, int mouseY, float partialTicks,
+                                                 Operation<Void> original) {
         if (!CeleritasExtraClientMod.options().extraSettings.hideHeiUntilSearch
                 || !Config.getFilterText().isEmpty()) {
             original.call(contents, minecraft, mouseX, mouseY, partialTicks);

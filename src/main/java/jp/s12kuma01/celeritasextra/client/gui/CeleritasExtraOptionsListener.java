@@ -8,11 +8,7 @@ import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 import org.taumc.celeritas.api.OptionGroupConstructionEvent;
 import org.taumc.celeritas.api.options.control.CyclingControl;
 import org.taumc.celeritas.api.options.control.TickBoxControl;
-import org.taumc.celeritas.api.options.structure.Option;
-import org.taumc.celeritas.api.options.structure.OptionFlag;
-import org.taumc.celeritas.api.options.structure.OptionImpl;
-import org.taumc.celeritas.api.options.structure.OptionImpact;
-import org.taumc.celeritas.api.options.structure.StandardOptions;
+import org.taumc.celeritas.api.options.structure.*;
 
 import java.util.List;
 

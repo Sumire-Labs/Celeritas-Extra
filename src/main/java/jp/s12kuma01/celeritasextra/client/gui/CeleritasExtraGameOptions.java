@@ -424,7 +424,7 @@ public class CeleritasExtraGameOptions {
     }
 
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
-                                    Consumer<Boolean> setter, Supplier<Boolean> getter) {
+                                   Consumer<Boolean> setter, Supplier<Boolean> getter) {
         void load(Configuration config) {
             setter.accept(config.getBoolean(key, category, defaultValue, comment));
         }
@@ -435,7 +435,7 @@ public class CeleritasExtraGameOptions {
     }
 
     private record IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
-                                Consumer<Integer> setter, Supplier<Integer> getter) {
+                               Consumer<Integer> setter, Supplier<Integer> getter) {
         void load(Configuration config) {
             setter.accept(config.getInt(key, category, defaultValue, min, max, comment));
         }
