@@ -13,6 +13,8 @@ import org.taumc.celeritas.api.options.structure.OptionGroup;
 import org.taumc.celeritas.api.options.structure.OptionImpl;
 import org.taumc.celeritas.api.options.structure.OptionPage;
 
+import org.taumc.celeritas.api.options.structure.OptionImpact;
+
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -33,6 +35,20 @@ public class CeleritasExtraGameOptionPages {
                 .setTooltip(TextComponent.literal(I18n.format(translationKey + ".tooltip")))
                 .setControl(TickBoxControl::new)
                 .setBinding(setter, getter)
+                .build();
+    }
+
+    private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
+            String translationKey,
+            BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
+            Function<CeleritasExtraGameOptions, Boolean> getter,
+            OptionImpact impact) {
+        return OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                .setName(TextComponent.literal(I18n.format(translationKey)))
+                .setTooltip(TextComponent.literal(I18n.format(translationKey + ".tooltip")))
+                .setControl(TickBoxControl::new)
+                .setBinding(setter, getter)
+                .setImpact(impact)
                 .build();
     }
 
@@ -71,10 +87,15 @@ public class CeleritasExtraGameOptionPages {
         List<OptionGroup> groups = new ArrayList<>();
 
         groups.add(OptionGroup.createBuilder()
-                .add(booleanOption("celeritasextra.option.animations.all",
-                        (opts, v) -> opts.animationSettings.animation = v,
-                        opts -> opts.animationSettings.animation,
-                        OptionFlag.REQUIRES_ASSET_RELOAD))
+                .add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        .setName(TextComponent.literal(I18n.format("celeritasextra.option.animations.all")))
+                        .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.animations.all.tooltip")))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((opts, v) -> opts.animationSettings.animation = v,
+                                opts -> opts.animationSettings.animation)
+                        .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
+                        .setImpact(OptionImpact.MEDIUM)
+                        .build())
                 .build());
 
         groups.add(OptionGroup.createBuilder()
@@ -112,7 +133,8 @@ public class CeleritasExtraGameOptionPages {
         groups.add(OptionGroup.createBuilder()
                 .add(booleanOption("celeritasextra.option.particles.all",
                         (opts, v) -> opts.particleSettings.particles = v,
-                        opts -> opts.particleSettings.particles))
+                        opts -> opts.particleSettings.particles,
+                        OptionImpact.HIGH))
                 .build());
 
         groups.add(OptionGroup.createBuilder()
@@ -246,7 +268,8 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.renderSettings.cloudHeight))
                 .add(booleanOption("celeritasextra.option.render.light_updates",
                         (opts, v) -> opts.renderSettings.lightUpdates = v,
-                        opts -> opts.renderSettings.lightUpdates))
+                        opts -> opts.renderSettings.lightUpdates,
+                        OptionImpact.HIGH))
                 .add(booleanOption("celeritasextra.option.render.item_frames",
                         (opts, v) -> opts.renderSettings.itemFrames = v,
                         opts -> opts.renderSettings.itemFrames))
@@ -341,13 +364,13 @@ public class CeleritasExtraGameOptionPages {
                 .build());
 
         // HEI-specific options (only shown when HEI is installed)
-        if (net.minecraftforge.fml.common.Loader.isModLoaded("jei")) {
-            groups.add(OptionGroup.createBuilder()
-                    .add(booleanOption("celeritasextra.option.extra.hide_hei",
-                            (opts, v) -> opts.extraSettings.hideHeiUntilSearch = v,
-                            opts -> opts.extraSettings.hideHeiUntilSearch))
-                    .build());
-        }
+        groups.add(OptionGroup.createBuilder()
+                .addConditionally(
+                        net.minecraftforge.fml.common.Loader.isModLoaded("jei"),
+                        () -> booleanOption("celeritasextra.option.extra.hide_hei",
+                                (opts, v) -> opts.extraSettings.hideHeiUntilSearch = v,
+                                opts -> opts.extraSettings.hideHeiUntilSearch))
+                .build());
 
         return new OptionPage(CeleritasExtraOptionPages.EXTRA, TextComponent.literal(I18n.format("celeritasextra.option.page.extra")), ImmutableList.copyOf(groups));
     }

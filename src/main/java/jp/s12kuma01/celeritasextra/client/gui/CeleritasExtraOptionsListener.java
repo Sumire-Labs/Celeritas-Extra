@@ -6,7 +6,9 @@ import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 import org.taumc.celeritas.api.OptionGroupConstructionEvent;
 import org.taumc.celeritas.api.options.control.CyclingControl;
+import org.taumc.celeritas.api.options.control.TickBoxControl;
 import org.taumc.celeritas.api.options.structure.Option;
+import org.taumc.celeritas.api.options.structure.OptionFlag;
 import org.taumc.celeritas.api.options.structure.OptionImpl;
 import org.taumc.celeritas.api.options.structure.OptionImpact;
 import org.taumc.celeritas.api.options.structure.StandardOptions;
@@ -57,6 +59,23 @@ public class CeleritasExtraOptionsListener {
                 CeleritasExtraMod.LOGGER.debug("Replaced VSync option with adaptive VSync control");
             }
         }
+
+        options.add(createRetinaOption());
+    }
+
+    private static final boolean IS_MAC = System.getProperty("os.name", "").toLowerCase().contains("mac");
+
+    private static OptionImpl<CeleritasExtraGameOptions, Boolean> createRetinaOption() {
+        return OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                .setName(TextComponent.literal(I18n.format("celeritasextra.option.retina_framebuffer")))
+                .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.retina_framebuffer.tooltip")))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (opts, v) -> net.minecraftforge.common.ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER = v,
+                        opts -> net.minecraftforge.common.ForgeEarlyConfig.COCOA_RETINA_FRAMEBUFFER)
+                .setEnabledPredicate(() -> IS_MAC)
+                .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
+                .build();
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.ScreenMode> createScreenModeOption() {
