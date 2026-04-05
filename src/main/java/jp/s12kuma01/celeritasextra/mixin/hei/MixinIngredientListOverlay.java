@@ -4,10 +4,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiTextField;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+
+import java.lang.reflect.Method;
 
 /**
  * Hides HEI's item grid overlay until the user types in the search bar.
@@ -17,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(targets = "mezz.jei.gui.overlay.IngredientListOverlay")
 public class MixinIngredientListOverlay {
 
-    @Shadow
-    private GuiTextField searchField;
+    @Unique
+    private static Method celeritasExtra$getFilterTextMethod;
 
     @WrapOperation(
             method = "drawScreen",
@@ -30,8 +31,21 @@ public class MixinIngredientListOverlay {
                                                   Minecraft minecraft, int mouseX, int mouseY, float partialTicks,
                                                   Operation<Void> original) {
         if (!CeleritasExtraClientMod.options().extraSettings.hideHeiUntilSearch
-                || !searchField.getText().isEmpty()) {
+                || !celeritasExtra$getFilterText().isEmpty()) {
             original.call(contents, minecraft, mouseX, mouseY, partialTicks);
+        }
+    }
+
+    @Unique
+    private static String celeritasExtra$getFilterText() {
+        try {
+            if (celeritasExtra$getFilterTextMethod == null) {
+                var configClass = Class.forName("mezz.jei.config.Config");
+                celeritasExtra$getFilterTextMethod = configClass.getMethod("getFilterText");
+            }
+            return (String) celeritasExtra$getFilterTextMethod.invoke(null);
+        } catch (Exception _) {
+            return "";
         }
     }
 }
