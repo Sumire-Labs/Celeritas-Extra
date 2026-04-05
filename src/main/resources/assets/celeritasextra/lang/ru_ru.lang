@@ -87,7 +87,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=Если включен
 celeritasextra.option.extra.fps=Отоброжать FPS
 celeritasextra.option.extra.fps.tooltip=Отображает текущее значение FPS.
 celeritasextra.option.extra.fps_extended=Расширенное отображение FPS
-celeritasextra.option.extra.fps_extended.tooltip=Если включено, показывает максимальный, средний и минимальный FPS в дополнение к текущему.
+celeritasextra.option.extra.fps_extended.tooltip=Если включено, показывает средний, 1%% Low и 0.1%% Low FPS в дополнение к текущему.
 celeritasextra.option.extra.coords=Отоброжать координаты
 celeritasextra.option.extra.coords.tooltip=Отображает координаты игрока.
 celeritasextra.option.extra.ignore_reduced_debug_info=Игнорировать сокращённую отладочную информацию
@@ -123,6 +123,6 @@ celeritasextra.option.vertical_sync.adaptive=Адаптивная
 
 # Overlay Text
 celeritasextra.overlay.fps=%s FPS
-celeritasextra.overlay.fps_extended=(Макс: %s, Сред: %s, Мин: %s)
+celeritasextra.overlay.fps_extended=(Сред: %s, 1%% Low: %s, 0.1%% Low: %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Обновление освещения отключено

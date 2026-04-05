@@ -42,9 +42,9 @@ public class CeleritasExtraHud {
 
             if (settings.showFPSExtended) {
                 String extendedText = I18n.format("celeritasextra.overlay.fps_extended",
-                        ClientTickHandler.getHighestFps(),
                         ClientTickHandler.getAverageFps(),
-                        ClientTickHandler.getLowestFps());
+                        ClientTickHandler.getOnePercentLowFps(),
+                        ClientTickHandler.getPointOnePercentLowFps());
                 fpsText = fpsText + " " + extendedText;
             }
 

@@ -87,7 +87,7 @@ celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame 
 celeritasextra.option.extra.fps=Show FPS
 celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
 celeritasextra.option.extra.fps_extended=Show FPS Extended
-celeritasextra.option.extra.fps_extended.tooltip=Displays in additional information (max, average, and min FPS) alongside current FPS on the overlay.
+celeritasextra.option.extra.fps_extended.tooltip=Displays additional information (average, 1%% low, and 0.1%% low FPS) alongside current FPS on the overlay.
 celeritasextra.option.extra.coords=Show Coordinates
 celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
 celeritasextra.option.extra.ignore_reduced_debug_info=Ignore Reduced Debug Info
@@ -123,6 +123,6 @@ celeritasextra.option.vertical_sync.adaptive=Adaptive
 
 # Overlay Text
 celeritasextra.overlay.fps=%s FPS
-celeritasextra.overlay.fps_extended=(max. %s / avg. %s / min. %s)
+celeritasextra.overlay.fps_extended=(avg. %s / 1%% low %s / 0.1%% low %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.light_updates=Light updates disabled
