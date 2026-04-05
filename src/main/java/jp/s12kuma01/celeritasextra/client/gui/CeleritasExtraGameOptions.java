@@ -332,7 +332,7 @@ public class CeleritasExtraGameOptions {
      */
     public static void setScreenMode(CeleritasExtraGameOptions opts, ScreenMode mode) {
         Minecraft mc = Minecraft.getMinecraft();
-        var previous = getScreenMode();
+        var previous = getScreenMode(opts);
         currentScreenMode = mode;
 
         if (previous == mode) return;
