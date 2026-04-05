@@ -31,12 +31,8 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
     }
 
     private static boolean isClassPresent(String className) {
-        try {
-            Class.forName(className, false, CeleritasExtraMixinConfigPlugin.class.getClassLoader());
-            return true;
-        } catch (ClassNotFoundException _) {
-            return false;
-        }
+        return CeleritasExtraMixinConfigPlugin.class.getClassLoader()
+                .getResource(className.replace('.', '/') + ".class") != null;
     }
 
     @Override
