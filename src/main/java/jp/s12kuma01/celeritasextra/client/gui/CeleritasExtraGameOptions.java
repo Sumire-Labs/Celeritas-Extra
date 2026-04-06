@@ -125,6 +125,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
             new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 64, "Cloud render distance in chunks (0 = use render distance)",
                     v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
+            new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
+                    v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
                     v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval)
     );
@@ -416,6 +418,7 @@ public class CeleritasExtraGameOptions {
         public boolean biomeColors = true;
         public boolean voidParticles = true;
         public boolean voidFog = true;
+        public int totalStars = 1500;
     }
 
     public static class RenderSettings {

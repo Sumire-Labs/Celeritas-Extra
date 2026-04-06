@@ -38,16 +38,18 @@ celeritasextra.option.details.sky=空
 celeritasextra.option.details.sky.tooltip=有効にした場合、空は描画されます。
 celeritasextra.option.details.stars=星
 celeritasextra.option.details.stars.tooltip=有効にした場合、星は描画されます。
+celeritasextra.option.details.total_stars=星の数
+celeritasextra.option.details.total_stars.tooltip=空に描画される星の数を制御します。反映にはレンダラーの再読み込みが必要です。
 celeritasextra.option.details.sun_moon=太陽と月
 celeritasextra.option.details.sun_moon.tooltip=有効にした場合、太陽と月は描画されます。
 celeritasextra.option.details.rain_snow=雨と雪
 celeritasextra.option.details.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
 celeritasextra.option.details.biome_colors=バイオームの色
 celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオームの色はそれぞれのバイオームに基づいて変更されます。
-celeritasextra.option.details.void_particles=虚空のパーティクル
-celeritasextra.option.details.void_particles.tooltip=有効にした場合、ワールドの下で虚空のパーティクルが描画されます。
-celeritasextra.option.details.void_fog=虚空の霧
-celeritasextra.option.details.void_fog.tooltip=有効にした場合、ワールドの下で虚空の霧が描画されます。
+celeritasextra.option.details.void_particles=奈落のパーティクル
+celeritasextra.option.details.void_particles.tooltip=有効にした場合、ワールドの下で奈落のパーティクルが描画されます。
+celeritasextra.option.details.void_fog=奈落の霧
+celeritasextra.option.details.void_fog.tooltip=有効にした場合、ワールドの下で奈落の霧が描画されます。
 
 # レンダリングオプション
 celeritasextra.option.render.fog=霧

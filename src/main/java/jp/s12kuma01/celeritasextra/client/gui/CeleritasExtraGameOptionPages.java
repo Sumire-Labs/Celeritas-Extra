@@ -201,6 +201,10 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.detailSettings.stars = v,
                         opts -> opts.detailSettings.stars,
                         OptionFlag.REQUIRES_RENDERER_RELOAD))
+                .add(sliderOption("celeritasextra.option.details.total_stars",
+                        500, 32000, 500, ControlValueFormatter.number(),
+                        (opts, v) -> opts.detailSettings.totalStars = v,
+                        opts -> opts.detailSettings.totalStars))
                 .add(booleanOption("celeritasextra.option.details.sun_moon",
                         (opts, v) -> opts.detailSettings.sunMoon = v,
                         opts -> opts.detailSettings.sunMoon,
