@@ -119,6 +119,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.fogDistance = v, () -> renderSettings.fogDistance),
             new IntProperty(CAT_RENDER, "cloudHeight", 192, 0, 384, "Cloud height",
                     v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
+            new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 64, "Cloud render distance in chunks (0 = use render distance)",
+                    v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
                     v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval)
     );
@@ -396,6 +398,7 @@ public class CeleritasExtraGameOptions {
         public FogType fogType = FogType.DEFAULT;
         public boolean clouds = true;
         public int cloudHeight = 192;
+        public int cloudDistance = 0;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public boolean armorStands = true;

@@ -62,6 +62,8 @@ celeritasextra.option.render.clouds=Clouds
 celeritasextra.option.render.clouds.tooltip=If enabled, clouds are rendered.
 celeritasextra.option.render.cloud_height=Cloud Height
 celeritasextra.option.render.cloud_height.tooltip=Controls the height of clouds that are rendered.
+celeritasextra.option.render.cloud_distance=Cloud Distance
+celeritasextra.option.render.cloud_distance.tooltip=Controls the cloud render distance in chunks. 0 = Default (uses game render distance).
 celeritasextra.option.render.light_updates=Light Updates
 celeritasextra.option.render.light_updates.tooltip=If disabled, light updates will not be processed. This can improve performance but may cause visual artifacts.
 celeritasextra.option.render.item_frames=Item Frames

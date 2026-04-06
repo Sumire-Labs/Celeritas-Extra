@@ -62,6 +62,8 @@ celeritasextra.option.render.clouds=云
 celeritasextra.option.render.clouds.tooltip=若启用，将渲染云。
 celeritasextra.option.render.cloud_height=云层高度
 celeritasextra.option.render.cloud_height.tooltip=控制渲染云层的高度。
+celeritasextra.option.render.cloud_distance=云渲染距离
+celeritasextra.option.render.cloud_distance.tooltip=以区块为单位控制云渲染距离。0 = 默认（使用游戏渲染距离）。
 celeritasextra.option.render.light_updates=光照更新
 celeritasextra.option.render.light_updates.tooltip=若禁用，将不处理光照更新。这可以提高性能，但可能会导致视觉问题。
 celeritasextra.option.render.item_frames=物品展示框

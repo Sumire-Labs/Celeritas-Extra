@@ -255,6 +255,10 @@ public class CeleritasExtraGameOptionPages {
                         0, 384, 16, ControlValueFormatter.number(),
                         (opts, v) -> opts.renderSettings.cloudHeight = v,
                         opts -> opts.renderSettings.cloudHeight))
+                .add(sliderOption("celeritasextra.option.render.cloud_distance",
+                        0, 64, 1, ControlValueFormatter.quantityOrDisabled("chunks", "Default"),
+                        (opts, v) -> opts.renderSettings.cloudDistance = v,
+                        opts -> opts.renderSettings.cloudDistance))
                 .add(booleanOption("celeritasextra.option.render.light_updates",
                         (opts, v) -> opts.renderSettings.lightUpdates = v,
                         opts -> opts.renderSettings.lightUpdates,

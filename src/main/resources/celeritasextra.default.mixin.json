@@ -23,6 +23,8 @@
     "render.block_entity.MixinTileEntityPistonRenderer",
     "render.weather.MixinEntityRendererWeather",
     "render.sky.MixinRenderGlobalClouds",
+    "render.sky.MixinCloudRenderer",
+    "render.sky.MixinEntityRendererFarPlane",
     "render.sky.MixinWorldProvider",
     "render.sky.MixinRenderGlobalSky",
     "render.sky.MixinRenderGlobalStars",
