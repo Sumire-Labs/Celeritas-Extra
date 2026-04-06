@@ -212,6 +212,12 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.detailSettings.biomeColors = v,
                         opts -> opts.detailSettings.biomeColors,
                         OptionFlag.REQUIRES_RENDERER_RELOAD))
+                .add(booleanOption("celeritasextra.option.details.void_particles",
+                        (opts, v) -> opts.detailSettings.voidParticles = v,
+                        opts -> opts.detailSettings.voidParticles))
+                .add(booleanOption("celeritasextra.option.details.void_fog",
+                        (opts, v) -> opts.detailSettings.voidFog = v,
+                        opts -> opts.detailSettings.voidFog))
                 .build());
 
         return new OptionPage(CeleritasExtraOptionPages.DETAILS, TextComponent.literal(I18n.format("celeritasextra.option.page.details")), ImmutableList.copyOf(groups));

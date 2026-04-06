@@ -44,6 +44,10 @@ celeritasextra.option.details.rain_snow=Дождь & Снег
 celeritasextra.option.details.rain_snow.tooltip=Если этот параметр включен, отображаются дождь и снег.
 celeritasextra.option.details.biome_colors=Цвета Биомов
 celeritasextra.option.details.biome_colors.tooltip=Если этот параметр включен, для обозначения травы, воды и листвы используются цвета, характерные для биома. Если он отключен, используются цвета по умолчанию.
+celeritasextra.option.details.void_particles=Частицы Пустоты
+celeritasextra.option.details.void_particles.tooltip=Если этот параметр включен, частицы пустоты отображаются под миром.
+celeritasextra.option.details.void_fog=Туман Пустоты
+celeritasextra.option.details.void_fog.tooltip=Если этот параметр включен, туман пустоты отображается под миром.
 
 # Render Options
 celeritasextra.option.render.fog=Туман

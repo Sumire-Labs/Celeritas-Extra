@@ -44,6 +44,10 @@ celeritasextra.option.details.rain_snow=Rain & Snow
 celeritasextra.option.details.rain_snow.tooltip=If enabled, rain & snow are rendered.
 celeritasextra.option.details.biome_colors=Biome Colors
 celeritasextra.option.details.biome_colors.tooltip=If enabled, biome colors are changed based on the biome.
+celeritasextra.option.details.void_particles=Void Particles
+celeritasextra.option.details.void_particles.tooltip=If enabled, void particles are rendered below the world.
+celeritasextra.option.details.void_fog=Void Fog
+celeritasextra.option.details.void_fog.tooltip=If enabled, void fog is rendered below the world.
 
 # Render Options
 celeritasextra.option.render.fog=Fog

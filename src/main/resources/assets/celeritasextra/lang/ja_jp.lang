@@ -44,6 +44,10 @@ celeritasextra.option.details.rain_snow=雨と雪
 celeritasextra.option.details.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
 celeritasextra.option.details.biome_colors=バイオームの色
 celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオームの色はそれぞれのバイオームに基づいて変更されます。
+celeritasextra.option.details.void_particles=虚空のパーティクル
+celeritasextra.option.details.void_particles.tooltip=有効にした場合、ワールドの下で虚空のパーティクルが描画されます。
+celeritasextra.option.details.void_fog=虚空の霧
+celeritasextra.option.details.void_fog.tooltip=有効にした場合、ワールドの下で虚空の霧が描画されます。
 
 # レンダリングオプション
 celeritasextra.option.render.fog=霧

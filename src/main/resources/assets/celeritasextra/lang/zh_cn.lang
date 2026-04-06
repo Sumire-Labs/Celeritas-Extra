@@ -44,6 +44,10 @@ celeritasextra.option.details.rain_snow=雨和雪
 celeritasextra.option.details.rain_snow.tooltip=若启用，将渲染雨和雪。
 celeritasextra.option.details.biome_colors=生物群系颜色
 celeritasextra.option.details.biome_colors.tooltip=若启用，将为草、水和树叶使用生物群系特定颜色。禁用时，使用默认颜色。
+celeritasextra.option.details.void_particles=虚空粒子
+celeritasextra.option.details.void_particles.tooltip=若启用，将在世界下方渲染虚空粒子。
+celeritasextra.option.details.void_fog=虚空迷雾
+celeritasextra.option.details.void_fog.tooltip=若启用，将在世界下方渲染虚空迷雾。
 
 # 渲染选项
 celeritasextra.option.render.fog=雾
