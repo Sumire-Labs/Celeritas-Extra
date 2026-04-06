@@ -153,6 +153,24 @@ public class ParticleClassRegistry {
             }
         }
 
+        // Fallback: scan the jar/directory containing Particle.class itself.
+        // MinecraftDummyContainer.getSource() returns a non-existent "minecraft.jar",
+        // so vanilla Particle subclasses are missed by the mod list scan above.
+        try {
+            var codeSource = Particle.class.getProtectionDomain().getCodeSource();
+            if (codeSource != null) {
+                File particleSource = new File(codeSource.getLocation().toURI());
+                if (scannedSources.add(particleSource)) {
+                    if (particleSource.isFile() && particleSource.getName().endsWith(".jar")) {
+                        scanJarForSuperclasses(particleSource, superMap, classToModName, "minecraft");
+                    } else if (particleSource.isDirectory()) {
+                        scanDirectoryForSuperclasses(particleSource, superMap, classToModName, "minecraft");
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
         // Assign mod names to already-discovered classes (from config or runtime recording)
         for (String fullName : discoveredClasses.keySet()) {
             String internalName = fullName.replace('.', '/');
