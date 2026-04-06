@@ -125,6 +125,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
             new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 64, "Cloud render distance in chunks (0 = use render distance)",
                     v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
+            new IntProperty(CAT_RENDER, "cloudScale", 4, 1, 4, "Cloud scale (1 = smallest, 4 = default)",
+                    v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
             new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
                     v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
@@ -430,6 +432,7 @@ public class CeleritasExtraGameOptions {
         public int cloudHeight = 192;
         public int cloudDistance = 0;
         public CloudTranslucency cloudTranslucency = CloudTranslucency.DEFAULT;
+        public int cloudScale = 4;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public boolean armorStands = true;

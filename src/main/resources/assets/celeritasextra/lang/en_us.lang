@@ -70,6 +70,8 @@ celeritasextra.option.render.cloud_height=Cloud Height
 celeritasextra.option.render.cloud_height.tooltip=Controls the height of clouds that are rendered.
 celeritasextra.option.render.cloud_distance=Cloud Distance
 celeritasextra.option.render.cloud_distance.tooltip=Controls the cloud render distance in chunks. 0 = Default (uses game render distance).
+celeritasextra.option.render.cloud_scale=Cloud Scale
+celeritasextra.option.render.cloud_scale.tooltip=Controls the size of clouds. 1 = smallest, 4 = default (vanilla).
 celeritasextra.option.render.cloud_translucency=Cloud Translucency
 celeritasextra.option.render.cloud_translucency.tooltip=Controls when clouds become translucent. Default: based on cloud height. Always: clouds are always translucent. Never: clouds are always opaque.
 celeritasextra.option.cloud_translucency.default=Default

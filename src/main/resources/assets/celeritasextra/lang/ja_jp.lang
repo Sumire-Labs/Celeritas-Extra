@@ -70,6 +70,8 @@ celeritasextra.option.render.cloud_height=雲の高さ
 celeritasextra.option.render.cloud_height.tooltip=描画される雲の高さを制御します。
 celeritasextra.option.render.cloud_distance=雲の描画距離
 celeritasextra.option.render.cloud_distance.tooltip=雲の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
+celeritasextra.option.render.cloud_scale=雲のスケール
+celeritasextra.option.render.cloud_scale.tooltip=雲の大きさを制御します。1 = 最小、4 = デフォルト（バニラ）。
 celeritasextra.option.render.cloud_translucency=雲の透過
 celeritasextra.option.render.cloud_translucency.tooltip=雲が半透明になるタイミングを制御します。デフォルト: 雲の高さに基づく。常時: 常に半透明。無効: 常に不透明。
 celeritasextra.option.cloud_translucency.default=デフォルト

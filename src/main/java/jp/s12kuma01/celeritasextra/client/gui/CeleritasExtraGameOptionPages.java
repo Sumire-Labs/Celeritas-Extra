@@ -270,6 +270,10 @@ public class CeleritasExtraGameOptionPages {
                         0, 64, 1, ControlValueFormatter.quantityOrDisabled("chunks", "Default"),
                         (opts, v) -> opts.renderSettings.cloudDistance = v,
                         opts -> opts.renderSettings.cloudDistance))
+                .add(sliderOption("celeritasextra.option.render.cloud_scale",
+                        1, 4, 1, ControlValueFormatter.number(),
+                        (opts, v) -> opts.renderSettings.cloudScale = v,
+                        opts -> opts.renderSettings.cloudScale))
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.CloudTranslucency.class, celeritasExtraOpts)
                         .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.cloud_translucency")))
                         .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.cloud_translucency.tooltip")))
