@@ -68,6 +68,11 @@ celeritasextra.option.render.cloud_height=云层高度
 celeritasextra.option.render.cloud_height.tooltip=控制渲染云层的高度。
 celeritasextra.option.render.cloud_distance=云渲染距离
 celeritasextra.option.render.cloud_distance.tooltip=以区块为单位控制云渲染距离。0 = 默认（使用游戏渲染距离）。
+celeritasextra.option.render.cloud_translucency=云透明度
+celeritasextra.option.render.cloud_translucency.tooltip=控制云变为半透明的时机。默认：基于云高度。始终：始终半透明。从不：始终不透明。
+celeritasextra.option.cloud_translucency.default=默认
+celeritasextra.option.cloud_translucency.always=始终
+celeritasextra.option.cloud_translucency.never=从不
 celeritasextra.option.render.light_updates=光照更新
 celeritasextra.option.render.light_updates.tooltip=若禁用，将不处理光照更新。这可以提高性能，但可能会导致视觉问题。
 celeritasextra.option.render.item_frames=物品展示框

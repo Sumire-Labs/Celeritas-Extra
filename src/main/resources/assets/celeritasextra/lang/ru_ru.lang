@@ -68,6 +68,11 @@ celeritasextra.option.render.cloud_height=Высота облаков
 celeritasextra.option.render.cloud_height.tooltip=Управляет высотой отображения облаков.
 celeritasextra.option.render.cloud_distance=Дистанция облаков
 celeritasextra.option.render.cloud_distance.tooltip=Контролирует дистанцию рендеринга облаков в чанках. 0 = По умолчанию (использует дистанцию рендеринга).
+celeritasextra.option.render.cloud_translucency=Прозрачность Облаков
+celeritasextra.option.render.cloud_translucency.tooltip=Контролирует, когда облака становятся полупрозрачными. По умолчанию: на основе высоты облаков. Всегда: всегда полупрозрачные. Никогда: всегда непрозрачные.
+celeritasextra.option.cloud_translucency.default=По умолчанию
+celeritasextra.option.cloud_translucency.always=Всегда
+celeritasextra.option.cloud_translucency.never=Никогда
 celeritasextra.option.render.light_updates=Обновления освещения
 celeritasextra.option.render.light_updates.tooltip=Если отключено, обновления освещения не будут обрабатываться. Это может улучшить производительность, но может вызвать визуальные артефакты.
 celeritasextra.option.render.item_frames=Рамка Для Предметов

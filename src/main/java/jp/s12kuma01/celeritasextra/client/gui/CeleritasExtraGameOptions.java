@@ -154,6 +154,7 @@ public class CeleritasExtraGameOptions {
 
         // Enum properties
         renderSettings.fogType = FogType.values()[config.getInt("fogType", CAT_RENDER, 0, 0, FogType.values().length - 1, "Fog type (0 = Default, 1 = Off)")];
+        renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0, 0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
         extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0, OverlayCorner.values().length - 1, "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
         extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0, TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
 
@@ -173,6 +174,7 @@ public class CeleritasExtraGameOptions {
 
         // Enum properties
         config.get(CAT_RENDER, "fogType", 0).set(renderSettings.fogType.ordinal());
+        config.get(CAT_RENDER, "cloudTranslucency", 0).set(renderSettings.cloudTranslucency.ordinal());
         config.get(CAT_EXTRA, "overlayCorner", 0).set(extraSettings.overlayCorner.ordinal());
         config.get(CAT_EXTRA, "textContrast", 2).set(extraSettings.textContrast.ordinal());
 
@@ -354,6 +356,25 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
+     * Cloud translucency options
+     */
+    public enum CloudTranslucency {
+        DEFAULT("celeritasextra.option.cloud_translucency.default"),
+        ALWAYS("celeritasextra.option.cloud_translucency.always"),
+        NEVER("celeritasextra.option.cloud_translucency.never");
+
+        private final String translationKey;
+
+        CloudTranslucency(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        public String getLocalizedName() {
+            return I18n.format(this.translationKey);
+        }
+    }
+
+    /**
      * Fog type options for mod compatibility
      */
     public enum FogType {
@@ -405,6 +426,7 @@ public class CeleritasExtraGameOptions {
         public boolean clouds = true;
         public int cloudHeight = 192;
         public int cloudDistance = 0;
+        public CloudTranslucency cloudTranslucency = CloudTranslucency.DEFAULT;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public boolean armorStands = true;

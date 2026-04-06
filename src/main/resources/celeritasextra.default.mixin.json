@@ -26,6 +26,7 @@
     "render.weather.MixinEntityRendererWeather",
     "render.sky.MixinRenderGlobalClouds",
     "render.sky.MixinCloudRenderer",
+    "render.sky.MixinEntityRendererCloudTranslucency",
     "render.sky.MixinEntityRendererFarPlane",
     "render.sky.MixinWorldProvider",
     "render.sky.MixinRenderGlobalSky",
