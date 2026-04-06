@@ -11,6 +11,7 @@
   "client": [
     "animation.MixinTextureMap",
     "light_updates.MixinWorld",
+    "particle.IMixinParticleManager",
     "particle.MixinParticleManager",
     "particle.MixinParticleFirework",
     "particle.MixinRenderGlobal",

@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.client.gui;
 
 import com.google.common.collect.ImmutableList;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.options.control.ControlValueFormatter;
@@ -138,8 +139,8 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.particleSettings.blockBreaking))
                 .build());
 
-        // Scan mod jars via ASM to discover all Particle subclasses
-        ParticleClassRegistry.getInstance().scanModJars();
+        // Scan registered particle factories to discover particle classes
+        ParticleClassRegistry.getInstance().scanFactories(Minecraft.getMinecraft().effectRenderer);
 
         // Dynamic particle class controls - grouped by mod name
         var discovered = ParticleClassRegistry.getInstance().getDiscoveredClasses();

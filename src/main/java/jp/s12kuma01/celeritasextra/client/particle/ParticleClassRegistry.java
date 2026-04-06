@@ -1,22 +1,13 @@
 package jp.s12kuma01.celeritasextra.client.particle;
 
+import jp.s12kuma01.celeritasextra.mixin.particle.IMixinParticleManager;
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import org.objectweb.asm.ClassReader;
+import net.minecraft.client.particle.ParticleManager;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 /**
  * Runtime registry for discovered particle classes.
@@ -122,126 +113,36 @@ public class ParticleClassRegistry {
     }
 
     /**
-     * Scan all mod jar files using ASM to discover Particle subclasses
-     * without loading or instantiating them. Uses bytecode superclass analysis
-     * to find classes that extend Particle or any known Particle subclass.
-     * Also records which mod each class belongs to.
+     * Scan ParticleManager's registered factories to discover particle classes.
+     * Uses two strategies:
+     * 1. Enclosing class - for inner class factories (e.g. ParticleFlame.Factory)
+     * 2. Covariant return type - for factories that declare a specific Particle subclass return type
      */
-    public void scanModJars() {
-        // Build initial set of known particle class names (internal form: / separator)
-        Set<String> knownParticleNames = new HashSet<>();
-        knownParticleNames.add(Particle.class.getName().replace('.', '/'));
-        for (String className : discoveredClasses.keySet()) {
-            knownParticleNames.add(className.replace('.', '/'));
-        }
+    public void scanFactories(ParticleManager particleManager) {
+        Map<Integer, IParticleFactory> factories = ((IMixinParticleManager) particleManager).getParticleTypes();
 
-        // Collect superclass map and class-to-mod mapping from mod sources using ASM
-        Map<String, String> superMap = new HashMap<>();
-        Map<String, String> classToModName = new HashMap<>();
-        Set<File> scannedSources = new HashSet<>();
+        for (var entry : factories.entrySet()) {
+            IParticleFactory factory = entry.getValue();
+            Class<?> factoryClass = factory.getClass();
 
-        for (ModContainer mod : Loader.instance().getModList()) {
-            File source = mod.getSource();
-            if (source == null || !scannedSources.add(source)) continue;
-
-            String modName = mod.getModId();
-
-            if (source.isFile() && source.getName().endsWith(".jar")) {
-                scanJarForSuperclasses(source, superMap, classToModName, modName);
-            } else if (source.isDirectory()) {
-                scanDirectoryForSuperclasses(source, superMap, classToModName, modName);
+            // Strategy 1: Enclosing class (inner class factories like ParticleFlame.Factory)
+            Class<?> enclosingClass = factoryClass.getEnclosingClass();
+            if (enclosingClass != null && Particle.class.isAssignableFrom(enclosingClass)) {
+                recordClass(enclosingClass.getName(), enclosingClass.getSimpleName());
+                continue;
             }
-        }
 
-        // Fallback: scan the jar/directory containing Particle.class itself.
-        // MinecraftDummyContainer.getSource() returns a non-existent "minecraft.jar",
-        // so vanilla Particle subclasses are missed by the mod list scan above.
-        try {
-            var codeSource = Particle.class.getProtectionDomain().getCodeSource();
-            if (codeSource != null) {
-                File particleSource = new File(codeSource.getLocation().toURI());
-                if (scannedSources.add(particleSource)) {
-                    if (particleSource.isFile() && particleSource.getName().endsWith(".jar")) {
-                        scanJarForSuperclasses(particleSource, superMap, classToModName, "minecraft");
-                    } else if (particleSource.isDirectory()) {
-                        scanDirectoryForSuperclasses(particleSource, superMap, classToModName, "minecraft");
+            // Strategy 2: Covariant return type analysis
+            try {
+                for (Method method : factoryClass.getDeclaredMethods()) {
+                    Class<?> returnType = method.getReturnType();
+                    if (returnType != Particle.class && Particle.class.isAssignableFrom(returnType)) {
+                        recordClass(returnType.getName(), returnType.getSimpleName());
+                        break;
                     }
                 }
+            } catch (Throwable _) {
             }
-        } catch (Exception ignored) {
-        }
-
-        // Assign mod names to already-discovered classes (from config or runtime recording)
-        for (String fullName : discoveredClasses.keySet()) {
-            String internalName = fullName.replace('.', '/');
-            String modName = classToModName.get(internalName);
-            if (modName != null) {
-                recordModName(fullName, modName);
-            }
-        }
-
-        // Iteratively resolve: find classes whose superclass is a known particle class
-        boolean changed = true;
-        while (changed) {
-            changed = false;
-            for (var entry : superMap.entrySet()) {
-                String className = entry.getKey();
-                String superName = entry.getValue();
-                if (knownParticleNames.contains(className)) continue;
-                if (superName != null && knownParticleNames.contains(superName)) {
-                    String fullName = className.replace('/', '.');
-                    String simpleName = toSimpleName(fullName);
-                    recordClass(fullName, simpleName);
-                    String modName = classToModName.get(className);
-                    if (modName != null) {
-                        recordModName(fullName, modName);
-                    }
-                    knownParticleNames.add(className);
-                    changed = true;
-                }
-            }
-        }
-    }
-
-    private void scanJarForSuperclasses(File jarFile, Map<String, String> superMap,
-                                        Map<String, String> classToModName, String modName) {
-        try (JarFile jar = new JarFile(jarFile)) {
-            Enumeration<JarEntry> entries = jar.entries();
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                if (!entry.getName().endsWith(".class")) continue;
-                try (InputStream is = jar.getInputStream(entry)) {
-                    ClassReader cr = new ClassReader(is);
-                    String className = cr.getClassName();
-                    superMap.put(className, cr.getSuperName());
-                    classToModName.put(className, modName);
-                } catch (Throwable _) {
-                }
-            }
-        } catch (Throwable _) {
-        }
-    }
-
-    private void scanDirectoryForSuperclasses(File dir, Map<String, String> superMap,
-                                              Map<String, String> classToModName, String modName) {
-        Path root = dir.toPath();
-        try {
-            Files.walkFileTree(root, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                    if (file.toString().endsWith(".class")) {
-                        try (InputStream is = Files.newInputStream(file)) {
-                            ClassReader cr = new ClassReader(is);
-                            String className = cr.getClassName();
-                            superMap.put(className, cr.getSuperName());
-                            classToModName.put(className, modName);
-                        } catch (Throwable _) {
-                        }
-                    }
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException ignored) {
         }
     }
 
