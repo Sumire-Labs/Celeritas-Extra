@@ -1,8 +1,6 @@
 package jp.s12kuma01.celeritasextra.client;
 
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.util.Random;
 
@@ -14,17 +12,17 @@ import java.util.Random;
 public class RenderStars {
 
     /**
-     * Generate star vertex data into the tessellator.
+     * Generate star vertex data into an already-begun BufferBuilder.
      * Called from the mixin that overrides RenderGlobal.generateStars().
      * Uses the same seed (10842L) and algorithm as vanilla for deterministic rendering.
+     *
+     * @param buffer     a BufferBuilder that has already had begin() called
+     * @param totalStars number of stars to generate
      */
-    public static void generateStars(int totalStars) {
+    public static void generateStars(BufferBuilder buffer, int totalStars) {
         if (totalStars <= 0) return;
 
         Random random = new Random(10842L);
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
-        buffer.begin(7, DefaultVertexFormats.POSITION);
 
         for (int i = 0; i < totalStars; ++i) {
             double x = random.nextFloat() * 2.0F - 1.0F;
@@ -69,6 +67,5 @@ public class RenderStars {
             }
         }
 
-        tessellator.draw();
     }
 }
