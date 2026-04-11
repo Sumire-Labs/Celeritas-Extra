@@ -284,7 +284,9 @@ public class CeleritasExtraGameOptions {
                     mc.gameSettings.enableVsync = true;
                 }
                 case ADAPTIVE -> {
-                    opts.extraSettings.useAdaptiveSync = true;
+                    boolean supported = GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
+                            || GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear");
+                    opts.extraSettings.useAdaptiveSync = supported;
                     mc.gameSettings.enableVsync = true;
                 }
             }

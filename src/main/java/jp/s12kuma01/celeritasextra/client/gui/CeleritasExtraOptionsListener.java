@@ -98,14 +98,12 @@ public class CeleritasExtraOptionsListener {
                 .setName(TextComponent.translatable("options.vsync"))
                 .setTooltip(TextComponent.literal(
                         I18n.format("celeritasextra.option.extra.vertical_sync.tooltip")))
-                .setControl(option -> {
-                    var available = CeleritasExtraGameOptions.VerticalSyncOption.getAvailableOptions();
-                    var names = new TextComponent[available.length];
-                    for (int i = 0; i < available.length; i++) {
-                        names[i] = TextComponent.literal(available[i].getLocalizedName());
-                    }
-                    return new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class, names);
-                })
+                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class,
+                        new TextComponent[]{
+                                TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.OFF.getLocalizedName()),
+                                TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ON.getLocalizedName()),
+                                TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ADAPTIVE.getLocalizedName())
+                        }))
                 .setBinding(CeleritasExtraGameOptions.VerticalSyncOption::apply,
                         CeleritasExtraGameOptions.VerticalSyncOption::getCurrent)
                 .setImpact(OptionImpact.VARIES)
