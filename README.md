@@ -12,8 +12,10 @@ You can obtain Celeritas from this AutoBuild repository maintained by kappa-main
 
 ## Description
 
-Celeritas Extra is a comprehensive unofficial backport of Sodium Extra/Embeddium Extra, specifically targeting Celeritas
-1.12.2, along with several additional features.
+Celeritas Extra is a mod developed as an alternative to OptiFine Options, and is an unofficial backport of Embeddium Extra for Celeritas 1.12.2.
+In addition to Embeddium Extra features, it also includes several features from Sodium Extras and some original additions.
+You can obtain Celeritas from the Celeritas AutoBuild repository maintained by kappa-maintainer:
+[Celeritas AutoBuild](https://github.com/kappa-maintainer/Celeritas-auto-build/releases)
 
 ## Features
 
