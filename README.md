@@ -48,7 +48,6 @@ You can obtain Celeritas from the Celeritas AutoBuild repository maintained by k
 ### Window Settings (Celeritas GUI integration)
 - Screen Mode selector (Windowed / Borderless / Fullscreen) — replaces vanilla fullscreen toggle
 - Adaptive VSync (Off / On / Adaptive) — replaces vanilla VSync toggle
-- macOS Retina Framebuffer toggle (grayed out on non-macOS)
 
 ### Profiler
 - Entity and tile entity render profiler sections for performance analysis
