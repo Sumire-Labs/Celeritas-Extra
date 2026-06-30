@@ -13,7 +13,6 @@
     "light_updates.MixinWorld",
     "particle.IMixinParticleManager",
     "particle.MixinParticleManager",
-    "particle.MixinParticleFirework",
     "particle.MixinWorldClient",
     "particle.MixinRenderGlobal",
     "render.entity.MixinRenderItemFrame",

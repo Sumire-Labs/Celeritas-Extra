@@ -189,6 +189,7 @@ public class CeleritasExtraGameOptions {
                 .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
 
         config.save();
+        ParticleClassRegistry.getInstance().markClean();
     }
 
     /**
