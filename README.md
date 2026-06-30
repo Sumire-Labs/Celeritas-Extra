@@ -24,7 +24,7 @@ You can obtain Celeritas from the Celeritas AutoBuild repository maintained by k
 
 ### Particle Control
 - Global particle toggle with individual controls for rain splash, block break, and block breaking particles
-- Dynamic per-class particle control — automatically discovers all particle classes (including mod particles) via ASM scanning and allows toggling each one individually
+- Dynamic per-class particle control — discovers particle classes via reflection over the registered particle factories at world load, supplemented by runtime detection as particles spawn (the only way to catch mod particles registered as lambdas), and lets you toggle each one individually. Discovered classes are cached so they appear from launch on later sessions, and the cache is pruned when a mod is removed
 
 ### Detail Settings
 - Toggle sky, stars, sun/moon, rain/snow rendering, and biome colors
