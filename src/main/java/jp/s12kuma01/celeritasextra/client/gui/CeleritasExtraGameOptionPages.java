@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import com.google.common.collect.ImmutableList;
+import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -139,48 +140,54 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.particleSettings.blockBreaking))
                 .build());
 
-        // Scan registered particle factories to discover particle classes
-        ParticleClassRegistry.getInstance().scanFactories(Minecraft.getMinecraft().effectRenderer);
+        // Dynamic per-class particle controls, grouped by mod. Discovery normally happens at
+        // world load; re-scanning here is a defensive supplement. Guarded so a discovery failure
+        // can never abort the page build and drop the static toggles above (or later pages).
+        try {
+            ParticleClassRegistry registry = ParticleClassRegistry.getInstance();
+            registry.scanFactories(Minecraft.getMinecraft().effectRenderer);
 
-        // Dynamic particle class controls - grouped by mod name
-        var discovered = ParticleClassRegistry.getInstance().getDiscoveredClasses();
-        if (!discovered.isEmpty()) {
-            var byMod = new TreeMap<String, List<Map.Entry<String, String>>>();
-            for (var entry : discovered.entrySet()) {
-                String fullName = entry.getKey();
-                String modId = ParticleClassRegistry.getInstance().getModName(fullName);
-                if (modId == null) {
-                    modId = "unknown";
+            var discovered = registry.getDiscoveredClasses();
+            if (!discovered.isEmpty()) {
+                var byMod = new TreeMap<String, List<Map.Entry<String, String>>>();
+                for (var entry : discovered.entrySet()) {
+                    String fullName = entry.getKey();
+                    String modId = registry.getModName(fullName);
+                    if (modId == null) {
+                        modId = "unknown";
+                    }
+                    byMod.computeIfAbsent(modId, k -> new ArrayList<>()).add(entry);
                 }
-                byMod.computeIfAbsent(modId, k -> new ArrayList<>()).add(entry);
-            }
 
-            for (var modEntry : byMod.entrySet()) {
-                var modId = modEntry.getKey();
-                var groupBuilder = OptionGroup.createBuilder();
-                var classEntries = modEntry.getValue();
-                classEntries.sort(Comparator.comparing(Map.Entry::getValue));
+                for (var modEntry : byMod.entrySet()) {
+                    var modId = modEntry.getKey();
+                    var groupBuilder = OptionGroup.createBuilder();
+                    var classEntries = modEntry.getValue();
+                    classEntries.sort(Comparator.comparing(Map.Entry::getValue));
 
-                for (var classEntry : classEntries) {
-                    var fullClassName = classEntry.getKey();
-                    var simpleClassName = classEntry.getValue();
-                    String displayName = simpleClassName + " (" + modId + ")";
+                    for (var classEntry : classEntries) {
+                        var fullClassName = classEntry.getKey();
+                        var simpleClassName = classEntry.getValue();
+                        String displayName = simpleClassName + " (" + modId + ")";
 
-                    groupBuilder.add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
-                            .setName(TextComponent.literal(displayName))
-                            .setTooltip(TextComponent.literal(
-                                    I18n.format("celeritasextra.option.particles.other.tooltip", simpleClassName)
-                                            + "\n" + fullClassName))
-                            .setControl(TickBoxControl::new)
-                            .setBinding(
-                                    (opts, value) -> ParticleClassRegistry.getInstance().setClassEnabled(fullClassName, value),
-                                    opts -> !ParticleClassRegistry.getInstance().isClassDisabled(fullClassName)
-                            )
-                            .build()
-                    );
+                        groupBuilder.add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                                .setName(TextComponent.literal(displayName))
+                                .setTooltip(TextComponent.literal(
+                                        I18n.format("celeritasextra.option.particles.other.tooltip", simpleClassName)
+                                                + "\n" + fullClassName))
+                                .setControl(TickBoxControl::new)
+                                .setBinding(
+                                        (opts, value) -> registry.setClassEnabled(fullClassName, value),
+                                        opts -> !registry.isClassDisabled(fullClassName)
+                                )
+                                .build()
+                        );
+                    }
+                    groups.add(groupBuilder.build());
                 }
-                groups.add(groupBuilder.build());
             }
+        } catch (Throwable t) {
+            CeleritasExtraMod.LOGGER.warn("Failed to build dynamic particle toggles", t);
         }
 
         return new OptionPage(CeleritasExtraOptionPages.PARTICLE, TextComponent.literal(I18n.format("celeritasextra.option.page.particles")), ImmutableList.copyOf(groups));
