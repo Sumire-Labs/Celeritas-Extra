@@ -467,6 +467,9 @@ public class CeleritasExtraGameOptionPages {
                 .add(booleanOption("celeritasextra.option.extra.reduced_motion",
                         (opts, v) -> opts.extraSettings.reducedMotion = v,
                         opts -> opts.extraSettings.reducedMotion))
+                .add(booleanOption("celeritasextra.option.extra.advanced_item_tooltips",
+                        (opts, v) -> opts.extraSettings.advancedItemTooltips = v,
+                        opts -> opts.extraSettings.advancedItemTooltips))
                 .add(steadyHudOption)
                 .add(sliderOption("celeritasextra.option.extra.steady_debug_hud_refresh",
                         1, 60, 1, v -> TextComponent.literal(v + " ticks"),
