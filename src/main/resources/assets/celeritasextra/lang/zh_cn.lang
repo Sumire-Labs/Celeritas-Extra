@@ -45,7 +45,7 @@ celeritasextra.option.details.sun_moon.tooltip=若启用，将渲染太阳与月
 celeritasextra.option.details.rain_snow=雨和雪
 celeritasextra.option.details.rain_snow.tooltip=若启用，将渲染雨和雪。
 celeritasextra.option.details.biome_colors=生物群系颜色
-celeritasextra.option.details.biome_colors.tooltip=若启用，将为草、水和树叶使用生物群系特定颜色。禁用时，使用默认颜色。
+celeritasextra.option.details.biome_colors.tooltip=若启用，将根据生物群系改变颜色。
 celeritasextra.option.details.void_particles=虚空粒子
 celeritasextra.option.details.void_particles.tooltip=若启用，将在世界下方渲染虚空粒子。
 celeritasextra.option.details.void_fog=虚空迷雾
@@ -54,12 +54,12 @@ celeritasextra.option.details.void_fog.tooltip=若启用，将在世界下方渲
 # 渲染选项
 celeritasextra.option.render.fog=雾
 celeritasextra.option.render.fog.tooltip=若启用，将渲染雾。
-celeritasextra.option.render.fog_start=雾起始距离
-celeritasextra.option.render.fog_start.tooltip=控制雾的起始距离。100% 为默认值，较低的值使雾更近，较高的值使雾更远。
+celeritasextra.option.render.fog_start=雾起始距离倍数
+celeritasextra.option.render.fog_start.tooltip=调整地形雾开始渲染的距离。
 celeritasextra.option.render.fog_distance=雾距离
 celeritasextra.option.render.fog_distance.tooltip=以区块为单位控制雾渲染距离。0 = 默认（使用渲染距离）。
 celeritasextra.option.render.prevent_shaders=禁用光影
-celeritasextra.option.render.prevent_shaders.tooltip=若启用，可防止意外激活光影（超级秘密设置）。
+celeritasextra.option.render.prevent_shaders.tooltip=若启用，将阻止加载任何原版屏幕着色器。例如以旁观者视角观看蜘蛛时的画面扭曲效果。
 celeritasextra.option.render.clouds=云
 celeritasextra.option.render.clouds.tooltip=若启用，将渲染云。
 celeritasextra.option.render.cloud_height=云层高度
@@ -106,7 +106,7 @@ celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=若启用，即使
 celeritasextra.option.extra.overlay_corner=界面位置
 celeritasextra.option.extra.overlay_corner.tooltip=选择 FPS 和坐标界面显示的屏幕角落。
 celeritasextra.option.extra.text_contrast=文字对比度
-celeritasextra.option.extra.text_contrast.tooltip=控制界面文字的渲染方式，以提高可读性。
+celeritasextra.option.extra.text_contrast.tooltip=调整 FPS/坐标计数器的对比度。无：默认的纯白色文字。背景：像调试菜单那样为文字渲染背景。阴影：带阴影的纯白色文字。
 celeritasextra.option.extra.vertical_sync=垂直同步
 celeritasextra.option.extra.vertical_sync.tooltip=控制垂直同步模式。关闭：禁用垂直同步，可能导致画面撕裂。开启：标准垂直同步，将帧率限制为刷新率。自适应：帧率高于刷新率时启用，低于时禁用以减少卡顿。仅在GPU驱动支持时可用。
 celeritasextra.option.screen_mode=屏幕模式
@@ -117,9 +117,9 @@ celeritasextra.option.screen_mode.fullscreen=全屏
 celeritasextra.option.extra.reduced_motion=减少动态效果
 celeritasextra.option.extra.reduced_motion.tooltip=为辅助功能减少动态效果。
 celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
-celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面的更新频率将降低，以减少 CPU 使用并提高 FPS。
-celeritasextra.option.extra.steady_debug_hud_refresh=F3 界面刷新间隔
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=控制 F3 调试界面更新之间的游戏刻数。值越高 = 更新频率越低 = 性能越好。默认为 20 游戏刻（1 秒）。
+celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面将按照“稳定 F3 调试界面刷新间隔”设定的游戏刻数进行刷新。
+celeritasextra.option.extra.steady_debug_hud_refresh=稳定 F3 调试界面刷新间隔
+celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=以游戏刻为单位调整调试界面刷新的间隔。
 celeritasextra.option.extra.hide_hei=搜索前隐藏 HEI
 celeritasextra.option.extra.hide_hei.tooltip=启用后，HEI 物品列表将在搜索栏输入内容前保持隐藏。搜索栏始终可见。
 
