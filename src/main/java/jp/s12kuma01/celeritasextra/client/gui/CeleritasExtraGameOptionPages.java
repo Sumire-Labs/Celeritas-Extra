@@ -291,6 +291,9 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.detailSettings.biomeColors = v,
                         opts -> opts.detailSettings.biomeColors,
                         OptionFlag.REQUIRES_RENDERER_RELOAD))
+                .add(booleanOption("celeritasextra.option.details.sky_colors",
+                        (opts, v) -> opts.detailSettings.skyColors = v,
+                        opts -> opts.detailSettings.skyColors))
                 .add(booleanOption("celeritasextra.option.details.void_particles",
                         (opts, v) -> opts.detailSettings.voidParticles = v,
                         opts -> opts.detailSettings.voidParticles))

@@ -67,6 +67,8 @@ public class CeleritasExtraGameOptions {
                     v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
             new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
                     v -> detailSettings.biomeColors = v, () -> detailSettings.biomeColors),
+            new BooleanProperty(CAT_DETAIL, "skyColors", true, "Enable/disable biome-based sky colors",
+                    v -> detailSettings.skyColors = v, () -> detailSettings.skyColors),
             new BooleanProperty(CAT_DETAIL, "voidParticles", true, "Enable/disable void particles",
                     v -> detailSettings.voidParticles = v, () -> detailSettings.voidParticles),
             new BooleanProperty(CAT_DETAIL, "voidFog", true, "Enable/disable void fog",
@@ -413,6 +415,7 @@ public class CeleritasExtraGameOptions {
         public boolean sunMoon = true;
         public boolean rainSnow = true;
         public boolean biomeColors = true;
+        public boolean skyColors = true;
         public boolean voidParticles = true;
         public boolean voidFog = true;
         public int totalStars = 1500;
