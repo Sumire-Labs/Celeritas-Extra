@@ -123,7 +123,7 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.fogDistance = v, () -> renderSettings.fogDistance),
             new IntProperty(CAT_RENDER, "cloudHeight", 192, 0, 384, "Cloud height",
                     v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
-            new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 64, "Cloud render distance in chunks (0 = use render distance)",
+            new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 128, "Cloud render distance in chunks (0 = use render distance)",
                     v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
             new IntProperty(CAT_RENDER, "cloudScale", 4, 1, 4, "Cloud scale (1 = smallest, 4 = default)",
                     v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
