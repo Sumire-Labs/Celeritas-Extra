@@ -1,69 +1,66 @@
+<div align="center">
+
 # Celeritas Extra
 
-This is an unofficial backport of Sodium Extra for Celeritas 1.12.2 (Cleanroom Loader).
-Additionally, several custom enhancements are being implemented.
+**Aiming to bring compelling video options to Celeritas 1.12.2 (CRL).**
 
-For improved QoL, you may also want to check out these additional mods:
-[CeleritasLeafCulling](https://github.com/Karnatour/CeleritasLeafCulling)
-[CeleritasDynamicLights](https://github.com/Karnatour/CeleritasDynamicLights)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.12.2-62B47A?style=flat-square)
+![Loader](https://img.shields.io/badge/Loader-Cleanroom-5865F2?style=flat-square)
+![Requires](https://img.shields.io/badge/Requires-Celeritas-E67E22?style=flat-square)
+![License](https://img.shields.io/badge/License-LGPL--3.0-97CA00?style=flat-square)
 
-You can obtain Celeritas from this AutoBuild repository maintained by kappa-maintainer:
-[Celeritas Auto Build](https://github.com/kappa-maintainer/Celeritas-auto-build/releases)
+</div>
 
-## Description
+---
 
-Celeritas Extra is a mod developed as an alternative to OptiFine Options, and is an unofficial backport of Embeddium Extra for Celeritas 1.12.2.
-In addition to Embeddium Extra features, it also includes several features from Sodium Extras and some original additions.
-You can obtain Celeritas from the Celeritas AutoBuild repository maintained by kappa-maintainer:
-[Celeritas AutoBuild](https://github.com/kappa-maintainer/Celeritas-auto-build/releases)
+Celeritas Extra is an unofficial mod that ports and integrates features inspired by various mods — Sodium Extra among them — along with a number of original features, into Celeritas 1.12.2 (CRL).
+Once installed, it lets you tweak fine-grained settings such as animations, particles, details, and the HUD — OptiFine-style — directly and intuitively from the Celeritas video-settings screen.
 
-## Features
+## 📦 Requirements
 
-### Animation Control
-- Toggle all animations globally, or individually control water, lava, fire, portal, and block animations
+| | |
+|---|---|
+| **Loader** | Cleanroom Loader 0.5.0+ |
+| **Dependency** | [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build/releases) — available from kappa-maintainer's auto-build repository |
 
-### Particle Control
-- Global particle toggle with individual controls for rain splash, block break, and block breaking particles
-- Dynamic per-class particle control — discovers particle classes via reflection over the registered particle factories at world load, supplemented by runtime detection as particles spawn (the only way to catch mod particles registered as lambdas), and lets you toggle each one individually. Discovered classes are cached so they appear from launch on later sessions, and the cache is pruned when a mod is removed
+## ✨ Features
 
-### Detail Settings
-- Toggle sky, stars, sun/moon, rain/snow rendering, and biome colors
+### Animations
+Master toggle for all animations, plus individual control of **water, lava, fire, portal, and block** animations.
 
-### Render Settings
-- Fog control (toggle, start distance, render distance, fog type)
-- Cloud toggle and height adjustment
-- Light update toggle
-- Toggle rendering of item frames, armor stands, paintings, pistons, beacons, enchanting table books
-- Beacon beam height limiting
-- Player and item frame name tag toggles
-- Shader prevention
+### Particles
+- Global particle toggle, with individual toggles for **rain splash, block break, and block-breaking** particles.
+- **Per-particle-class control** — every particle type (including modded ones) is auto-discovered and can be toggled individually. Classes are found by scanning the registered particle factories at world load, supplemented by runtime detection as particles spawn (the only reliable way to catch mod particles registered as lambdas). Discovered classes are cached so they appear from launch in later sessions, and the cache is pruned when a mod is removed.
 
-### Extra Settings
-- FPS overlay with 1% low and 0.1% low percentile metrics (industry-standard frame timing analysis)
-- Coordinates overlay with configurable corner position and text contrast (None / Background / Shadow)
-- Steady Debug HUD with configurable refresh interval
-- Reduced motion option
-- Hide HEI item list until searching (optional, only available when HEI is installed)
+### Details
+Toggle **sky, stars** (with an adjustable star count), **sun & moon, rain & snow, biome colors, sky colors, void particles, and void fog**.
 
-### Window Settings (Celeritas GUI integration)
-- Screen Mode selector (Windowed / Borderless / Fullscreen) — replaces vanilla fullscreen toggle
-- Adaptive VSync (Off / On / Adaptive) — replaces vanilla VSync toggle
+### Render
+- **Fog** — toggle, start-distance multiplier, and render distance (in chunks). Gameplay fog (blindness, underwater, lava) is always preserved, even with fog turned off.
+- **Clouds** — toggle, height, render distance (extended range), scale, and translucency (Default / Always / Never).
+- **Item Frame LOD** — beyond a configurable distance, framed items render with fewer faces and framed maps are hidden, to lighten large item-frame and map walls. *(Off by default.)*
+- **Entity & block rendering toggles** — item frames, armor stands, paintings, pistons, beacon beams (with an optional beam-height limit), and enchanting-table books.
+- **Name tags** — player and item-frame name-tag toggles.
+- **Light Updates** toggle and **Prevent Shaders** (blocks vanilla screen shaders, e.g. the spider-vision distortion).
 
-### Profiler
-- Entity and tile entity render profiler sections for performance analysis
+### Extras
+- **FPS overlay** — current FPS, with optional extended metrics (average, 1% low, 0.1% low).
+- **Coordinates overlay** — with corner position, text contrast (None / Background / Shadow), and an "ignore reduced debug info" option.
+- **Advanced Item Tooltips** — always show an item's identifier and durability.
+- **Toasts** — master toggle plus per-type control (advancement, recipe, tutorial, system).
+- **Steady Debug HUD** — refresh the F3 screen on a fixed tick interval instead of every frame.
+- **Reduced Motion**.
+- **Hide HEI Until Searching** — keeps the HEI item list hidden until you type in the search bar *(only available when HEI is installed)*.
 
-## Requirements
+### Window
+- **Screen Mode** — Windowed / Borderless / Fullscreen (replaces the vanilla fullscreen toggle).
+- **VSync** — Off / On / Adaptive (replaces the vanilla VSync toggle).
 
-* **CleanroomLoader 0.5.7 or later**
-* **Celeritas**
+## 📄 License
+Licensed under **LGPL-3.0** — see [LICENSE.md](LICENSE.md).
 
-## License
-
-LGPL-3.0 - For details, please refer to the LICENSE.md file.
-
-## Credits
-
-* **dima_dencep** - Creator of Embeddium Extra.
-* **embeddedt** - Creator of Celeritas.
-* **CleanroomMC** - This mod utilizes the Cleanroom Mod Template.
-* All contributors who provided translation keys for their languages
+## 🙏 Credits
+- **FlashyReese** — creator of Sodium Extra.
+- **embeddedt** — creator of Celeritas.
+- **CleanroomMC** — CleanroomModTemplate and various other resources.
+- Everyone who contributed translations.
