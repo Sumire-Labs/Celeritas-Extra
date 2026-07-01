@@ -58,10 +58,6 @@ celeritasextra.option.render.fog_start=雾起始距离
 celeritasextra.option.render.fog_start.tooltip=控制雾的起始距离。100% 为默认值，较低的值使雾更近，较高的值使雾更远。
 celeritasextra.option.render.fog_distance=雾距离
 celeritasextra.option.render.fog_distance.tooltip=以区块为单位控制雾渲染距离。0 = 默认（使用渲染距离）。
-celeritasextra.option.render.fog_type=雾类型
-celeritasextra.option.render.fog_type.tooltip=控制雾的应用方式。默认应用正常雾效，关闭禁用雾渲染。
-celeritasextra.option.fog_type.default=默认
-celeritasextra.option.fog_type.off=关闭
 celeritasextra.option.render.prevent_shaders=禁用光影
 celeritasextra.option.render.prevent_shaders.tooltip=若启用，可防止意外激活光影（超级秘密设置）。
 celeritasextra.option.render.clouds=云

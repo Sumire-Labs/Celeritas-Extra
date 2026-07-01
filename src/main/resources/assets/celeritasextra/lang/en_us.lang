@@ -58,10 +58,6 @@ celeritasextra.option.render.fog_start=Fog Start Multiplier
 celeritasextra.option.render.fog_start.tooltip=Adjusts when the terrain fog begins to render for the player.
 celeritasextra.option.render.fog_distance=Fog Distance
 celeritasextra.option.render.fog_distance.tooltip=Controls the fog render distance in chunks. 0 = Default (uses render distance).
-celeritasextra.option.render.fog_type=Fog Type
-celeritasextra.option.render.fog_type.tooltip=Controls how fog is applied. Default applies normal fog, Off disables fog rendering.
-celeritasextra.option.fog_type.default=Default
-celeritasextra.option.fog_type.off=Off
 celeritasextra.option.render.prevent_shaders=Prevent Shaders
 celeritasextra.option.render.prevent_shaders.tooltip=If enabled, any type of vanilla shaders will be prevented from loading. For example, the distorted view when spectating from a spider's point of view.
 celeritasextra.option.render.clouds=Clouds

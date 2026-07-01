@@ -58,10 +58,6 @@ celeritasextra.option.render.fog_start=霧の開始地点の倍数
 celeritasextra.option.render.fog_start.tooltip=プレイヤーのために地形上の霧の描画の開始地点を調整します。
 celeritasextra.option.render.fog_distance=霧の距離
 celeritasextra.option.render.fog_distance.tooltip=霧の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
-celeritasextra.option.render.fog_type=霧のタイプ
-celeritasextra.option.render.fog_type.tooltip=霧の適用方法を制御します。デフォルトは通常の霧を適用し、オフは霧の描画を無効にします。
-celeritasextra.option.fog_type.default=デフォルト
-celeritasextra.option.fog_type.off=オフ
 celeritasextra.option.render.prevent_shaders=シェーダー読み込みの防止
 celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、あらゆるタイプのバニラのシェーダーがロードされなくなります。具体的には、スペクテイターモードで蜘蛛の視点に乗り移った時の視界の歪みなどです。
 celeritasextra.option.render.clouds=雲

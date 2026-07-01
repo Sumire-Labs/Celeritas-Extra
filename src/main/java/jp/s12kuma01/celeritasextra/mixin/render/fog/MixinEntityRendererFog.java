@@ -23,7 +23,7 @@ public class MixinEntityRendererFog {
     )
     private void disableFogAfterSetup(int startCoords, float partialTicks, CallbackInfo ci) {
         CeleritasExtraGameOptions options = CeleritasExtraClientMod.options();
-        if (!options.renderSettings.fog || options.renderSettings.fogType == CeleritasExtraGameOptions.FogType.OFF) {
+        if (!options.renderSettings.fog) {
             GlStateManager.disableFog();
         }
     }

@@ -43,7 +43,7 @@ public class MixinEntityRendererFogFalloff {
         }
 
         // Fog off: do nothing here; disableFog() handles suppression. Never write MAX_VALUE.
-        if (!rs.fog || rs.fogType == CeleritasExtraGameOptions.FogType.OFF) {
+        if (!rs.fog) {
             return original;
         }
 
@@ -72,7 +72,7 @@ public class MixinEntityRendererFogFalloff {
             return CloudPassState.cloudFar(rs.cloudDistance, rs.cloudHeight) + 64.0f;
         }
 
-        if (!rs.fog || rs.fogType == CeleritasExtraGameOptions.FogType.OFF) {
+        if (!rs.fog) {
             return original;
         }
 
