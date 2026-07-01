@@ -64,3 +64,6 @@ Licensed under **LGPL-3.0** — see [LICENSE.md](LICENSE.md).
 - **embeddedt** — creator of Celeritas.
 - **CleanroomMC** — CleanroomModTemplate and various other resources.
 - Everyone who contributed translations.
+
+## ⚠️ Notice
+Some of this mod's code was generated with the help of Claude. All AI-assisted code is reviewed before it is included.
