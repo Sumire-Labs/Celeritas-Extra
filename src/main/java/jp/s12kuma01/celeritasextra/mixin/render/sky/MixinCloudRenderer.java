@@ -1,17 +1,15 @@
 package jp.s12kuma01.celeritasextra.mixin.render.sky;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.CloudRenderer;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -19,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Controls cloud render distance and cloud scale via Forge's CloudRenderer.
  * <p>
  * Cloud Distance: Two @Redirects decouple the dirty-check from geometry extent.
- * Cloud Scale: @Overwrite on getScale() and @ModifyConstant on HEIGHT (4).
+ * Cloud Scale: @ModifyReturnValue on getScale() (XZ tiling scale).
  * <p>
  * Scale values (1-4, default 4):
  * <ul>
@@ -31,9 +29,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(value = CloudRenderer.class, remap = false)
 public class MixinCloudRenderer {
-
-    @Shadow
-    private int cloudMode;
 
     @Shadow
     private int renderDistance;
@@ -102,25 +97,12 @@ public class MixinCloudRenderer {
     // ========================
 
     /**
-     * Override getScale() to apply cloud scale multiplier.
-     * Multiplier = cloudScale / 4.0, so scale 4 = vanilla (1.0x).
-     *
-     * @author Celeritas Extra
-     * @reason Configurable cloud scale
+     * Apply the cloud scale multiplier (cloudScale / 4.0, so 4 = vanilla 1.0x) on top of
+     * the vanilla base scale returned by getScale(). Non-destructive: preserves the vanilla
+     * cloudMode logic and any other mod's modifications, unlike an @Overwrite.
      */
-    @Overwrite
-    private int getScale() {
-        int baseScale = cloudMode == 2 ? 12 : 8;
-        int cloudScale = CeleritasExtraClientMod.options().renderSettings.cloudScale;
-        return Math.max(1, baseScale * cloudScale / 4);
-    }
-
-    /**
-     * Scale the cloud HEIGHT constant (4) proportionally.
-     * HEIGHT is inlined by the compiler, so @ModifyConstant targets the literal value.
-     */
-    @ModifyConstant(method = "vertices", constant = @Constant(intValue = 4))
-    private int celeritasExtra$modifyCloudHeight(int original) {
+    @ModifyReturnValue(method = "getScale", at = @At("RETURN"))
+    private int celeritasExtra$scaleClouds(int original) {
         int cloudScale = CeleritasExtraClientMod.options().renderSettings.cloudScale;
         return Math.max(1, original * cloudScale / 4);
     }
