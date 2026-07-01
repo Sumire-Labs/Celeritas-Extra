@@ -141,6 +141,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
             new IntProperty(CAT_RENDER, "cloudScale", 4, 1, 4, "Cloud scale (1 = smallest, 4 = default)",
                     v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
+            new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
+                    v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
             new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
                     v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval", 20, 1, 60, "F3 debug screen refresh interval in ticks",
@@ -432,6 +434,7 @@ public class CeleritasExtraGameOptions {
         public int cloudScale = 4;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
+        public int itemFrameLodDistance = 0;
         public boolean armorStands = true;
         public boolean paintings = true;
         public boolean pistons = true;

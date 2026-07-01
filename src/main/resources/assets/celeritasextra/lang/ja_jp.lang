@@ -79,6 +79,8 @@ celeritasextra.option.render.light_updates=明るさの更新
 celeritasextra.option.render.light_updates.tooltip=無効にした場合、明るさの更新は処理されません。パフォーマンスは向上しますが、表示に不具合が生じる可能性があります。
 celeritasextra.option.render.item_frames=額縁
 celeritasextra.option.render.item_frames.tooltip=有効にした場合、額縁は描画されます。
+celeritasextra.option.render.item_frame_lod_distance=額縁のLODの距離
+celeritasextra.option.render.item_frame_lod_distance.tooltip=この距離（ブロック単位）を超えると、額縁内のアイテムを少ない面数で描画し、額縁内の地図を非表示にします。0 = オフ。
 celeritasextra.option.render.armor_stands=防具立て
 celeritasextra.option.render.armor_stands.tooltip=有効にした場合、防具立ては描画されます。
 celeritasextra.option.render.paintings=絵画

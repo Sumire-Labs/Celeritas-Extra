@@ -79,6 +79,8 @@ celeritasextra.option.render.light_updates=Обновления освещени
 celeritasextra.option.render.light_updates.tooltip=Если отключено, обновления освещения не будут обрабатываться. Это может улучшить производительность, но может вызвать визуальные артефакты.
 celeritasextra.option.render.item_frames=Рамки для предметов
 celeritasextra.option.render.item_frames.tooltip=Если этот параметр включен, отображаются рамки для предметов.
+celeritasextra.option.render.item_frame_lod_distance=Дальность упрощения рамки
+celeritasextra.option.render.item_frame_lod_distance.tooltip=За этим расстоянием (в блоках) предметы в рамках отображаются с меньшим числом граней, а карты скрываются. 0 = Выкл.
 celeritasextra.option.render.armor_stands=Стойки для брони
 celeritasextra.option.render.armor_stands.tooltip=Если этот параметр включен, отображаются стойки для брони.
 celeritasextra.option.render.paintings=Картины

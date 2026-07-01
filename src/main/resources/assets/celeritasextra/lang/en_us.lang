@@ -79,6 +79,8 @@ celeritasextra.option.render.light_updates=Light Updates
 celeritasextra.option.render.light_updates.tooltip=If disabled, light updates will not be processed. This can improve performance but may cause visual artifacts.
 celeritasextra.option.render.item_frames=Item Frames
 celeritasextra.option.render.item_frames.tooltip=If enabled, item frames are rendered.
+celeritasextra.option.render.item_frame_lod_distance=Item Frame LOD Distance
+celeritasextra.option.render.item_frame_lod_distance.tooltip=Beyond this distance (in blocks), framed items render with fewer faces and framed maps are hidden. 0 = Off.
 celeritasextra.option.render.armor_stands=Armor Stands
 celeritasextra.option.render.armor_stands.tooltip=If enabled, armor stands are rendered.
 celeritasextra.option.render.paintings=Paintings

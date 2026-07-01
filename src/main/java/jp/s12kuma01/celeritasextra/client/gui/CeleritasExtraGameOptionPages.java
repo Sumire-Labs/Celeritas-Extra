@@ -380,6 +380,11 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.renderSettings.lightUpdates,
                         OptionImpact.HIGH))
                 .add(itemFramesOption)
+                .add(sliderOption("celeritasextra.option.render.item_frame_lod_distance",
+                        0, 256, 1, ControlValueFormatter.quantityOrDisabled("blocks", "Off"),
+                        (opts, v) -> opts.renderSettings.itemFrameLodDistance = v,
+                        opts -> opts.renderSettings.itemFrameLodDistance,
+                        itemFramesOn, OptionImpact.LOW))
                 .add(booleanOption("celeritasextra.option.render.armor_stands",
                         (opts, v) -> opts.renderSettings.armorStands = v,
                         opts -> opts.renderSettings.armorStands))

@@ -16,6 +16,8 @@
     "particle.MixinWorldClient",
     "particle.MixinRenderGlobal",
     "render.entity.MixinRenderItemFrame",
+    "render.entity.MixinRenderItem",
+    "render.entity.MixinForgeHooksClient",
     "render.entity.MixinRenderPainting",
     "render.entity.MixinRenderArmorStand",
     "render.entity.MixinRenderLivingBase",
