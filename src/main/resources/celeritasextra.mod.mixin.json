@@ -10,6 +10,8 @@
   "setSourceFile": true,
   "server": [],
   "client": [
-    "hei.MixinIngredientListOverlay"
+    "hei.MixinIngredientListOverlay",
+    "hei.MixinGuiIngredient",
+    "hei.MixinIngredientRenderer"
   ]
 }
