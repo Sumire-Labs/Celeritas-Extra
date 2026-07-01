@@ -475,6 +475,32 @@ public class CeleritasExtraGameOptionPages {
                         steadyHudOn))
                 .build());
 
+        // Toast settings group
+        OptionImpl<CeleritasExtraGameOptions, Boolean> toastsOption = booleanOption("celeritasextra.option.extra.toasts",
+                (opts, v) -> opts.extraSettings.toasts = v,
+                opts -> opts.extraSettings.toasts);
+        BooleanSupplier toastsOn = () -> toastsOption.getValue();
+
+        groups.add(OptionGroup.createBuilder()
+                .add(toastsOption)
+                .add(booleanOption("celeritasextra.option.extra.toast_advancement",
+                        (opts, v) -> opts.extraSettings.toastAdvancement = v,
+                        opts -> opts.extraSettings.toastAdvancement,
+                        toastsOn))
+                .add(booleanOption("celeritasextra.option.extra.toast_recipe",
+                        (opts, v) -> opts.extraSettings.toastRecipe = v,
+                        opts -> opts.extraSettings.toastRecipe,
+                        toastsOn))
+                .add(booleanOption("celeritasextra.option.extra.toast_tutorial",
+                        (opts, v) -> opts.extraSettings.toastTutorial = v,
+                        opts -> opts.extraSettings.toastTutorial,
+                        toastsOn))
+                .add(booleanOption("celeritasextra.option.extra.toast_system",
+                        (opts, v) -> opts.extraSettings.toastSystem = v,
+                        opts -> opts.extraSettings.toastSystem,
+                        toastsOn))
+                .build());
+
         // HEI-specific options (only shown when HEI is installed)
         groups.add(OptionGroup.createBuilder()
                 .addConditionally(

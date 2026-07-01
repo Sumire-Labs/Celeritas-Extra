@@ -122,6 +122,16 @@ celeritasextra.option.extra.steady_debug_hud_refresh=安定したデバッグ画
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=デバッグ画面の更新間隔をティック単位で調整します。
 celeritasextra.option.extra.hide_hei=検索時までHEIを非表示
 celeritasextra.option.extra.hide_hei.tooltip=有効にすると、検索バーに入力するまでHEIのアイテムリストが非表示になります。検索バーは常に表示されます。
+celeritasextra.option.extra.toasts=ポップアップメッセージ
+celeritasextra.option.extra.toasts.tooltip=進捗とレシピのポップアップ(トースト)を表示します。
+celeritasextra.option.extra.toast_advancement=進捗の通知
+celeritasextra.option.extra.toast_advancement.tooltip=進捗のポップアップ(トースト)を表示します。
+celeritasextra.option.extra.toast_recipe=レシピの通知
+celeritasextra.option.extra.toast_recipe.tooltip=レシピのポップアップ(トースト)を表示します。
+celeritasextra.option.extra.toast_tutorial=チュートリアルの通知
+celeritasextra.option.extra.toast_tutorial.tooltip=チュートリアルのポップアップ(トースト)を表示します。
+celeritasextra.option.extra.toast_system=システムの通知
+celeritasextra.option.extra.toast_system.tooltip=システムのポップアップ(トースト)を表示します。
 
 # オーバーレイ位置オプション
 celeritasextra.option.overlay_corner.top_left=左上

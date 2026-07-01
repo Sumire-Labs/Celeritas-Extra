@@ -39,6 +39,7 @@
     "profiler.MixinTileEntityRendererDispatcher",
     "profiler.MixinRenderManager",
     "steady_debug_hud.MixinForgeGuiDebugOverlay",
-    "adaptive_sync.MixinDisplay"
+    "adaptive_sync.MixinDisplay",
+    "toast.MixinGuiToast"
   ]
 }

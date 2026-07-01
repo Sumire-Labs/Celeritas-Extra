@@ -122,6 +122,16 @@ celeritasextra.option.extra.steady_debug_hud_refresh=Интервал обнов
 celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Определяет интервал обновления отладочного экрана в тиках.
 celeritasextra.option.extra.hide_hei=Скрыть HEI до поиска
 celeritasextra.option.extra.hide_hei.tooltip=Если включено, список предметов HEI будет скрыт, пока вы не введёте текст в строке поиска. Строка поиска остаётся видимой.
+celeritasextra.option.extra.toasts=Уведомления
+celeritasextra.option.extra.toasts.tooltip=Показывает всплывающие уведомления о достижениях и рецептах.
+celeritasextra.option.extra.toast_advancement=Достижения
+celeritasextra.option.extra.toast_advancement.tooltip=Показывает всплывающие уведомления о достижениях.
+celeritasextra.option.extra.toast_recipe=Новые рецепты
+celeritasextra.option.extra.toast_recipe.tooltip=Показывает всплывающие уведомления о рецептах.
+celeritasextra.option.extra.toast_tutorial=Обучающие подсказки
+celeritasextra.option.extra.toast_tutorial.tooltip=Показывает обучающие всплывающие уведомления.
+celeritasextra.option.extra.toast_system=Системные уведомления
+celeritasextra.option.extra.toast_system.tooltip=Показывает системные всплывающие уведомления.
 
 # Overlay Corner Options
 celeritasextra.option.overlay_corner.top_left=Верхний левый

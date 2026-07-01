@@ -114,7 +114,17 @@ public class CeleritasExtraGameOptions {
             new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
                     v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync),
             new BooleanProperty(CAT_EXTRA, "hideHeiUntilSearch", false, "Hide HEI item list until searching",
-                    v -> extraSettings.hideHeiUntilSearch = v, () -> extraSettings.hideHeiUntilSearch)
+                    v -> extraSettings.hideHeiUntilSearch = v, () -> extraSettings.hideHeiUntilSearch),
+            new BooleanProperty(CAT_EXTRA, "toasts", true, "Master toggle for toast pop-ups",
+                    v -> extraSettings.toasts = v, () -> extraSettings.toasts),
+            new BooleanProperty(CAT_EXTRA, "toastAdvancement", true, "Show advancement toasts",
+                    v -> extraSettings.toastAdvancement = v, () -> extraSettings.toastAdvancement),
+            new BooleanProperty(CAT_EXTRA, "toastRecipe", true, "Show recipe toasts",
+                    v -> extraSettings.toastRecipe = v, () -> extraSettings.toastRecipe),
+            new BooleanProperty(CAT_EXTRA, "toastTutorial", true, "Show tutorial toasts",
+                    v -> extraSettings.toastTutorial = v, () -> extraSettings.toastTutorial),
+            new BooleanProperty(CAT_EXTRA, "toastSystem", true, "Show system toasts",
+                    v -> extraSettings.toastSystem = v, () -> extraSettings.toastSystem)
     );
     private final List<IntProperty> intProperties = Arrays.asList(
             new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
@@ -440,6 +450,11 @@ public class CeleritasExtraGameOptions {
         public boolean steadyDebugHud = false;
         public int steadyDebugHudRefreshInterval = 20;
         public boolean hideHeiUntilSearch = false;
+        public boolean toasts = true;
+        public boolean toastAdvancement = true;
+        public boolean toastRecipe = true;
+        public boolean toastTutorial = true;
+        public boolean toastSystem = true;
     }
 
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
