@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.mixin.render.fog;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+import jp.s12kuma01.celeritasextra.client.FogState;
 import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +24,7 @@ public class MixinEntityRendererFog {
     )
     private void disableFogAfterSetup(int startCoords, float partialTicks, CallbackInfo ci) {
         CeleritasExtraGameOptions options = CeleritasExtraClientMod.options();
-        if (!options.renderSettings.fog) {
+        if (!options.renderSettings.fog && !FogState.isGameplayFog()) {
             GlStateManager.disableFog();
         }
     }

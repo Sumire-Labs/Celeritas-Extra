@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.mixin.render.fog;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.CloudPassState;
+import jp.s12kuma01.celeritasextra.client.FogState;
 import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,6 +43,11 @@ public class MixinEntityRendererFogFalloff {
             return CloudPassState.cloudFar(rs.cloudDistance, rs.cloudHeight);
         }
 
+        // Protect gameplay fog (blindness / water / lava): leave it vanilla.
+        if (FogState.isGameplayFog()) {
+            return original;
+        }
+
         // Fog off: do nothing here; disableFog() handles suppression. Never write MAX_VALUE.
         if (!rs.fog) {
             return original;
@@ -70,6 +76,11 @@ public class MixinEntityRendererFogFalloff {
         // Cloud pass: end just beyond the cloud-far start (finite, start < end).
         if (CloudPassState.inCloudPass && rs.clouds && rs.cloudDistance > 0) {
             return CloudPassState.cloudFar(rs.cloudDistance, rs.cloudHeight) + 64.0f;
+        }
+
+        // Protect gameplay fog (blindness / water / lava): leave it vanilla.
+        if (FogState.isGameplayFog()) {
+            return original;
         }
 
         if (!rs.fog) {
