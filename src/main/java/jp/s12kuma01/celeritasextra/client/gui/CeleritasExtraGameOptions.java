@@ -127,8 +127,8 @@ public class CeleritasExtraGameOptions {
                     v -> extraSettings.toastTutorial = v, () -> extraSettings.toastTutorial),
             new BooleanProperty(CAT_EXTRA, "toastSystem", true, "Show system toasts",
                     v -> extraSettings.toastSystem = v, () -> extraSettings.toastSystem),
-            new BooleanProperty(CAT_EXTRA, "advancedItemTooltips", false, "Always show advanced item tooltips (id + durability)",
-                    v -> extraSettings.advancedItemTooltips = v, () -> extraSettings.advancedItemTooltips)
+            new BooleanProperty(CAT_EXTRA, "modNameTooltip", false, "Show the source mod's name at the bottom of item tooltips",
+                    v -> extraSettings.modNameTooltip = v, () -> extraSettings.modNameTooltip)
     );
     private final List<IntProperty> intProperties = Arrays.asList(
             new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
@@ -463,7 +463,7 @@ public class CeleritasExtraGameOptions {
         public boolean toastRecipe = true;
         public boolean toastTutorial = true;
         public boolean toastSystem = true;
-        public boolean advancedItemTooltips = false;
+        public boolean modNameTooltip = false;
     }
 
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
