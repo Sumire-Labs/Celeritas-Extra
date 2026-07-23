@@ -531,9 +531,6 @@ public class CeleritasExtraGameOptionPages {
         BooleanSupplier steadyHudOn = () -> steadyHudOption.getValue();
 
         groups.add(OptionGroup.createBuilder()
-                .add(booleanOption("celeritasextra.option.extra.reduced_motion",
-                        (opts, v) -> opts.extraSettings.reducedMotion = v,
-                        opts -> opts.extraSettings.reducedMotion))
                 .add(booleanOption("celeritasextra.option.extra.mod_name_tooltip",
                         (opts, v) -> opts.extraSettings.modNameTooltip = v,
                         opts -> opts.extraSettings.modNameTooltip))

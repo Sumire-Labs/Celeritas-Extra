@@ -117,8 +117,6 @@ public class CeleritasExtraGameOptions {
                     v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
             new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
                     v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
-            new BooleanProperty(CAT_EXTRA, "reducedMotion", false, "Reduce motion effects for accessibility",
-                    v -> extraSettings.reducedMotion = v, () -> extraSettings.reducedMotion),
             new BooleanProperty(CAT_EXTRA, "steadyDebugHud", false, "Reduce F3 debug screen update frequency",
                     v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud),
             new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
@@ -517,7 +515,7 @@ public class CeleritasExtraGameOptions {
 
     /**
      * Miscellaneous quality-of-life settings: the FPS/coordinate overlay with its placement and
-     * contrast, accessibility options (reduced motion, adaptive vsync, steady debug HUD), toast
+     * contrast, accessibility options (adaptive vsync, steady debug HUD), toast
      * toggles, the HEI search gate, and the mod-name tooltip.
      */
     public static class ExtraSettings {
@@ -525,7 +523,6 @@ public class CeleritasExtraGameOptions {
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
         public boolean ignoreReducedDebugInfo = false;
-        public boolean reducedMotion = false;
         public boolean useAdaptiveSync = false;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
         public TextContrast textContrast = TextContrast.SHADOW;
