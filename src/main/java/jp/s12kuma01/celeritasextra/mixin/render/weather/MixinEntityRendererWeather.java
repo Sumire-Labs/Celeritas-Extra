@@ -8,8 +8,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls weather rendering (rain/snow)
- * EntityRenderer in 1.12.2 contains the weather rendering code
+ * Toggles rain and snow rendering according to the detail config.
+ * <p>
+ * In 1.12.2 the weather draw code lives in {@link EntityRenderer#renderRainSnow}. When
+ * precipitation rendering is disabled, this mixin cancels that call at {@code HEAD} so no rain
+ * or snow particles are drawn.
  */
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererWeather {

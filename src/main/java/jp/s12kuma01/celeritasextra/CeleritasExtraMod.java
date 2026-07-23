@@ -10,6 +10,18 @@ import org.apache.logging.log4j.Logger;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 import org.taumc.celeritas.api.OptionGroupConstructionEvent;
 
+/**
+ * Main mod entry point for Celeritas Extra, a client-only companion to Celeritas.
+ * <p>
+ * Celeritas Extra layers additional rendering options on top of Celeritas and surfaces
+ * them inside Celeritas' own options GUI. This class drives the Forge lifecycle: during
+ * construction it verifies Celeritas is present and new enough, then registers the
+ * option-GUI construction listeners; during initialization it bootstraps the client
+ * configuration.
+ * <p>
+ * The mod is {@code clientSideOnly} and accepts any remote version, so it can join
+ * servers that do not have it installed.
+ */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
         clientSideOnly = true, acceptableRemoteVersions = "*")
 public class CeleritasExtraMod {
@@ -19,6 +31,17 @@ public class CeleritasExtraMod {
     @Mod.Instance
     public static CeleritasExtraMod INSTANCE;
 
+    /**
+     * Wires Celeritas Extra into Celeritas' options GUI during mod construction.
+     * <p>
+     * Runs only when Celeritas is loaded. Resolving {@link OptionGUIConstructionEvent}
+     * confirms the installed Celeritas exposes the extension API (2.4.0 or newer); a
+     * {@link NoClassDefFoundError} instead indicates an outdated Celeritas and is logged
+     * as such. When Celeritas is absent the mod logs a warning, as it cannot function
+     * without it.
+     *
+     * @param event the Forge construction event
+     */
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
         if (Loader.isModLoaded("celeritas")) {
@@ -39,11 +62,24 @@ public class CeleritasExtraMod {
         }
     }
 
+    /**
+     * Handles Forge pre-initialization; currently only logs progress.
+     *
+     * @param event the Forge pre-initialization event
+     */
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         LOGGER.info("Celeritas Extra pre-initialization");
     }
 
+    /**
+     * Bootstraps the client on the effective client side during Forge initialization.
+     * <p>
+     * Delegates to {@link jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod#onClientInit()}
+     * so dedicated-server environments never load client-only classes.
+     *
+     * @param event the Forge initialization event
+     */
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         if (net.minecraftforge.fml.common.FMLCommonHandler.instance().getEffectiveSide().isClient()) {

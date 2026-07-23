@@ -8,9 +8,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls cloud rendering
- * RenderGlobal is the 1.12.2 equivalent of WorldRenderer from 1.20.1
- * Cloud height is controlled via MixinWorldProvider
+ * Toggles vanilla cloud rendering on and off.
+ * <p>
+ * Cancels {@code renderClouds} at its head when the "clouds" render setting is disabled, so no
+ * cloud geometry is drawn. {@code RenderGlobal} is the 1.12.2 equivalent of the 1.20.1
+ * {@code WorldRenderer}.
+ * <p>
+ * Related cloud tuning lives elsewhere: cloud height in {@link MixinWorldProvider}, and cloud
+ * distance/scale in {@link MixinCloudRenderer}.
  */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalClouds {

@@ -18,12 +18,19 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 
 /**
- * Defines all option pages for Celeritas Extra
+ * Builds the Celeritas Extra option pages shown in the Celeritas video-settings UI.
+ * <p>
+ * Each {@code public static} factory ({@link #animation()}, {@link #particle()}, {@link #details()},
+ * {@link #render()}, {@link #extra()}) assembles an {@link OptionPage} of {@link OptionGroup}s from the
+ * reusable {@link #booleanOption} and {@link #sliderOption} builders. Options bind directly to the
+ * fields of {@link CeleritasExtraGameOptions} through {@link CeleritasExtraOptionsStorage}, and
+ * dependent controls use {@code enabled} predicates so sub-options grey out while their parent is off.
  */
 public class CeleritasExtraGameOptionPages {
 
     private static final CeleritasExtraOptionsStorage celeritasExtraOpts = new CeleritasExtraOptionsStorage();
 
+    /** Plain toggle with no flag, performance impact, or enable gate. */
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
@@ -31,6 +38,7 @@ public class CeleritasExtraGameOptionPages {
         return booleanOption(translationKey, setter, getter, null, null, null);
     }
 
+    /** Toggle carrying a performance {@link OptionImpact} hint. */
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
@@ -39,6 +47,7 @@ public class CeleritasExtraGameOptionPages {
         return booleanOption(translationKey, setter, getter, null, impact, null);
     }
 
+    /** Toggle carrying an {@link OptionFlag} (e.g. an asset or renderer reload on change). */
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
@@ -47,6 +56,7 @@ public class CeleritasExtraGameOptionPages {
         return booleanOption(translationKey, setter, getter, flag, null, null);
     }
 
+    /** Toggle carrying both an {@link OptionFlag} and a performance {@link OptionImpact} hint. */
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
@@ -75,6 +85,19 @@ public class CeleritasExtraGameOptionPages {
         return booleanOption(translationKey, setter, getter, flag, null, enabled);
     }
 
+    /**
+     * Canonical toggle builder that every other {@code booleanOption} overload delegates to.
+     * <p>
+     * Binds a {@link TickBoxControl} to the given getter/setter, taking the localized name and tooltip
+     * from {@code translationKey} (the tooltip uses its {@code .tooltip} suffix) and applying the
+     * optional flag, impact, and enable predicate when present.
+     *
+     * @param translationKey lang key for the option name and, via its {@code .tooltip} suffix, its tooltip
+     * @param flag           optional {@link OptionFlag} applied when the value changes, or {@code null}
+     * @param impact         optional performance-impact hint, or {@code null}
+     * @param enabled        optional predicate; when it returns false the control is shown greyed out
+     * @return the built option
+     */
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
@@ -93,6 +116,7 @@ public class CeleritasExtraGameOptionPages {
         return builder.build();
     }
 
+    /** Integer slider with no enable gate or performance-impact hint. */
     private static OptionImpl<CeleritasExtraGameOptions, Integer> sliderOption(
             String translationKey,
             int min, int max, int step,
@@ -102,6 +126,7 @@ public class CeleritasExtraGameOptionPages {
         return sliderOption(translationKey, min, max, step, formatter, setter, getter, null, null);
     }
 
+    /** Integer slider gated by an {@code enabled} predicate. */
     private static OptionImpl<CeleritasExtraGameOptions, Integer> sliderOption(
             String translationKey,
             int min, int max, int step,
@@ -112,6 +137,22 @@ public class CeleritasExtraGameOptionPages {
         return sliderOption(translationKey, min, max, step, formatter, setter, getter, enabled, null);
     }
 
+    /**
+     * Canonical integer-slider builder that the other {@code sliderOption} overloads delegate to.
+     * <p>
+     * Binds a {@link SliderControl} over the inclusive {@code [min, max]} range (in increments of
+     * {@code step}) to the given getter/setter, taking the localized name and tooltip from
+     * {@code translationKey} and applying the optional enable predicate and impact hint when present.
+     *
+     * @param translationKey lang key for the option name and, via its {@code .tooltip} suffix, its tooltip
+     * @param min            inclusive minimum slider value
+     * @param max            inclusive maximum slider value
+     * @param step           increment between selectable values
+     * @param formatter      renders the current value for display
+     * @param enabled        optional predicate; when it returns false the slider is shown greyed out
+     * @param impact         optional performance-impact hint
+     * @return the built option
+     */
     private static OptionImpl<CeleritasExtraGameOptions, Integer> sliderOption(
             String translationKey,
             int min, int max, int step,
@@ -131,7 +172,10 @@ public class CeleritasExtraGameOptionPages {
     }
 
     /**
-     * Animation settings page
+     * Builds the Animations page: a master toggle gating per-type animation switches (water, lava,
+     * fire, portal, and block animations), all flagged to reload assets when changed.
+     *
+     * @return the assembled animations option page
      */
     public static OptionPage animation() {
         List<OptionGroup> groups = new ArrayList<>();
@@ -173,7 +217,13 @@ public class CeleritasExtraGameOptionPages {
     }
 
     /**
-     * Particle settings page
+     * Builds the Particles page: the master and built-in particle toggles, followed by dynamically
+     * discovered per-class toggles grouped by owning mod.
+     * <p>
+     * Particle-class discovery is re-run defensively here and wrapped in a guard, so a discovery
+     * failure cannot abort the page build or drop the static toggles above it.
+     *
+     * @return the assembled particles option page
      */
     public static OptionPage particle() {
         List<OptionGroup> groups = new ArrayList<>();
@@ -258,7 +308,10 @@ public class CeleritasExtraGameOptionPages {
     }
 
     /**
-     * Detail settings page
+     * Builds the Details page covering sky, stars (with a star-count slider), sun/moon, weather,
+     * biome and sky colors, and void particle/fog rendering.
+     *
+     * @return the assembled details option page
      */
     public static OptionPage details() {
         List<OptionGroup> groups = new ArrayList<>();
@@ -306,7 +359,10 @@ public class CeleritasExtraGameOptionPages {
     }
 
     /**
-     * Render settings page
+     * Builds the Render page covering fog, clouds (height, distance, scale, and translucency), light
+     * updates, and per-entity/block render toggles with their dependent sliders.
+     *
+     * @return the assembled render option page
      */
     public static OptionPage render() {
         List<OptionGroup> groups = new ArrayList<>();
@@ -415,7 +471,10 @@ public class CeleritasExtraGameOptionPages {
     }
 
     /**
-     * Extra settings page
+     * Builds the Extra page: the FPS/coordinate overlay group, miscellaneous quality-of-life
+     * settings, toast toggles, and the HEI search gate (added only when JEI/HEI is loaded).
+     *
+     * @return the assembled extra option page
      */
     public static OptionPage extra() {
         List<OptionGroup> groups = new ArrayList<>();

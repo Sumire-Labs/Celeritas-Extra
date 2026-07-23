@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Reduce F3 debug screen update frequency
- * Port of embeddium-extra's steady_debug_hud.MixinDebugHud
+ * Throttles how often the F3 debug overlay text is rebuilt.
+ * Port of embeddium-extra's steady_debug_hud.MixinDebugHud.
+ * <p>
+ * The vanilla debug screen recomputes every line each frame, which is comparatively expensive.
+ * When enabled, this caches the left- and right-hand text lists and only rebuilds them on a fixed
+ * interval (default 20 ticks / 1 second), returning the cached lists in between to reduce CPU
+ * usage. When the feature is off, the text is rebuilt every frame as in vanilla.
  * <p>
  * In 1.20.1: Forge's ForgeGui$ForgeDebugScreenOverlay
  * In 1.12.2: Forge's GuiIngameForge (debug rendering is built into GuiIngame)
- * <p>
- * This reduces CPU usage by caching debug strings and only updating them periodically
- * Default refresh interval is 20 ticks (1 second)
  */
 @Mixin(targets = "net.minecraftforge.client.GuiIngameForge")
 public abstract class MixinForgeGuiDebugOverlay {

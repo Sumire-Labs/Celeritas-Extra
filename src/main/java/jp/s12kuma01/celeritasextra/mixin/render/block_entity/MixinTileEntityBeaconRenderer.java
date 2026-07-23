@@ -12,8 +12,14 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls beacon rendering and beam height limiting
- * Ported from MixinBeaconBlockEntityRenderer in Embeddium Extra 1.20.1
+ * Controls beacon rendering and beam height via {@link TileEntityBeaconRenderer}.
+ * Ported from MixinBeaconBlockEntityRenderer in Embeddium Extra 1.20.1.
+ * <p>
+ * Two behaviors, each gated by a render setting:
+ * - {@code beacons}: cancels {@code render} at HEAD to skip the beacon and its beam entirely.
+ * - {@code limitBeaconBeamHeight}: clamps the beam so it stops at the world ceiling instead of
+ *   extending the vanilla default (256 blocks above the beacon), avoiding an over-long beam that
+ *   draws past the top of the world.
  */
 @Mixin(TileEntityBeaconRenderer.class)
 public class MixinTileEntityBeaconRenderer {

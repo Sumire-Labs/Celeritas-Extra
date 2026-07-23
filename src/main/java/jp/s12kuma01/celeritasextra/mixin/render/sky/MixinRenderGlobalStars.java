@@ -17,9 +17,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 /**
- * Controls star rendering and generation.
- * - Toggles star visibility via star brightness wrapping
- * - Overrides star generation to use configurable star count
+ * Controls star visibility and the number of stars generated on {@code RenderGlobal}.
+ * <p>
+ * Two independent changes:
+ * - a {@code WrapOperation} around {@code World.getStarBrightness} that returns {@code 0.0f} when
+ *   the "stars" detail setting is off, suppressing the star pass without rebuilding its geometry, and
+ * - an {@code @Overwrite} of {@code generateStars} that rebuilds the star VBO from the configured
+ *   star count instead of the hardcoded vanilla count.
+ * <p>
+ * Star generation is ported from Angelica's NotFine {@code RenderStars}.
  */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalStars {

@@ -30,6 +30,15 @@ public class FrameCounter {
     private static int cachedOnePercentLowFps = 0;
     private static int cachedPointOnePercentLowFps = 0;
 
+    /**
+     * Samples the current frame's duration at the start of each render tick, evicts samples older than
+     * the 5-second window, and refreshes the cached FPS statistics at most once every 500ms.
+     * <p>
+     * Only the {@link TickEvent.Phase#START} phase is processed; the first observed frame seeds the
+     * timer without producing a sample.
+     *
+     * @param event the render-tick event carrying the current {@link TickEvent.Phase}
+     */
     @SubscribeEvent
     public static void onRenderTick(TickEvent.RenderTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
@@ -58,6 +67,10 @@ public class FrameCounter {
         }
     }
 
+    /**
+     * Recomputes the cached average FPS and the 1% / 0.1% low metrics from the current sample window,
+     * resetting all three to zero when the window holds no samples.
+     */
     private static void recalculate() {
         int size = frameSamples.size();
         if (size == 0) {
@@ -103,14 +116,17 @@ public class FrameCounter {
         return avgDelta > 0 ? (int) (1_000_000_000.0 / avgDelta) : 0;
     }
 
+    /** Returns the most recently cached average FPS over the rolling 5-second window. */
     public static int getAverageFps() {
         return cachedAverageFps;
     }
 
+    /** Returns the most recently cached 1% low FPS (average of the slowest 1% of frames in the window). */
     public static int getOnePercentLowFps() {
         return cachedOnePercentLowFps;
     }
 
+    /** Returns the most recently cached 0.1% low FPS (average of the slowest 0.1% of frames in the window). */
     public static int getPointOnePercentLowFps() {
         return cachedPointOnePercentLowFps;
     }

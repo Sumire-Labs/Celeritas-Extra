@@ -16,8 +16,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls particle rendering and spawning
- * Ported from MixinParticleManager in Embeddium Extra 1.20.1
+ * Controls particle spawning on {@link ParticleManager}.
+ * Ported from MixinParticleManager in Embeddium Extra 1.20.1.
+ * <p>
+ * Gates block-break, block-hit, and general particle additions behind the configured particle
+ * toggles, and records each effect's class so particles can be suppressed globally or per class.
+ * Factory-to-mod attribution is captured at registration time via {@link ParticleClassRegistry},
+ * since lambda and anonymous-class factories cannot be resolved statically.
  */
 @Mixin(ParticleManager.class)
 public class MixinParticleManager {

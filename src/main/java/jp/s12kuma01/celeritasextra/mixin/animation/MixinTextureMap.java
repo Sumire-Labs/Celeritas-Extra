@@ -17,8 +17,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * Controls texture animations (water, lava, fire, portal, etc.)
- * This is the 1.12.2 equivalent of MixinSpriteAtlasTexture from 1.20.1
+ * Controls texture animations on {@link TextureMap} (water, lava, fire, portal, and other blocks).
+ * This is the 1.12.2 equivalent of MixinSpriteAtlasTexture from 1.20.1.
+ * <p>
+ * Wraps each sprite's {@code updateAnimation} call so animation ticks can be skipped when animations
+ * are disabled globally or when the sprite's texture category (matched by icon name) is toggled off.
+ * The category-to-toggle mapping is built lazily on first use.
  */
 @Mixin(TextureMap.class)
 public abstract class MixinTextureMap {

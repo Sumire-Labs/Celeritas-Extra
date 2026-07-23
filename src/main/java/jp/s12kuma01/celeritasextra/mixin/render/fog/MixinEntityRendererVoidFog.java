@@ -8,9 +8,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 /**
- * Controls void fog rendering.
- * In 1.12.2, void fog is applied in EntityRenderer.setupFog() based on
- * WorldProvider.getVoidFogYFactor(). Returning 1.0 disables the void fog effect.
+ * Suppresses the distance-based void fog that darkens the view near the world bottom.
+ * <p>
+ * In 1.12.2 void fog is applied inside {@link EntityRenderer#setupFog} from
+ * {@link WorldProvider#getVoidFogYFactor()}. When void fog is disabled in the detail config this
+ * redirect returns {@code 1.0}, which makes the game treat the player as fully above the void and
+ * skip the effect; otherwise the real factor is used.
  */
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererVoidFog {

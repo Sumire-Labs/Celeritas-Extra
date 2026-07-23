@@ -27,6 +27,15 @@ public class ParticleDiscoveryHandler {
     /** The effectRenderer instance most recently scanned; a change means a new world was loaded. */
     private static ParticleManager lastScanned = null;
 
+    /**
+     * Detects a freshly (re)created {@code effectRenderer} on the tick END phase and, once per
+     * instance, prunes the discovered cache, rescans its factories, and flushes any changes.
+     * <p>
+     * Keying off the instance rather than a world-load event makes discovery robust to
+     * world-load ordering while still running exactly once per world.
+     *
+     * @param event the client tick event; only the END phase is acted upon
+     */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) {
@@ -44,6 +53,13 @@ public class ParticleDiscoveryHandler {
         flushIfDirty(registry);
     }
 
+    /**
+     * Persists any registry changes accumulated during the session when the client world unloads.
+     * Covers classes discovered at spawn time and user enable/disable toggles, which mutate the
+     * registry directly rather than through a scan.
+     *
+     * @param event the world-unload event; ignored for non-client (server) worlds
+     */
     @SubscribeEvent
     public static void onWorldUnload(WorldEvent.Unload event) {
         if (event.getWorld() == null || !event.getWorld().isRemote) {

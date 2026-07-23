@@ -16,8 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Controls item frame rendering and name tags
- * Ported from MixinItemFrameEntityRenderer in Embeddium Extra 1.20.1
+ * Controls item frame rendering, name tags, and level-of-detail culling via {@link RenderItemFrame}.
+ * Ported from MixinItemFrameEntityRenderer in Embeddium Extra 1.20.1.
+ * <p>
+ * Three independent behaviors, each gated by a render setting:
+ * - {@code itemFrames}: cancels {@code doRender} to hide the frame entirely.
+ * - {@code itemFrameNameTag}: suppresses the frame's hover name tag.
+ * - {@code itemFrameLodDistance}: a backport of MoreCulling's "Frame LOD" that, beyond the
+ *   configured distance, sets {@link ItemFrameLodState#active} so the held item's quads are
+ *   face-reduced (via {@link MixinRenderItem} / {@link MixinForgeHooksClient}) and framed maps are
+ *   culled outright. The flag is always cleared on return so it never leaks into unrelated item
+ *   rendering.
  */
 @Mixin(RenderItemFrame.class)
 public class MixinRenderItemFrame {

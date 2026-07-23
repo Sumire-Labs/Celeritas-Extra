@@ -9,13 +9,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Add profiler sections for block entity rendering
- * Port of embeddium-extra's profiler.MixinBlockEntityRenderDispatcher
+ * Wraps block-entity (tile-entity) rendering in named profiler sections for the F3 profiler graph.
+ * Port of embeddium-extra's profiler.MixinBlockEntityRenderDispatcher.
+ * <p>
+ * Pushes a profiler section keyed by the tile entity's renderer at the {@code HEAD} of
+ * {@link TileEntityRendererDispatcher#render} and pops it at the {@code TAIL}, exposing the
+ * per-renderer cost so block-entity rendering bottlenecks can be identified.
  * <p>
  * In 1.20.1: BlockEntityRenderDispatcher.render()
  * In 1.12.2: TileEntityRendererDispatcher.render()
- * <p>
- * This helps identify rendering performance bottlenecks in F3 profiler
  */
 @Mixin(TileEntityRendererDispatcher.class)
 public class MixinTileEntityRendererDispatcher {

@@ -18,6 +18,14 @@ public final class FogState {
     private FogState() {
     }
 
+    /**
+     * Returns whether the active view entity is subject to gameplay-critical fog that must be preserved.
+     * <p>
+     * True when the render view entity has {@link MobEffects#BLINDNESS}, or is submerged in
+     * {@link Material#WATER} or {@link Material#LAVA}. Returns false when there is no render view entity.
+     *
+     * @return true if the current fog conveys gameplay state and must not be disabled or rescaled
+     */
     public static boolean isGameplayFog() {
         Minecraft mc = Minecraft.getMinecraft();
         Entity view = mc.getRenderViewEntity();

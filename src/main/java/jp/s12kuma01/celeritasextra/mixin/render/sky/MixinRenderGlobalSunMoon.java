@@ -9,8 +9,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 /**
- * Controls sun and moon rendering
- * In 1.12.2, sun and moon are rendered using texture binding in renderSky
+ * Toggles rendering of the sun and moon discs.
+ * <p>
+ * Wraps the two internal {@code renderSky(BufferBuilder, float, float, float, boolean)} helper
+ * invocations inside {@code RenderGlobal.renderSky(FI)V} — ordinal 0 draws the sun, ordinal 1 the
+ * moon — and skips the wrapped call when the "sunMoon" detail setting is disabled, so both discs
+ * vanish while the rest of the sky box is left intact.
  */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalSunMoon {

@@ -13,7 +13,7 @@
 
 ---
 
-Celeritas Extra is an unofficial mod that ports and integrates features inspired by various mods — Sodium Extra among them — along with a number of original features, into Celeritas 1.12.2 (CRL).
+Celeritas Extra is an unofficial mod that ports and integrates features from Rubidium / Embeddium Extra (itself a port of Sodium Extra) — along with a number of original features — into Celeritas 1.12.2 (CRL).
 Once installed, it lets you tweak fine-grained settings such as animations, particles, details, and the HUD — OptiFine-style — directly and intuitively from the Celeritas video-settings screen.
 
 ## 📦 Requirements
@@ -21,7 +21,7 @@ Once installed, it lets you tweak fine-grained settings such as animations, part
 | | |
 |---|---|
 | **Loader** | Cleanroom Loader 0.5.0+ |
-| **Dependency** | [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build/releases) — available from kappa-maintainer's auto-build repository |
+| **Dependency** | [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build/releases) 2.4.0+ — available from kappa-maintainer's auto-build repository |
 
 ## ✨ Features
 
@@ -45,11 +45,12 @@ Toggle **sky, stars** (with an adjustable star count), **sun & moon, rain & snow
 
 ### Extras
 - **FPS overlay** — current FPS, with optional extended metrics (average, 1% low, 0.1% low).
-- **Coordinates overlay** — with corner position, text contrast (None / Background / Shadow), and an "ignore reduced debug info" option.
+- **Coordinates overlay** — with an "ignore reduced debug info" option.
+- **Overlay position & contrast** — corner position and text contrast (None / Background / Shadow), shared by the FPS and coordinates overlays.
 - **Mod Name Tooltip** — show the source mod's name at the bottom of every item's tooltip.
 - **Toasts** — master toggle plus per-type control (advancement, recipe, tutorial, system).
 - **Steady Debug HUD** — refresh the F3 screen on a fixed tick interval instead of every frame.
-- **Reduced Motion**.
+- **F3 profiler sections** — labels entity and block-entity renderers as sections in the debug profiler pie chart (F3), to help spot render bottlenecks.
 - **Hide HEI Until Searching** — keeps the HEI item list hidden until you type in the search bar *(only available when HEI is installed)*.
 
 ### Window
@@ -61,9 +62,12 @@ Licensed under **LGPL-3.0** — see [LICENSE.md](LICENSE.md).
 
 ## 🙏 Credits
 - **FlashyReese** — creator of Sodium Extra.
+- **dima_dencep** — creator of Rubidium / Embeddium Extra.
 - **embeddedt** — creator of Celeritas.
 - **CleanroomMC** — CleanroomModTemplate and various other resources.
 - Everyone who contributed translations.
 
 ## ⚠️ Notice
-Some of this mod's code was generated with the help of Claude. All AI-assisted code is reviewed before it is included.
+Part of this mod's code is written with the help of generative AI. I review the generated code beforehand, but on rare occasions an imperfection may still remain — if you spot one, I'd appreciate it if you let me know via an Issue.
+
+I'm also well aware that some people feel uneasy about, or dislike, software that uses generative AI. If you're okay with that, I'd be glad to have you use this mod.

@@ -56,6 +56,7 @@ public class ParticleClassRegistry {
     private ParticleClassRegistry() {
     }
 
+    /** Returns the process-wide singleton registry. */
     public static ParticleClassRegistry getInstance() {
         return INSTANCE;
     }
@@ -73,6 +74,11 @@ public class ParticleClassRegistry {
         return name;
     }
 
+    /**
+     * Resolves a robust, non-empty simple name for a class. Tolerates reflection failures
+     * and empty synthetic names by falling back to {@link #toSimpleName(String)} and finally
+     * to the fully-qualified name, so the result is always usable as a display label.
+     */
     private static String simpleNameOf(Class<?> clazz) {
         String s;
         try {
@@ -208,6 +214,15 @@ public class ParticleClassRegistry {
     // Mod attribution
     // ------------------------------------------------------------------
 
+    /**
+     * Determines the owning mod id for a class using, in order of authority: the vanilla
+     * {@code net.minecraft.*} namespace, the mod captured for the supplying factory (see
+     * {@link #registerFactoryMod}), then the class's code-source jar or directory.
+     *
+     * @param clazz   the particle class to attribute
+     * @param factory the factory that produced it, or {@code null} at the spawn-time path
+     * @return the resolved mod id, or {@code null} if none could be attributed
+     */
     private String resolveModId(Class<?> clazz, IParticleFactory factory) {
         String name = clazz.getName();
         if (name.startsWith("net.minecraft.")) {
@@ -271,6 +286,13 @@ public class ParticleClassRegistry {
         }
     }
 
+    /**
+     * Resolves the owning mod id for a discovered class. Falls back to {@code "minecraft"}
+     * for {@code net.minecraft.*} classes when no attribution was recorded.
+     *
+     * @param fullClassName fully-qualified particle class name
+     * @return the owning mod id, {@code "minecraft"} for vanilla classes, or {@code null} if unknown
+     */
     public String getModName(String fullClassName) {
         String modName = classModNames.get(fullClassName);
         if (modName != null) {
@@ -286,14 +308,23 @@ public class ParticleClassRegistry {
     // Disabled set (authoritative user data)
     // ------------------------------------------------------------------
 
+    /** Returns whether the user has disabled the given fully-qualified class. */
     public boolean isClassDisabled(String fullClassName) {
         return disabledClasses.contains(fullClassName);
     }
 
+    /** Returns whether the disabled set is empty, i.e. no particle filtering is active. */
     public boolean isEmptyDisabled() {
         return disabledClasses.isEmpty();
     }
 
+    /**
+     * Enables or disables a particle class for the user. Enabling removes it from the disabled
+     * set; disabling adds it. Marks the registry dirty only when the set actually changes.
+     *
+     * @param fullClassName fully-qualified particle class name
+     * @param enabled       {@code true} to render the particle, {@code false} to suppress it
+     */
     public void setClassEnabled(String fullClassName, boolean enabled) {
         boolean changed = enabled
                 ? disabledClasses.remove(fullClassName)
@@ -303,6 +334,12 @@ public class ParticleClassRegistry {
         }
     }
 
+    /**
+     * Replaces the disabled set with the given classes loaded from config. Null and empty
+     * entries are skipped.
+     *
+     * @param classes fully-qualified class names to mark disabled
+     */
     public void loadDisabledClasses(String[] classes) {
         disabledClasses.clear();
         for (String cls : classes) {
@@ -312,6 +349,11 @@ public class ParticleClassRegistry {
         }
     }
 
+    /**
+     * Exports the disabled set for config persistence.
+     *
+     * @return the fully-qualified names of all user-disabled classes
+     */
     public String[] getDisabledClassesArray() {
         return disabledClasses.toArray(new String[0]);
     }
@@ -320,14 +362,21 @@ public class ParticleClassRegistry {
     // Discovered cache persistence
     // ------------------------------------------------------------------
 
+    /**
+     * Returns a read-only view of discovered classes keyed by fully-qualified name.
+     *
+     * @return an unmodifiable {@code fullClassName -> display simpleName} map
+     */
     public Map<String, String> getDiscoveredClasses() {
         return Collections.unmodifiableMap(discoveredClasses);
     }
 
+    /** Returns whether persisted state has changed since the last {@link #markClean()}. */
     public boolean isDirty() {
         return dirty;
     }
 
+    /** Clears the dirty flag once the registry state has been persisted. */
     public void markClean() {
         dirty = false;
     }

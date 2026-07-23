@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Mixin configuration plugin for Celeritas Extra
- * Handles conditional mixin loading based on mod compatibility
+ * Mixin configuration plugin that gates optional mixins by mod compatibility.
+ * <p>
+ * Referenced from the mixin config JSON, this plugin lets the mixin subsystem decide
+ * which mixins to apply at load time. Mixins in a {@code .hei.} sub-package integrate
+ * with the Just Enough Items ingredient overlay and are applied only when JEI/HEI is
+ * present; all other mixins always apply. The remaining callbacks are unused no-ops
+ * required by the {@link IMixinConfigPlugin} contract.
  */
 public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
 
@@ -22,6 +27,17 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
         return null;
     }
 
+    /**
+     * Decides whether a candidate mixin should be applied to its target class.
+     * <p>
+     * Mixins whose class name contains {@code .hei.} depend on JEI/HEI and are applied
+     * only when its ingredient-overlay class is on the classpath; every other mixin is
+     * applied unconditionally.
+     *
+     * @param targetClassName fully-qualified name of the class being mixed into
+     * @param mixinClassName  fully-qualified name of the candidate mixin
+     * @return {@code true} if the mixin should be applied
+     */
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.contains(".hei.")) {
@@ -30,6 +46,12 @@ public class CeleritasExtraMixinConfigPlugin implements IMixinConfigPlugin {
         return true;
     }
 
+    /**
+     * Tests whether a class is available on the classpath without initializing it.
+     *
+     * @param className fully-qualified class name to look up
+     * @return {@code true} if the corresponding {@code .class} resource is found
+     */
     private static boolean isClassPresent(String className) {
         return CeleritasExtraMixinConfigPlugin.class.getClassLoader()
                 .getResource(className.replace('.', '/') + ".class") != null;

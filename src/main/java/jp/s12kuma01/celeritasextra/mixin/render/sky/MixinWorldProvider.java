@@ -8,7 +8,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Controls cloud height via WorldProvider
+ * Overrides the world's cloud altitude with the configured cloud height.
+ * <p>
+ * Injects at the return of {@code WorldProvider.getCloudHeight} and replaces the result with the
+ * "cloudHeight" render setting. Since vanilla and other systems query {@code getCloudHeight} for the
+ * altitude at which clouds are drawn, this is the single source of truth for cloud height relied on
+ * by {@link MixinRenderGlobalClouds} and {@link MixinEntityRendererCloudTranslucency}.
  */
 @Mixin(WorldProvider.class)
 public class MixinWorldProvider {

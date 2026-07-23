@@ -9,8 +9,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls piston rendering
- * Ported from MixinPistonBlockEntityRenderer in Embeddium Extra 1.20.1
+ * Toggles moving-piston rendering via {@link TileEntityPistonRenderer}.
+ * Ported from MixinPistonBlockEntityRenderer in Embeddium Extra 1.20.1.
+ * <p>
+ * When {@code renderSettings.pistons} is disabled, cancels {@code render} at HEAD so the
+ * block-entity render of a moving piston (the extending/retracting head and the pushed block) is
+ * skipped.
  */
 @Mixin(TileEntityPistonRenderer.class)
 public class MixinTileEntityPistonRenderer {

@@ -14,8 +14,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Controls living entity rendering and name tags
- * In 1.12.2, this is RenderLivingBase
+ * Controls living entity rendering and name tags via {@link RenderLivingBase}, the shared
+ * living-entity renderer in 1.12.2.
+ * <p>
+ * Complements {@link MixinRenderArmorStand}: when armor stand rendering is disabled it cancels
+ * {@code doRender} but still draws the entity's label, so hidden armor stands keep their name tag.
+ * Independently, it suppresses player name tags when {@code renderSettings.playerNameTag} is
+ * disabled.
  */
 @Mixin(RenderLivingBase.class)
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {

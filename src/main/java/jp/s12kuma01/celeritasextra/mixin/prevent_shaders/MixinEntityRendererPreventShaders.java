@@ -9,8 +9,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Prevent accidental shader activation
- * Port of embeddium-extra's prevent_shaders.MixinGameRenderer
+ * Blocks the vanilla post-processing shader pipeline from being activated.
+ * Port of embeddium-extra's prevent_shaders.MixinGameRenderer.
+ * <p>
+ * When enabled in the render config, this cancels {@link EntityRenderer#loadShader} and
+ * {@code switchUseShader} at their {@code HEAD} so effects such as the spectator/creeper/entity
+ * view shaders never take over, avoiding conflicts and overhead with Celeritas' own rendering.
  * <p>
  * In 1.20.1: GameRenderer.togglePostProcessorEnabled() / loadPostProcessor()
  * In 1.12.2: EntityRenderer.loadShader() / switchUseShader()

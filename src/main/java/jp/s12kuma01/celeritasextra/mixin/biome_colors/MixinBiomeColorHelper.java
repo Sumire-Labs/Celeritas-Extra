@@ -9,11 +9,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Biome color control - disable biome-specific colors
- * Port of embeddium-extra's biome_colors.MixinBiomeColors
+ * Disables biome-specific tinting on {@link BiomeColorHelper}.
+ * Port of embeddium-extra's biome_colors.MixinBiomeColors.
  * <p>
- * In 1.20.1: BiomeColors class
- * In 1.12.2: BiomeColorHelper class
+ * When biome colors are turned off, forces grass, water, and foliage lookups to return fixed default
+ * colors instead of the biome-blended values, giving every biome a uniform tint.
+ * <p>
+ * In 1.20.1 this targets the BiomeColors class; in 1.12.2 it is {@link BiomeColorHelper}.
  */
 @Mixin(BiomeColorHelper.class)
 public class MixinBiomeColorHelper {

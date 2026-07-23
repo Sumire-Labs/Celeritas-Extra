@@ -9,7 +9,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls armor stand rendering
+ * Toggles armor stand rendering via {@link RenderArmorStand}.
+ * <p>
+ * When {@code renderSettings.armorStands} is disabled, cancels {@code doRender} at HEAD so the
+ * armor stand is skipped entirely. Name-tag handling for hidden armor stands lives in
+ * {@link MixinRenderLivingBase}, which still draws the label when the body is cancelled.
  */
 @Mixin(RenderArmorStand.class)
 public class MixinRenderArmorStand {

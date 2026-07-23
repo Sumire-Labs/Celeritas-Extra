@@ -3,7 +3,13 @@ package jp.s12kuma01.celeritasextra.client.gui;
 import org.taumc.celeritas.api.options.OptionIdentifier;
 
 /**
- * Defines option page identifiers for Celeritas Extra
+ * Holds the {@link OptionIdentifier} constants that identify the option pages
+ * contributed by Celeritas Extra.
+ * <p>
+ * Each identifier pairs the {@code celeritasextra} namespace with a page key and
+ * serves as a stable handle for the extra pages when they are registered into the
+ * Celeritas options GUI by {@link CeleritasExtraOptionsListener}. The pages cover
+ * animation, particle, detail, render, and miscellaneous ("extra") settings.
  */
 public class CeleritasExtraOptionPages {
     public static final OptionIdentifier<Void> ANIMATION = OptionIdentifier.create("celeritasextra", "animation");

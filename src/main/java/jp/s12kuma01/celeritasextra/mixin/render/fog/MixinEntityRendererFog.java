@@ -11,9 +11,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fog toggle control
- * Disables OpenGL fog after setupFog completes so that all other
- * GL state (fog color, mode, etc.) is still configured correctly
+ * Toggles OpenGL fog off when fog rendering is disabled in the render config.
+ * <p>
+ * Runs at the {@code RETURN} of {@link EntityRenderer#setupFog}, after vanilla has finished
+ * configuring all surrounding fog GL state (color, mode, start/end). Disabling fog only at this
+ * point keeps that state correct while still suppressing the visible effect. Gameplay fog such
+ * as blindness, water, and lava is left intact via {@link FogState#isGameplayFog()}.
  */
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererFog {

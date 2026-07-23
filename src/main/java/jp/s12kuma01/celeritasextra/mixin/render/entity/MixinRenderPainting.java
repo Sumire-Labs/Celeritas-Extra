@@ -9,8 +9,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls painting rendering
- * Ported from MixinPaintingEntityRenderer in Embeddium Extra 1.20.1
+ * Toggles painting rendering via {@link RenderPainting}.
+ * Ported from MixinPaintingEntityRenderer in Embeddium Extra 1.20.1.
+ * <p>
+ * When {@code renderSettings.paintings} is disabled, cancels {@code doRender} at HEAD so paintings
+ * are skipped entirely.
  */
 @Mixin(RenderPainting.class)
 public class MixinRenderPainting {

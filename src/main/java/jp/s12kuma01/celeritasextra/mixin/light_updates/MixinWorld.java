@@ -10,9 +10,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Controls light updates for performance optimization.
- * When disabled, light will not be recalculated which can improve performance
- * but may cause visual artifacts.
+ * Controls world light recalculation on {@link World} for performance.
+ * <p>
+ * On the client, short-circuits {@code checkLight} and {@code checkLightFor} when the light-updates
+ * toggle is off, skipping lighting recomputation. This can improve performance in exchange for
+ * possible lighting artifacts until light is recalculated. Server-side worlds are unaffected.
  */
 @Mixin(World.class)
 public class MixinWorld {

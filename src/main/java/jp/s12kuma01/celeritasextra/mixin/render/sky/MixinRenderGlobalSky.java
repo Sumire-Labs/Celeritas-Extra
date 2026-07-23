@@ -8,8 +8,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls sky rendering (sky box)
- * RenderGlobal is the 1.12.2 equivalent of WorldRenderer from 1.20.1
+ * Toggles the vanilla sky box on and off.
+ * <p>
+ * Cancels {@code renderSky(FI)V} at its head when the "sky" detail setting is disabled, hiding the
+ * sky dome, horizon, and void planes. {@code RenderGlobal} is the 1.12.2 equivalent of the 1.20.1
+ * {@code WorldRenderer}.
+ * <p>
+ * Sun/moon, stars, and clouds are gated independently by {@link MixinRenderGlobalSunMoon},
+ * {@link MixinRenderGlobalStars}, and {@link MixinRenderGlobalClouds}.
  */
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalSky {

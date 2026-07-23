@@ -18,7 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Renders FPS and coordinates overlay with configurable position and text contrast
+ * Renders the optional FPS and coordinate overlay onto the in-game HUD.
+ * <p>
+ * Subscribed to the client Forge event bus, it draws the lines enabled in
+ * {@link CeleritasExtraGameOptions.ExtraSettings} (FPS with optional high/avg/low detail, player
+ * coordinates, and a light-updates-disabled warning) in the configured screen corner and with the
+ * chosen text contrast. Nothing is drawn while the F3 debug screen is showing or the GUI is hidden.
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
@@ -28,6 +33,15 @@ public class CeleritasExtraHud {
     private static final int HUD_TEXT_COLOR = 0xFFFFFF;
     private static final int HUD_BACKGROUND_COLOR = 0x90505050;
 
+    /**
+     * Draws the enabled overlay lines each time the HUD text layer renders.
+     * <p>
+     * Collects the FPS, coordinate, and warning lines permitted by the current settings, then lays
+     * them out from the configured {@link CeleritasExtraGameOptions.OverlayCorner}, stacking away from
+     * that corner. Returns early when the debug screen or GUI is hidden, or when no line is enabled.
+     *
+     * @param event the HUD text render event supplying the current screen resolution
+     */
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         if (mc.gameSettings.showDebugInfo || mc.gameSettings.hideGUI) {

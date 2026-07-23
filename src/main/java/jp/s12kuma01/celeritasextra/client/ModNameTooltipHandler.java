@@ -36,6 +36,15 @@ public final class ModNameTooltipHandler {
     private ModNameTooltipHandler() {
     }
 
+    /**
+     * Appends the source mod's display name as the final tooltip line when the feature is enabled and
+     * the name is not already present.
+     * <p>
+     * No-op when the {@code modNameTooltip} option is disabled, or when the item cannot be attributed
+     * to a loaded mod.
+     *
+     * @param event the tooltip event whose {@link ItemTooltipEvent#getToolTip() lines} are appended to
+     */
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (!CeleritasExtraClientMod.options().extraSettings.modNameTooltip) {

@@ -11,13 +11,25 @@ import org.taumc.celeritas.api.options.structure.*;
 import java.util.List;
 
 /**
- * Listens for Celeritas Options GUI construction events
- * and adds Celeritas Extra option pages
+ * Hooks into the Celeritas options GUI so Celeritas Extra can extend it.
+ * <p>
+ * Two construction events are handled:
+ * - {@link OptionGUIConstructionEvent} adds the five Celeritas Extra pages
+ *   (animation, particle, details, render, extra) built by
+ *   {@link CeleritasExtraGameOptionPages}.
+ * - {@link OptionGroupConstructionEvent} rewrites the vanilla WINDOW group,
+ *   swapping the plain Fullscreen and VSync boolean toggles for richer
+ *   three-way cycling controls.
  */
 public class CeleritasExtraOptionsListener {
 
     private static final CeleritasExtraOptionsStorage celeritasExtraOpts = new CeleritasExtraOptionsStorage();
 
+    /**
+     * Registers every Celeritas Extra option page when the Celeritas options GUI is built.
+     *
+     * @param event the GUI construction event the pages are added to
+     */
     public static void onCeleritasOptionsConstruct(OptionGUIConstructionEvent event) {
         CeleritasExtraMod.LOGGER.info("Registering Celeritas Extra options pages");
 
@@ -56,6 +68,13 @@ public class CeleritasExtraOptionsListener {
         }
     }
 
+    /**
+     * Builds the replacement for the vanilla Fullscreen toggle: a three-way
+     * cycling control over {@link CeleritasExtraGameOptions.ScreenMode} offering
+     * windowed, borderless, and fullscreen modes.
+     *
+     * @return the configured screen-mode option
+     */
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.ScreenMode> createScreenModeOption() {
         return OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
                 .setId(StandardOptions.Option.FULLSCREEN.cast())
@@ -73,6 +92,13 @@ public class CeleritasExtraOptionsListener {
                 .build();
     }
 
+    /**
+     * Builds the replacement for the vanilla VSync toggle: a three-way cycling
+     * control over {@link CeleritasExtraGameOptions.VerticalSyncOption} offering
+     * off, on, and adaptive modes.
+     *
+     * @return the configured vertical-sync option
+     */
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.VerticalSyncOption> createVSyncOption() {
         return OptionImpl.createBuilder(CeleritasExtraGameOptions.VerticalSyncOption.class, celeritasExtraOpts)
                 .setId(StandardOptions.Option.VSYNC.cast())

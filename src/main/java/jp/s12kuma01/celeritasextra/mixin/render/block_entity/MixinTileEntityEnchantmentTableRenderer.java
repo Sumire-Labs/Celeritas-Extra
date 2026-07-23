@@ -9,8 +9,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Controls enchanting table book rendering
- * Ported from MixinEnchantingTableBlockEntityRenderer in Embeddium Extra 1.20.1
+ * Toggles the enchanting table's animated floating book via {@link TileEntityEnchantmentTableRenderer}.
+ * Ported from MixinEnchantingTableBlockEntityRenderer in Embeddium Extra 1.20.1.
+ * <p>
+ * When {@code renderSettings.enchantingTableBooks} is disabled, cancels {@code render} at HEAD so
+ * the book is skipped.
  */
 @Mixin(TileEntityEnchantmentTableRenderer.class)
 public class MixinTileEntityEnchantmentTableRenderer {

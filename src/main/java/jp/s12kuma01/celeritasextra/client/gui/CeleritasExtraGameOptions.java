@@ -16,8 +16,16 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * Main configuration class for Celeritas Extra
- * Uses Forge Configuration for .cfg file format
+ * Central store for all Celeritas Extra configuration values.
+ * <p>
+ * Settings are grouped into typed holder classes ({@link AnimationSettings}, {@link ParticleSettings},
+ * {@link DetailSettings}, {@link RenderSettings}, {@link ExtraSettings}) and persisted to a Forge
+ * {@code .cfg} file via {@link Configuration}. Simple boolean and integer options are declared through
+ * the {@link BooleanProperty} and {@link IntProperty} tables, while enum-valued and list-valued options
+ * are handled explicitly in {@link #loadFromConfig()} and {@link #writeChanges()}.
+ * <p>
+ * Enum options are stored by their ordinal, so the declaration order of the enum constants is part of
+ * the on-disk format and must not be reordered.
  */
 public class CeleritasExtraGameOptions {
 
@@ -150,6 +158,15 @@ public class CeleritasExtraGameOptions {
     );
     private Configuration config;
 
+    /**
+     * Loads options from the given config file, falling back to defaults on any error.
+     * <p>
+     * The file is always saved afterwards if Forge marked it changed (for example when missing keys
+     * were added with their default values).
+     *
+     * @param file the {@code .cfg} file to read
+     * @return a fully populated options instance backed by {@code file}
+     */
     public static CeleritasExtraGameOptions load(File file) {
         CeleritasExtraGameOptions options = new CeleritasExtraGameOptions();
         options.config = new Configuration(file);
@@ -168,6 +185,10 @@ public class CeleritasExtraGameOptions {
         return options;
     }
 
+    /**
+     * Populates every setting from the loaded {@link Configuration}, including the declarative
+     * boolean/int tables, the ordinal-encoded enum options, and the particle class filter lists.
+     */
     private void loadFromConfig() {
         booleanProperties.forEach(p -> p.load(config));
         intProperties.forEach(p -> p.load(config));
@@ -187,6 +208,13 @@ public class CeleritasExtraGameOptions {
         ParticleClassRegistry.getInstance().loadDiscoveredClasses(discoveredClasses);
     }
 
+    /**
+     * Writes all current setting values back to the config file and saves it.
+     * <p>
+     * Mirrors {@link #loadFromConfig()}: the boolean/int tables, ordinal-encoded enums, and the
+     * particle class filter lists are all flushed, after which the {@link ParticleClassRegistry} is
+     * marked clean.
+     */
     public void writeChanges() {
         booleanProperties.forEach(p -> p.save(config));
         intProperties.forEach(p -> p.save(config));
@@ -227,7 +255,10 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
-     * Text contrast options for overlay readability
+     * Text contrast modes controlling how overlay text is drawn for readability against the world.
+     * - NONE: plain text with no backing
+     * - BACKGROUND: a translucent rectangle drawn behind the text
+     * - SHADOW: a drop shadow behind the glyphs
      */
     public enum TextContrast {
         NONE("celeritasextra.option.text_contrast.none"),
@@ -246,7 +277,11 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
-     * Vertical sync options
+     * Vertical sync (frame presentation) modes selectable from the options UI.
+     * - OFF: no vsync; frames are presented as fast as they render
+     * - ON: standard vsync; frames are capped to the display refresh rate
+     * - ADAPTIVE: vsync that disengages below the refresh rate to reduce stutter, requiring driver
+     *   support for {@code GLX_EXT_swap_control_tear} / {@code WGL_EXT_swap_control_tear}
      */
     public enum VerticalSyncOption {
         OFF("celeritasextra.option.vertical_sync.off"),
@@ -277,6 +312,12 @@ public class CeleritasExtraGameOptions {
             }
         }
 
+        /**
+         * Derives the active mode from the adaptive-sync flag and the vanilla vsync setting.
+         *
+         * @param opts the options holding the adaptive-sync preference
+         * @return the mode reflecting the game's present configuration
+         */
         public static VerticalSyncOption getCurrent(CeleritasExtraGameOptions opts) {
             if (opts.extraSettings.useAdaptiveSync) {
                 return ADAPTIVE;
@@ -287,6 +328,14 @@ public class CeleritasExtraGameOptions {
             }
         }
 
+        /**
+         * Applies the selected mode, updating the adaptive-sync flag, the vanilla vsync setting, and
+         * the live display, then persisting the vanilla options.
+         *
+         * @param opts  the options whose adaptive-sync flag is updated
+         * @param value the mode to apply; ADAPTIVE silently falls back to ON when the driver lacks
+         *              tear-control support
+         */
         public static void apply(CeleritasExtraGameOptions opts, VerticalSyncOption value) {
             var mc = Minecraft.getMinecraft();
             switch (value) {
@@ -377,7 +426,10 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
-     * Cloud translucency options
+     * Cloud translucency modes controlling when clouds fade to translucent.
+     * - DEFAULT: clouds turn translucent above the configured cloud height, as in vanilla
+     * - ALWAYS: clouds are always translucent
+     * - NEVER: clouds are never translucent
      */
     public enum CloudTranslucency {
         DEFAULT("celeritasextra.option.cloud_translucency.default"),
@@ -395,6 +447,10 @@ public class CeleritasExtraGameOptions {
         }
     }
 
+    /**
+     * Toggles for texture animations, with a master {@code animation} switch that gates the finer
+     * water, lava, fire, portal, and general block-animation controls.
+     */
     public static class AnimationSettings {
         public boolean animation = true;
         public boolean water = true;
@@ -404,6 +460,10 @@ public class CeleritasExtraGameOptions {
         public boolean blockAnimations = true;
     }
 
+    /**
+     * Toggles for particle effects, with a master {@code particles} switch and finer controls for
+     * rain-splash, block-break, and block-breaking particles.
+     */
     public static class ParticleSettings {
         public boolean particles = true;
         public boolean rainSplash = true;
@@ -411,6 +471,10 @@ public class CeleritasExtraGameOptions {
         public boolean blockBreaking = true;
     }
 
+    /**
+     * Toggles for celestial and environmental detail rendering (sky, stars, sun/moon, weather, biome
+     * and sky colors, void particles and fog) plus the {@code totalStars} count.
+     */
     public static class DetailSettings {
         public boolean sky = true;
         public boolean stars = true;
@@ -423,6 +487,11 @@ public class CeleritasExtraGameOptions {
         public int totalStars = 1500;
     }
 
+    /**
+     * World-rendering toggles and tuning values: fog, clouds (height, distance, scale, translucency),
+     * light updates, and per-entity/block-entity render switches such as item frames, armor stands,
+     * paintings, pistons, and beacon beams.
+     */
     public static class RenderSettings {
         public boolean fog = true;
         public int fogStart = 100;
@@ -446,6 +515,11 @@ public class CeleritasExtraGameOptions {
         public boolean preventShaders = false;
     }
 
+    /**
+     * Miscellaneous quality-of-life settings: the FPS/coordinate overlay with its placement and
+     * contrast, accessibility options (reduced motion, adaptive vsync, steady debug HUD), toast
+     * toggles, the HEI search gate, and the mod-name tooltip.
+     */
     public static class ExtraSettings {
         public boolean showFps = false;
         public boolean showFPSExtended = true;
@@ -466,23 +540,39 @@ public class CeleritasExtraGameOptions {
         public boolean modNameTooltip = false;
     }
 
+    /**
+     * Declarative binding between a boolean config entry and its in-memory field.
+     * <p>
+     * Couples a category, key, default, and comment with a setter and getter so an entire table of
+     * boolean options can be loaded from and saved to the {@link Configuration} uniformly.
+     */
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
                                    Consumer<Boolean> setter, Supplier<Boolean> getter) {
+        /** Reads the entry from {@code config} (creating it with its default if absent) into the bound field. */
         void load(Configuration config) {
             setter.accept(config.getBoolean(key, category, defaultValue, comment));
         }
 
+        /** Writes the bound field's current value into {@code config}. */
         void save(Configuration config) {
             config.get(category, key, defaultValue).set(getter.get());
         }
     }
 
+    /**
+     * Declarative binding between a bounded integer config entry and its in-memory field.
+     * <p>
+     * Like {@link BooleanProperty} but carries an inclusive {@code min}/{@code max} range that
+     * {@link Configuration} clamps values to on load.
+     */
     private record IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
                                Consumer<Integer> setter, Supplier<Integer> getter) {
+        /** Reads and clamps the entry from {@code config} (creating it with its default if absent) into the bound field. */
         void load(Configuration config) {
             setter.accept(config.getInt(key, category, defaultValue, min, max, comment));
         }
 
+        /** Writes the bound field's current value into {@code config}. */
         void save(Configuration config) {
             config.get(category, key, defaultValue).set(getter.get());
         }
