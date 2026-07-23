@@ -43,7 +43,6 @@
     "steady_debug_hud.MixinForgeGuiDebugOverlay",
     "adaptive_sync.MixinDisplay",
     "toast.MixinGuiToast",
-    "tooltip.MixinGuiScreen",
     "sky_colors.MixinBiome"
   ]
 }

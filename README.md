@@ -46,7 +46,7 @@ Toggle **sky, stars** (with an adjustable star count), **sun & moon, rain & snow
 ### Extras
 - **FPS overlay** — current FPS, with optional extended metrics (average, 1% low, 0.1% low).
 - **Coordinates overlay** — with corner position, text contrast (None / Background / Shadow), and an "ignore reduced debug info" option.
-- **Advanced Item Tooltips** — always show an item's identifier and durability.
+- **Mod Name Tooltip** — show the source mod's name at the bottom of every item's tooltip.
 - **Toasts** — master toggle plus per-type control (advancement, recipe, tutorial, system).
 - **Steady Debug HUD** — refresh the F3 screen on a fixed tick interval instead of every frame.
 - **Reduced Motion**.
