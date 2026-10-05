@@ -96,7 +96,7 @@ public class MixinEntityRendererFogFalloff {
     }
 
     private static boolean extendsCloudRange(CeleritasExtraGameOptions.RenderSettings settings) {
-        return settings.clouds && settings.cloudDistance > 0
+        return CloudPassState.cloudsEnabled(settings) && settings.cloudDistance > 0
                 && CloudPassState.usesDefaultCloudRenderer();
     }
 

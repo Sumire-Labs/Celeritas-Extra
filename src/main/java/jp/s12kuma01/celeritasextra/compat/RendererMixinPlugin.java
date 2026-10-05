@@ -24,6 +24,7 @@ public final class RendererMixinPlugin implements IMixinConfigPlugin {
 
     static boolean supportsMixin(boolean actinium, String name) {
         if (name.contains(".options_search.")) return !actinium;
+        if (name.endsWith(".render.sky.MixinRenderGlobalClouds")) return !actinium;
         if (name.contains(".actinium.")) return actinium;
         return true;
     }

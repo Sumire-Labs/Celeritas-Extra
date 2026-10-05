@@ -39,7 +39,9 @@ def generateActiniumAdapters = tasks.register('generateActiniumAdapters') {
                     .replace('org.taumc.celeritas.api', 'dhj.embeddedt.embeddium.api')
                     .replace('org.embeddedt.embeddium.impl', 'dhj.embeddedt.embeddium.impl')
             if (name == 'CeleritasExtraGameOptionPages') {
-                source = source.replace('.setBinding(setter, getter)',
+                source = source.replace('BooleanSupplier cloudsOn = () -> cloudsOption.getValue();',
+                        'BooleanSupplier cloudsOn = () -> Minecraft.getMinecraft().gameSettings.clouds != 0;')
+                        .replace('.setBinding(setter, getter)',
                         '.setDefaultValue(getter.apply(new CeleritasExtraGameOptions()))\n                .setBinding(setter, getter)')
                         .replace('OptionImpl.createBuilder(int.class, celeritasExtraOpts)',
                                 'OptionImpl.createBuilder(int.class, celeritasExtraOpts).setDefaultValue(100)')

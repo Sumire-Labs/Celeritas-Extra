@@ -14,6 +14,13 @@ import net.minecraft.util.math.MathHelper;
  * touching terrain fog. Client render thread only — no synchronization needed.
  */
 public final class CloudPassState {
+    private static final boolean ACTINIUM = CloudPassState.class.getClassLoader()
+            .getResource("com/dhj/actinium/Actinium.class") != null;
+
+    /** Actinium owns the cloud toggle; Extra's saved toggle applies to Celeritas. */
+    public static boolean cloudsEnabled(RenderSettings settings) {
+        return ACTINIUM ? Minecraft.getMinecraft().gameSettings.clouds != 0 : settings.clouds;
+    }
 
     /**
      * Forge 1.12.2 builds its legacy cloud mesh to {@code (renderDistance * 2) * 16} blocks.

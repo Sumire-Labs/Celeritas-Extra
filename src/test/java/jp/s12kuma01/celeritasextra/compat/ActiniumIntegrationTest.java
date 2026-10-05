@@ -53,6 +53,8 @@ class ActiniumIntegrationTest {
         assertTrue(RendererMixinPlugin.supportsMixin(true, "extra.mixin.actinium.MixinFastLitItemLod"));
         assertFalse(RendererMixinPlugin.supportsMixin(false, "extra.mixin.actinium.MixinFastLitItemLod"));
         assertTrue(RendererMixinPlugin.supportsMixin(true, "extra.mixin.render.entity.MixinRenderItemFrame"));
+        assertFalse(RendererMixinPlugin.supportsMixin(true, "extra.mixin.render.sky.MixinRenderGlobalClouds"));
+        assertTrue(RendererMixinPlugin.supportsMixin(false, "extra.mixin.render.sky.MixinRenderGlobalClouds"));
     }
 
     @Test void actiniumAdapterLinksWithCeleritasApiUnavailable() throws Exception {
