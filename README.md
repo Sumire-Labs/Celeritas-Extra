@@ -29,6 +29,7 @@ The mod started as a port of features from Sodium Extra and Rubidium/Embeddium E
 - Windowed, borderless, and fullscreen modes, plus Off, On, and Adaptive VSync.
 - Independent unfocused and minimized drawing FPS limits (disabled by default). Minimized takes precedence, or inherits the unfocused limit when set to 0. Rates below 20 FPS skip rendering while keeping the client loop at least 20 Hz for ticking and network processing.
 - Search across Celeritas, Extra, and addon option names and tooltips. All words must match; matching options and pages remain visible, with a result count. Ctrl+F focuses the search field, and Escape or the X button clears the query. Hidden pending changes remain available to Apply and Undo.
+- Hold Shift and scroll over a slider row to adjust it by one configured step. Disabled sliders stay unchanged; other wheel input retains normal page scrolling.
 
 ## Credits
 

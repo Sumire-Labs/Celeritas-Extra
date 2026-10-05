@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.mixin.options_search.MixinOptionsController;
+import jp.s12kuma01.celeritasextra.mixin.options_search.MixinSliderScroll;
 import org.embeddedt.embeddium.impl.gui.frame.AbstractFrame;
 import org.embeddedt.embeddium.impl.gui.framework.*;
 import org.embeddedt.embeddium.impl.util.Dim2i;
@@ -53,6 +54,29 @@ class OptionsGuiIntegrationTest {
         controller.celeritasExtra$search("does not exist");
         assertEquals(0, controller.celeritasExtra$resultCount());
         assertTrue(controls(filteredFrame(controller)).isEmpty());
+    }
+
+    @Test void shiftWheelUsesIntervalAndDoesNotChangeDisabledOrUnhoveredSliders() throws Exception {
+        var option = new TestOption("Distance", "Blocks");
+        var slider = new MixinSliderScroll(option, new Dim2i(0, 0, 200, 20)) {};
+        set(MixinSliderScroll.class, slider, "min", 0);
+        set(MixinSliderScroll.class, slider, "max", 12);
+        set(MixinSliderScroll.class, slider, "interval", 3);
+        InteractionContext shift = new InteractionContext() {
+            public boolean isSpecialKeyDown(SpecialKey key) { return key == SpecialKey.SHIFT; }
+        };
+        assertFalse(slider.mouseScrolled(new InteractionContext(){}, 10, 10, 0, 1));
+        assertFalse(slider.mouseScrolled(shift, 210, 10, 0, 1));
+        assertTrue(slider.mouseScrolled(shift, 10, 10, 0, 1));
+        assertEquals(6, option.getValue());
+        option.available = false;
+        assertFalse(slider.mouseScrolled(shift, 10, 10, 0, 1));
+        assertEquals(6, option.getValue());
+        option.available = true;
+        option.setValue(12);
+        assertTrue(slider.mouseScrolled(shift, 10, 10, 0, 1), "Boundary scroll must be consumed");
+        assertEquals(12, option.getValue());
+        assertEquals(Integer.MAX_VALUE, SliderScroll.adjust(Integer.MAX_VALUE, 0, Integer.MAX_VALUE, 100, 1));
     }
 
     private static MixinOptionsController controller(List<OptionPage> pages) throws Exception {
