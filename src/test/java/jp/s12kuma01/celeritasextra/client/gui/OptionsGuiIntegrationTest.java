@@ -18,6 +18,55 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Exercises Celeritas's real TabFrame/OptionPageFrame builders without an OpenGL window. */
 class OptionsGuiIntegrationTest {
+    @Test void groupHeaderCollapseKeepsPendingOptionsAndSearchTemporarilyExpandsThem() throws Exception {
+        var sun = new TestOption("Sun", "Render sun");
+        var moon = new TestOption("Moon", "Render moon");
+        var fog = new TestOption("Fog", "Distance");
+        var first = OptionGroup.createBuilder().add(sun).add(moon).build();
+        var second = OptionGroup.createBuilder().add(fog).build();
+        var page = new OptionPage(OptionIdentifier.create("test", "collapsible"), TextComponent.literal("Sky"), List.of(first, second));
+        var state = new OptionsCollapseState();
+        var rebuilds = new java.util.concurrent.atomic.AtomicInteger();
+        var bounds = new Dim2i(10, 20, 200, 100);
+        var frame = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
+        sun.setValue(9);
+        assertEquals(3, controls(frame).size());
+        assertTrue(frame.mouseClicked(new InteractionContext(){}, 15, 25, 0));
+        assertEquals(1, rebuilds.get());
+        var collapsed = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
+        assertEquals(List.of(fog), controls(collapsed).stream().map(ControlElement::getOption).toList());
+        assertTrue(sun.hasChanged());
+        assertEquals(9, sun.getValue());
+        assertTrue(collapsed.getDimensions().height() < frame.getDimensions().height());
+        var searching = new CollapsibleOptionPageFrame(bounds, page, option -> option == sun, state, true, rebuilds::incrementAndGet);
+        assertEquals(List.of(sun), controls(searching).stream().map(ControlElement::getOption).toList());
+        assertFalse(searching.mouseClicked(new InteractionContext(){}, 15, 25, 0));
+        var restored = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
+        assertEquals(List.of(fog), controls(restored).stream().map(ControlElement::getOption).toList());
+        page.getOptions().forEach(Option::reset);
+        assertFalse(sun.hasChanged());
+    }
+
+    @Test void modHeadersCollapseTabsWhileRetainingTheSelectedPage() throws Exception {
+        var option = new TestOption("Sun", "Render sun");
+        var controller = controller(List.of(page("sky", option), page("fog", new TestOption("Fog", "Distance"))));
+        var frame = filteredFrame(controller);
+        assertTrue(frame instanceof CollapsibleTabFrame);
+        // The native sidebar ScrollableFrame transforms coordinates before dispatch.
+        assertTrue(frame.mouseClicked(new InteractionContext(){}, 10, 35, 0));
+        var collapsed = filteredFrame(controller);
+        assertEquals(1, controls(collapsed).size(), "The active page remains visible when its mod rail collapses");
+        var stateField = MixinOptionsController.class.getDeclaredField("celeritasExtra$collapse");
+        stateField.setAccessible(true);
+        var state = (OptionsCollapseState) stateField.get(controller);
+        assertTrue(state.modCollapsed("test", false));
+        controller.celeritasExtra$search("fog");
+        assertFalse(state.modCollapsed("test", true));
+        assertEquals("Fog", controls(filteredFrame(controller)).getFirst().getOption().getName().toString());
+        controller.celeritasExtra$search("");
+        assertTrue(state.modCollapsed("test", false));
+    }
+
     private static final DrawContext FONT = (DrawContext) Proxy.newProxyInstance(DrawContext.class.getClassLoader(),
             new Class<?>[]{DrawContext.class}, (proxy, method, args) -> switch (method.getName()) {
                 case "extractString", "substrByWidth" -> args[0].toString();

@@ -2,11 +2,14 @@ package jp.s12kuma01.celeritasextra.mixin.options_search;
 
 import jp.s12kuma01.celeritasextra.client.gui.OptionSearchQuery;
 import jp.s12kuma01.celeritasextra.client.gui.SearchableOptionsController;
+import jp.s12kuma01.celeritasextra.client.gui.OptionsCollapseState;
+import jp.s12kuma01.celeritasextra.client.gui.CollapsibleTabFrame;
+import jp.s12kuma01.celeritasextra.client.gui.CollapsibleOptionPageFrame;
+import org.embeddedt.embeddium.impl.gui.frame.ScrollableFrame;
 import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
 import org.embeddedt.embeddium.impl.gui.frame.AbstractFrame;
 import org.embeddedt.embeddium.impl.gui.frame.BasicFrame;
 import org.embeddedt.embeddium.impl.gui.frame.tab.Tab;
-import org.embeddedt.embeddium.impl.gui.frame.tab.TabFrame;
 import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.embeddedt.embeddium.impl.util.Dim2i;
@@ -35,6 +38,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique private OptionSearchQuery celeritasExtra$query = new OptionSearchQuery("");
     @Unique private Dim2i celeritasExtra$bounds = new Dim2i(0, 0, 0, 0);
     @Unique private int celeritasExtra$results = -1;
+    @Unique private final OptionsCollapseState celeritasExtra$collapse = new OptionsCollapseState();
 
     @Inject(method = "init", at = @At("HEAD"))
     private void celeritasExtra$refreshCount(int width, int height, CallbackInfo ci) {
@@ -79,15 +83,17 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
 
     @Inject(method = "createTabFrame", at = @At("HEAD"), cancellable = true)
     private void celeritasExtra$filterOptions(Dim2i bounds, CallbackInfoReturnable<AbstractFrame> cir) {
-        if (celeritasExtra$query.isEmpty()) return;
         Map<String, List<Tab<?>>> tabs = new LinkedHashMap<>();
         for (OptionPage page : pages) {
             if (page.getOptions().stream().noneMatch(this::celeritasExtra$matches)) continue;
             tabs.computeIfAbsent(page.getId().getModId(), ignored -> new ArrayList<>())
-                    .add(Tab.from(page, this::celeritasExtra$matches, optionPageScrollBarOffset));
+                    .add(new Tab<>(page.getId(), page.getName(), null, dim -> ScrollableFrame.createBuilder()
+                            .setDimension(dim).setFrame(new CollapsibleOptionPageFrame(dim, page, this::celeritasExtra$matches,
+                                    celeritasExtra$collapse, !celeritasExtra$query.isEmpty(), () -> init(width, height)))
+                            .setVerticalScrollBarOffset(optionPageScrollBarOffset).build()));
         }
-        cir.setReturnValue(TabFrame.createBuilder().setDimension(bounds).shouldRenderOutline(false)
-                .setTabSectionScrollBarOffset(tabFrameScrollBarOffset).setTabSectionSelectedTab(tabFrameSelectedTab)
-                .addTabs(result -> result.putAll(tabs)).onSetTab(() -> optionPageScrollBarOffset.set(0)).build(font));
+        cir.setReturnValue(new CollapsibleTabFrame(bounds, font, tabs, celeritasExtra$collapse,
+                !celeritasExtra$query.isEmpty(), tabFrameSelectedTab, tabFrameScrollBarOffset,
+                () -> optionPageScrollBarOffset.set(0), () -> init(width, height)));
     }
 }
