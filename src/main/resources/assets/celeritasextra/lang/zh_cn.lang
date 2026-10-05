@@ -164,3 +164,5 @@ celeritasextra.option.details.sun=太阳
 celeritasextra.option.details.sun.tooltip=独立切换太阳的显示。
 celeritasextra.option.details.moon=月亮
 celeritasextra.option.details.moon.tooltip=独立切换月亮的显示。
+celeritasextra.option.render.sign_text_culling=告示牌文字剔除
+celeritasextra.option.render.sign_text_culling.tooltip=跳过背面的告示牌文字。编辑时和靠近平面时保持显示。

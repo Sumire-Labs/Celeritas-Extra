@@ -495,6 +495,9 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.renderSettings.itemFrameLodDistance = v,
                         opts -> opts.renderSettings.itemFrameLodDistance,
                         itemFramesOn, OptionImpact.LOW))
+                .add(booleanOption("celeritasextra.option.render.sign_text_culling",
+                        (opts, v) -> opts.renderSettings.signTextCulling = v,
+                        opts -> opts.renderSettings.signTextCulling))
                 .add(booleanOption("celeritasextra.option.render.armor_stands",
                         (opts, v) -> opts.renderSettings.armorStands = v,
                         opts -> opts.renderSettings.armorStands))

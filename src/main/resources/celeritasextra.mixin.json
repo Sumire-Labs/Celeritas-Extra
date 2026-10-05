@@ -18,6 +18,7 @@
     "particle.MixinParticleManager",
     "particle.MixinEntityRendererRainSplash",
     "render.entity.MixinRenderItemFrame",
+    "render.block_entity.MixinTileEntitySignRenderer",
     "render.entity.MixinRenderItem",
     "render.entity.MixinForgeHooksClient",
     "render.entity.MixinRenderPainting",

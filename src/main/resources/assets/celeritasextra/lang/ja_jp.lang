@@ -164,3 +164,5 @@ celeritasextra.option.details.sun=太陽
 celeritasextra.option.details.sun.tooltip=月と独立して太陽の表示を切り替えます。
 celeritasextra.option.details.moon=月
 celeritasextra.option.details.moon.tooltip=太陽と独立して月の表示を切り替えます。
+celeritasextra.option.render.sign_text_culling=看板文字のカリング
+celeritasextra.option.render.sign_text_culling.tooltip=裏側から見た看板の文字描画を省略します。編集中と面の近くでは表示を維持します。

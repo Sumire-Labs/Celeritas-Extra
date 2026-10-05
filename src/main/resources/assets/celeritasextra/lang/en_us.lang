@@ -164,3 +164,5 @@ celeritasextra.option.details.sun=Sun
 celeritasextra.option.details.sun.tooltip=Render the sun independently of the moon.
 celeritasextra.option.details.moon=Moon
 celeritasextra.option.details.moon.tooltip=Render the moon independently of the sun.
+celeritasextra.option.render.sign_text_culling=Cull Sign Text
+celeritasextra.option.render.sign_text_culling.tooltip=Skips sign text viewed from behind. Editing and near-plane views remain visible.

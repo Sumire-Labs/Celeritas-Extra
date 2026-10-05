@@ -164,3 +164,5 @@ celeritasextra.option.details.sun=Солнце
 celeritasextra.option.details.sun.tooltip=Отдельное управление отображением солнца.
 celeritasextra.option.details.moon=Луна
 celeritasextra.option.details.moon.tooltip=Отдельное управление отображением луны.
+celeritasextra.option.render.sign_text_culling=Отсечение текста табличек
+celeritasextra.option.render.sign_text_culling.tooltip=Не рисовать текст с обратной стороны таблички. При редактировании и вблизи текст сохраняется.
