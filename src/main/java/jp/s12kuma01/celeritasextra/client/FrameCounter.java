@@ -25,8 +25,10 @@ public class FrameCounter {
     private static int sampleHead;
     private static int sampleCount;
 
-    private static long lastFrameTime = -1;
-    private static long lastCacheTime = 0;
+    private static long lastFrameTime;
+    private static boolean hasLastFrameTime;
+    private static long lastCacheTime;
+    private static boolean hasCacheTime;
 
     private static int cachedAverageFps = 0;
     private static int cachedSmoothFps = 0;
@@ -53,13 +55,14 @@ public class FrameCounter {
     // Explicit time input keeps rolling-window behavior testable without sleeping.
     static void recordFrame(long now) {
 
-        if (lastFrameTime != -1) {
+        if (hasLastFrameTime) {
             long delta = now - lastFrameTime;
             if (delta > 0) {
                 addSample(now, delta);
             }
         }
         lastFrameTime = now;
+        hasLastFrameTime = true;
 
         // Evict samples older than 5 seconds
         while (sampleCount > 0 && now - sampleTimes[sampleHead] > WINDOW_NS) {
@@ -68,8 +71,9 @@ public class FrameCounter {
         }
 
         // Recalculate cached stats every 500ms
-        if (now - lastCacheTime >= CACHE_INTERVAL_NS) {
+        if (!hasCacheTime || now - lastCacheTime >= CACHE_INTERVAL_NS) {
             lastCacheTime = now;
+            hasCacheTime = true;
             recalculate(now);
         }
     }
@@ -157,8 +161,8 @@ public class FrameCounter {
     /** Start a fresh timing window. Render thread only. */
     static void reset() {
         sampleHead = sampleCount = 0;
-        lastFrameTime = -1;
-        lastCacheTime = 0;
+        hasLastFrameTime = false;
+        hasCacheTime = false;
         cachedSmoothFps = cachedAverageFps = cachedOnePercentLowFps = cachedPointOnePercentLowFps = 0;
     }
 

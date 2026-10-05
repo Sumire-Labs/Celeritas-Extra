@@ -23,6 +23,15 @@ class FrameCounterTest {
     }
 
     @Test
+    void cacheRefreshWorksWhenMonotonicClockOriginIsNegative() {
+        FrameCounter.recordFrame(-2_000_000_000L);
+        FrameCounter.recordFrame(-1_500_000_000L);
+
+        assertEquals(2, FrameCounter.getAverageFps());
+        assertEquals(2, FrameCounter.getSmoothFps());
+    }
+
+    @Test
     void lowsAverageSlowestFramesAndUseCeilingForTheTailSize() {
         long now = 1_000_000_000L;
         FrameCounter.recordFrame(now);
