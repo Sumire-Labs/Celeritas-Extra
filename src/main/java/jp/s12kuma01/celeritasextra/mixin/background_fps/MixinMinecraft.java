@@ -18,7 +18,7 @@ public class MixinMinecraft {
 
     @ModifyReturnValue(method = "getLimitFramerate", at = @At("RETURN"))
     private int celeritasExtra$backgroundLimit(int original) {
-        return BackgroundFrameLimiter.loopLimit(original, BackgroundFrameLimiter.currentLimit());
+        return BackgroundFrameLimiter.loopLimit(BackgroundFrameLimiter.currentNormalLimit(original), BackgroundFrameLimiter.currentLimit());
     }
 
     @WrapWithCondition(method = "runGameLoop", at = @At(value = "INVOKE",

@@ -744,6 +744,10 @@ public class CeleritasExtraGameOptionPages {
         BooleanSupplier toastsOn = () -> toastsOption.getValue();
 
         groups.add(OptionGroup.createBuilder()
+                .add(sliderOption("celeritasextra.option.menu_fps_limit", 0, 240, 1,
+                        quantityOrDefault("sodium-extra.overlay.fps", "celeritasextra.option.menu_fps_limit.default"),
+                        (opts, value) -> opts.extraSettings.menuFpsLimit = value,
+                        opts -> opts.extraSettings.menuFpsLimit))
                 .add(sliderOption("celeritasextra.option.inactive_fps_limit", 0, 120, 1,
                         quantityOrDefault("sodium-extra.overlay.fps", "options.off"),
                         (opts, value) -> opts.extraSettings.inactiveFpsLimit = value,

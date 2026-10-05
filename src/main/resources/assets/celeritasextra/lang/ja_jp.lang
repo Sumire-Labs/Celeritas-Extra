@@ -175,3 +175,6 @@ celeritasextra.option.page.dimension_fog=ディメンション別の霧
 celeritasextra.option.page.entities=エンティティ
 celeritasextra.option.page.block_rendering=ブロック描画
 celeritasextra.option.page.overlay=HUD・表示
+celeritasextra.option.menu_fps_limit=メニュー画面のFPS上限
+celeritasextra.option.menu_fps_limit.default=標準（30 FPS）
+celeritasextra.option.menu_fps_limit.tooltip=タイトルやワールド選択など、ワールドに入っていないメニュー画面の描画FPSを制限します。0はバニラの30 FPS制限を使用します。非アクティブ時・最小化時の制限も適用されます。Tickと通信のためのクライアントループは最低20 Hzを維持します。

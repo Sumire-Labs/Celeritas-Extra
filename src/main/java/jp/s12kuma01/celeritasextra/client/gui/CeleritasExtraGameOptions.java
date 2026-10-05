@@ -162,6 +162,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.entityRenderDistance = v, () -> renderSettings.entityRenderDistance),
             new IntProperty(CAT_RENDER, "tileEntityRenderDistance", 0, 0, 256, "Tile entity render distance in blocks (0 = vanilla)",
                     v -> renderSettings.tileEntityRenderDistance = v, () -> renderSettings.tileEntityRenderDistance),
+            new IntProperty(CAT_EXTRA, "menuFpsLimit", 0, 0, 240, "FPS limit outside a world (0 = vanilla)",
+                    v -> extraSettings.menuFpsLimit = v, () -> extraSettings.menuFpsLimit),
             new IntProperty(CAT_EXTRA, "inactiveFpsLimit", 0, 0, 120, "Unfocused FPS limit (0 = off)",
                     v -> extraSettings.inactiveFpsLimit = v, () -> extraSettings.inactiveFpsLimit),
             new IntProperty(CAT_EXTRA, "minimizedFpsLimit", 0, 0, 120, "Minimized FPS limit (0 = off)",
@@ -622,6 +624,7 @@ public class CeleritasExtraGameOptions {
         public boolean showMemory = false;
         public boolean ignoreReducedDebugInfo = false;
         public boolean useAdaptiveSync = false;
+        public int menuFpsLimit;
         public int inactiveFpsLimit;
         public int minimizedFpsLimit;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;

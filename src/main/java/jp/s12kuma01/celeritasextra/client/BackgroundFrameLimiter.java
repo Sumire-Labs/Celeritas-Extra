@@ -12,11 +12,28 @@ public final class BackgroundFrameLimiter {
 
     public static int currentLimit() {
         var settings = CeleritasExtraClientMod.options().extraSettings;
-        if ((settings.inactiveFpsLimit == 0 && settings.minimizedFpsLimit == 0) || !Display.isCreated()) return 0;
-        int requested = selectLimit(Display.isActive(), Display.isVisible(), settings.inactiveFpsLimit, settings.minimizedFpsLimit);
+        if (!Display.isCreated()) return 0;
         Minecraft mc = Minecraft.getMinecraft();
-        int normal = mc.world == null && mc.currentScreen != null ? 30 : mc.gameSettings.limitFramerate;
+        boolean menu = mc.world == null && mc.currentScreen != null;
+        int requested = selectLimit(Display.isActive(), Display.isVisible(), settings.inactiveFpsLimit, settings.minimizedFpsLimit);
+        requested = combineMenuLimit(requested, menu, settings.menuFpsLimit);
+        int normal = normalLimit(menu ? 30 : mc.gameSettings.limitFramerate, menu, settings.menuFpsLimit);
         return requested > 0 ? Math.min(normal, requested) : 0;
+    }
+
+    public static int normalLimit(int vanilla, boolean menu, int menuLimit) {
+        return menu && menuLimit > 0 ? menuLimit : vanilla;
+    }
+
+    public static int combineMenuLimit(int background, boolean menu, int menuLimit) {
+        if (!menu || menuLimit == 0) return background;
+        return background > 0 ? Math.min(background, menuLimit) : menuLimit;
+    }
+
+    public static int currentNormalLimit(int vanilla) {
+        Minecraft mc = Minecraft.getMinecraft();
+        return normalLimit(vanilla, mc.world == null && mc.currentScreen != null,
+                CeleritasExtraClientMod.options().extraSettings.menuFpsLimit);
     }
 
     public static int selectLimit(boolean active, boolean visible, int inactive, int minimized) {

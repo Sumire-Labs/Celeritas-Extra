@@ -4,6 +4,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BackgroundFrameLimiterTest {
+    @Test void menuLimitOverridesVanillaThirtyOnlyOutsideWorldAndCombinesWithBackground() {
+        assertEquals(60, BackgroundFrameLimiter.normalLimit(30, true, 60));
+        assertEquals(30, BackgroundFrameLimiter.normalLimit(30, true, 0));
+        assertEquals(120, BackgroundFrameLimiter.normalLimit(120, false, 60));
+        assertEquals(60, BackgroundFrameLimiter.combineMenuLimit(0, true, 60));
+        assertEquals(5, BackgroundFrameLimiter.combineMenuLimit(5, true, 60));
+        assertEquals(10, BackgroundFrameLimiter.combineMenuLimit(30, true, 10));
+        assertEquals(30, BackgroundFrameLimiter.combineMenuLimit(30, true, 0));
+        assertEquals(0, BackgroundFrameLimiter.combineMenuLimit(0, false, 60));
+        assertEquals(20, BackgroundFrameLimiter.loopLimit(10, 10));
+        assertEquals(60, BackgroundFrameLimiter.loopLimit(60, 60));
+    }
+
     @Test void foregroundIsUnrestrictedAndMinimizedTakesPrecedence() {
         assertEquals(0, BackgroundFrameLimiter.selectLimit(true, true, 30, 5));
         assertEquals(30, BackgroundFrameLimiter.selectLimit(false, true, 30, 5));

@@ -70,6 +70,8 @@ class ExtraOptionsPersistenceTest {
         options.renderSettings.tileEntityRenderDistance = 32;
         options.renderSettings.entityDistanceExemptions = new String[]{"mod.visual.*"};
         options.extraSettings.inactiveFpsLimit = 30;
+        assertEquals(0, options.extraSettings.menuFpsLimit);
+        options.extraSettings.menuFpsLimit = 60;
         options.extraSettings.minimizedFpsLimit = 5;
         var fog = options.renderSettings.dimensionFog(72);
         fog.override = true;
@@ -82,6 +84,7 @@ class ExtraOptionsPersistenceTest {
         assertEquals(32, reloaded.renderSettings.tileEntityRenderDistance);
         assertArrayEquals(new String[]{"mod.visual.*"}, reloaded.renderSettings.entityDistanceExemptions);
         assertEquals(30, reloaded.extraSettings.inactiveFpsLimit);
+        assertEquals(60, reloaded.extraSettings.menuFpsLimit);
         assertEquals(5, reloaded.extraSettings.minimizedFpsLimit);
         assertEquals(6, reloaded.renderSettings.resolveFog(72).distance());
         assertEquals(50, reloaded.renderSettings.resolveFog(72).start());

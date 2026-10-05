@@ -175,3 +175,6 @@ celeritasextra.option.page.dimension_fog=维度雾设置
 celeritasextra.option.page.entities=实体
 celeritasextra.option.page.block_rendering=方块渲染
 celeritasextra.option.page.overlay=HUD 与界面
+celeritasextra.option.menu_fps_limit=菜单帧率上限
+celeritasextra.option.menu_fps_limit.default=默认（30 FPS）
+celeritasextra.option.menu_fps_limit.tooltip=限制未进入世界时的菜单绘制帧率，例如标题和世界选择界面。0使用原版的30 FPS限制。后台帧率限制也会生效。客户端循环保持至少20 Hz，以处理游戏刻和网络通信。

@@ -175,3 +175,6 @@ celeritasextra.option.page.dimension_fog=Dimension Fog
 celeritasextra.option.page.entities=Entities
 celeritasextra.option.page.block_rendering=Block Rendering
 celeritasextra.option.page.overlay=HUD & Overlays
+celeritasextra.option.menu_fps_limit=Menu FPS Limit
+celeritasextra.option.menu_fps_limit.default=Default (30 FPS)
+celeritasextra.option.menu_fps_limit.tooltip=Limits drawing FPS on menus outside a world, such as the title and world selection screens. 0 uses vanilla's 30 FPS limit. Background limits also apply. Client ticks and networking remain at least 20 Hz.
