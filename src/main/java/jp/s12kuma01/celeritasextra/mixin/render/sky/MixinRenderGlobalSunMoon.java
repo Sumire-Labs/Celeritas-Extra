@@ -34,7 +34,7 @@ public class MixinRenderGlobalSunMoon {
             )
     )
     private void celeritasExtra$drawSun(Tessellator tessellator, Operation<Void> original) {
-        this.celeritasExtra$drawOrDiscard(tessellator, original);
+        this.celeritasExtra$drawOrDiscard(tessellator, original, CeleritasExtraClientMod.options().detailSettings.sun);
     }
 
     @WrapOperation(
@@ -51,12 +51,12 @@ public class MixinRenderGlobalSunMoon {
             )
     )
     private void celeritasExtra$drawMoon(Tessellator tessellator, Operation<Void> original) {
-        this.celeritasExtra$drawOrDiscard(tessellator, original);
+        this.celeritasExtra$drawOrDiscard(tessellator, original, CeleritasExtraClientMod.options().detailSettings.moon);
     }
 
     @Unique
-    private void celeritasExtra$drawOrDiscard(Tessellator tessellator, Operation<Void> original) {
-        if (CeleritasExtraClientMod.options().detailSettings.sunMoon) {
+    private void celeritasExtra$drawOrDiscard(Tessellator tessellator, Operation<Void> original, boolean enabled) {
+        if (enabled) {
             original.call(tessellator);
         } else {
             tessellator.getBuffer().finishDrawing();

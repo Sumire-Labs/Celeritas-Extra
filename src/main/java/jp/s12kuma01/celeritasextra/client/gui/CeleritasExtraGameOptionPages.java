@@ -376,10 +376,12 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.detailSettings.totalStars = v,
                         opts -> opts.detailSettings.totalStars,
                         starsOn, OptionImpact.MEDIUM, OptionFlag.REQUIRES_RENDERER_RELOAD))
-                .add(booleanOption("celeritasextra.option.details.sun_moon",
-                        (opts, v) -> opts.detailSettings.sunMoon = v,
-                        opts -> opts.detailSettings.sunMoon,
-                        OptionFlag.REQUIRES_RENDERER_RELOAD))
+                .add(booleanOption("celeritasextra.option.details.sun",
+                        (opts, v) -> opts.detailSettings.sun = v,
+                        opts -> opts.detailSettings.sun))
+                .add(booleanOption("celeritasextra.option.details.moon",
+                        (opts, v) -> opts.detailSettings.moon = v,
+                        opts -> opts.detailSettings.moon))
                 .add(booleanOption("celeritasextra.option.details.rain_snow",
                         (opts, v) -> opts.detailSettings.rainSnow = v,
                         opts -> opts.detailSettings.rainSnow))

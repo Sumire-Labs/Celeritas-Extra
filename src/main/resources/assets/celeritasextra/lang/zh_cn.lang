@@ -159,3 +159,8 @@ celeritasextra.overlay.fps_extended=(平均: %d, 1%% Low: %d, 0.1%% Low: %d)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=内存: %s%% (%s / %s MiB)
 celeritasextra.overlay.light_updates=光照更新已禁用
+
+celeritasextra.option.details.sun=太阳
+celeritasextra.option.details.sun.tooltip=独立切换太阳的显示。
+celeritasextra.option.details.moon=月亮
+celeritasextra.option.details.moon.tooltip=独立切换月亮的显示。

@@ -69,8 +69,6 @@ public class CeleritasExtraGameOptions {
                     v -> detailSettings.sky = v, () -> detailSettings.sky),
             new BooleanProperty(CAT_DETAIL, "stars", true, "Enable/disable star rendering",
                     v -> detailSettings.stars = v, () -> detailSettings.stars),
-            new BooleanProperty(CAT_DETAIL, "sunMoon", true, "Enable/disable sun and moon rendering",
-                    v -> detailSettings.sunMoon = v, () -> detailSettings.sunMoon),
             new BooleanProperty(CAT_DETAIL, "rainSnow", true, "Enable/disable rain and snow rendering",
                     v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
             new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
@@ -202,6 +200,12 @@ public class CeleritasExtraGameOptions {
         booleanProperties.forEach(p -> p.load(config));
         intProperties.forEach(p -> p.load(config));
 
+        // Preserve the old combined setting when upgrading an existing config.
+        boolean legacySunMoon = config.hasKey(CAT_DETAIL, "sunMoon")
+                ? config.getBoolean("sunMoon", CAT_DETAIL, true, "Legacy combined sun/moon setting") : true;
+        detailSettings.sun = config.getBoolean("sun", CAT_DETAIL, legacySunMoon, "Render the sun");
+        detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, legacySunMoon, "Render the moon");
+
         // Enum properties
         renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0, 0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
         extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0, OverlayCorner.values().length - 1, "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
@@ -227,6 +231,8 @@ public class CeleritasExtraGameOptions {
     public void writeChanges() {
         booleanProperties.forEach(p -> p.save(config));
         intProperties.forEach(p -> p.save(config));
+        config.get(CAT_DETAIL, "sun", true).set(detailSettings.sun);
+        config.get(CAT_DETAIL, "moon", true).set(detailSettings.moon);
 
         // Enum properties
         config.get(CAT_RENDER, "cloudTranslucency", 0).set(renderSettings.cloudTranslucency.ordinal());
@@ -478,7 +484,8 @@ public class CeleritasExtraGameOptions {
     public static class DetailSettings {
         public boolean sky = true;
         public boolean stars = true;
-        public boolean sunMoon = true;
+        public boolean sun = true;
+        public boolean moon = true;
         public boolean rainSnow = true;
         public boolean biomeColors = true;
         public boolean skyColors = true;

@@ -159,3 +159,8 @@ celeritasextra.overlay.fps_extended=(平均 %s / 1%% Low %s / 0.1%% Low %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=メモリ: %s%% (%s / %s MiB)
 celeritasextra.overlay.light_updates=明るさの更新が無効
+
+celeritasextra.option.details.sun=太陽
+celeritasextra.option.details.sun.tooltip=月と独立して太陽の表示を切り替えます。
+celeritasextra.option.details.moon=月
+celeritasextra.option.details.moon.tooltip=太陽と独立して月の表示を切り替えます。

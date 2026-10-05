@@ -159,3 +159,8 @@ celeritasextra.overlay.fps_extended=(avg. %s / 1%% low %s / 0.1%% low %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=Memory: %s%% (%s / %s MiB)
 celeritasextra.overlay.light_updates=Light updates disabled
+
+celeritasextra.option.details.sun=Sun
+celeritasextra.option.details.sun.tooltip=Render the sun independently of the moon.
+celeritasextra.option.details.moon=Moon
+celeritasextra.option.details.moon.tooltip=Render the moon independently of the sun.

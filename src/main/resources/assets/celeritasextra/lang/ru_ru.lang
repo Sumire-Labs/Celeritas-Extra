@@ -159,3 +159,8 @@ celeritasextra.overlay.fps_extended=(Сред: %s, 1%% Low: %s, 0.1%% Low: %s)
 celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=Память: %s%% (%s / %s МиБ)
 celeritasextra.overlay.light_updates=Обновление освещения отключено
+
+celeritasextra.option.details.sun=Солнце
+celeritasextra.option.details.sun.tooltip=Отдельное управление отображением солнца.
+celeritasextra.option.details.moon=Луна
+celeritasextra.option.details.moon.tooltip=Отдельное управление отображением луны.
