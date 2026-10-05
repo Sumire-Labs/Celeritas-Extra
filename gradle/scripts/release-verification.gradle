@@ -33,7 +33,7 @@ tasks.register('verifyReleaseJar') {
                 'render/entity/MixinRenderItemFrame': ['renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V']
             ].each { mixin, selectors ->
                 selectors.each { selector ->
-                    def mapped = refmap.mappings["jp/s12kuma01/celeritasextra/mixin/${mixin}"]?.get(selector)
+                    def mapped = refmap.mappings["com/sumire/celeritasextra/mixin/${mixin}"]?.get(selector)
                     if (!(mapped instanceof String) || !mapped.contains(';func_')) {
                         throw new GradleException("Missing production selector mapping: ${mixin} ${selector}")
                     }
