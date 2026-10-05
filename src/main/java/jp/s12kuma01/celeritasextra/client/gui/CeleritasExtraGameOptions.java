@@ -3,7 +3,6 @@ package jp.s12kuma01.celeritasextra.client.gui;
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.ForgeEarlyConfig;
 import net.minecraftforge.common.config.Configuration;
 import org.lwjgl.glfw.GLFW;
@@ -297,10 +296,10 @@ public class CeleritasExtraGameOptions {
      * Overlay corner positions for FPS/coordinate/memory display
      */
     public enum OverlayCorner {
-        TOP_LEFT("celeritasextra.option.overlay_corner.top_left"),
-        TOP_RIGHT("celeritasextra.option.overlay_corner.top_right"),
-        BOTTOM_LEFT("celeritasextra.option.overlay_corner.bottom_left"),
-        BOTTOM_RIGHT("celeritasextra.option.overlay_corner.bottom_right");
+        TOP_LEFT("sodium-extra.option.overlay_corner.top_left"),
+        TOP_RIGHT("sodium-extra.option.overlay_corner.top_right"),
+        BOTTOM_LEFT("sodium-extra.option.overlay_corner.bottom_left"),
+        BOTTOM_RIGHT("sodium-extra.option.overlay_corner.bottom_right");
 
         private final String translationKey;
 
@@ -309,7 +308,7 @@ public class CeleritasExtraGameOptions {
         }
 
         public String getLocalizedName() {
-            return I18n.format(this.translationKey);
+            return Translations.format(this.translationKey);
         }
     }
 
@@ -320,9 +319,9 @@ public class CeleritasExtraGameOptions {
      * - SHADOW: a drop shadow behind the glyphs
      */
     public enum TextContrast {
-        NONE("celeritasextra.option.text_contrast.none"),
-        BACKGROUND("celeritasextra.option.text_contrast.background"),
-        SHADOW("celeritasextra.option.text_contrast.shadow");
+        NONE("sodium-extra.option.text_contrast.none"),
+        BACKGROUND("sodium-extra.option.text_contrast.background"),
+        SHADOW("sodium-extra.option.text_contrast.shadow");
 
         private final String translationKey;
 
@@ -331,7 +330,7 @@ public class CeleritasExtraGameOptions {
         }
 
         public String getLocalizedName() {
-            return I18n.format(this.translationKey);
+            return Translations.format(this.translationKey);
         }
     }
 
@@ -343,9 +342,9 @@ public class CeleritasExtraGameOptions {
      * support for {@code GLX_EXT_swap_control_tear} / {@code WGL_EXT_swap_control_tear}
      */
     public enum VerticalSyncOption {
-        OFF("celeritasextra.option.vertical_sync.off"),
-        ON("celeritasextra.option.vertical_sync.on"),
-        ADAPTIVE("celeritasextra.option.vertical_sync.adaptive");
+        OFF("options.off"),
+        ON("options.on"),
+        ADAPTIVE("sodium-extra.option.use_adaptive_sync.name");
 
         private final String translationKey;
 
@@ -354,7 +353,7 @@ public class CeleritasExtraGameOptions {
         }
 
         public String getLocalizedName() {
-            return I18n.format(this.translationKey);
+            return Translations.format(this.translationKey);
         }
 
         /**
@@ -423,9 +422,9 @@ public class CeleritasExtraGameOptions {
      * Borderless uses Cleanroom's built-in Display.toggleBorderless() via ForgeEarlyConfig.
      */
     public enum ScreenMode {
-        WINDOWED("celeritasextra.option.screen_mode.windowed"),
-        BORDERLESS("celeritasextra.option.screen_mode.borderless"),
-        FULLSCREEN("celeritasextra.option.screen_mode.fullscreen");
+        WINDOWED("sodium.extras.options.screen.windowed"),
+        BORDERLESS("sodium.extras.options.screen.borderless"),
+        FULLSCREEN("options.fullscreen");
 
         private final String translationKey;
 
@@ -434,7 +433,7 @@ public class CeleritasExtraGameOptions {
         }
 
         public String getLocalizedName() {
-            return I18n.format(this.translationKey);
+            return Translations.format(this.translationKey);
         }
 
         /**
@@ -493,7 +492,7 @@ public class CeleritasExtraGameOptions {
         }
 
         public String getLocalizedName() {
-            return I18n.format(this.translationKey);
+            return Translations.format(this.translationKey);
         }
     }
 

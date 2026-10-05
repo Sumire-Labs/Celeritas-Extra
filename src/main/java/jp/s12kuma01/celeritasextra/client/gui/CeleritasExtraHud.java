@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,10 +53,10 @@ public class CeleritasExtraHud {
         // FPS display
         if (settings.showFps) {
             int fps = FrameCounter.getSmoothFps();
-            String fpsText = I18n.format("celeritasextra.overlay.fps", fps);
+            String fpsText = Translations.format("sodium-extra.overlay.fps", fps);
 
             if (settings.showFPSExtended) {
-                String extendedText = I18n.format("celeritasextra.overlay.fps_extended",
+                String extendedText = Translations.format("sodium-extra.overlay.fps_extended",
                         FrameCounter.getAverageFps(),
                         FrameCounter.getOnePercentLowFps(),
                         FrameCounter.getPointOnePercentLowFps());
@@ -74,7 +73,7 @@ public class CeleritasExtraHud {
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;
-                lines.add(I18n.format("celeritasextra.overlay.coordinates",
+                lines.add(Translations.format("sodium-extra.overlay.coordinates",
                         String.format("%.2f", x),
                         String.format("%.2f", y),
                         String.format("%.2f", z)));
@@ -85,13 +84,13 @@ public class CeleritasExtraHud {
             Runtime runtime = Runtime.getRuntime();
             long used = runtime.totalMemory() - runtime.freeMemory();
             long max = runtime.maxMemory();
-            lines.add(I18n.format("celeritasextra.overlay.memory",
+            lines.add(Translations.format("celeritasextra.overlay.memory",
                     used * 100L / max, used / 1_048_576L, max / 1_048_576L));
         }
 
         // Light updates disabled warning
         if (!CeleritasExtraClientMod.options().renderSettings.lightUpdates) {
-            lines.add(I18n.format("celeritasextra.overlay.light_updates"));
+            lines.add(Translations.format("sodium-extra.overlay.light_updates"));
         }
 
         if (lines.isEmpty()) {

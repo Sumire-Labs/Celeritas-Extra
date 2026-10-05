@@ -1,0 +1,1003 @@
+{
+  "policy": "Use exact upstream keys for equivalent controls; Minecraft names use 1.12.2 keys. Preserve localized text when upstream is missing/untranslated and adapt descriptions to backport behavior.",
+  "mappings": [
+    {
+      "oldKey": "celeritasextra.option.page.animations",
+      "key": "sodium-extra.option.animations",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.page.particles",
+      "key": "options.particles",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.page.details",
+      "key": "sodium-extra.option.details",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.page.render",
+      "key": "sodium-extra.option.render",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.page.extra",
+      "key": "sodium-extra.option.extras",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.all",
+      "key": "gui.all",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.all.tooltip",
+      "key": "sodium-extra.option.animations_all.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.all",
+      "key": "gui.all",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.all.tooltip",
+      "key": "sodium-extra.option.particles_all.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.water",
+      "key": "tile.water.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.water.tooltip",
+      "key": "sodium-extra.option.animate_water.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.lava",
+      "key": "tile.lava.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.lava.tooltip",
+      "key": "sodium-extra.option.animate_lava.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.fire",
+      "key": "tile.fire.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.fire.tooltip",
+      "key": "sodium-extra.option.animate_fire.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.portal",
+      "key": "tile.portal.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.portal.tooltip",
+      "key": "sodium-extra.option.animate_portal.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.block",
+      "key": "sodium-extra.option.block_animations",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.animations.block.tooltip",
+      "key": "sodium-extra.option.block_animations.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.rain_splash",
+      "key": "subtitles.weather.rain",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.rain_splash.tooltip",
+      "key": "sodium-extra.option.rain_splash.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.block_break",
+      "key": "subtitles.block.generic.break",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.block_break.tooltip",
+      "key": "sodium-extra.option.block_break.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.block_breaking",
+      "key": "subtitles.block.generic.hit",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.block_breaking.tooltip",
+      "key": "sodium-extra.option.block_breaking.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.other.tooltip",
+      "key": null,
+      "source": "obsolete",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sky",
+      "key": "sodium-extra.option.sky",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sky.tooltip",
+      "key": "sodium-extra.option.sky.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.stars",
+      "key": "sodium-extra.option.stars",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.stars.tooltip",
+      "key": "sodium-extra.option.stars.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sun",
+      "key": "sodium-extra.option.sun",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sun.tooltip",
+      "key": "sodium-extra.option.sun.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.moon",
+      "key": "sodium-extra.option.moon",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.moon.tooltip",
+      "key": "sodium-extra.option.moon.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.biome_colors",
+      "key": "sodium-extra.option.biome_colors",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.biome_colors.tooltip",
+      "key": "sodium-extra.option.biome_colors.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sky_colors",
+      "key": "sodium-extra.option.sky_colors",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sky_colors.tooltip",
+      "key": "sodium-extra.option.sky_colors.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.rain_snow",
+      "key": "soundCategory.weather",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.rain_snow.tooltip",
+      "key": "sodium-extra.option.rain_snow.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.total_stars",
+      "key": "options.total_stars",
+      "source": "notfine",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.total_stars.tooltip",
+      "key": "options.total_stars.tooltip",
+      "source": "notfine",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.details.void_fog",
+      "key": "options.void_fog",
+      "source": "notfine",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.void_fog.tooltip",
+      "key": "options.void_fog.tooltip",
+      "source": "notfine",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sun_moon",
+      "key": null,
+      "source": "obsolete",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.details.sun_moon.tooltip",
+      "key": null,
+      "source": "obsolete",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog",
+      "key": "sodium-extra.option.fog_type.atmospheric",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog.tooltip",
+      "key": "sodium-extra.option.fog_type.atmospheric.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog_start",
+      "key": "sodium-extra.option.fog_start",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog_start.tooltip",
+      "key": "sodium-extra.option.fog_start.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog_distance",
+      "key": "sodium-extra.option.fog_distance",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.fog_distance.tooltip",
+      "key": "sodium-extra.option.fog_distance.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.prevent_shaders",
+      "key": "sodium-extra.option.prevent_shaders",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.prevent_shaders.tooltip",
+      "key": "sodium-extra.option.prevent_shaders.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.clouds",
+      "key": "options.renderClouds",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.clouds.tooltip",
+      "key": "celeritasextra.option.clouds.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.modern_clouds",
+      "key": "celeritasextra.option.modern_clouds",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.modern_clouds.tooltip",
+      "key": "celeritasextra.option.modern_clouds.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_height",
+      "key": "sodium-extra.option.cloud_height",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_height.tooltip",
+      "key": "sodium-extra.option.cloud_height.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_distance",
+      "key": "sodium-extra.option.cloud_distance",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_distance.tooltip",
+      "key": "sodium-extra.option.cloud_distance.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_scale",
+      "key": "options.cloud_scale",
+      "source": "notfine",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_scale.tooltip",
+      "key": "options.cloud_scale.tooltip",
+      "source": "notfine",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_translucency",
+      "key": "options.mode_cloud_translucency",
+      "source": "notfine",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.cloud_translucency.tooltip",
+      "key": "options.mode_cloud_translucency.tooltip",
+      "source": "notfine",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.light_updates",
+      "key": "sodium-extra.option.light_updates",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.light_updates.tooltip",
+      "key": "sodium-extra.option.light_updates.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frames",
+      "key": "item.frame.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frames.tooltip",
+      "key": "sodium-extra.option.item_frames.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.armor_stands",
+      "key": "entity.ArmorStand.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.armor_stands.tooltip",
+      "key": "sodium-extra.option.armor_stands.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.paintings",
+      "key": "entity.Painting.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.paintings.tooltip",
+      "key": "sodium-extra.option.paintings.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.pistons",
+      "key": "tile.pistonBase.name",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.pistons.tooltip",
+      "key": "sodium-extra.option.piston.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.beacons",
+      "key": "sodium-extra.option.beacon_beam",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.beacons.tooltip",
+      "key": "sodium-extra.option.beacon_beam.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.limit_beacon_beam_height",
+      "key": "sodium-extra.option.limit_beacon_beam_height",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.limit_beacon_beam_height.tooltip",
+      "key": "sodium-extra.option.limit_beacon_beam_height.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.enchanting_books",
+      "key": "sodium-extra.option.enchanting_table_book",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.enchanting_books.tooltip",
+      "key": "sodium-extra.option.enchanting_table_book.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.player_name_tag",
+      "key": "sodium-extra.option.player_name_tag",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.player_name_tag.tooltip",
+      "key": "sodium-extra.option.player_name_tag.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frame_name_tag",
+      "key": "sodium-extra.option.item_frame_name_tag",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frame_name_tag.tooltip",
+      "key": "sodium-extra.option.item_frame_name_tag.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frame_lod_distance",
+      "key": "moreculling.config.option.itemFrameLODRange",
+      "source": "more",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.item_frame_lod_distance.tooltip",
+      "key": "moreculling.config.option.itemFrameLODRange.tooltip",
+      "source": "more",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.sign_text_culling",
+      "key": "moreculling.config.option.signTextCulling",
+      "source": "more",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.sign_text_culling.tooltip",
+      "key": "moreculling.config.option.signTextCulling.tooltip",
+      "source": "more",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.map_back_face_culling",
+      "key": "moreculling.config.option.itemFrameMapCulling",
+      "source": "more",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.map_back_face_culling.tooltip",
+      "key": "moreculling.config.option.itemFrameMapCulling.tooltip",
+      "source": "more",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.render.entity_distance",
+      "key": "celeritasextra.option.entity_render_distance",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.entity_distance.tooltip",
+      "key": "celeritasextra.option.entity_render_distance.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.tile_entity_distance",
+      "key": "celeritasextra.option.tile_entity_render_distance",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.tile_entity_distance.tooltip",
+      "key": "celeritasextra.option.tile_entity_render_distance.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.dimension_fog",
+      "key": "celeritasextra.option.dimension_fog_override",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.render.dimension_fog.tooltip",
+      "key": "celeritasextra.option.dimension_fog_override.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.particles.spawn_rate.tooltip",
+      "key": "celeritasextra.option.particle_spawn_percentage.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.fps",
+      "key": "sodium-extra.option.show_fps",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.fps.tooltip",
+      "key": "sodium-extra.option.show_fps.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.fps_extended",
+      "key": "sodium-extra.option.show_fps_extended",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.fps_extended.tooltip",
+      "key": "sodium-extra.option.show_fps_extended.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.coords",
+      "key": "sodium-extra.option.show_coordinates",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.coords.tooltip",
+      "key": "sodium-extra.option.show_coordinates.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.overlay_corner",
+      "key": "sodium-extra.option.overlay_corner",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.overlay_corner.tooltip",
+      "key": "sodium-extra.option.overlay_corner.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.text_contrast",
+      "key": "sodium-extra.option.text_contrast",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.text_contrast.tooltip",
+      "key": "sodium-extra.option.text_contrast.tooltip",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.steady_debug_hud",
+      "key": "sodium-extra.option.steady_debug_hud",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.steady_debug_hud.tooltip",
+      "key": "sodium-extra.option.steady_debug_hud.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.steady_debug_hud_refresh",
+      "key": "sodium-extra.option.steady_debug_hud_refresh_interval",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.steady_debug_hud_refresh.tooltip",
+      "key": "sodium-extra.option.steady_debug_hud_refresh_interval.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toasts",
+      "key": "sodium-extra.option.toasts",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toasts.tooltip",
+      "key": "sodium-extra.option.toasts.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_advancement",
+      "key": "sodium-extra.option.advancement_toast",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_advancement.tooltip",
+      "key": "sodium-extra.option.advancement_toast.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_recipe",
+      "key": "sodium-extra.option.recipe_toast",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_recipe.tooltip",
+      "key": "sodium-extra.option.recipe_toast.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_tutorial",
+      "key": "sodium-extra.option.tutorial_toast",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_tutorial.tooltip",
+      "key": "sodium-extra.option.tutorial_toast.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_system",
+      "key": "sodium-extra.option.system_toast",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.toast_system.tooltip",
+      "key": "sodium-extra.option.system_toast.tooltip",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.memory",
+      "key": "celeritasextra.option.show_memory",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.memory.tooltip",
+      "key": "celeritasextra.option.show_memory.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.ignore_reduced_debug_info",
+      "key": "celeritasextra.option.ignore_reduced_debug_info",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.ignore_reduced_debug_info.tooltip",
+      "key": "celeritasextra.option.ignore_reduced_debug_info.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.mod_name_tooltip",
+      "key": "celeritasextra.option.mod_name_tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.mod_name_tooltip.tooltip",
+      "key": "celeritasextra.option.mod_name_tooltip.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.inactive_fps",
+      "key": "celeritasextra.option.inactive_fps_limit",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.inactive_fps.tooltip",
+      "key": "celeritasextra.option.inactive_fps_limit.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.minimized_fps",
+      "key": "celeritasextra.option.minimized_fps_limit",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.minimized_fps.tooltip",
+      "key": "celeritasextra.option.minimized_fps_limit.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.vertical_sync",
+      "key": null,
+      "source": "obsolete",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.extra.vertical_sync.tooltip",
+      "key": "celeritasextra.option.vsync.tooltip",
+      "source": "custom",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.screen_mode",
+      "key": "sodium.extras.options.screen.title",
+      "source": "extras",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.screen_mode.tooltip",
+      "key": "sodium.extras.options.screen.desc",
+      "source": "extras",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.option.screen_mode.windowed",
+      "key": "sodium.extras.options.screen.windowed",
+      "source": "extras",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.screen_mode.borderless",
+      "key": "sodium.extras.options.screen.borderless",
+      "source": "extras",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.screen_mode.fullscreen",
+      "key": "options.fullscreen",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.vertical_sync.off",
+      "key": "options.off",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.vertical_sync.on",
+      "key": "options.on",
+      "source": "minecraft",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.vertical_sync.adaptive",
+      "key": "sodium-extra.option.use_adaptive_sync.name",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.overlay_corner.top_left",
+      "key": "sodium-extra.option.overlay_corner.top_left",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.overlay_corner.top_right",
+      "key": "sodium-extra.option.overlay_corner.top_right",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.overlay_corner.bottom_left",
+      "key": "sodium-extra.option.overlay_corner.bottom_left",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.overlay_corner.bottom_right",
+      "key": "sodium-extra.option.overlay_corner.bottom_right",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.text_contrast.none",
+      "key": "sodium-extra.option.text_contrast.none",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.text_contrast.background",
+      "key": "sodium-extra.option.text_contrast.background",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.option.text_contrast.shadow",
+      "key": "sodium-extra.option.text_contrast.shadow",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.overlay.fps",
+      "key": "sodium-extra.overlay.fps",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.overlay.fps_extended",
+      "key": "sodium-extra.overlay.fps_extended",
+      "source": "sodium",
+      "adapted": true
+    },
+    {
+      "oldKey": "celeritasextra.overlay.coordinates",
+      "key": "sodium-extra.overlay.coordinates",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.overlay.light_updates",
+      "key": "sodium-extra.overlay.light_updates",
+      "source": "sodium",
+      "adapted": false
+    },
+    {
+      "oldKey": "celeritasextra.search.placeholder",
+      "key": "rso.search_bar_empty",
+      "source": "rso",
+      "adapted": false
+    }
+  ],
+  "tooltips": {
+    "tile.water.name": "sodium-extra.option.animate_water.tooltip",
+    "tile.lava.name": "sodium-extra.option.animate_lava.tooltip",
+    "tile.fire.name": "sodium-extra.option.animate_fire.tooltip",
+    "tile.portal.name": "sodium-extra.option.animate_portal.tooltip",
+    "subtitles.weather.rain": "sodium-extra.option.rain_splash.tooltip",
+    "subtitles.block.generic.break": "sodium-extra.option.block_break.tooltip",
+    "subtitles.block.generic.hit": "sodium-extra.option.block_breaking.tooltip",
+    "soundCategory.weather": "sodium-extra.option.rain_snow.tooltip",
+    "options.renderClouds": "celeritasextra.option.clouds.tooltip",
+    "item.frame.name": "sodium-extra.option.item_frames.tooltip",
+    "entity.ArmorStand.name": "sodium-extra.option.armor_stands.tooltip",
+    "entity.Painting.name": "sodium-extra.option.paintings.tooltip",
+    "tile.pistonBase.name": "sodium-extra.option.piston.tooltip"
+  },
+  "builtinKeys": [
+    "options.particles",
+    "gui.all",
+    "tile.water.name",
+    "tile.lava.name",
+    "tile.fire.name",
+    "tile.portal.name",
+    "subtitles.weather.rain",
+    "subtitles.block.generic.break",
+    "subtitles.block.generic.hit",
+    "soundCategory.weather",
+    "options.renderClouds",
+    "item.frame.name",
+    "entity.ArmorStand.name",
+    "entity.Painting.name",
+    "tile.pistonBase.name",
+    "options.fullscreen",
+    "options.off",
+    "options.on",
+    "options.chunks",
+    "generator.default"
+  ],
+  "retainedCustomKeys": [
+    "celeritasextra.option.cloud_translucency.default",
+    "celeritasextra.option.cloud_translucency.always",
+    "celeritasextra.option.cloud_translucency.never",
+    "celeritasextra.overlay.memory",
+    "celeritasextra.search.results",
+    "celeritasextra.search.no_results"
+  ],
+  "sources": {
+    "sodium": "https://github.com/FlashyReese/sodium-extra",
+    "embeddium": "https://github.com/dima-dencep/rubidium-extra",
+    "more": "https://github.com/FxMorin/MoreCulling",
+    "extras": "https://github.com/txnimc/SodiumExtras",
+    "rso": "https://github.com/FlashyReese/reeses-sodium-options",
+    "notfine": "https://github.com/GTNewHorizons/Angelica"
+  },
+  "supplementalKeys": [
+    "options.dimensions.minecraft.overworld",
+    "options.dimensions.minecraft.the_nether",
+    "options.dimensions.minecraft.the_end",
+    "sodium-extra.units.blocks",
+    "sodium-extra.units.ticks"
+  ],
+  "revisions": {
+    "sodium": "b0bbae55629d078e0b58a0f99465ee142f18465b",
+    "embeddium": "ab30cc1850adab5b3dc56c1e1d8d4f0b9e12e365",
+    "more": "23e0f29f0f6b146916bd293a79e8fafcbba596af",
+    "extras": "45e8cd7bfd5db414c20a3fc03efb9d48081ed877",
+    "rso": "25af713aef880c57981b644b96adf194172d1e6d",
+    "notfine": "3389b952d0fa434cf7ac62adfef0df7d90869de6"
+  }
+}

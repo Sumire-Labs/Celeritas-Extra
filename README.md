@@ -31,10 +31,19 @@ The mod started as a port of features from Sodium Extra and Rubidium/Embeddium E
 - Search across Celeritas, Extra, and addon option names and tooltips. All words must match; matching options and pages remain visible, with a result count. Ctrl+F focuses the search field, and Escape or the X button clears the query. Hidden pending changes remain available to Apply and Undo.
 - Hold Shift and scroll over a slider row to adjust it by one configured step. Disabled sliders stay unchanged; other wheel input retains normal page scrolling.
 
+## Translations
+
+English, Japanese, Simplified Chinese, and Russian share the same translation keys. Equivalent features use the original Sodium Extra/Embeddium Extra, Sodium Extras, MoreCulling, Reese's Sodium Options, and NotFine keys. Vanilla labels use Minecraft 1.12.2's keys. Local translations are retained where upstream translations are missing or untranslated, and descriptions are adapted where this backport behaves differently.
+
+The old-to-new key mapping and source references are recorded in [translations/upstream-keys.json](translations/upstream-keys.json). Independent features such as radial render distances, JVM-only memory usage, spawn percentages, and per-dimension override toggles retain Celeritas Extra keys.
+
 ## Credits
 
 - FlashyReese, creator of Sodium Extra
 - dima_dencep, creator of Rubidium and Embeddium Extra
+- Txni, creator of Sodium Extras
+- FxMorin and the MoreCulling contributors
+- The NotFine and Angelica contributors
 - embeddedt, creator of Celeritas
 - CleanroomMC, for Cleanroom Loader, CleanroomModTemplate, and related tools
 - Everyone who has contributed translations

@@ -1,185 +1,168 @@
+# Upstream-aligned translation keys; see translations/upstream-keys.json.
 # Celeritas Extra - English Translation
 # Based on Embeddium Extra translations
 
 # Option Pages
-celeritasextra.option.page.animations=Animations
-celeritasextra.option.page.particles=Particles
-celeritasextra.option.page.details=Details
-celeritasextra.option.page.render=Render
-celeritasextra.option.page.extra=Extras
+sodium-extra.option.animations=Animations
+sodium-extra.option.details=Details
+sodium-extra.option.render=Render
+sodium-extra.option.extras=Extras
 
 # Animation Options
-celeritasextra.option.animations.all=Animations
-celeritasextra.option.animations.all.tooltip=If enabled, animations are processed.
-celeritasextra.option.animations.water=Water
-celeritasextra.option.animations.water.tooltip=If enabled, water animations are processed.
-celeritasextra.option.animations.lava=Lava
-celeritasextra.option.animations.lava.tooltip=If enabled, lava animations are processed.
-celeritasextra.option.animations.fire=Fire
-celeritasextra.option.animations.fire.tooltip=If enabled, fire animations are processed.
-celeritasextra.option.animations.portal=Portal
-celeritasextra.option.animations.portal.tooltip=If enabled, portal animations are processed.
-celeritasextra.option.animations.block=Block Animations
-celeritasextra.option.animations.block.tooltip=If enabled, block animations are processed.
+sodium-extra.option.animations_all.tooltip=Processes all animations.
+sodium-extra.option.animate_water.tooltip=Processes water animations.
+sodium-extra.option.animate_lava.tooltip=Processes lava animations.
+sodium-extra.option.animate_fire.tooltip=Processes fire animations.
+sodium-extra.option.animate_portal.tooltip=Processes portal animations.
+sodium-extra.option.block_animations=Block Animations
+sodium-extra.option.block_animations.tooltip=Processes block animations.
 
 # Particle Options
-celeritasextra.option.particles.all=Particles
-celeritasextra.option.particles.all.tooltip=If enabled, particles are processed.
-celeritasextra.option.particles.rain_splash=Rain Splash
-celeritasextra.option.particles.rain_splash.tooltip=If enabled, rain splash particles are rendered.
-celeritasextra.option.particles.block_break=Block Break
-celeritasextra.option.particles.block_break.tooltip=If enabled, block break particles are processed.
-celeritasextra.option.particles.block_breaking=Block Breaking
-celeritasextra.option.particles.block_breaking.tooltip=If enabled, block breaking particles are processed.
-celeritasextra.option.particles.other.tooltip=If enabled, %s particles are processed.
+sodium-extra.option.particles_all.tooltip=Processes all particles.
+sodium-extra.option.rain_splash.tooltip=Renders rain splash particles.
+sodium-extra.option.block_break.tooltip=Processes block break particles.
+sodium-extra.option.block_breaking.tooltip=Processes block breaking particles.
 
 # Detail Options
-celeritasextra.option.details.sky=Sky
-celeritasextra.option.details.sky.tooltip=If enabled, the sky will be rendered.
-celeritasextra.option.details.stars=Stars
-celeritasextra.option.details.stars.tooltip=If enabled, the stars will be rendered.
-celeritasextra.option.details.total_stars=Total Stars
-celeritasextra.option.details.total_stars.tooltip=Controls the number of stars rendered in the sky. Requires renderer reload to take effect.
-celeritasextra.option.details.sun_moon=Sun & Moon
-celeritasextra.option.details.sun_moon.tooltip=If enabled, the sun and moon will be rendered.
-celeritasextra.option.details.rain_snow=Rain & Snow
-celeritasextra.option.details.rain_snow.tooltip=If enabled, rain & snow are rendered.
-celeritasextra.option.details.biome_colors=Biome Colors
-celeritasextra.option.details.biome_colors.tooltip=If enabled, biome colors are changed based on the biome.
-celeritasextra.option.details.sky_colors=Sky Colors
-celeritasextra.option.details.sky_colors.tooltip=Applies biome-based sky coloring.
-celeritasextra.option.details.void_fog=Void Fog
-celeritasextra.option.details.void_fog.tooltip=If enabled, void fog is rendered below the world.
+sodium-extra.option.sky=Sky
+sodium-extra.option.sky.tooltip=Renders the sky.
+sodium-extra.option.stars=Stars
+sodium-extra.option.stars.tooltip=Renders stars.
+options.total_stars=Star Density
+options.total_stars.tooltip=Controls the number of stars rendered in the sky. Requires renderer reload to take effect.
+sodium-extra.option.rain_snow.tooltip=Renders rain and snow.
+sodium-extra.option.biome_colors=Biome Colors
+sodium-extra.option.biome_colors.tooltip=Applies biome-based coloring where applicable.
+sodium-extra.option.sky_colors=Sky Colors
+sodium-extra.option.sky_colors.tooltip=Applies biome-based sky coloring.
+options.void_fog=Void Fog
+options.void_fog.tooltip=Void Fog
 
 # Render Options
-celeritasextra.option.render.fog=Fog
-celeritasextra.option.render.fog.tooltip=If enabled, fog will be rendered.
-celeritasextra.option.render.fog_start=Fog Start Multiplier
-celeritasextra.option.render.fog_start.tooltip=Adjusts when the terrain fog begins to render for the player.
-celeritasextra.option.render.fog_distance=Fog Distance
-celeritasextra.option.render.fog_distance.tooltip=Controls the fog render distance in chunks. 0 = Default (uses render distance).
-celeritasextra.option.render.prevent_shaders=Prevent Shaders
-celeritasextra.option.render.prevent_shaders.tooltip=If enabled, any type of vanilla shaders will be prevented from loading. For example, the distorted view when spectating from a spider's point of view.
-celeritasextra.option.render.clouds=Clouds
-celeritasextra.option.render.clouds.tooltip=If enabled, clouds are rendered.
-celeritasextra.option.render.modern_clouds=Modern Clouds
-celeritasextra.option.render.modern_clouds.tooltip=Uses the Minecraft 1.21.6 cloud texture with the existing renderer. AssetMover 2.5 downloads the texture. Keeps cloud height, distance, and scale settings; user resource packs take priority. Applying this option reloads resources.
-celeritasextra.option.render.cloud_height=Cloud Height
-celeritasextra.option.render.cloud_height.tooltip=Controls the height of clouds that are rendered.
-celeritasextra.option.render.cloud_distance=Cloud Distance
-celeritasextra.option.render.cloud_distance.tooltip=Controls the cloud render distance in chunks. 0 = Default (uses game render distance).
-celeritasextra.option.render.cloud_scale=Cloud Scale
-celeritasextra.option.render.cloud_scale.tooltip=Controls the size of clouds from 0.25x to 4.00x. 1.00x is the vanilla default.
-celeritasextra.option.render.cloud_translucency=Cloud Translucency
-celeritasextra.option.render.cloud_translucency.tooltip=Controls when clouds become translucent. Default: based on cloud height. Always: clouds are always translucent. Never: clouds are always opaque.
+sodium-extra.option.fog_type.atmospheric=Atmospheric Fog
+sodium-extra.option.fog_type.atmospheric.tooltip=Controls fog caused by atmosphere and weather.
+sodium-extra.option.fog_start=Fog Start
+sodium-extra.option.fog_start.tooltip=Controls how close to the player atmospheric terrain fog begins.
+sodium-extra.option.fog_distance=Fog Distance
+sodium-extra.option.fog_distance.tooltip=Controls the fog render distance in chunks. 0 = Default (uses render distance).
+sodium-extra.option.prevent_shaders=Prevent Shaders
+sodium-extra.option.prevent_shaders.tooltip=Prevents vanilla shader effects from loading (e.g., spider-view distortion while spectating).
+celeritasextra.option.clouds.tooltip=If enabled, clouds are rendered.
+celeritasextra.option.modern_clouds=Modern Clouds
+celeritasextra.option.modern_clouds.tooltip=Uses the Minecraft 1.21.6 cloud texture with the existing renderer. AssetMover 2.5 downloads the texture. Keeps cloud height, distance, and scale settings; user resource packs take priority. Applying this option reloads resources.
+sodium-extra.option.cloud_height=Cloud Height
+sodium-extra.option.cloud_height.tooltip=Controls the height of clouds that are rendered.
+sodium-extra.option.cloud_distance=Cloud Distance
+sodium-extra.option.cloud_distance.tooltip=Controls the cloud render distance in chunks. 0 = Default (uses game render distance).
+options.cloud_scale=Cloud Scale
+options.cloud_scale.tooltip=Controls the size of clouds from 0.25x to 4.00x. 1.00x is the vanilla default.
+options.mode_cloud_translucency=Cloud Translucency
+options.mode_cloud_translucency.tooltip=Controls when clouds become translucent. Default: based on cloud height. Always: clouds are always translucent. Never: clouds are always opaque.
 celeritasextra.option.cloud_translucency.default=Default
 celeritasextra.option.cloud_translucency.always=Always
 celeritasextra.option.cloud_translucency.never=Never
-celeritasextra.option.render.light_updates=Light Updates
-celeritasextra.option.render.light_updates.tooltip=If disabled, light updates will not be processed. This can improve performance but may cause visual artifacts.
-celeritasextra.option.render.item_frames=Item Frames
-celeritasextra.option.render.item_frames.tooltip=If enabled, item frames are rendered.
-celeritasextra.option.render.item_frame_lod_distance=Item Frame LOD Distance
-celeritasextra.option.render.item_frame_lod_distance.tooltip=Beyond this distance (in blocks), non-block items retain their front face instead of sprite edges. Maps and 3D blocks stay visible. 0 = Off.
-celeritasextra.option.render.armor_stands=Armor Stands
-celeritasextra.option.render.armor_stands.tooltip=If enabled, armor stands are rendered.
-celeritasextra.option.render.paintings=Paintings
-celeritasextra.option.render.paintings.tooltip=If enabled, paintings are rendered.
-celeritasextra.option.render.pistons=Pistons
-celeritasextra.option.render.pistons.tooltip=If enabled, piston extending animations are rendered.
-celeritasextra.option.render.beacons=Beacon Beam
-celeritasextra.option.render.beacons.tooltip=If enabled, beacon beams are rendered.
-celeritasextra.option.render.limit_beacon_beam_height=Limit Beacon Beam Height
-celeritasextra.option.render.limit_beacon_beam_height.tooltip=If enabled, beacon beams will be limited to the maximum height of the world.
-celeritasextra.option.render.enchanting_books=Enchanting Table Book
-celeritasextra.option.render.enchanting_books.tooltip=If enabled, enchanting table books are rendered.
-celeritasextra.option.render.player_name_tag=Player Name Tag
-celeritasextra.option.render.player_name_tag.tooltip=If enabled, player name tags will be visible.
-celeritasextra.option.render.item_frame_name_tag=Item Frame Name Tag
-celeritasextra.option.render.item_frame_name_tag.tooltip=If enabled, item frame name tags will be visible.
+sodium-extra.option.light_updates=Light Updates
+sodium-extra.option.light_updates.tooltip=Processes lighting updates. Disabling this may cause incorrect lighting when generating chunks. Only disable if you understand the impact.
+sodium-extra.option.item_frames.tooltip=Renders item frames.
+moreculling.config.option.itemFrameLODRange=Frame LOD Range
+moreculling.config.option.itemFrameLODRange.tooltip=Beyond this distance (in blocks), non-block items retain their front face instead of sprite edges. Maps and 3D blocks stay visible. 0 = Off.
+sodium-extra.option.armor_stands.tooltip=Renders armor stands.
+sodium-extra.option.paintings.tooltip=Renders paintings.
+sodium-extra.option.piston.tooltip=Renders piston extension animations.
+sodium-extra.option.beacon_beam=Beacon Beam
+sodium-extra.option.beacon_beam.tooltip=Renders beacon beams.
+sodium-extra.option.limit_beacon_beam_height=Limit Beacon Beam Height
+sodium-extra.option.limit_beacon_beam_height.tooltip=Limits beacon beams to the world’s maximum height.
+sodium-extra.option.enchanting_table_book=Enchanting Table Book
+sodium-extra.option.enchanting_table_book.tooltip=Renders the enchanting table book.
+sodium-extra.option.player_name_tag=Player Name Tag
+sodium-extra.option.player_name_tag.tooltip=Shows player name tags.
+sodium-extra.option.item_frame_name_tag=Item Frame Name Tag
+sodium-extra.option.item_frame_name_tag.tooltip=Shows name tags for item frames.
 
 # Extra Options
-celeritasextra.option.extra.fps=Show FPS
-celeritasextra.option.extra.fps.tooltip=Displays the current FPS of the game on the overlay.
-celeritasextra.option.extra.fps_extended=Show FPS Extended
-celeritasextra.option.extra.fps_extended.tooltip=Displays additional information (average, 1%% low, and 0.1%% low FPS) alongside current FPS on the overlay.
-celeritasextra.option.extra.coords=Show Coordinates
-celeritasextra.option.extra.coords.tooltip=Displays player coordinates on the overlay.
-celeritasextra.option.extra.memory=Show Memory Usage
-celeritasextra.option.extra.memory.tooltip=Displays JVM heap usage as a percentage and used/max MiB.
-celeritasextra.option.extra.ignore_reduced_debug_info=Ignore Reduced Debug Info
-celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=If enabled, coordinates will be shown even when reduced debug info is active (e.g., on servers with reducedDebugInfo gamerule).
-celeritasextra.option.extra.overlay_corner=Overlay Corner
-celeritasextra.option.extra.overlay_corner.tooltip=Determines in which corner of the screen the overlay (FPS, coordinates, and memory usage) will be rendered.
-celeritasextra.option.extra.text_contrast=Text Contrast
-celeritasextra.option.extra.text_contrast.tooltip=Adjusts overlay text contrast. None: Plain white text. Background: Text with a debug-style background. Shadow: White text with shadow.
-celeritasextra.option.extra.vertical_sync=VSync
-celeritasextra.option.extra.vertical_sync.tooltip=Controls vertical synchronization mode. Off: VSync disabled, may cause screen tearing. On: Standard VSync, limits FPS to refresh rate. Adaptive: Enables VSync when above refresh rate, disables when below to reduce stuttering. Only available if supported by GPU driver.
-celeritasextra.option.screen_mode=Screen Mode
-celeritasextra.option.screen_mode.tooltip=Windowed: Standard window mode. Borderless: Fullscreen without exclusive mode, allows easy alt-tab and multi-monitor use. Fullscreen: Exclusive fullscreen mode.
-celeritasextra.option.screen_mode.windowed=Windowed
-celeritasextra.option.screen_mode.borderless=Borderless
-celeritasextra.option.screen_mode.fullscreen=Fullscreen
-celeritasextra.option.extra.mod_name_tooltip=Mod Name Tooltip
-celeritasextra.option.extra.mod_name_tooltip.tooltip=Shows the source mod’s name at the bottom of every item’s tooltip.
-celeritasextra.option.extra.steady_debug_hud=Steady Debug Hud
-celeritasextra.option.extra.steady_debug_hud.tooltip=If enabled, the debug hud will be refreshed every set number of ticks, configured by the Steady Debug Hud Refresh Interval.
-celeritasextra.option.extra.steady_debug_hud_refresh=Steady Debug Hud Refresh Interval
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=Adjusts the interval, in ticks, at which the debug hud is refreshed.
-celeritasextra.option.extra.toasts=Toasts
-celeritasextra.option.extra.toasts.tooltip=Shows advancement and recipe popups (toasts).
-celeritasextra.option.extra.toast_advancement=Advancement Toasts
-celeritasextra.option.extra.toast_advancement.tooltip=Shows advancement popups (toasts).
-celeritasextra.option.extra.toast_recipe=Recipe Toasts
-celeritasextra.option.extra.toast_recipe.tooltip=Shows recipe popups (toasts).
-celeritasextra.option.extra.toast_tutorial=Tutorial Toasts
-celeritasextra.option.extra.toast_tutorial.tooltip=Shows tutorial popups (toasts).
-celeritasextra.option.extra.toast_system=System Toasts
-celeritasextra.option.extra.toast_system.tooltip=Shows system popups (toasts).
+sodium-extra.option.show_fps=Show FPS
+sodium-extra.option.show_fps.tooltip=Shows the current FPS on the overlay.
+sodium-extra.option.show_fps_extended=Show FPS Extended
+sodium-extra.option.show_fps_extended.tooltip=Displays additional information (average, 1%% low, and 0.1%% low FPS) alongside current FPS on the overlay.
+sodium-extra.option.show_coordinates=Show Coordinates
+sodium-extra.option.show_coordinates.tooltip=Shows player coordinates on the overlay.
+celeritasextra.option.show_memory=Show Memory Usage
+celeritasextra.option.show_memory.tooltip=Displays JVM heap usage as a percentage and used/max MiB.
+celeritasextra.option.ignore_reduced_debug_info=Ignore Reduced Debug Info
+celeritasextra.option.ignore_reduced_debug_info.tooltip=If enabled, coordinates will be shown even when reduced debug info is active (e.g., on servers with reducedDebugInfo gamerule).
+sodium-extra.option.overlay_corner=Overlay Corner
+sodium-extra.option.overlay_corner.tooltip=Determines in which corner of the screen the overlay (FPS, coordinates, and memory usage) will be rendered.
+sodium-extra.option.text_contrast=Text Contrast
+sodium-extra.option.text_contrast.tooltip=Adjusts overlay text contrast. None: Plain white text. Background: Text with a debug-style background. Shadow: White text with shadow.
+celeritasextra.option.vsync.tooltip=Controls vertical synchronization mode. Off: VSync disabled, may cause screen tearing. On: Standard VSync, limits FPS to refresh rate. Adaptive: Enables VSync when above refresh rate, disables when below to reduce stuttering. Only available if supported by GPU driver.
+sodium.extras.options.screen.title=Fullscreen Mode
+sodium.extras.options.screen.desc=Windowed: Standard window mode. Borderless: Fullscreen without exclusive mode, allows easy alt-tab and multi-monitor use. Fullscreen: Exclusive fullscreen mode.
+sodium.extras.options.screen.windowed=Windowed
+sodium.extras.options.screen.borderless=Borderless
+celeritasextra.option.mod_name_tooltip=Mod Name Tooltip
+celeritasextra.option.mod_name_tooltip.tooltip=Shows the source mod’s name at the bottom of every item’s tooltip.
+sodium-extra.option.steady_debug_hud=Steady Debug HUD
+sodium-extra.option.steady_debug_hud.tooltip=Refreshes the debug HUD at a fixed interval set by Steady Debug HUD Refresh Interval.
+sodium-extra.option.steady_debug_hud_refresh_interval=Steady Debug HUD Refresh Interval
+sodium-extra.option.steady_debug_hud_refresh_interval.tooltip=Sets how often the debug HUD refreshes (in ticks).
+sodium-extra.option.toasts=Toasts
+sodium-extra.option.toasts.tooltip=Shows advancement and recipe popups (toasts).
+sodium-extra.option.advancement_toast=Advancement Toasts
+sodium-extra.option.advancement_toast.tooltip=Shows advancement popups (toasts).
+sodium-extra.option.recipe_toast=Recipe Toasts
+sodium-extra.option.recipe_toast.tooltip=Shows recipe popups (toasts).
+sodium-extra.option.tutorial_toast=Tutorial Toasts
+sodium-extra.option.tutorial_toast.tooltip=Shows tutorial popups (toasts).
+sodium-extra.option.system_toast=System Toasts
+sodium-extra.option.system_toast.tooltip=Shows system popups (toasts).
 
 # Overlay Corner Options
-celeritasextra.option.overlay_corner.top_left=Top Left
-celeritasextra.option.overlay_corner.top_right=Top Right
-celeritasextra.option.overlay_corner.bottom_left=Bottom Left
-celeritasextra.option.overlay_corner.bottom_right=Bottom Right
+sodium-extra.option.overlay_corner.top_left=Top Left
+sodium-extra.option.overlay_corner.top_right=Top Right
+sodium-extra.option.overlay_corner.bottom_left=Bottom Left
+sodium-extra.option.overlay_corner.bottom_right=Bottom Right
 
 # Text Contrast Options
-celeritasextra.option.text_contrast.none=None
-celeritasextra.option.text_contrast.background=Background
-celeritasextra.option.text_contrast.shadow=Shadow
+sodium-extra.option.text_contrast.none=None
+sodium-extra.option.text_contrast.background=Background
+sodium-extra.option.text_contrast.shadow=Shadow
 
 # VSync Options
-celeritasextra.option.vertical_sync.off=Off
-celeritasextra.option.vertical_sync.on=On
-celeritasextra.option.vertical_sync.adaptive=Adaptive
+sodium-extra.option.use_adaptive_sync.name=Adaptive
 
 # Overlay Text
-celeritasextra.overlay.fps=%s FPS
-celeritasextra.overlay.fps_extended=(avg. %s / 1%% low %s / 0.1%% low %s)
-celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+sodium-extra.overlay.fps=%s FPS
+sodium-extra.overlay.fps_extended=(avg. %s / 1%% low %s / 0.1%% low %s)
+sodium-extra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=Memory: %s%% (%s / %s MiB)
-celeritasextra.overlay.light_updates=Light updates disabled
+sodium-extra.overlay.light_updates=Light updates disabled
 
-celeritasextra.option.details.sun=Sun
-celeritasextra.option.details.sun.tooltip=Render the sun independently of the moon.
-celeritasextra.option.details.moon=Moon
-celeritasextra.option.details.moon.tooltip=Render the moon independently of the sun.
-celeritasextra.option.render.sign_text_culling=Cull Sign Text
-celeritasextra.option.render.sign_text_culling.tooltip=Skips sign text viewed from behind. Editing and near-plane views remain visible.
-celeritasextra.option.render.map_back_face_culling=Cull Map Back Faces
-celeritasextra.option.render.map_back_face_culling.tooltip=Skips framed maps viewed from behind. Maps stay visible from the front at any distance.
-celeritasextra.option.render.entity_distance=Entity Render Distance
-celeritasextra.option.render.entity_distance.tooltip=Limits entity rendering distance in blocks. 0 keeps vanilla behavior. Exempt classes can be configured in the config file.
-celeritasextra.option.render.tile_entity_distance=Tile Entity Render Distance
-celeritasextra.option.render.tile_entity_distance.tooltip=Limits special block renderer distance in blocks. 0 keeps vanilla behavior. Beacons are exempt by default; additional classes can be configured.
-celeritasextra.option.extra.inactive_fps=Unfocused FPS Limit
-celeritasextra.option.extra.inactive_fps.tooltip=Limits drawing while the window is unfocused. 0 = Off. Client ticks and network processing continue at 20 Hz or more.
-celeritasextra.option.extra.minimized_fps=Minimized FPS Limit
-celeritasextra.option.extra.minimized_fps.tooltip=Limits drawing while the window is minimized. 0 inherits the unfocused limit.
-celeritasextra.option.render.dimension_fog=Override Fog: %s
-celeritasextra.option.render.dimension_fog.tooltip=Use separate atmospheric fog settings for this dimension. Disabled inherits the global settings. Blindness, water, and lava fog are preserved.
-celeritasextra.option.particles.spawn_rate.tooltip=Sets the spawn percentage for %s. 0%% = Off, 100%% = all particles.
+sodium-extra.option.sun=Sun
+sodium-extra.option.sun.tooltip=Renders the sun.
+sodium-extra.option.moon=Moon
+sodium-extra.option.moon.tooltip=Renders the moon.
+moreculling.config.option.signTextCulling=Sign Text Culling
+moreculling.config.option.signTextCulling.tooltip=Skips sign text viewed from behind. Editing and near-plane views remain visible.
+moreculling.config.option.itemFrameMapCulling=Frame Map Culling
+moreculling.config.option.itemFrameMapCulling.tooltip=Skips framed maps viewed from behind. Maps stay visible from the front at any distance.
+celeritasextra.option.entity_render_distance=Entity Render Distance
+celeritasextra.option.entity_render_distance.tooltip=Limits entity rendering distance in blocks. 0 keeps vanilla behavior. Exempt classes can be configured in the config file.
+celeritasextra.option.tile_entity_render_distance=Tile Entity Render Distance
+celeritasextra.option.tile_entity_render_distance.tooltip=Limits special block renderer distance in blocks. 0 keeps vanilla behavior. Beacons are exempt by default; additional classes can be configured.
+celeritasextra.option.inactive_fps_limit=Unfocused FPS Limit
+celeritasextra.option.inactive_fps_limit.tooltip=Limits drawing while the window is unfocused. 0 = Off. Client ticks and network processing continue at 20 Hz or more.
+celeritasextra.option.minimized_fps_limit=Minimized FPS Limit
+celeritasextra.option.minimized_fps_limit.tooltip=Limits drawing while the window is minimized. 0 inherits the unfocused limit.
+celeritasextra.option.dimension_fog_override=Override Fog: %s
+celeritasextra.option.dimension_fog_override.tooltip=Use separate atmospheric fog settings for this dimension. Disabled inherits the global settings. Blindness, water, and lava fog are preserved.
+celeritasextra.option.particle_spawn_percentage.tooltip=Sets the spawn percentage for %s. 0%% = Off, 100%% = all particles.
 
-celeritasextra.search.placeholder=Search options... (Ctrl+F)
+rso.search_bar_empty=Search options...
 celeritasextra.search.results=%s results
 celeritasextra.search.no_results=No matching options
+sodium-extra.units.blocks=%s block(s)
+sodium-extra.units.ticks=%s tick(s)
+options.dimensions.minecraft.overworld=Overworld
+options.dimensions.minecraft.the_nether=Nether
+options.dimensions.minecraft.the_end=End

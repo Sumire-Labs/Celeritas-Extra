@@ -1,7 +1,6 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
-import net.minecraft.client.resources.I18n;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.OptionGUIConstructionEvent;
 import org.taumc.celeritas.api.OptionGroupConstructionEvent;
@@ -80,9 +79,9 @@ public class CeleritasExtraOptionsListener {
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.ScreenMode> createScreenModeOption() {
         return OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
                 .setId(StandardOptions.Option.FULLSCREEN.cast())
-                .setName(TextComponent.literal(I18n.format("celeritasextra.option.screen_mode")))
+                .setName(TextComponent.literal(Translations.format("sodium.extras.options.screen.title")))
                 .setTooltip(TextComponent.literal(
-                        I18n.format("celeritasextra.option.screen_mode.tooltip")))
+                        Translations.format("sodium.extras.options.screen.desc")))
                 .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
                         new TextComponent[]{
                                 TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.WINDOWED.getLocalizedName()),
@@ -106,7 +105,7 @@ public class CeleritasExtraOptionsListener {
                 .setId(StandardOptions.Option.VSYNC.cast())
                 .setName(TextComponent.translatable("options.vsync"))
                 .setTooltip(TextComponent.literal(
-                        I18n.format("celeritasextra.option.extra.vertical_sync.tooltip")))
+                        Translations.format("celeritasextra.option.vsync.tooltip")))
                 .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class,
                         new TextComponent[]{
                                 TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.OFF.getLocalizedName()),

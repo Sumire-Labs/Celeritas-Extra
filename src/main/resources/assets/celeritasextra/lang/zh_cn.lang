@@ -1,185 +1,168 @@
+# Upstream-aligned translation keys; see translations/upstream-keys.json.
 # Celeritas Extra - 简体中文翻译
 # 基于 Embeddium Extra 的翻译
 
 # 选项页面
-celeritasextra.option.page.animations=动画
-celeritasextra.option.page.particles=粒子
-celeritasextra.option.page.details=细节
-celeritasextra.option.page.render=渲染
-celeritasextra.option.page.extra=额外
+sodium-extra.option.animations=动画
+sodium-extra.option.details=细节
+sodium-extra.option.render=显示
+sodium-extra.option.extras=其他
 
 # 动画选项
-celeritasextra.option.animations.all=动画
-celeritasextra.option.animations.all.tooltip=若启用，将处理动画。
-celeritasextra.option.animations.water=水
-celeritasextra.option.animations.water.tooltip=若启用，将处理水动画。
-celeritasextra.option.animations.lava=熔岩
-celeritasextra.option.animations.lava.tooltip=若启用，将处理熔岩动画。
-celeritasextra.option.animations.fire=火
-celeritasextra.option.animations.fire.tooltip=若启用，将处理火动画。
-celeritasextra.option.animations.portal=传送门
-celeritasextra.option.animations.portal.tooltip=若启用，将处理传送门动画。
-celeritasextra.option.animations.block=方块动画
-celeritasextra.option.animations.block.tooltip=若启用，将处理方块动画。
+sodium-extra.option.animations_all.tooltip=处理全部动画。
+sodium-extra.option.animate_water.tooltip=处理水动画。
+sodium-extra.option.animate_lava.tooltip=处理熔岩动画。
+sodium-extra.option.animate_fire.tooltip=处理火焰动画。
+sodium-extra.option.animate_portal.tooltip=处理传送门动画。
+sodium-extra.option.block_animations=方块动画
+sodium-extra.option.block_animations.tooltip=处理方块动画。
 
 # 粒子选项
-celeritasextra.option.particles.all=粒子
-celeritasextra.option.particles.all.tooltip=若启用，将处理粒子效果。
-celeritasextra.option.particles.rain_splash=雨滴飞溅
-celeritasextra.option.particles.rain_splash.tooltip=若启用，将渲染雨滴飞溅粒子。
-celeritasextra.option.particles.block_break=方块破坏
-celeritasextra.option.particles.block_break.tooltip=若启用，将处理方块破坏粒子。
-celeritasextra.option.particles.block_breaking=方块破坏中
-celeritasextra.option.particles.block_breaking.tooltip=若启用，将处理方块破坏过程中的粒子。
-celeritasextra.option.particles.other.tooltip=若启用，将渲染 %s 粒子。
+sodium-extra.option.particles_all.tooltip=处理全部粒子效果。
+sodium-extra.option.rain_splash.tooltip=渲染雨水飞溅粒子。
+sodium-extra.option.block_break.tooltip=处理方块破坏粒子。
+sodium-extra.option.block_breaking.tooltip=处理方块破坏中粒子。
 
 # 细节选项
-celeritasextra.option.details.sky=天空
-celeritasextra.option.details.sky.tooltip=若启用，将渲染天空。
-celeritasextra.option.details.stars=星星
-celeritasextra.option.details.stars.tooltip=若启用，将渲染星星。
-celeritasextra.option.details.total_stars=星星数量
-celeritasextra.option.details.total_stars.tooltip=控制天空中渲染的星星数量。需要重新加载渲染器才能生效。
-celeritasextra.option.details.sun_moon=太阳与月亮
-celeritasextra.option.details.sun_moon.tooltip=若启用，将渲染太阳与月亮。
-celeritasextra.option.details.rain_snow=雨和雪
-celeritasextra.option.details.rain_snow.tooltip=若启用，将渲染雨和雪。
-celeritasextra.option.details.biome_colors=生物群系颜色
-celeritasextra.option.details.biome_colors.tooltip=若启用，将根据生物群系改变颜色。
-celeritasextra.option.details.sky_colors=天空颜色
-celeritasextra.option.details.sky_colors.tooltip=应用基于生物群系的天空颜色。
-celeritasextra.option.details.void_fog=虚空迷雾
-celeritasextra.option.details.void_fog.tooltip=若启用，将在世界下方渲染虚空迷雾。
+sodium-extra.option.sky=天空
+sodium-extra.option.sky.tooltip=渲染天空。
+sodium-extra.option.stars=星星
+sodium-extra.option.stars.tooltip=渲染星星。
+options.total_stars=星星密度
+options.total_stars.tooltip=控制天空中渲染的星星数量。需要重新加载渲染器才能生效。
+sodium-extra.option.rain_snow.tooltip=渲染雨和雪。
+sodium-extra.option.biome_colors=群系颜色
+sodium-extra.option.biome_colors.tooltip=应用基于生物群系的颜色（在适用的情况下）。
+sodium-extra.option.sky_colors=天空颜色
+sodium-extra.option.sky_colors.tooltip=应用基于生物群系的天空颜色。
+options.void_fog=虚空雾
+options.void_fog.tooltip=若启用，将在世界下方渲染虚空迷雾。
 
 # 渲染选项
-celeritasextra.option.render.fog=雾
-celeritasextra.option.render.fog.tooltip=若启用，将渲染雾。
-celeritasextra.option.render.fog_start=雾起始距离倍数
-celeritasextra.option.render.fog_start.tooltip=调整地形雾开始渲染的距离。
-celeritasextra.option.render.fog_distance=雾距离
-celeritasextra.option.render.fog_distance.tooltip=以区块为单位控制雾渲染距离。0 = 默认（使用渲染距离）。
-celeritasextra.option.render.prevent_shaders=禁用光影
-celeritasextra.option.render.prevent_shaders.tooltip=若启用，将阻止加载任何原版屏幕着色器。例如以旁观者视角观看蜘蛛时的画面扭曲效果。
-celeritasextra.option.render.clouds=云
-celeritasextra.option.render.clouds.tooltip=若启用，将渲染云。
-celeritasextra.option.render.modern_clouds=现代云
-celeritasextra.option.render.modern_clouds.tooltip=使用现有渲染器显示 Minecraft 1.21.6 的云纹理，由 AssetMover 2.5 下载。保留云高度、渲染距离和大小设置；用户资源包优先。应用此选项时会重新加载资源。
-celeritasextra.option.render.cloud_height=云层高度
-celeritasextra.option.render.cloud_height.tooltip=控制渲染云层的高度。
-celeritasextra.option.render.cloud_distance=云渲染距离
-celeritasextra.option.render.cloud_distance.tooltip=以区块为单位控制云渲染距离。0 = 默认（使用游戏渲染距离）。
-celeritasextra.option.render.cloud_scale=云缩放
-celeritasextra.option.render.cloud_scale.tooltip=控制云的大小，范围为 0.25 倍至 4.00 倍；1.00 倍为原版默认值。
-celeritasextra.option.render.cloud_translucency=云透明度
-celeritasextra.option.render.cloud_translucency.tooltip=控制云变为半透明的时机。默认：基于云高度。始终：始终半透明。从不：始终不透明。
+sodium-extra.option.fog_type.atmospheric=大气迷雾
+sodium-extra.option.fog_type.atmospheric.tooltip=控制由大气和天气引起的迷雾。
+sodium-extra.option.fog_start=迷雾起始点
+sodium-extra.option.fog_start.tooltip=控制地形迷雾相对于玩家的起始距离。
+sodium-extra.option.fog_distance=雾距离
+sodium-extra.option.fog_distance.tooltip=以区块为单位控制雾渲染距离。0 = 默认（使用渲染距离）。
+sodium-extra.option.prevent_shaders=禁止着色器
+sodium-extra.option.prevent_shaders.tooltip=禁止加载任何类型的着色器（例如蜘蛛的旁观视角中的扭曲效果）。
+celeritasextra.option.clouds.tooltip=若启用，将渲染云。
+celeritasextra.option.modern_clouds=现代云
+celeritasextra.option.modern_clouds.tooltip=使用现有渲染器显示 Minecraft 1.21.6 的云纹理，由 AssetMover 2.5 下载。保留云高度、渲染距离和大小设置；用户资源包优先。应用此选项时会重新加载资源。
+sodium-extra.option.cloud_height=云层高度
+sodium-extra.option.cloud_height.tooltip=控制渲染云层的高度。
+sodium-extra.option.cloud_distance=云层距离
+sodium-extra.option.cloud_distance.tooltip=以区块为单位控制云渲染距离。0 = 默认（使用游戏渲染距离）。
+options.cloud_scale=云比例
+options.cloud_scale.tooltip=控制云的大小，范围为 0.25 倍至 4.00 倍；1.00 倍为原版默认值。
+options.mode_cloud_translucency=云透明度
+options.mode_cloud_translucency.tooltip=控制云变为半透明的时机。默认：基于云高度。始终：始终半透明。从不：始终不透明。
 celeritasextra.option.cloud_translucency.default=默认
 celeritasextra.option.cloud_translucency.always=始终
 celeritasextra.option.cloud_translucency.never=从不
-celeritasextra.option.render.light_updates=光照更新
-celeritasextra.option.render.light_updates.tooltip=若禁用，将不处理光照更新。这可以提高性能，但可能会导致视觉问题。
-celeritasextra.option.render.item_frames=物品展示框
-celeritasextra.option.render.item_frames.tooltip=若启用，将渲染物品展示框。
-celeritasextra.option.render.item_frame_lod_distance=展示框多层次细节范围
-celeritasextra.option.render.item_frame_lod_distance.tooltip=超过此距离（方块）后，普通物品省略侧面并保留正面。地图和 3D 方块保持显示。0 = 关闭。
-celeritasextra.option.render.armor_stands=盔甲架
-celeritasextra.option.render.armor_stands.tooltip=若启用，将渲染盔甲架。
-celeritasextra.option.render.paintings=画
-celeritasextra.option.render.paintings.tooltip=若启用，将渲染画。
-celeritasextra.option.render.pistons=活塞
-celeritasextra.option.render.pistons.tooltip=若启用，将渲染活塞伸出动画。
-celeritasextra.option.render.beacons=信标光束
-celeritasextra.option.render.beacons.tooltip=若启用，将渲染信标光束。
-celeritasextra.option.render.limit_beacon_beam_height=限制信标光束高度
-celeritasextra.option.render.limit_beacon_beam_height.tooltip=若启用，信标光束将只渲染到世界高度，而不是无限向上延伸。
-celeritasextra.option.render.enchanting_books=附魔台的书
-celeritasextra.option.render.enchanting_books.tooltip=若启用，将渲染附魔台的书。
-celeritasextra.option.render.player_name_tag=玩家名称标签
-celeritasextra.option.render.player_name_tag.tooltip=若启用，玩家名称标签将可见。
-celeritasextra.option.render.item_frame_name_tag=物品展示框名称标签
-celeritasextra.option.render.item_frame_name_tag.tooltip=若启用，物品展示框名称标签将可见。
+sodium-extra.option.light_updates=光照更新
+sodium-extra.option.light_updates.tooltip=处理光照更新。若禁用，可能会导致新区块的光照不正确。只有在了解其影响的情况下才能禁用。
+sodium-extra.option.item_frames.tooltip=渲染物品展示框。
+moreculling.config.option.itemFrameLODRange=展示框多层次细节范围
+moreculling.config.option.itemFrameLODRange.tooltip=超过此距离（方块）后，普通物品省略侧面并保留正面。地图和 3D 方块保持显示。0 = 关闭。
+sodium-extra.option.armor_stands.tooltip=渲染盔甲架。
+sodium-extra.option.paintings.tooltip=渲染画。
+sodium-extra.option.piston.tooltip=渲染活塞伸缩动画。
+sodium-extra.option.beacon_beam=信标光柱
+sodium-extra.option.beacon_beam.tooltip=渲染信标光柱。
+sodium-extra.option.limit_beacon_beam_height=限制信标光柱高度
+sodium-extra.option.limit_beacon_beam_height.tooltip=只渲染信标光柱在世界最大建筑高度以下的部分。
+sodium-extra.option.enchanting_table_book=附魔台上的书
+sodium-extra.option.enchanting_table_book.tooltip=渲染附魔台上的书。
+sodium-extra.option.player_name_tag=玩家名称标签
+sodium-extra.option.player_name_tag.tooltip=显示玩家名称标签。
+sodium-extra.option.item_frame_name_tag=物品展示框名称标签
+sodium-extra.option.item_frame_name_tag.tooltip=显示物品展示框名称标签。
 
 # 额外选项
-celeritasextra.option.extra.fps=显示 FPS
-celeritasextra.option.extra.fps.tooltip=在界面上显示当前游戏帧率（FPS）。
-celeritasextra.option.extra.fps_extended=FPS 扩展显示
-celeritasextra.option.extra.fps_extended.tooltip=若启用，除当前 FPS 外，还会显示平均、1%% Low 和 0.1%% Low FPS。
-celeritasextra.option.extra.coords=显示坐标
-celeritasextra.option.extra.coords.tooltip=在界面上显示玩家坐标。
-celeritasextra.option.extra.memory=显示内存使用量
-celeritasextra.option.extra.memory.tooltip=显示 JVM 堆内存使用率和已用/最大容量（MiB）。
-celeritasextra.option.extra.ignore_reduced_debug_info=忽略精简调试信息
-celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=若启用，即使精简调试信息处于活动状态（例如在启用 reducedDebugInfo 游戏规则的服务器上），也会显示坐标。
-celeritasextra.option.extra.overlay_corner=界面位置
-celeritasextra.option.extra.overlay_corner.tooltip=选择 FPS、坐标和内存使用量界面显示的屏幕角落。
-celeritasextra.option.extra.text_contrast=文字对比度
-celeritasextra.option.extra.text_contrast.tooltip=调整界面文字的对比度。无：纯白色文字。背景：为文字渲染调试菜单样式的背景。阴影：带阴影的白色文字。
-celeritasextra.option.extra.vertical_sync=垂直同步
-celeritasextra.option.extra.vertical_sync.tooltip=控制垂直同步模式。关闭：禁用垂直同步，可能导致画面撕裂。开启：标准垂直同步，将帧率限制为刷新率。自适应：帧率高于刷新率时启用，低于时禁用以减少卡顿。仅在GPU驱动支持时可用。
-celeritasextra.option.screen_mode=屏幕模式
-celeritasextra.option.screen_mode.tooltip=窗口化：标准窗口模式。无边框：无独占模式的全屏，便于Alt+Tab和多显示器切换。全屏：独占全屏模式。
-celeritasextra.option.screen_mode.windowed=窗口化
-celeritasextra.option.screen_mode.borderless=无边框
-celeritasextra.option.screen_mode.fullscreen=全屏
-celeritasextra.option.extra.mod_name_tooltip=模组名称提示
-celeritasextra.option.extra.mod_name_tooltip.tooltip=在每个物品提示框底部显示其来源模组的名称。
-celeritasextra.option.extra.steady_debug_hud=稳定 F3 调试界面
-celeritasextra.option.extra.steady_debug_hud.tooltip=若启用，F3 调试界面将按照“稳定 F3 调试界面刷新间隔”设定的游戏刻数进行刷新。
-celeritasextra.option.extra.steady_debug_hud_refresh=稳定 F3 调试界面刷新间隔
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=以游戏刻为单位调整调试界面刷新的间隔。
-celeritasextra.option.extra.toasts=弹窗提示
-celeritasextra.option.extra.toasts.tooltip=显示完成进度或解锁新配方的弹窗。
-celeritasextra.option.extra.toast_advancement=进度弹窗提示
-celeritasextra.option.extra.toast_advancement.tooltip=显示完成进度的弹窗。
-celeritasextra.option.extra.toast_recipe=配方弹窗提示
-celeritasextra.option.extra.toast_recipe.tooltip=显示解锁新配方的弹窗。
-celeritasextra.option.extra.toast_tutorial=教程弹窗提示
-celeritasextra.option.extra.toast_tutorial.tooltip=显示教学提示的弹窗。
-celeritasextra.option.extra.toast_system=系统弹窗提示
-celeritasextra.option.extra.toast_system.tooltip=显示系统弹窗。
+sodium-extra.option.show_fps=显示FPS
+sodium-extra.option.show_fps.tooltip=在叠加层上显示当前FPS。
+sodium-extra.option.show_fps_extended=显示FPS拓展
+sodium-extra.option.show_fps_extended.tooltip=若启用，除当前 FPS 外，还会显示平均、1%% Low 和 0.1%% Low FPS。
+sodium-extra.option.show_coordinates=显示坐标
+sodium-extra.option.show_coordinates.tooltip=在叠加层上显示坐标。
+celeritasextra.option.show_memory=显示内存使用量
+celeritasextra.option.show_memory.tooltip=显示 JVM 堆内存使用率和已用/最大容量（MiB）。
+celeritasextra.option.ignore_reduced_debug_info=忽略精简调试信息
+celeritasextra.option.ignore_reduced_debug_info.tooltip=若启用，即使精简调试信息处于活动状态（例如在启用 reducedDebugInfo 游戏规则的服务器上），也会显示坐标。
+sodium-extra.option.overlay_corner=叠加层位置
+sodium-extra.option.overlay_corner.tooltip=选择 FPS、坐标和内存使用量界面显示的屏幕角落。
+sodium-extra.option.text_contrast=文本对比度
+sodium-extra.option.text_contrast.tooltip=调整界面文字的对比度。无：纯白色文字。背景：为文字渲染调试菜单样式的背景。阴影：带阴影的白色文字。
+celeritasextra.option.vsync.tooltip=控制垂直同步模式。关闭：禁用垂直同步，可能导致画面撕裂。开启：标准垂直同步，将帧率限制为刷新率。自适应：帧率高于刷新率时启用，低于时禁用以减少卡顿。仅在GPU驱动支持时可用。
+sodium.extras.options.screen.title=全屏模式
+sodium.extras.options.screen.desc=窗口化：标准窗口模式。无边框：无独占模式的全屏，便于Alt+Tab和多显示器切换。全屏：独占全屏模式。
+sodium.extras.options.screen.windowed=窗口化
+sodium.extras.options.screen.borderless=无边框
+celeritasextra.option.mod_name_tooltip=模组名称提示
+celeritasextra.option.mod_name_tooltip.tooltip=在每个物品提示框底部显示其来源模组的名称。
+sodium-extra.option.steady_debug_hud=稳固调试界面
+sodium-extra.option.steady_debug_hud.tooltip=按照“稳固调试界面刷新间隔”设置的固定间隔来刷新调试界面。
+sodium-extra.option.steady_debug_hud_refresh_interval=稳固调试界面刷新间隔
+sodium-extra.option.steady_debug_hud_refresh_interval.tooltip=设置调试界面刷新的时间间隔（以刻为单位）。
+sodium-extra.option.toasts=弹窗提示
+sodium-extra.option.toasts.tooltip=显示完成进度或解锁新配方的弹窗。
+sodium-extra.option.advancement_toast=进度弹窗提示
+sodium-extra.option.advancement_toast.tooltip=显示完成进度的弹窗。
+sodium-extra.option.recipe_toast=配方弹窗提示
+sodium-extra.option.recipe_toast.tooltip=显示解锁新配方的弹窗。
+sodium-extra.option.tutorial_toast=教程弹窗提示
+sodium-extra.option.tutorial_toast.tooltip=显示教学提示的弹窗。
+sodium-extra.option.system_toast=系统弹窗提示
+sodium-extra.option.system_toast.tooltip=显示系统弹窗。
 
 # 界面位置选项
-celeritasextra.option.overlay_corner.top_left=左上
-celeritasextra.option.overlay_corner.top_right=右上
-celeritasextra.option.overlay_corner.bottom_left=左下
-celeritasextra.option.overlay_corner.bottom_right=右下
+sodium-extra.option.overlay_corner.top_left=左上
+sodium-extra.option.overlay_corner.top_right=右上
+sodium-extra.option.overlay_corner.bottom_left=左下
+sodium-extra.option.overlay_corner.bottom_right=右下
 
 # 文字对比度选项
-celeritasextra.option.text_contrast.none=无
-celeritasextra.option.text_contrast.background=背景
-celeritasextra.option.text_contrast.shadow=阴影
+sodium-extra.option.text_contrast.none=无
+sodium-extra.option.text_contrast.background=背景
+sodium-extra.option.text_contrast.shadow=阴影
 
 # 垂直同步选项
-celeritasextra.option.vertical_sync.off=关闭
-celeritasextra.option.vertical_sync.on=开启
-celeritasextra.option.vertical_sync.adaptive=自适应
+sodium-extra.option.use_adaptive_sync.name=自适应
 
 # 界面文本
-celeritasextra.overlay.fps=%d FPS
-celeritasextra.overlay.fps_extended=(平均: %d, 1%% Low: %d, 0.1%% Low: %d)
-celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+sodium-extra.overlay.fps=%d FPS
+sodium-extra.overlay.fps_extended=(平均: %d, 1%% Low: %d, 0.1%% Low: %d)
+sodium-extra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=内存: %s%% (%s / %s MiB)
-celeritasextra.overlay.light_updates=光照更新已禁用
+sodium-extra.overlay.light_updates=光照更新已禁用
 
-celeritasextra.option.details.sun=太阳
-celeritasextra.option.details.sun.tooltip=独立切换太阳的显示。
-celeritasextra.option.details.moon=月亮
-celeritasextra.option.details.moon.tooltip=独立切换月亮的显示。
-celeritasextra.option.render.sign_text_culling=告示牌文字剔除
-celeritasextra.option.render.sign_text_culling.tooltip=跳过背面的告示牌文字。编辑时和靠近平面时保持显示。
-celeritasextra.option.render.map_back_face_culling=地图背面剔除
-celeritasextra.option.render.map_back_face_culling.tooltip=跳过从背面看到的物品展示框地图。正面不受距离影响。
-celeritasextra.option.render.entity_distance=实体渲染距离
-celeritasextra.option.render.entity_distance.tooltip=以方块为单位限制实体渲染距离。0 保持原版。可在配置文件中设置排除类。
-celeritasextra.option.render.tile_entity_distance=方块实体渲染距离
-celeritasextra.option.render.tile_entity_distance.tooltip=限制特殊方块渲染器的距离。0 保持原版。默认排除信标，可在配置文件中添加排除类。
-celeritasextra.option.extra.inactive_fps=后台 FPS 上限
-celeritasextra.option.extra.inactive_fps.tooltip=窗口失去焦点时限制绘制 FPS。0 为关闭。客户端 Tick 和网络处理保持至少 20 Hz。
-celeritasextra.option.extra.minimized_fps=最小化 FPS 上限
-celeritasextra.option.extra.minimized_fps.tooltip=最小化时限制绘制 FPS。0 使用后台设置。
-celeritasextra.option.render.dimension_fog=覆盖雾设置: %s
-celeritasextra.option.render.dimension_fog.tooltip=为该维度使用独立的环境雾设置。禁用时继承全局设置。保留失明、水和熔岩雾。
-celeritasextra.option.particles.spawn_rate.tooltip=设置 %s 的生成率。0%% 关闭，100%% 保留所有粒子。
+sodium-extra.option.sun=太阳
+sodium-extra.option.sun.tooltip=渲染太阳。
+sodium-extra.option.moon=月亮
+sodium-extra.option.moon.tooltip=渲染月亮。
+moreculling.config.option.signTextCulling=告示牌文本剔除
+moreculling.config.option.signTextCulling.tooltip=跳过背面的告示牌文字。编辑时和靠近平面时保持显示。
+moreculling.config.option.itemFrameMapCulling=展示框地图剔除
+moreculling.config.option.itemFrameMapCulling.tooltip=跳过从背面看到的物品展示框地图。正面不受距离影响。
+celeritasextra.option.entity_render_distance=实体渲染距离
+celeritasextra.option.entity_render_distance.tooltip=以方块为单位限制实体渲染距离。0 保持原版。可在配置文件中设置排除类。
+celeritasextra.option.tile_entity_render_distance=方块实体渲染距离
+celeritasextra.option.tile_entity_render_distance.tooltip=限制特殊方块渲染器的距离。0 保持原版。默认排除信标，可在配置文件中添加排除类。
+celeritasextra.option.inactive_fps_limit=后台 FPS 上限
+celeritasextra.option.inactive_fps_limit.tooltip=窗口失去焦点时限制绘制 FPS。0 为关闭。客户端 Tick 和网络处理保持至少 20 Hz。
+celeritasextra.option.minimized_fps_limit=最小化 FPS 上限
+celeritasextra.option.minimized_fps_limit.tooltip=最小化时限制绘制 FPS。0 使用后台设置。
+celeritasextra.option.dimension_fog_override=覆盖雾设置: %s
+celeritasextra.option.dimension_fog_override.tooltip=为该维度使用独立的环境雾设置。禁用时继承全局设置。保留失明、水和熔岩雾。
+celeritasextra.option.particle_spawn_percentage.tooltip=设置 %s 的生成率。0%% 关闭，100%% 保留所有粒子。
 
-celeritasextra.search.placeholder=搜索设置... (Ctrl+F)
+rso.search_bar_empty=搜索选项……
 celeritasextra.search.results=%s 项结果
 celeritasextra.search.no_results=没有匹配的设置
+sodium-extra.units.blocks=%s 方块
+sodium-extra.units.ticks=%s刻
+options.dimensions.minecraft.overworld=主世界
+options.dimensions.minecraft.the_nether=下界
+options.dimensions.minecraft.the_end=末地

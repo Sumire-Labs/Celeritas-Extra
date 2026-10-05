@@ -1,185 +1,168 @@
+# Upstream-aligned translation keys; see translations/upstream-keys.json.
 # Celeritas Extra - 日本語翻訳
 # Based on Embeddium Extra translations
 
 # オプションページ
-celeritasextra.option.page.animations=アニメーション
-celeritasextra.option.page.particles=パーティクル
-celeritasextra.option.page.details=詳細
-celeritasextra.option.page.render=描画
-celeritasextra.option.page.extra=追加の機能
+sodium-extra.option.animations=アニメーション
+sodium-extra.option.details=詳細
+sodium-extra.option.render=描画
+sodium-extra.option.extras=追加の機能
 
 # アニメーションオプション
-celeritasextra.option.animations.all=アニメーション
-celeritasextra.option.animations.all.tooltip=有効にした場合、すべてのアニメーションが処理されます。
-celeritasextra.option.animations.water=水
-celeritasextra.option.animations.water.tooltip=有効にした場合、水のアニメーションが処理されます。
-celeritasextra.option.animations.lava=溶岩
-celeritasextra.option.animations.lava.tooltip=有効にした場合、溶岩のアニメーションが処理されます。
-celeritasextra.option.animations.fire=炎
-celeritasextra.option.animations.fire.tooltip=有効にした場合、炎のアニメーションが処理されます。
-celeritasextra.option.animations.portal=ポータル
-celeritasextra.option.animations.portal.tooltip=有効にした場合、ネザーポータルのアニメーションが処理されます。
-celeritasextra.option.animations.block=ブロックアニメーション
-celeritasextra.option.animations.block.tooltip=有効にした場合、ブロックアニメーションが処理されます。
+sodium-extra.option.animations_all.tooltip=有効にした場合、すべてのアニメーションの処理は実行されます。
+sodium-extra.option.animate_water.tooltip=有効にした場合、水のアニメーションの処理は実行されます。
+sodium-extra.option.animate_lava.tooltip=有効にした場合、溶岩のアニメーションの処理は実行されます。
+sodium-extra.option.animate_fire.tooltip=有効にした場合、炎のアニメーションの処理は実行されます。
+sodium-extra.option.animate_portal.tooltip=有効にした場合、ネザーポータルのアニメーションの処理は実行されます。
+sodium-extra.option.block_animations=ブロックアニメーション
+sodium-extra.option.block_animations.tooltip=有効にした場合、ブロックアニメーションの処理は実行されます。
 
 # パーティクルオプション
-celeritasextra.option.particles.all=パーティクル
-celeritasextra.option.particles.all.tooltip=有効にした場合、全てのパーティクルが処理されます。
-celeritasextra.option.particles.rain_splash=雨の水しぶき
-celeritasextra.option.particles.rain_splash.tooltip=有効にした場合、雨の水しぶきのパーティクルは描画されます。
-celeritasextra.option.particles.block_break=ブロック破壊
-celeritasextra.option.particles.block_break.tooltip=有効にした場合、ブロックが破壊されたときのパーティクルが処理されます。
-celeritasextra.option.particles.block_breaking=ブロック採掘中
-celeritasextra.option.particles.block_breaking.tooltip=有効にした場合、ブロックを採掘しているときのパーティクルが処理されます。
-celeritasextra.option.particles.other.tooltip=有効にした場合、%sのパーティクルが処理されます。
+sodium-extra.option.particles_all.tooltip=有効にした場合、全てのパーティクルの処理は実行されます。
+sodium-extra.option.rain_splash.tooltip=有効にした場合、雨の水しぶきのパーティクルは描画されます。
+sodium-extra.option.block_break.tooltip=有効にした場合、ブロックが破壊されたときのパーティクルの処理は実行されます。
+sodium-extra.option.block_breaking.tooltip=有効にした場合、ブロックが破壊されているときのパーティクルの処理は実行されます。
 
 # 詳細オプション
-celeritasextra.option.details.sky=空
-celeritasextra.option.details.sky.tooltip=有効にした場合、空は描画されます。
-celeritasextra.option.details.stars=星
-celeritasextra.option.details.stars.tooltip=有効にした場合、星は描画されます。
-celeritasextra.option.details.total_stars=星の数
-celeritasextra.option.details.total_stars.tooltip=空に描画される星の数を制御します。反映にはレンダラーの再読み込みが必要です。
-celeritasextra.option.details.sun_moon=太陽と月
-celeritasextra.option.details.sun_moon.tooltip=有効にした場合、太陽と月は描画されます。
-celeritasextra.option.details.rain_snow=雨と雪
-celeritasextra.option.details.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
-celeritasextra.option.details.biome_colors=バイオームの色
-celeritasextra.option.details.biome_colors.tooltip=有効にした場合、バイオームの色はそれぞれのバイオームに基づいて変更されます。
-celeritasextra.option.details.sky_colors=空の色
-celeritasextra.option.details.sky_colors.tooltip=バイオームに基づく空の色を適用します。
-celeritasextra.option.details.void_fog=奈落の霧
-celeritasextra.option.details.void_fog.tooltip=有効にした場合、ワールドの下で奈落の霧が描画されます。
+sodium-extra.option.sky=空
+sodium-extra.option.sky.tooltip=有効にした場合、空は描画されます。
+sodium-extra.option.stars=星
+sodium-extra.option.stars.tooltip=有効にした場合、星は描画されます。
+options.total_stars=星の密度
+options.total_stars.tooltip=空に描画される星の数を制御します。反映にはレンダラーの再読み込みが必要です。
+sodium-extra.option.rain_snow.tooltip=有効にした場合、雨と雪は描画されます。
+sodium-extra.option.biome_colors=バイオームの色
+sodium-extra.option.biome_colors.tooltip=有効にした場合、バイオームの色はそれぞれのバイオームに基づいて変更されます。
+sodium-extra.option.sky_colors=空の色
+sodium-extra.option.sky_colors.tooltip=有効にした場合、空の色はそれぞれのバイオームに基づいて変更されます。
+options.void_fog=奈落の霧
+options.void_fog.tooltip=奈落の霧の有効、無効を設定します。
 
 # レンダリングオプション
-celeritasextra.option.render.fog=霧
-celeritasextra.option.render.fog.tooltip=有効にした場合、霧は描画されます。
-celeritasextra.option.render.fog_start=霧の開始距離の倍率
-celeritasextra.option.render.fog_start.tooltip=地形の霧が描画され始める距離を調整します。
-celeritasextra.option.render.fog_distance=霧の距離
-celeritasextra.option.render.fog_distance.tooltip=霧の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
-celeritasextra.option.render.prevent_shaders=シェーダー読み込みの防止
-celeritasextra.option.render.prevent_shaders.tooltip=有効にした場合、あらゆるタイプのバニラのシェーダーがロードされなくなります。具体的には、スペクテイターモードで蜘蛛の視点に乗り移った時の視界の歪みなどです。
-celeritasextra.option.render.clouds=雲
-celeritasextra.option.render.clouds.tooltip=有効にした場合、雲は描画されます。
-celeritasextra.option.render.modern_clouds=モダンな雲
-celeritasextra.option.render.modern_clouds.tooltip=既存の描画方式でMinecraft 1.21.6の雲テクスチャを使用します。AssetMover 2.5で画像を取得します。雲の高さ・描画距離・大きさの設定に対応し、ユーザーのリソースパックを優先します。適用時にリソースを再読み込みします。
-celeritasextra.option.render.cloud_height=雲の高さ
-celeritasextra.option.render.cloud_height.tooltip=描画される雲の高さを制御します。
-celeritasextra.option.render.cloud_distance=雲の描画距離
-celeritasextra.option.render.cloud_distance.tooltip=雲の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
-celeritasextra.option.render.cloud_scale=雲のスケール
-celeritasextra.option.render.cloud_scale.tooltip=雲の大きさを0.25倍～4.00倍で調整します。1.00倍がバニラのデフォルトです。
-celeritasextra.option.render.cloud_translucency=雲の透過
-celeritasextra.option.render.cloud_translucency.tooltip=雲が半透明になるタイミングを制御します。デフォルト: 雲の高さに基づく。常時: 常に半透明。しない: 常に不透明。
+sodium-extra.option.fog_type.atmospheric=霧
+sodium-extra.option.fog_type.atmospheric.tooltip=有効にした場合、霧は描画されます。
+sodium-extra.option.fog_start=霧の開始地点の倍数
+sodium-extra.option.fog_start.tooltip=Controls how close to the player terrain fog begins.
+sodium-extra.option.fog_distance=霧の距離
+sodium-extra.option.fog_distance.tooltip=霧の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
+sodium-extra.option.prevent_shaders=シェーダー読み込みの防止
+sodium-extra.option.prevent_shaders.tooltip=有効にした場合、あらゆるタイプのバニラのシェーダーがロードされなくなります。具体的には、スペクテイターモードで蜘蛛の視点に乗り移った時の視界の歪みなどです。
+celeritasextra.option.clouds.tooltip=有効にした場合、雲は描画されます。
+celeritasextra.option.modern_clouds=モダンな雲
+celeritasextra.option.modern_clouds.tooltip=既存の描画方式でMinecraft 1.21.6の雲テクスチャを使用します。AssetMover 2.5で画像を取得します。雲の高さ・描画距離・大きさの設定に対応し、ユーザーのリソースパックを優先します。適用時にリソースを再読み込みします。
+sodium-extra.option.cloud_height=雲の高さ
+sodium-extra.option.cloud_height.tooltip=描画される雲の高さを制御します。
+sodium-extra.option.cloud_distance=雲の距離
+sodium-extra.option.cloud_distance.tooltip=雲の描画距離をチャンク単位で制御します。0 = デフォルト（描画距離を使用）。
+options.cloud_scale=雲の大きさ
+options.cloud_scale.tooltip=雲の大きさを0.25倍～4.00倍で調整します。1.00倍がバニラのデフォルトです。
+options.mode_cloud_translucency=半透明の雲
+options.mode_cloud_translucency.tooltip=雲が半透明になるタイミングを制御します。デフォルト: 雲の高さに基づく。常時: 常に半透明。しない: 常に不透明。
 celeritasextra.option.cloud_translucency.default=デフォルト
 celeritasextra.option.cloud_translucency.always=常時
 celeritasextra.option.cloud_translucency.never=しない
-celeritasextra.option.render.light_updates=明るさの更新
-celeritasextra.option.render.light_updates.tooltip=無効にした場合、明るさの更新は処理されません。パフォーマンスは向上しますが、表示に不具合が生じる可能性があります。
-celeritasextra.option.render.item_frames=額縁
-celeritasextra.option.render.item_frames.tooltip=有効にした場合、額縁は描画されます。
-celeritasextra.option.render.item_frame_lod_distance=額縁のLODの距離
-celeritasextra.option.render.item_frame_lod_distance.tooltip=この距離（ブロック）を超えると、通常アイテムの側面を省略して正面を表示します。地図と3Dブロックは表示を維持します。0 = オフ。
-celeritasextra.option.render.armor_stands=防具立て
-celeritasextra.option.render.armor_stands.tooltip=有効にした場合、防具立ては描画されます。
-celeritasextra.option.render.paintings=絵画
-celeritasextra.option.render.paintings.tooltip=有効にした場合、絵画は描画されます。
-celeritasextra.option.render.pistons=ピストン
-celeritasextra.option.render.pistons.tooltip=有効にした場合、ピストンの伸びるアニメーションは描画されます。
-celeritasextra.option.render.beacons=ビーコンのビーム
-celeritasextra.option.render.beacons.tooltip=有効にした場合、ビーコンのビームは描画されます。
-celeritasextra.option.render.limit_beacon_beam_height=ビーコンビームの高さを制限
-celeritasextra.option.render.limit_beacon_beam_height.tooltip=有効にした場合、ビーコンのビームは無限に上に伸びる代わりに、ワールドの高さまでしか描画されません。
-celeritasextra.option.render.enchanting_books=エンチャントテーブルの本
-celeritasextra.option.render.enchanting_books.tooltip=有効にした場合、エンチャントテーブルの本は描画されます。
-celeritasextra.option.render.player_name_tag=プレイヤーネームタグ
-celeritasextra.option.render.player_name_tag.tooltip=有効にした場合、プレイヤーのネームタグは表示されます。
-celeritasextra.option.render.item_frame_name_tag=額縁のネームタグ
-celeritasextra.option.render.item_frame_name_tag.tooltip=有効にした場合、額縁のネームタグは表示されます。
+sodium-extra.option.light_updates=光の状態更新
+sodium-extra.option.light_updates.tooltip=有効にした場合、光の状態更新の処理は実行されます。これを無効にした場合、新しいチャンクを生成したときの光の状態に影響を与える可能性があります。自分が何をしているのかを分かっている場合にのみ、無効にしてください。
+sodium-extra.option.item_frames.tooltip=有効にした場合、額縁は描画されます。
+moreculling.config.option.itemFrameLODRange=額縁のLODの距離
+moreculling.config.option.itemFrameLODRange.tooltip=この距離（ブロック）を超えると、通常アイテムの側面を省略して正面を表示します。地図と3Dブロックは表示を維持します。0 = オフ。
+sodium-extra.option.armor_stands.tooltip=有効にした場合、防具立ては描画されます。
+sodium-extra.option.paintings.tooltip=有効にした場合、絵画は描画されます。
+sodium-extra.option.piston.tooltip=有効にした場合、ピストンの伸びるアニメーションは描画されます。
+sodium-extra.option.beacon_beam=ビーコンのビーム
+sodium-extra.option.beacon_beam.tooltip=有効にした場合、ビーコンのビームは描画されます。
+sodium-extra.option.limit_beacon_beam_height=ビーコンビームの高さを制限
+sodium-extra.option.limit_beacon_beam_height.tooltip=有効にした場合、ビーコンのビームは無限に上に伸びる代わりに、ワールドの高さまでしか描画されません。
+sodium-extra.option.enchanting_table_book=エンチャントテーブルの本
+sodium-extra.option.enchanting_table_book.tooltip=有効にした場合、エンチャントテーブルの本は描画されます。
+sodium-extra.option.player_name_tag=プレイヤーネームタグ
+sodium-extra.option.player_name_tag.tooltip=有効にした場合、プレイヤーのネームタグは表示されます。
+sodium-extra.option.item_frame_name_tag=額縁のネームタグ
+sodium-extra.option.item_frame_name_tag.tooltip=有効にした場合、額縁のネームタグは描画されます。
 
 # 追加オプション
-celeritasextra.option.extra.fps=FPSの表示
-celeritasextra.option.extra.fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
-celeritasextra.option.extra.fps_extended=FPSの拡張表示
-celeritasextra.option.extra.fps_extended.tooltip=オーバーレイのFPSの表示の横に追加の情報 (平均、1%% Low、0.1%% LowのFPS) を表示します。
-celeritasextra.option.extra.coords=座標の表示
-celeritasextra.option.extra.coords.tooltip=オーバーレイにプレイヤーの座標を表示します。
-celeritasextra.option.extra.memory=メモリ使用量の表示
-celeritasextra.option.extra.memory.tooltip=JVMヒープの使用率と使用量/最大容量をMiBで表示します。
-celeritasextra.option.extra.ignore_reduced_debug_info=デバッグ情報制限を無視
-celeritasextra.option.extra.ignore_reduced_debug_info.tooltip=有効にした場合、デバッグ情報が制限されている場合（例：reducedDebugInfoゲームルールが有効なサーバー）でも座標が表示されます。
-celeritasextra.option.extra.overlay_corner=オーバーレイの位置
-celeritasextra.option.extra.overlay_corner.tooltip=オーバーレイ（FPS、座標、メモリ使用量）を描画する位置を指定します。
-celeritasextra.option.extra.text_contrast=文字のコントラスト
-celeritasextra.option.extra.text_contrast.tooltip=オーバーレイの文字のコントラストを調整します。無し: 通常の白い文字。背景: デバッグメニューのように文字の背景を描画します。影: 白い文字に影を付けます。
-celeritasextra.option.extra.vertical_sync=垂直同期
-celeritasextra.option.extra.vertical_sync.tooltip=垂直同期のモードを制御します。オフ: 垂直同期を無効にします。画面のティアリングが発生する場合があります。オン: 標準の垂直同期。FPSをモニターのリフレッシュレートに制限します。アダプティブ: FPSがリフレッシュレートを上回る場合に垂直同期を有効にし、下回る場合に無効にしてカクつきを軽減します。GPUドライバーがサポートしている場合のみ利用可能です。
-celeritasextra.option.screen_mode=スクリーンモード
-celeritasextra.option.screen_mode.tooltip=ウィンドウ: 通常のウィンドウモード。ボーダーレス: 排他制御なしのフルスクリーン。Alt+Tabやマルチモニターの切り替えが容易。フルスクリーン: 排他フルスクリーンモード。
-celeritasextra.option.screen_mode.windowed=ウィンドウ
-celeritasextra.option.screen_mode.borderless=ボーダーレス
-celeritasextra.option.screen_mode.fullscreen=フルスクリーン
-celeritasextra.option.extra.mod_name_tooltip=MOD名ツールチップ
-celeritasextra.option.extra.mod_name_tooltip.tooltip=各アイテムのツールチップの一番下に、そのアイテムの提供元MOD名を表示します。
-celeritasextra.option.extra.steady_debug_hud=安定したデバッグ画面
-celeritasextra.option.extra.steady_debug_hud.tooltip=有効にした場合、デバッグ画面は「デバッグ画面の更新間隔」で設定したティック間隔で更新されます。
-celeritasextra.option.extra.steady_debug_hud_refresh=安定したデバッグ画面の更新間隔
-celeritasextra.option.extra.steady_debug_hud_refresh.tooltip=デバッグ画面の更新間隔をティック単位で調整します。
-celeritasextra.option.extra.toasts=ポップアップメッセージ
-celeritasextra.option.extra.toasts.tooltip=進捗とレシピのポップアップ(トースト)を表示します。
-celeritasextra.option.extra.toast_advancement=進捗の通知
-celeritasextra.option.extra.toast_advancement.tooltip=進捗のポップアップ(トースト)を表示します。
-celeritasextra.option.extra.toast_recipe=レシピの通知
-celeritasextra.option.extra.toast_recipe.tooltip=レシピのポップアップ(トースト)を表示します。
-celeritasextra.option.extra.toast_tutorial=チュートリアルの通知
-celeritasextra.option.extra.toast_tutorial.tooltip=チュートリアルのポップアップ(トースト)を表示します。
-celeritasextra.option.extra.toast_system=システムの通知
-celeritasextra.option.extra.toast_system.tooltip=システムのポップアップ(トースト)を表示します。
+sodium-extra.option.show_fps=FPSの表示
+sodium-extra.option.show_fps.tooltip=オーバーレイにゲームの現在の FPS を表示します。
+sodium-extra.option.show_fps_extended=FPSの拡張表示
+sodium-extra.option.show_fps_extended.tooltip=オーバーレイのFPSの表示の横に追加の情報 (平均、1%% Low、0.1%% LowのFPS) を表示します。
+sodium-extra.option.show_coordinates=座標の表示
+sodium-extra.option.show_coordinates.tooltip=オーバーレイにプレイヤーの座標を表示します。
+celeritasextra.option.show_memory=メモリ使用量の表示
+celeritasextra.option.show_memory.tooltip=JVMヒープの使用率と使用量/最大容量をMiBで表示します。
+celeritasextra.option.ignore_reduced_debug_info=デバッグ情報制限を無視
+celeritasextra.option.ignore_reduced_debug_info.tooltip=有効にした場合、デバッグ情報が制限されている場合（例：reducedDebugInfoゲームルールが有効なサーバー）でも座標が表示されます。
+sodium-extra.option.overlay_corner=オーバーレイの位置
+sodium-extra.option.overlay_corner.tooltip=オーバーレイ（FPS、座標、メモリ使用量）を描画する位置を指定します。
+sodium-extra.option.text_contrast=文字のコントラスト
+sodium-extra.option.text_contrast.tooltip=オーバーレイの文字のコントラストを調整します。無し: 通常の白い文字。背景: デバッグメニューのように文字の背景を描画します。影: 白い文字に影を付けます。
+celeritasextra.option.vsync.tooltip=垂直同期のモードを制御します。オフ: 垂直同期を無効にします。画面のティアリングが発生する場合があります。オン: 標準の垂直同期。FPSをモニターのリフレッシュレートに制限します。アダプティブ: FPSがリフレッシュレートを上回る場合に垂直同期を有効にし、下回る場合に無効にしてカクつきを軽減します。GPUドライバーがサポートしている場合のみ利用可能です。
+sodium.extras.options.screen.title=スクリーンモード
+sodium.extras.options.screen.desc=ウィンドウ: 通常のウィンドウモード。ボーダーレス: 排他制御なしのフルスクリーン。Alt+Tabやマルチモニターの切り替えが容易。フルスクリーン: 排他フルスクリーンモード。
+sodium.extras.options.screen.windowed=ウィンドウ
+sodium.extras.options.screen.borderless=ボーダーレス
+celeritasextra.option.mod_name_tooltip=MOD名ツールチップ
+celeritasextra.option.mod_name_tooltip.tooltip=各アイテムのツールチップの一番下に、そのアイテムの提供元MOD名を表示します。
+sodium-extra.option.steady_debug_hud=安定したデバック画面
+sodium-extra.option.steady_debug_hud.tooltip=有効にした場合、デバック画面は安定したデバック画面の更新間隔によって設定された一定量のティックで更新されます。
+sodium-extra.option.steady_debug_hud_refresh_interval=安定したデバック画面の更新間隔
+sodium-extra.option.steady_debug_hud_refresh_interval.tooltip=デバック画面の更新間隔をティックで調整します。
+sodium-extra.option.toasts=ポップアップメッセージ
+sodium-extra.option.toasts.tooltip=有効にした場合、レシピと進捗のポップアップは表示されます。
+sodium-extra.option.advancement_toast=進捗の通知
+sodium-extra.option.advancement_toast.tooltip=有効にした場合、進捗のポップアップは表示されます。
+sodium-extra.option.recipe_toast=レシピの通知
+sodium-extra.option.recipe_toast.tooltip=有効にした場合、レシピのポップアップは表示されます。
+sodium-extra.option.tutorial_toast=チュートリアルの通知
+sodium-extra.option.tutorial_toast.tooltip=有効にした場合チュートリアルのポップアップは表示されます。
+sodium-extra.option.system_toast=システムの通知
+sodium-extra.option.system_toast.tooltip=有効にした場合、システムのポップアップは表示されます。
 
 # オーバーレイ位置オプション
-celeritasextra.option.overlay_corner.top_left=左上
-celeritasextra.option.overlay_corner.top_right=右上
-celeritasextra.option.overlay_corner.bottom_left=左下
-celeritasextra.option.overlay_corner.bottom_right=右下
+sodium-extra.option.overlay_corner.top_left=左上
+sodium-extra.option.overlay_corner.top_right=右上
+sodium-extra.option.overlay_corner.bottom_left=左下
+sodium-extra.option.overlay_corner.bottom_right=右下
 
 # テキストコントラストオプション
-celeritasextra.option.text_contrast.none=無し
-celeritasextra.option.text_contrast.background=背景
-celeritasextra.option.text_contrast.shadow=影
+sodium-extra.option.text_contrast.none=無し
+sodium-extra.option.text_contrast.background=背景
+sodium-extra.option.text_contrast.shadow=影
 
 # 垂直同期オプション
-celeritasextra.option.vertical_sync.off=オフ
-celeritasextra.option.vertical_sync.on=オン
-celeritasextra.option.vertical_sync.adaptive=アダプティブ
+sodium-extra.option.use_adaptive_sync.name=アダプティブ
 
 # オーバーレイテキスト
-celeritasextra.overlay.fps=%s FPS
-celeritasextra.overlay.fps_extended=(平均 %s / 1%% Low %s / 0.1%% Low %s)
-celeritasextra.overlay.coordinates=X: %s, Y: %s, Z: %s
+sodium-extra.overlay.fps=%s FPS
+sodium-extra.overlay.fps_extended=(平均 %s / 1%% Low %s / 0.1%% Low %s)
+sodium-extra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=メモリ: %s%% (%s / %s MiB)
-celeritasextra.overlay.light_updates=明るさの更新が無効
+sodium-extra.overlay.light_updates=光の状態更新が無効
 
-celeritasextra.option.details.sun=太陽
-celeritasextra.option.details.sun.tooltip=月と独立して太陽の表示を切り替えます。
-celeritasextra.option.details.moon=月
-celeritasextra.option.details.moon.tooltip=太陽と独立して月の表示を切り替えます。
-celeritasextra.option.render.sign_text_culling=看板文字のカリング
-celeritasextra.option.render.sign_text_culling.tooltip=裏側から見た看板の文字描画を省略します。編集中と面の近くでは表示を維持します。
-celeritasextra.option.render.map_back_face_culling=地図の裏側カリング
-celeritasextra.option.render.map_back_face_culling.tooltip=裏側から見た額縁内の地図描画を省略します。正面からは距離に関係なく表示します。
-celeritasextra.option.render.entity_distance=エンティティの描画距離
-celeritasextra.option.render.entity_distance.tooltip=エンティティの描画距離をブロック単位で制限します。0は通常の動作です。除外するクラスは設定ファイルで指定できます。
-celeritasextra.option.render.tile_entity_distance=タイルエンティティの描画距離
-celeritasextra.option.render.tile_entity_distance.tooltip=特殊なブロック描画の距離を制限します。0は通常の動作です。ビーコンは既定で除外し、設定ファイルで除外を追加できます。
-celeritasextra.option.extra.inactive_fps=非アクティブ時のFPS上限
-celeritasextra.option.extra.inactive_fps.tooltip=ウィンドウが非アクティブな間の描画FPSを制限します。0はオフです。クライアントのTickと通信は毎秒20回以上維持します。
-celeritasextra.option.extra.minimized_fps=最小化時のFPS上限
-celeritasextra.option.extra.minimized_fps.tooltip=ウィンドウを最小化している間の描画FPSを制限します。0は非アクティブ時の設定を使います。
-celeritasextra.option.render.dimension_fog=Fogの上書き: %s
-celeritasextra.option.render.dimension_fog.tooltip=このディメンション専用の環境Fog設定を使います。無効時は全体設定を使用し、盲目・水・溶岩のFogは維持します。
-celeritasextra.option.particles.spawn_rate.tooltip=%sの発生率を設定します。0%%はオフ、100%%はすべて発生します。
+sodium-extra.option.sun=太陽
+sodium-extra.option.sun.tooltip=月と独立して太陽の表示を切り替えます。
+sodium-extra.option.moon=月
+sodium-extra.option.moon.tooltip=太陽と独立して月の表示を切り替えます。
+moreculling.config.option.signTextCulling=看板の文字のカリング
+moreculling.config.option.signTextCulling.tooltip=裏側から見た看板の文字描画を省略します。編集中と面の近くでは表示を維持します。
+moreculling.config.option.itemFrameMapCulling=額縁内のマップのカリング
+moreculling.config.option.itemFrameMapCulling.tooltip=裏側から見た額縁内の地図描画を省略します。正面からは距離に関係なく表示します。
+celeritasextra.option.entity_render_distance=エンティティの描画距離
+celeritasextra.option.entity_render_distance.tooltip=エンティティの描画距離をブロック単位で制限します。0は通常の動作です。除外するクラスは設定ファイルで指定できます。
+celeritasextra.option.tile_entity_render_distance=タイルエンティティの描画距離
+celeritasextra.option.tile_entity_render_distance.tooltip=特殊なブロック描画の距離を制限します。0は通常の動作です。ビーコンは既定で除外し、設定ファイルで除外を追加できます。
+celeritasextra.option.inactive_fps_limit=非アクティブ時のFPS上限
+celeritasextra.option.inactive_fps_limit.tooltip=ウィンドウが非アクティブな間の描画FPSを制限します。0はオフです。クライアントのTickと通信は毎秒20回以上維持します。
+celeritasextra.option.minimized_fps_limit=最小化時のFPS上限
+celeritasextra.option.minimized_fps_limit.tooltip=ウィンドウを最小化している間の描画FPSを制限します。0は非アクティブ時の設定を使います。
+celeritasextra.option.dimension_fog_override=Fogの上書き: %s
+celeritasextra.option.dimension_fog_override.tooltip=このディメンション専用の環境Fog設定を使います。無効時は全体設定を使用し、盲目・水・溶岩のFogは維持します。
+celeritasextra.option.particle_spawn_percentage.tooltip=%sの発生率を設定します。0%%はオフ、100%%はすべて発生します。
 
-celeritasextra.search.placeholder=設定を検索...（Ctrl+F）
+rso.search_bar_empty=オプションを検索...
 celeritasextra.search.results=%s件
 celeritasextra.search.no_results=一致する設定がありません
+sodium-extra.units.blocks=%sブロック
+sodium-extra.units.ticks=%s ティック
+options.dimensions.minecraft.overworld=オーバーワールド
+options.dimensions.minecraft.the_nether=ネザー
+options.dimensions.minecraft.the_end=ジ・エンド

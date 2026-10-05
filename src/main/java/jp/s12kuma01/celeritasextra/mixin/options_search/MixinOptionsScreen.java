@@ -1,11 +1,12 @@
 package jp.s12kuma01.celeritasextra.mixin.options_search;
 
+import jp.s12kuma01.celeritasextra.client.gui.Translations;
+
 import jp.s12kuma01.celeritasextra.client.gui.OptionsSearchScreen;
 import jp.s12kuma01.celeritasextra.client.gui.SearchableOptionsController;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.resources.I18n;
 import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.lwjgl.input.Keyboard;
@@ -35,7 +36,7 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         int cursor = celeritasExtra$field == null ? 0 : celeritasExtra$field.getCursorPosition();
         int selection = celeritasExtra$field == null ? 0 : celeritasExtra$field.getSelectionEnd();
         Dim2i bounds = celeritasExtra$searchController().celeritasExtra$searchBounds();
-        int countWidth = fontRenderer.getStringWidth(I18n.format("celeritasextra.search.results",
+        int countWidth = fontRenderer.getStringWidth(Translations.format("celeritasextra.search.results",
                 celeritasExtra$searchController().celeritasExtra$optionCount())) + 10;
         celeritasExtra$fieldBounds = new Dim2i(bounds.x(), bounds.y(), Math.max(40, bounds.width() - countWidth - 22), bounds.height());
         celeritasExtra$clearBounds = new Dim2i(bounds.getLimitX() - 18, bounds.y(), 18, bounds.height());
@@ -59,10 +60,10 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         celeritasExtra$field.drawTextBox();
         int baseline = celeritasExtra$fieldBounds.y() + (celeritasExtra$fieldBounds.height() - 8) / 2;
         if (celeritasExtra$field.getText().isEmpty() && !celeritasExtra$field.isFocused()) {
-            fontRenderer.drawString(fontRenderer.trimStringToWidth(I18n.format("celeritasextra.search.placeholder"),
+            fontRenderer.drawString(fontRenderer.trimStringToWidth(Translations.format("rso.search_bar_empty"),
                     celeritasExtra$fieldBounds.width() - 8), celeritasExtra$fieldBounds.x() + 4, baseline, 0x808080);
         }
-        fontRenderer.drawString(I18n.format("celeritasextra.search.results",
+        fontRenderer.drawString(Translations.format("celeritasextra.search.results",
                 celeritasExtra$searchController().celeritasExtra$resultCount()),
                 celeritasExtra$fieldBounds.getLimitX() + 5, baseline, 0xFFFFFF);
         var clear = celeritasExtra$clearBounds;
@@ -70,7 +71,7 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
                 clear.containsCursor(mouseX, mouseY) ? 0xFF555555 : 0xFF333333);
         fontRenderer.drawString("X", clear.x() + 6, baseline, 0xFFFFFF);
         if (celeritasExtra$searchController().celeritasExtra$resultCount() == 0) {
-            String empty = I18n.format("celeritasextra.search.no_results");
+            String empty = Translations.format("celeritasextra.search.no_results");
             fontRenderer.drawString(empty, (width - fontRenderer.getStringWidth(empty)) / 2,
                     clear.getLimitY() + 30, 0xAAAAAA);
         }
