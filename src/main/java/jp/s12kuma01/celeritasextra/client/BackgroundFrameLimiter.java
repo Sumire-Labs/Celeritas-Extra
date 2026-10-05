@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.client;
 
 import org.lwjgl.opengl.Display;
 import net.minecraft.client.Minecraft;
+import jp.s12kuma01.celeritasextra.compat.RendererCompat;
 
 /** Limits drawing without dropping the 20 Hz client tick/network processing cadence. */
 public final class BackgroundFrameLimiter {
@@ -16,8 +17,10 @@ public final class BackgroundFrameLimiter {
         Minecraft mc = Minecraft.getMinecraft();
         boolean menu = mc.world == null && mc.currentScreen != null;
         int requested = selectLimit(Display.isActive(), Display.isVisible(), settings.inactiveFpsLimit, settings.minimizedFpsLimit);
-        requested = combineMenuLimit(requested, menu, settings.menuFpsLimit);
-        int normal = normalLimit(menu ? 30 : mc.gameSettings.limitFramerate, menu, settings.menuFpsLimit);
+        int menuLimit = RendererCompat.isActinium() ? 0 : settings.menuFpsLimit;
+        requested = combineMenuLimit(requested, menu, menuLimit);
+        int nativeLimit = menu ? RendererCompat.menuFramerate(30) : mc.gameSettings.limitFramerate;
+        int normal = normalLimit(nativeLimit, menu, menuLimit);
         return requested > 0 ? Math.min(normal, requested) : 0;
     }
 
@@ -31,6 +34,7 @@ public final class BackgroundFrameLimiter {
     }
 
     public static int currentNormalLimit(int vanilla) {
+        if (RendererCompat.isActinium()) return vanilla;
         Minecraft mc = Minecraft.getMinecraft();
         return normalLimit(vanilla, mc.world == null && mc.currentScreen != null,
                 CeleritasExtraClientMod.options().extraSettings.menuFpsLimit);

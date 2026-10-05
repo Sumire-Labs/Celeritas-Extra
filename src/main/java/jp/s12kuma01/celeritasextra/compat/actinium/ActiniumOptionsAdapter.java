@@ -9,10 +9,14 @@ import jp.s12kuma01.celeritasextra.compat.actinium.gui.CeleritasExtraOptionsList
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /** Direct integration with Actinium alpha-0.0.12's relocated option API. */
 public final class ActiniumOptionsAdapter {
+    private static final Map<String, OptionIdentifier<?>> NATIVE_EQUIVALENTS = Map.of(
+            "options.renderClouds", StandardOptions.Option.CLOUDS,
+            "celeritasextra.option.menu_fps_limit", OptionIdentifier.create("actinium", "loading_screen_framerate_limit", int.class));
     // Scope the native-option snapshot to Extra's page construction.
     private static final ThreadLocal<Set<OptionIdentifier<?>>> NATIVE_OPTIONS = ThreadLocal.withInitial(Set::of);
     private ActiniumOptionsAdapter() { }
@@ -24,11 +28,11 @@ public final class ActiniumOptionsAdapter {
         // identifier, so the shared listener preserves it and enhances VSync only.
         OptionGroupConstructionEvent.BUS.addListener(event -> {
             CeleritasExtraOptionsListener.onOptionGroupConstruct(event);
-            if (NATIVE_OPTIONS.get().contains(StandardOptions.Option.CLOUDS)) {
-                event.getOptions().removeIf(option -> option.getId() != null
-                        && option.getId().getModId().equals("celeritasextra")
-                        && option.getId().getPath().equalsIgnoreCase("options.renderClouds"));
-            }
+            event.getOptions().removeIf(option -> option.getId() != null
+                    && option.getId().getModId().equals("celeritasextra")
+                    && NATIVE_EQUIVALENTS.entrySet().stream().anyMatch(entry ->
+                    option.getId().getPath().equalsIgnoreCase(entry.getKey())
+                            && NATIVE_OPTIONS.get().contains(entry.getValue())));
         });
     }
 

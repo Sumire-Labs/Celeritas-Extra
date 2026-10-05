@@ -35,9 +35,14 @@ class ActiniumOptionVisibilityTest {
                 assertTrue(hasOption(extra, "sodium-extra.option.cloud_distance"));
                 assertTrue(hasOption(extra, "celeritasextra.option.modern_clouds"));
                 assertTrue(extra.getGroups().stream().noneMatch(g -> g.getOptions().isEmpty()));
-                assertEquals(List.of(nativeClouds.getOptions().getFirst()), nativeClouds.getOptions());
+                assertEquals(2, nativeClouds.getOptions().size());
+                var misc = CeleritasExtraGameOptionPages.misc();
+                assertFalse(hasOption(misc, "celeritasextra.option.menu_fps_limit"));
+                assertTrue(hasOption(misc, "celeritasextra.option.inactive_fps_limit"));
+                assertTrue(hasOption(misc, "celeritasextra.option.minimized_fps_limit"));
             });
             assertTrue(hasOption(CeleritasExtraGameOptionPages.clouds(), "options.renderclouds"));
+            assertTrue(hasOption(CeleritasExtraGameOptionPages.misc(), "celeritasextra.option.menu_fps_limit"));
             assertTrue(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptionPages.clouds()
                     .getOptions().stream().anyMatch(o -> o.getId().getPath().equals("options.renderclouds")));
             // Weather quality and the ability to disable rain/snow are different features.
@@ -66,7 +71,13 @@ class ActiniumOptionVisibilityTest {
                 .setTooltip(TextComponent.literal("Off / fast / fancy"))
                 .setControl(option -> new SliderControl(option, 0, 2, 1, value -> TextComponent.literal("" + value)))
                 .setBinding((data, value) -> data[0] = value, data -> data[0]).build();
+        var menuFps = OptionImpl.createBuilder(int.class, storage)
+                .setId(OptionIdentifier.create("actinium", "loading_screen_framerate_limit", int.class))
+                .setName(TextComponent.literal("Loading screen FPS"))
+                .setTooltip(TextComponent.literal("Menu FPS"))
+                .setControl(option -> new SliderControl(option, 30, 240, 10, value -> TextComponent.literal("" + value)))
+                .setBinding((data, value) -> data[0] = value, data -> data[0]).build();
         return new OptionPage(OptionIdentifier.create("actinium", "quality"), TextComponent.literal("Quality"),
-                List.of(OptionGroup.createBuilder().add(clouds).build()));
+                List.of(OptionGroup.createBuilder().add(clouds).add(menuFps).build()));
     }
 }

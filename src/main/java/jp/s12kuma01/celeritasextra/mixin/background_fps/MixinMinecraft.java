@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.mixin.background_fps;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import jp.s12kuma01.celeritasextra.client.BackgroundFrameLimiter;
 import net.minecraft.client.Minecraft;
@@ -16,9 +17,11 @@ public class MixinMinecraft {
         BackgroundFrameLimiter.beginFrame(System.nanoTime());
     }
 
-    @ModifyReturnValue(method = "getLimitFramerate", at = @At("RETURN"))
-    private int celeritasExtra$backgroundLimit(int original) {
-        return BackgroundFrameLimiter.loopLimit(BackgroundFrameLimiter.currentNormalLimit(original), BackgroundFrameLimiter.currentLimit());
+    // Wrap the whole method so native cancellable HEAD injectors cannot bypass
+    // the background limiter with a newly inserted early return.
+    @WrapMethod(method = "getLimitFramerate")
+    private int celeritasExtra$backgroundLimit(Operation<Integer> original) {
+        return BackgroundFrameLimiter.loopLimit(BackgroundFrameLimiter.currentNormalLimit(original.call()), BackgroundFrameLimiter.currentLimit());
     }
 
     @WrapWithCondition(method = "runGameLoop", at = @At(value = "INVOKE",

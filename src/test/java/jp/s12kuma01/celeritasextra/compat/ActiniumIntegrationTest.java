@@ -23,13 +23,15 @@ class ActiniumIntegrationTest {
         try {
             configField.set(null, config);
             localeField.set(null, new net.minecraft.client.resources.Locale());
-            for (String factory : List.of("animation", "sky", "clouds", "fog", "entities", "blocks", "overlay", "misc")) {
+            var allIds = new java.util.HashSet<dhj.embeddedt.embeddium.api.options.OptionIdentifier<?>>();
+            for (String factory : List.of("animation", "particle", "sky", "clouds", "fog", "entities", "blocks", "overlay", "misc")) {
                 var pages = jp.s12kuma01.celeritasextra.compat.actinium.gui.CeleritasExtraGameOptionPages.class;
                 var page = (dhj.embeddedt.embeddium.api.options.structure.OptionPage) pages.getMethod(factory).invoke(null);
                 assertEquals("celeritasextra", page.getId().getModId());
                 assertFalse(page.getOptions().isEmpty());
                 assertEquals(page.getOptions().size(), page.getOptions().stream().map(o -> o.getId()).distinct().count());
                 for (var option : page.getOptions()) {
+                    assertTrue(allIds.add(option.getId()), "Duplicate ID across pages: " + option.getId());
                     assertNotNull(option.getDefaultValue());
                     option.resetToDefault();
                 }
@@ -45,6 +47,19 @@ class ActiniumIntegrationTest {
             configField.set(null, previousConfig);
             localeField.set(null, previousLocale);
         }
+    }
+
+    @Test void backgroundLimiterWrapsNativeEarlyReturns() throws Exception {
+        var type = jp.s12kuma01.celeritasextra.mixin.background_fps.MixinMinecraft.class;
+        var node = new ClassNode();
+        try (var input = type.getResourceAsStream("MixinMinecraft.class")) {
+            new ClassReader(input).accept(node, ClassReader.SKIP_CODE);
+        }
+        var method = node.methods.stream().filter(m -> m.name.equals("celeritasExtra$backgroundLimit")).findFirst().orElseThrow();
+        var annotations = new java.util.ArrayList<org.objectweb.asm.tree.AnnotationNode>();
+        if (method.visibleAnnotations != null) annotations.addAll(method.visibleAnnotations);
+        if (method.invisibleAnnotations != null) annotations.addAll(method.invisibleAnnotations);
+        assertTrue(annotations.stream().anyMatch(a -> a.desc.equals("Lcom/llamalad7/mixinextras/injector/wrapmethod/WrapMethod;")));
     }
 
     @Test void rendererHooksAreSelectedWithoutLoadingTheOtherGui() {
