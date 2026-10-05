@@ -7,6 +7,11 @@ import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.ItemFrameLodState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.gui.MapItemRenderer;
+import net.minecraft.world.storage.MapData;
+import net.minecraft.util.math.Vec3d;
+import jp.s12kuma01.celeritasextra.client.VisibilityRules;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderItemFrame;
 import net.minecraft.entity.Entity;
@@ -19,10 +24,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Independent toggles for the frame, its name tag, and distance LOD of non-block items.
- * Maps retain normal rendering; map visibility culling is a separate MoreCulling feature.
+ * Framed maps can independently skip drawing when the camera is behind the frame.
  */
 @Mixin(RenderItemFrame.class)
 public class MixinRenderItemFrame {
+    @WrapOperation(method = "renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/MapItemRenderer;renderMap(Lnet/minecraft/world/storage/MapData;Z)V"))
+    private void celeritasExtra$visibleMap(MapItemRenderer renderer, MapData data, boolean noOverlay,
+                                           Operation<Void> original, @Local(argsOnly = true) EntityItemFrame frame) {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (CeleritasExtraClientMod.options().renderSettings.mapBackFaceCulling
+                && mc.getRenderViewEntity() != null && frame.facingDirection != null) {
+            Vec3d camera = ActiveRenderInfo.projectViewFromEntity(mc.getRenderViewEntity(), mc.getRenderPartialTicks());
+            var normal = frame.facingDirection.getDirectionVec();
+            if (VisibilityRules.behindHorizontalFace(camera.x, camera.z, frame.posX, frame.posZ,
+                    normal.getX(), normal.getZ(), 0.05)) return;
+        }
+        original.call(renderer, data, noOverlay);
+    }
+
     @Inject(
             method = "doRender(Lnet/minecraft/entity/item/EntityItemFrame;DDDFF)V",
             at = @At("HEAD"),

@@ -166,3 +166,5 @@ celeritasextra.option.details.moon=Луна
 celeritasextra.option.details.moon.tooltip=Отдельное управление отображением луны.
 celeritasextra.option.render.sign_text_culling=Отсечение текста табличек
 celeritasextra.option.render.sign_text_culling.tooltip=Не рисовать текст с обратной стороны таблички. При редактировании и вблизи текст сохраняется.
+celeritasextra.option.render.map_back_face_culling=Отсечение обратной стороны карт
+celeritasextra.option.render.map_back_face_culling.tooltip=Не рисовать карты в рамках с обратной стороны. Спереди карты видны на любом расстоянии.

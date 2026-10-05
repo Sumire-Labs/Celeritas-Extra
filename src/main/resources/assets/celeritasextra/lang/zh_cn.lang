@@ -166,3 +166,5 @@ celeritasextra.option.details.moon=月亮
 celeritasextra.option.details.moon.tooltip=独立切换月亮的显示。
 celeritasextra.option.render.sign_text_culling=告示牌文字剔除
 celeritasextra.option.render.sign_text_culling.tooltip=跳过背面的告示牌文字。编辑时和靠近平面时保持显示。
+celeritasextra.option.render.map_back_face_culling=地图背面剔除
+celeritasextra.option.render.map_back_face_culling.tooltip=跳过从背面看到的物品展示框地图。正面不受距离影响。
