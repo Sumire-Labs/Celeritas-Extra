@@ -168,4 +168,8 @@ celeritasextra.option.render.sign_text_culling=Cull Sign Text
 celeritasextra.option.render.sign_text_culling.tooltip=Skips sign text viewed from behind. Editing and near-plane views remain visible.
 celeritasextra.option.render.map_back_face_culling=Cull Map Back Faces
 celeritasextra.option.render.map_back_face_culling.tooltip=Skips framed maps viewed from behind. Maps stay visible from the front at any distance.
+celeritasextra.option.render.entity_distance=Entity Render Distance
+celeritasextra.option.render.entity_distance.tooltip=Limits entity rendering distance in blocks. 0 keeps vanilla behavior. Exempt classes can be configured in the config file.
+celeritasextra.option.render.tile_entity_distance=Tile Entity Render Distance
+celeritasextra.option.render.tile_entity_distance.tooltip=Limits special block renderer distance in blocks. 0 keeps vanilla behavior. Beacons are exempt by default; additional classes can be configured.
 celeritasextra.option.particles.spawn_rate.tooltip=Sets the spawn percentage for %s. 0%% = Off, 100%% = all particles.

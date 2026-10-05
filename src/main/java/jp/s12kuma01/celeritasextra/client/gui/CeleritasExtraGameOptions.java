@@ -209,6 +209,10 @@ public class CeleritasExtraGameOptions {
                 ? config.getBoolean("sunMoon", CAT_DETAIL, true, "Legacy combined sun/moon setting") : true;
         detailSettings.sun = config.getBoolean("sun", CAT_DETAIL, legacySunMoon, "Render the sun");
         detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, legacySunMoon, "Render the moon");
+        renderSettings.entityDistanceExemptions = config.getStringList("entityDistanceExemptions", CAT_RENDER,
+                renderSettings.entityDistanceExemptions, "Classes exempt from entity distance culling; package.* is supported");
+        renderSettings.tileEntityDistanceExemptions = config.getStringList("tileEntityDistanceExemptions", CAT_RENDER,
+                renderSettings.tileEntityDistanceExemptions, "Classes exempt from tile entity distance culling; package.* is supported");
 
         // Enum properties
         renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0, 0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
@@ -239,6 +243,8 @@ public class CeleritasExtraGameOptions {
         intProperties.forEach(p -> p.save(config));
         config.get(CAT_DETAIL, "sun", true).set(detailSettings.sun);
         config.get(CAT_DETAIL, "moon", true).set(detailSettings.moon);
+        config.get(CAT_RENDER, "entityDistanceExemptions", new String[0]).set(renderSettings.entityDistanceExemptions);
+        config.get(CAT_RENDER, "tileEntityDistanceExemptions", new String[0]).set(renderSettings.tileEntityDistanceExemptions);
 
         // Enum properties
         config.get(CAT_RENDER, "cloudTranslucency", 0).set(renderSettings.cloudTranslucency.ordinal());

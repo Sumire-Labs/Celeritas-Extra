@@ -501,6 +501,14 @@ public class CeleritasExtraGameOptionPages {
                 .add(booleanOption("celeritasextra.option.render.map_back_face_culling",
                         (opts, v) -> opts.renderSettings.mapBackFaceCulling = v,
                         opts -> opts.renderSettings.mapBackFaceCulling, itemFramesOn))
+                .add(sliderOption("celeritasextra.option.render.entity_distance",
+                        0, 256, 1, ControlValueFormatter.quantityOrDisabled("blocks", "Default"),
+                        (opts, v) -> opts.renderSettings.entityRenderDistance = v,
+                        opts -> opts.renderSettings.entityRenderDistance))
+                .add(sliderOption("celeritasextra.option.render.tile_entity_distance",
+                        0, 256, 1, ControlValueFormatter.quantityOrDisabled("blocks", "Default"),
+                        (opts, v) -> opts.renderSettings.tileEntityRenderDistance = v,
+                        opts -> opts.renderSettings.tileEntityRenderDistance))
                 .add(booleanOption("celeritasextra.option.render.armor_stands",
                         (opts, v) -> opts.renderSettings.armorStands = v,
                         opts -> opts.renderSettings.armorStands))

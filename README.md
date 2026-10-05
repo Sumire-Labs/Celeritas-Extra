@@ -23,6 +23,7 @@ The mod started as a port of features from Sodium Extra and Rubidium/Embeddium E
 - MoreCulling-style item frame LOD: beyond the configured distance, ordinary sprite items render without their edge faces and, where the fixed transform allows, without the hidden back face. Maps and 3D block items retain their normal rendering. It is disabled by default.
 - Render toggles for item frames, armor stands, paintings, pistons, beacon beams, enchanting table books, name tags, light updates, and vanilla screen shaders.
 - Back-face culling for sign text and framed maps. Sign editing and views near the sign plane remain visible. Both features can be disabled independently.
+- Optional entity and tile entity rendering distance limits (0 = vanilla). Config-file class exemptions support exact class names and `package.*`; the Ender Dragon and beacon renderer are exempt by default. These settings affect drawing only, not ticking or server simulation.
 - FPS, coordinate, and JVM heap usage overlays with configurable position and text contrast. Current FPS is smoothed over 0.5 seconds; extended statistics include average FPS, 1% low, and 0.1% low over the last 5 seconds, refreshed every 0.5 seconds. Heap usage shows the percentage and used/max MiB.
 - Mod-name tooltips, per-type toast controls, a steady F3 debug screen, and renderer names in the F3 profiler pie chart.
 - Windowed, borderless, and fullscreen modes, plus Off, On, and Adaptive VSync.
