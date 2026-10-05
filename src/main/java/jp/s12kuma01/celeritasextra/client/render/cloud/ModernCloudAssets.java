@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Supplies the acquired cloud pattern as a low-priority, built-in resource pack. */
+/** Supplies the acquired cloud pattern above other resource packs while Modern Clouds is enabled. */
 public final class ModernCloudAssets implements IResourcePack {
 
     public static final ResourceLocation CLOUD_TEXTURE =
@@ -56,8 +56,9 @@ public final class ModernCloudAssets implements IResourcePack {
                     return packs;
                 }
                 List<IResourcePack> result = new ArrayList<>(packs);
-                // Override vanilla only; mod, user and server packs retain their precedence.
-                result.add(1, new ModernCloudAssets(texture));
+                // The explicit Modern Clouds choice takes precedence over other cloud textures.
+                // This pack exposes only clouds.png, so all other resources keep their ordering.
+                result.add(new ModernCloudAssets(texture));
                 return result;
             } catch (IOException exception) {
                 CeleritasExtraMod.LOGGER.warn("Could not load the modern cloud texture", exception);

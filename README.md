@@ -57,7 +57,7 @@ The following settings and features are added by Celeritas Extra. Individual par
 - Adjust cloud height and render distance
 - Adjust cloud scale (0.25×–4.00×)
 - Select cloud translucency (default, always translucent, or always opaque)
-- Modern Clouds: use the Minecraft 1.21.6 cloud texture
+- Modern Clouds: use the Minecraft 1.21.6 cloud texture, overriding resource-pack cloud textures while enabled
 
 ### Fog
 

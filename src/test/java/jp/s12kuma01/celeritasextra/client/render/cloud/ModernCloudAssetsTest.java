@@ -59,19 +59,36 @@ class ModernCloudAssetsTest {
         assertArrayEquals(new byte[]{2}, readCloud(result));
         assertEquals(2, original.size());
         assertTrue(ModernCloudAssets.isAvailable());
-        assertFalse(result.get(1).resourceExists(ModernCloudAssets.CLOUD_TEXTURE));
-        assertFalse(result.get(1).resourceExists(new ResourceLocation("textures/environment/clouds.png.mcmeta")));
+        assertFalse(result.getLast().resourceExists(ModernCloudAssets.CLOUD_TEXTURE));
+        assertFalse(result.getLast().resourceExists(new ResourceLocation("textures/environment/clouds.png.mcmeta")));
     }
 
     @Test
-    void userAndServerPacksOverrideTheBuiltInPattern() throws IOException {
+    void enabledModernCloudsOverrideUserAndServerCloudsAndDisablingRestoresThem() throws IOException {
         IResourcePack user = new TestPack(Map.of(CLOUD, new byte[]{3}));
         IResourcePack server = new TestPack(Map.of(CLOUD, new byte[]{4}));
 
-        assertArrayEquals(new byte[]{3}, readCloud(ModernCloudAssets.withCloudTexture(
+        assertArrayEquals(new byte[]{2}, readCloud(ModernCloudAssets.withCloudTexture(
                 List.of(VANILLA, ACQUIRED, user), true)));
-        assertArrayEquals(new byte[]{4}, readCloud(ModernCloudAssets.withCloudTexture(
+        assertArrayEquals(new byte[]{2}, readCloud(ModernCloudAssets.withCloudTexture(
                 List.of(VANILLA, ACQUIRED, user, server), true)));
+        assertArrayEquals(new byte[]{3}, readCloud(ModernCloudAssets.withCloudTexture(
+                List.of(VANILLA, ACQUIRED, user), false)));
+        assertArrayEquals(new byte[]{4}, readCloud(ModernCloudAssets.withCloudTexture(
+                List.of(VANILLA, ACQUIRED, user, server), false)));
+    }
+
+    @Test
+    void forcingModernCloudsDoesNotOverrideOtherUserTextures() throws IOException {
+        var block = new ResourceLocation("minecraft", "textures/blocks/stone.png");
+        IResourcePack user = new TestPack(Map.of(CLOUD, new byte[]{3}, block, new byte[]{6}));
+        var packs = ModernCloudAssets.withCloudTexture(List.of(VANILLA, ACQUIRED, user), true);
+        FallbackResourceManager manager = new FallbackResourceManager(new MetadataSerializer());
+        packs.forEach(manager::addResourcePack);
+        try (IResource resource = manager.getResource(block)) {
+            assertArrayEquals(new byte[]{6}, resource.getInputStream().readAllBytes());
+        }
+        assertArrayEquals(new byte[]{2}, readCloud(packs));
     }
 
     @Test
