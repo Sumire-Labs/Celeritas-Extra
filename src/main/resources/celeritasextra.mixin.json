@@ -21,6 +21,8 @@
     "render.block_entity.MixinTileEntitySignRenderer",
     "render.entity.MixinEntityRenderDistance",
     "render.block_entity.MixinTileEntityRenderDistance",
+    "background_fps.MixinMinecraft",
+    "background_fps.MixinEntityRenderer",
     "render.entity.MixinRenderItem",
     "render.entity.MixinForgeHooksClient",
     "render.entity.MixinRenderPainting",

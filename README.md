@@ -27,6 +27,7 @@ The mod started as a port of features from Sodium Extra and Rubidium/Embeddium E
 - FPS, coordinate, and JVM heap usage overlays with configurable position and text contrast. Current FPS is smoothed over 0.5 seconds; extended statistics include average FPS, 1% low, and 0.1% low over the last 5 seconds, refreshed every 0.5 seconds. Heap usage shows the percentage and used/max MiB.
 - Mod-name tooltips, per-type toast controls, a steady F3 debug screen, and renderer names in the F3 profiler pie chart.
 - Windowed, borderless, and fullscreen modes, plus Off, On, and Adaptive VSync.
+- Independent unfocused and minimized drawing FPS limits (disabled by default). Minimized takes precedence, or inherits the unfocused limit when set to 0. Rates below 20 FPS skip rendering while keeping the client loop at least 20 Hz for ticking and network processing.
 
 ## Credits
 

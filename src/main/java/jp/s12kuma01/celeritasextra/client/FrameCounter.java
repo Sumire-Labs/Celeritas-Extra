@@ -44,7 +44,7 @@ public class FrameCounter {
      */
     @SubscribeEvent
     public static void onRenderTick(TickEvent.RenderTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) {
+        if (event.phase != TickEvent.Phase.START || !BackgroundFrameLimiter.shouldRender()) {
             return;
         }
         recordFrame(System.nanoTime());

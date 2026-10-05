@@ -563,6 +563,9 @@ public class CeleritasExtraGameOptions {
         public boolean showMemory = false;
         public boolean ignoreReducedDebugInfo = false;
         public boolean useAdaptiveSync = false;
+        public int inactiveFpsLimit;
+        public int minimizedFpsLimit;
+
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = STEADY_DEBUG_HUD_DEFAULT;

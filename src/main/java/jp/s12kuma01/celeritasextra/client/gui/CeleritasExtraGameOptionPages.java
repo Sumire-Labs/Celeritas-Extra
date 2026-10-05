@@ -616,6 +616,16 @@ public class CeleritasExtraGameOptionPages {
                 .build());
 
         // Toast settings group
+        groups.add(OptionGroup.createBuilder()
+                .add(sliderOption("celeritasextra.option.extra.inactive_fps", 0, 120, 1,
+                        ControlValueFormatter.quantityOrDisabled("FPS", "Off"),
+                        (opts, value) -> opts.extraSettings.inactiveFpsLimit = value,
+                        opts -> opts.extraSettings.inactiveFpsLimit))
+                .add(sliderOption("celeritasextra.option.extra.minimized_fps", 0, 120, 1,
+                        ControlValueFormatter.quantityOrDisabled("FPS", "Off"),
+                        (opts, value) -> opts.extraSettings.minimizedFpsLimit = value,
+                        opts -> opts.extraSettings.minimizedFpsLimit)).build());
+
         OptionImpl<CeleritasExtraGameOptions, Boolean> toastsOption = booleanOption("celeritasextra.option.extra.toasts",
                 (opts, v) -> opts.extraSettings.toasts = v,
                 opts -> opts.extraSettings.toasts);
