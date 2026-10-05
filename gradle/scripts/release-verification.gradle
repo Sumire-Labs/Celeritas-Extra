@@ -1,0 +1,63 @@
+import groovy.json.JsonSlurper
+import java.util.zip.ZipFile
+
+// Validate the remapped artifact, not just classes on the development classpath.
+tasks.register('verifyReleaseJar') {
+    dependsOn(tasks.named(enable_shadow.toBoolean() ? 'remapShadowJar' : 'remapJar'))
+    def releaseFile = layout.buildDirectory.file("libs/${mod_id}-${project.version}.jar")
+    inputs.file(releaseFile)
+    doLast {
+        new ZipFile(releaseFile.get().asFile).withCloseable { zip ->
+            def readText = { String path ->
+                def entry = zip.getEntry(path)
+                if (entry == null) throw new GradleException("Release artifact is missing ${path}")
+                zip.getInputStream(entry).withCloseable { it.getText('UTF-8') }
+            }
+            def metadata = new JsonSlurper().parseText(readText('mcmod.info'))[0]
+            if (metadata.version != project.version.toString() || metadata.modid != mod_id) {
+                throw new GradleException('Release version or mod ID does not match project metadata')
+            }
+            if (metadata.dependencies.contains('celeritas') || metadata.dependencies.contains('actinium')) {
+                throw new GradleException('Release metadata must allow either supported renderer')
+            }
+            def config = new JsonSlurper().parseText(readText("${mod_id}.mixin.json"))
+            if (!config.refmap) throw new GradleException('Release Mixin config has no refmap')
+            def refmap = new JsonSlurper().parseText(readText(config.refmap))
+            if (!refmap.mappings) throw new GradleException('Release Mixin refmap is empty')
+            // These hooks combine optional renderer targets and MixinExtras.
+            // A nonempty refmap alone would not catch a silently lost remapper.
+            [
+                'background_fps/MixinMinecraft': ['getLimitFramerate'],
+                'options_search/MixinOptionsScreen': ['initGui', 'drawScreen', 'mouseClicked'],
+                'render/entity/MixinRenderItemFrame': ['renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V']
+            ].each { mixin, selectors ->
+                selectors.each { selector ->
+                    def mapped = refmap.mappings["jp/s12kuma01/celeritasextra/mixin/${mixin}"]?.get(selector)
+                    if (!(mapped instanceof String) || !mapped.contains(';func_')) {
+                        throw new GradleException("Missing production selector mapping: ${mixin} ${selector}")
+                    }
+                }
+            }
+            def requireEntry = { String name ->
+                if (zip.getEntry(name) == null) throw new GradleException("Release artifact is missing ${name}")
+            }
+            config.client.each { name -> requireEntry((config.package + '.' + name).replace('.', '/') + '.class') }
+            requireEntry(config.plugin.replace('.', '/') + '.class')
+            ['en_us', 'ja_jp', 'ru_ru', 'zh_cn'].each { locale ->
+                readText("assets/${mod_id}/lang/${locale}.lang")
+            }
+            requireEntry('META-INF/MANIFEST.MF')
+            def manifest = zip.getInputStream(zip.getEntry('META-INF/MANIFEST.MF')).withCloseable { new java.util.jar.Manifest(it) }
+            if (manifest.mainAttributes.getValue('MixinConfigs') != "${mod_id}.mixin.json") {
+                throw new GradleException('Release manifest does not register the Mixin config')
+            }
+            zip.entries().each { entry ->
+                if (entry.name.endsWith('.class') && entry.name ==~ /(?:net\/minecraft\/|net\/minecraftforge\/|org\/taumc\/|org\/embeddedt\/|dhj\/embeddedt\/|com\/dhj\/|net\/irisshaders\/|net\/coderbot\/).*/) {
+                    throw new GradleException("Renderer or game dependency bundled in release: ${entry.name}")
+                }
+            }
+        }
+        logger.lifecycle("Verified release artifact: ${releaseFile.get().asFile.name}")
+    }
+}
+tasks.named('build') { dependsOn(tasks.named('verifyReleaseJar')) }

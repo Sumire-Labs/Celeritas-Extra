@@ -1,5 +1,6 @@
 # Gradle
 .gradle/
+/*.mixin-refmap.json
 build/
 out/
 classes/

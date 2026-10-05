@@ -22,9 +22,20 @@ jobs:
       - name: Add permission
         run: chmod +x ./gradlew
       - name: Execute Gradle build
-        run: ./gradlew build
+        run: ./gradlew clean build verifyReleaseJar
+
+      - name: Select release artifacts
+        shell: bash
+        run: |
+          mkdir -p build/release
+          for artifact in build/libs/*.jar; do
+            case "$artifact" in
+              *-dev.jar|*-shadow.jar) continue ;;
+            esac
+            cp "$artifact" build/release/
+          done
 
       - uses: ncipollo/release-action@v1.21.0
         with:
-          artifacts: "build/libs/*"
+          artifacts: "build/release/*.jar"
           generateReleaseNotes: true
