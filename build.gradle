@@ -107,6 +107,7 @@ dependencies {
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'
+apply from: 'gradle/scripts/actinium.gradle'
 
 processResources {
     rename '(.+_at.cfg)', 'META-INF/$1'

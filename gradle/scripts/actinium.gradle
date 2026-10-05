@@ -1,0 +1,64 @@
+// Compile against the actual Actinium release API, never bundle the renderer.
+def actiniumVersion = 'alpha-0.0.12'
+def actiniumApi = layout.projectDirectory.file(".gradle/compat/Actinium-${actiniumVersion}.jar")
+def downloadActiniumApi = tasks.register('downloadActiniumApi') {
+    outputs.file(actiniumApi)
+    doLast {
+        def target = actiniumApi.asFile
+        target.parentFile.mkdirs()
+        new URI("https://github.com/Q-Engineering-Source/Actinium/releases/download/${actiniumVersion}/Actinium-${actiniumVersion}.jar")
+                .toURL().withInputStream { input -> target.withOutputStream { it << input } }
+        def digest = java.security.MessageDigest.getInstance('SHA-256').digest(target.bytes).encodeHex().toString()
+        if (digest != '94f79a0b67a7ec8ad3edf18c36b87d1402e98c9d38c49a65187a2d1959776c43') {
+            target.delete()
+            throw new GradleException('Actinium API artifact checksum mismatch')
+        }
+    }
+}
+dependencies {
+    modCompileOnly files(actiniumApi).builtBy(downloadActiniumApi)
+}
+
+// Both adapters use the same option definitions and configuration bindings.
+// Actinium has relocated its option API; these generated classes link directly
+// to that API instead of relying on old Celeritas binary compatibility.
+def adapterNames = ['CeleritasExtraGameOptionPages', 'CeleritasExtraOptionPages',
+                    'CeleritasExtraOptionsStorage', 'CeleritasExtraOptionsListener']
+def optionSources = layout.projectDirectory.dir('src/main/java/jp/s12kuma01/celeritasextra/client/gui')
+def generatedAdapters = layout.buildDirectory.dir('generated/sources/actinium/java')
+def generateActiniumAdapters = tasks.register('generateActiniumAdapters') {
+    inputs.files(adapterNames.collect { optionSources.file("${it}.java") })
+    outputs.dir(generatedAdapters)
+    doLast {
+        def output = new File(generatedAdapters.get().asFile, 'jp/s12kuma01/celeritasextra/compat/actinium/gui')
+        output.mkdirs()
+        adapterNames.each { name ->
+            def source = optionSources.file("${name}.java").asFile.getText('UTF-8')
+                    .replace('package jp.s12kuma01.celeritasextra.client.gui;',
+                            'package jp.s12kuma01.celeritasextra.compat.actinium.gui;\n\nimport jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;\nimport jp.s12kuma01.celeritasextra.client.gui.Translations;\nimport jp.s12kuma01.celeritasextra.client.gui.WindowModeSupport;')
+                    .replace('org.taumc.celeritas.api', 'dhj.embeddedt.embeddium.api')
+                    .replace('org.embeddedt.embeddium.impl', 'dhj.embeddedt.embeddium.impl')
+            if (name == 'CeleritasExtraGameOptionPages') {
+                source = source.replace('.setBinding(setter, getter)',
+                        '.setDefaultValue(getter.apply(new CeleritasExtraGameOptions()))\n                .setBinding(setter, getter)')
+                        .replace('OptionImpl.createBuilder(int.class, celeritasExtraOpts)',
+                                'OptionImpl.createBuilder(int.class, celeritasExtraOpts).setDefaultValue(100)')
+                        .replace('OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)',
+                                'OptionImpl.createBuilder(boolean.class, celeritasExtraOpts).setDefaultValue(false)')
+                [CloudTranslucency: 'renderSettings.cloudTranslucency',
+                 OverlayCorner: 'extraSettings.overlayCorner', TextContrast: 'extraSettings.textContrast'].each { type, field ->
+                    source = source.replace("OptionImpl.createBuilder(CeleritasExtraGameOptions.${type}.class, celeritasExtraOpts)",
+                            "OptionImpl.createBuilder(CeleritasExtraGameOptions.${type}.class, celeritasExtraOpts).setDefaultValue(new CeleritasExtraGameOptions().${field})")
+                }
+            }
+            if (name == 'CeleritasExtraOptionsListener') {
+                source = source.replace('OptionImpl.createBuilder(CeleritasExtraGameOptions.VerticalSyncOption.class, celeritasExtraOpts)',
+                        'OptionImpl.createBuilder(CeleritasExtraGameOptions.VerticalSyncOption.class, celeritasExtraOpts).setDefaultValue(CeleritasExtraGameOptions.VerticalSyncOption.OFF)')
+            }
+            new File(output, "${name}.java").setText(source, 'UTF-8')
+        }
+    }
+}
+sourceSets.main.java.srcDir(generatedAdapters)
+tasks.named('compileJava') { dependsOn(generateActiniumAdapters) }
+tasks.matching { it.name == 'sourcesJar' }.configureEach { dependsOn(generateActiniumAdapters) }

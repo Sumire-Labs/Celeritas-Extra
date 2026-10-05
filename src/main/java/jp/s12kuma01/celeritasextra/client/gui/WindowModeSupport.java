@@ -8,11 +8,11 @@ import java.nio.IntBuffer;
 import java.util.Locale;
 
 /** Gates the desktop screen-mode control without querying the native window. */
-final class WindowModeSupport {
+public final class WindowModeSupport {
     private WindowModeSupport() {
     }
 
-    static boolean canOfferBorderless() {
+    public static boolean canOfferBorderless() {
         return SupportHolder.AVAILABLE;
     }
 

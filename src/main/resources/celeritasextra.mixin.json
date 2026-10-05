@@ -2,6 +2,7 @@
   "required": true,
   "priority": 1001,
   "package": "jp.s12kuma01.celeritasextra.mixin",
+  "plugin": "jp.s12kuma01.celeritasextra.compat.RendererMixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "target": "@env(DEFAULT)",
   "injectors": {
@@ -12,6 +13,7 @@
   "setSourceFile": true,
   "server": [],
   "client": [
+    "actinium.MixinFastLitItemLod",
     "options_search.MixinOptionsController",
     "options_search.MixinOptionsScreen",
     "options_search.MixinGuiScreen",

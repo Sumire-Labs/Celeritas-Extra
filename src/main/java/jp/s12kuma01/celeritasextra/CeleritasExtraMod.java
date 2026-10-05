@@ -7,17 +7,15 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.taumc.celeritas.api.OptionGUIConstructionEvent;
-import org.taumc.celeritas.api.OptionGroupConstructionEvent;
 
 import java.io.File;
 
 /**
- * Main mod entry point for Celeritas Extra, a client-only companion to Celeritas.
+ * Main mod entry point for Celeritas Extra, a client-only renderer companion.
  * <p>
  * Celeritas Extra layers additional rendering options on top of Celeritas and surfaces
- * them inside Celeritas' own options GUI. This class drives the Forge lifecycle: during
- * construction it verifies Celeritas is present and new enough, then registers the
+ * them inside the renderer's own options GUI. This class drives the Forge lifecycle: during
+ * construction it selects Celeritas or Actinium, then registers the
  * option-GUI construction listeners; during initialization it bootstraps the client
  * configuration.
  * <p>
@@ -26,7 +24,7 @@ import java.io.File;
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
         clientSideOnly = true, acceptableRemoteVersions = "*",
-        dependencies = "required-after:cleanroom@[0.6.10-alpha,);required-after:celeritas;"
+        dependencies = "required-after:cleanroom@[0.6.10-alpha,);after:celeritas;after:actinium;"
                 + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 
@@ -38,16 +36,20 @@ public class CeleritasExtraMod {
     private File configDirectory;
 
     /**
-     * Wires Celeritas Extra into Celeritas' options GUI during mod construction.
+     * Wires Celeritas Extra into the installed renderer's options GUI during mod construction.
      * <p>
-     * Forge's required dependency guarantees Celeritas is loaded first. Calling the API directly
-     * also makes an incompatible Celeritas version fail at the actual missing symbol instead of
-     * leaving this mod half-initialized.
+     * Optional ordering loads either supported renderer first. The adapters are isolated
+     * so the absent renderer's API is never resolved during registration.
      *
      * @param event the Forge construction event
      */
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
+        boolean actinium = Loader.isModLoaded("actinium");
+        boolean celeritas = Loader.isModLoaded("celeritas");
+        if (actinium == celeritas) {
+            throw new IllegalStateException("Celeritas Extra requires exactly one renderer: Celeritas or Actinium");
+        }
         if (Loader.isModLoaded("assetmover")) {
             try {
                 jp.s12kuma01.celeritasextra.compat.assetmover.AssetMoverCompat
@@ -61,9 +63,12 @@ public class CeleritasExtraMod {
             LOGGER.info("AssetMover is not installed; the modern cloud texture will not be downloaded");
         }
 
-        OptionGUIConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onCeleritasOptionsConstruct);
-        OptionGroupConstructionEvent.BUS.addListener(jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraOptionsListener::onOptionGroupConstruct);
-        LOGGER.info("Successfully registered Celeritas Extra with Celeritas GUI");
+        if (actinium) {
+            jp.s12kuma01.celeritasextra.compat.actinium.ActiniumOptionsAdapter.register();
+        } else {
+            jp.s12kuma01.celeritasextra.compat.CeleritasOptionsAdapter.register();
+        }
+        LOGGER.info("Registered Celeritas Extra with {} GUI", actinium ? "Actinium" : "Celeritas");
     }
 
     /**
