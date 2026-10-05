@@ -179,3 +179,7 @@ celeritasextra.option.extra.minimized_fps.tooltip=Limits drawing while the windo
 celeritasextra.option.render.dimension_fog=Override Fog: %s
 celeritasextra.option.render.dimension_fog.tooltip=Use separate atmospheric fog settings for this dimension. Disabled inherits the global settings. Blindness, water, and lava fog are preserved.
 celeritasextra.option.particles.spawn_rate.tooltip=Sets the spawn percentage for %s. 0%% = Off, 100%% = all particles.
+
+celeritasextra.search.placeholder=Search options... (Ctrl+F)
+celeritasextra.search.results=%s results
+celeritasextra.search.no_results=No matching options

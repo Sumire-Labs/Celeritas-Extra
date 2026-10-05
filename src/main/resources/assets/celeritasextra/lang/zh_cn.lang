@@ -179,3 +179,7 @@ celeritasextra.option.extra.minimized_fps.tooltip=最小化时限制绘制 FPS�
 celeritasextra.option.render.dimension_fog=覆盖雾设置: %s
 celeritasextra.option.render.dimension_fog.tooltip=为该维度使用独立的环境雾设置。禁用时继承全局设置。保留失明、水和熔岩雾。
 celeritasextra.option.particles.spawn_rate.tooltip=设置 %s 的生成率。0%% 关闭，100%% 保留所有粒子。
+
+celeritasextra.search.placeholder=搜索设置... (Ctrl+F)
+celeritasextra.search.results=%s 项结果
+celeritasextra.search.no_results=没有匹配的设置

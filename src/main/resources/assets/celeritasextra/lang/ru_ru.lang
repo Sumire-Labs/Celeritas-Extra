@@ -179,3 +179,7 @@ celeritasextra.option.extra.minimized_fps.tooltip=Ограничивает FPS �
 celeritasextra.option.render.dimension_fog=Переопределить туман: %s
 celeritasextra.option.render.dimension_fog.tooltip=Отдельные настройки атмосферного тумана для измерения. Иначе используются общие настройки. Слепота, вода и лава сохраняются.
 celeritasextra.option.particles.spawn_rate.tooltip=Процент появления %s. 0%% отключает, 100%% сохраняет все частицы.
+
+celeritasextra.search.placeholder=Поиск настроек... (Ctrl+F)
+celeritasextra.search.results=Результатов: %s
+celeritasextra.search.no_results=Нет подходящих настроек

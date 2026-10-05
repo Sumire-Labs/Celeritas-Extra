@@ -179,3 +179,7 @@ celeritasextra.option.extra.minimized_fps.tooltip=ウィンドウを最小化し
 celeritasextra.option.render.dimension_fog=Fogの上書き: %s
 celeritasextra.option.render.dimension_fog.tooltip=このディメンション専用の環境Fog設定を使います。無効時は全体設定を使用し、盲目・水・溶岩のFogは維持します。
 celeritasextra.option.particles.spawn_rate.tooltip=%sの発生率を設定します。0%%はオフ、100%%はすべて発生します。
+
+celeritasextra.search.placeholder=設定を検索...（Ctrl+F）
+celeritasextra.search.results=%s件
+celeritasextra.search.no_results=一致する設定がありません

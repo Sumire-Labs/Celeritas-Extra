@@ -12,6 +12,9 @@
   "setSourceFile": true,
   "server": [],
   "client": [
+    "options_search.MixinOptionsController",
+    "options_search.MixinOptionsScreen",
+    "options_search.MixinGuiScreen",
     "animation.MixinTextureMap",
     "light_updates.MixinWorld",
     "particle.IMixinParticleManager",
