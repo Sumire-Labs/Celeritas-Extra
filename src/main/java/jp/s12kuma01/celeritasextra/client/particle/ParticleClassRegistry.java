@@ -54,6 +54,7 @@ public class ParticleClassRegistry {
      * User-disabled classes. This is the only authoritative, user-owned persisted state.
      */
     private final ConcurrentHashMap.KeySetView<String, Boolean> disabledClasses = ConcurrentHashMap.newKeySet();
+    private final ConcurrentHashMap<String, Integer> spawnPercentages = new ConcurrentHashMap<>();
     /**
      * Per-session identity guard so the hot path does expensive work at most once per class.
      */
@@ -338,6 +339,44 @@ public class ParticleClassRegistry {
      */
     public boolean isClassDisabled(String fullClassName) {
         return disabledClasses.contains(fullClassName);
+    }
+
+    public int getSpawnPercentage(String className) {
+        return isClassDisabled(className) ? 0 : spawnPercentages.getOrDefault(className, 100);
+    }
+
+    public void setSpawnPercentage(String className, int percentage) {
+        percentage = Math.clamp(percentage, 0, 100);
+        int previous = getSpawnPercentage(className);
+        if (percentage == 0) disabledClasses.add(className);
+        else disabledClasses.remove(className);
+        if (percentage == 0 || percentage == 100) spawnPercentages.remove(className);
+        else spawnPercentages.put(className, percentage);
+        if (previous != percentage) dirty = true;
+    }
+
+    public void loadSpawnPercentages(String[] entries) {
+        spawnPercentages.clear();
+        for (String entry : entries) {
+            if (entry == null) continue;
+            int separator = entry.lastIndexOf('|');
+            if (separator <= 0) continue;
+            try {
+                int percentage = Math.clamp(Integer.parseInt(entry.substring(separator + 1)), 0, 100);
+                if (percentage < 100) spawnPercentages.put(entry.substring(0, separator), percentage);
+            } catch (NumberFormatException ignored) {
+                // A malformed cache entry must not discard the user's remaining settings.
+            }
+        }
+    }
+
+    public String[] getSpawnPercentagesArray() {
+        return spawnPercentages.entrySet().stream().sorted(Map.Entry.comparingByKey())
+                .map(entry -> entry.getKey() + "|" + entry.getValue()).toArray(String[]::new);
+    }
+
+    public static boolean acceptSpawn(int percentage, int roll) {
+        return percentage >= 100 || (percentage > 0 && roll < percentage);
     }
 
     /**

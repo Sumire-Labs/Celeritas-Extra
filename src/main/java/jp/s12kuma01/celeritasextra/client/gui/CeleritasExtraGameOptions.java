@@ -219,6 +219,8 @@ public class CeleritasExtraGameOptions {
         String[] disabledClasses = config.getStringList("disabledClasses", CAT_PARTICLE_CLASSES,
                 new String[0], "List of disabled particle class names");
         ParticleClassRegistry.getInstance().loadDisabledClasses(disabledClasses);
+        ParticleClassRegistry.getInstance().loadSpawnPercentages(config.getStringList("spawnPercentages", CAT_PARTICLE_CLASSES,
+                new String[0], "Per-class spawn percentages: full.class.Name|percentage (0-100)"));
 
         String[] discoveredClasses = config.getStringList("discoveredClasses", CAT_PARTICLE_CLASSES,
                 new String[0], "Cached list of discovered particle classes (auto-populated)");
@@ -248,6 +250,9 @@ public class CeleritasExtraGameOptions {
                 .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
         config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
                 .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
+
+        config.get(CAT_PARTICLE_CLASSES, "spawnPercentages", new String[0])
+                .set(ParticleClassRegistry.getInstance().getSpawnPercentagesArray());
 
         config.save();
         ParticleClassRegistry.getInstance().markClean();

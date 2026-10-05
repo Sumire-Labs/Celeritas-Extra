@@ -168,3 +168,4 @@ celeritasextra.option.render.sign_text_culling=看板文字のカリング
 celeritasextra.option.render.sign_text_culling.tooltip=裏側から見た看板の文字描画を省略します。編集中と面の近くでは表示を維持します。
 celeritasextra.option.render.map_back_face_culling=地図の裏側カリング
 celeritasextra.option.render.map_back_face_culling.tooltip=裏側から見た額縁内の地図描画を省略します。正面からは距離に関係なく表示します。
+celeritasextra.option.particles.spawn_rate.tooltip=%sの発生率を設定します。0%%はオフ、100%%はすべて発生します。

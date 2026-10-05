@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Controls particle spawning on {@link ParticleManager}.
@@ -90,7 +91,9 @@ public class MixinParticleManager {
             return;
         }
 
-        if (!registry.isEmptyDisabled() && registry.isClassDisabled(effect.getClass().getName())) {
+        int percentage = registry.getSpawnPercentage(effect.getClass().getName());
+        if (percentage == 0 || (percentage < 100
+                && !ParticleClassRegistry.acceptSpawn(percentage, ThreadLocalRandom.current().nextInt(100)))) {
             ci.cancel();
         }
     }

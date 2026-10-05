@@ -326,15 +326,15 @@ public class CeleritasExtraGameOptionPages {
                         var simpleClassName = classEntry.getValue();
                         String displayName = simpleClassName + " (" + modId + ")";
 
-                        groupBuilder.add(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                        groupBuilder.add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
                                 .setName(TextComponent.literal(displayName))
                                 .setTooltip(TextComponent.literal(
-                                        I18n.format("celeritasextra.option.particles.other.tooltip", simpleClassName)
+                                        I18n.format("celeritasextra.option.particles.spawn_rate.tooltip", simpleClassName)
                                                 + "\n" + fullClassName))
-                                .setControl(TickBoxControl::new)
+                                .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
                                 .setBinding(
-                                        (opts, value) -> registry.setClassEnabled(fullClassName, value),
-                                        opts -> !registry.isClassDisabled(fullClassName)
+                                        (opts, value) -> registry.setSpawnPercentage(fullClassName, value),
+                                        opts -> registry.getSpawnPercentage(fullClassName)
                                 )
                                 .setEnabledPredicate(particlesOn)
                                 .build()
