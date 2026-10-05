@@ -30,6 +30,7 @@ bin/
 *~
 archive/
 .cache/
+docs/
 
 # Minecraft/Forge
 logs/
