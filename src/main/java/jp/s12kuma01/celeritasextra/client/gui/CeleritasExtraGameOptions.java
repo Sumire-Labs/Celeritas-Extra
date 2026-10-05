@@ -116,6 +116,8 @@ public class CeleritasExtraGameOptions {
                     v -> extraSettings.showFPSExtended = v, () -> extraSettings.showFPSExtended),
             new BooleanProperty(CAT_EXTRA, "showCoords", false, "Show coordinates overlay",
                     v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
+            new BooleanProperty(CAT_EXTRA, "showMemory", false, "Show JVM heap usage overlay (used/max MiB)",
+                    v -> extraSettings.showMemory = v, () -> extraSettings.showMemory),
             new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
                     v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
             new BooleanProperty(CAT_EXTRA, "steadyDebugHud", ExtraSettings.STEADY_DEBUG_HUD_DEFAULT,
@@ -242,7 +244,7 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
-     * Overlay corner positions for FPS/coordinate display
+     * Overlay corner positions for FPS/coordinate/memory display
      */
     public enum OverlayCorner {
         TOP_LEFT("celeritasextra.option.overlay_corner.top_left"),
@@ -521,7 +523,7 @@ public class CeleritasExtraGameOptions {
     }
 
     /**
-     * Miscellaneous quality-of-life settings: the FPS/coordinate overlay with its placement and
+     * Miscellaneous quality-of-life settings: the FPS/coordinate/memory overlay with its placement and
      * contrast, accessibility options (adaptive vsync, steady debug HUD), toast toggles, and the
      * mod-name tooltip.
      */
@@ -534,6 +536,7 @@ public class CeleritasExtraGameOptions {
         public boolean showFps = false;
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
+        public boolean showMemory = false;
         public boolean ignoreReducedDebugInfo = false;
         public boolean useAdaptiveSync = false;
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;

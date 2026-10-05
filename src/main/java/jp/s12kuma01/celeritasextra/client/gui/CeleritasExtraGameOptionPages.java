@@ -546,6 +546,9 @@ public class CeleritasExtraGameOptionPages {
                 .add(booleanOption("celeritasextra.option.extra.coords",
                         (opts, v) -> opts.extraSettings.showCoords = v,
                         opts -> opts.extraSettings.showCoords))
+                .add(booleanOption("celeritasextra.option.extra.memory",
+                        (opts, v) -> opts.extraSettings.showMemory = v,
+                        opts -> opts.extraSettings.showMemory))
                 .add(booleanOption("celeritasextra.option.extra.ignore_reduced_debug_info",
                         (opts, v) -> opts.extraSettings.ignoreReducedDebugInfo = v,
                         opts -> opts.extraSettings.ignoreReducedDebugInfo))

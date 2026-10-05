@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Renders the optional FPS and coordinate overlay onto the in-game HUD.
+ * Renders the optional FPS, coordinate, and JVM heap overlay onto the in-game HUD.
  * <p>
  * Subscribed to the client Forge event bus, it draws the lines enabled in
  * {@link CeleritasExtraGameOptions.ExtraSettings} (FPS with average/1%/0.1% lows, player
- * coordinates, and a light-updates-disabled warning) in the configured screen corner and with the
+ * coordinates, JVM heap usage, and a light-updates-disabled warning) in the configured screen corner and with the
  * chosen text contrast. Nothing is drawn while the F3 debug screen is showing or the GUI is hidden.
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -36,7 +36,7 @@ public class CeleritasExtraHud {
     /**
      * Draws the enabled overlay lines each time the HUD text layer renders.
      * <p>
-     * Collects the FPS, coordinate, and warning lines permitted by the current settings, then lays
+     * Collects the FPS, coordinate, memory, and warning lines permitted by the current settings, then lays
      * them out from the configured {@link CeleritasExtraGameOptions.OverlayCorner}, stacking away from
      * that corner. Returns early when the debug screen or GUI is hidden, or when no line is enabled.
      *
@@ -79,6 +79,14 @@ public class CeleritasExtraHud {
                         String.format("%.2f", y),
                         String.format("%.2f", z)));
             }
+        }
+
+        if (settings.showMemory) {
+            Runtime runtime = Runtime.getRuntime();
+            long used = runtime.totalMemory() - runtime.freeMemory();
+            long max = runtime.maxMemory();
+            lines.add(I18n.format("celeritasextra.overlay.memory",
+                    used * 100L / max, used / 1_048_576L, max / 1_048_576L));
         }
 
         // Light updates disabled warning
