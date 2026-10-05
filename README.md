@@ -1,61 +1,143 @@
-# Celeritas Extra
+# Celeritas/Actinium Extra
 
-Celeritas Extra is an unofficial client-side add-on for [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build/releases), built to run on Cleanroom. It adds more graphics, particle, HUD, and window settings to the Celeritas video settings screen.
-
-The mod started as a port of features from Sodium Extra and Rubidium/Embeddium Extra. It also includes several additions and backports made specifically for the Cleanroom environment.
+Celeritas (Actinium) Extra is an unofficial client-side add-on for Celeritas or Actinium, built to run on Cleanroom Loader.
+It provides a wide range of quality-of-life and optimization options, similar to OptiFine and Angelica.
 
 ## Requirements
 
-- [Cleanroom Loader](https://github.com/CleanroomMC/Cleanroom) 0.6.10-alpha or newer
-- [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build/releases) 2.4.0 or newer
+### Required
 
-### Optional dependency
+- [Cleanroom Loader](https://download.cleanroommc.com/) 0.6.10-alpha or newer
+- One of the following:
+  - [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build)
+  - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization)
+  - ~~[Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium)~~ (support planned)
 
-- [AssetMover](https://github.com/CleanroomMC/AssetMover) 2.5 or newer unlocks Modern Clouds.
+### Optional
+
+- [AssetMover](https://www.curseforge.com/minecraft/mc-mods/assetmover) 2.5 or newer
 
 ## Features
 
-- Animation controls for water, lava, fire, portals, and block textures.
-- Global and per-type particle controls, including options for rain splashes and block particles. Vanilla and modded particle classes are discovered automatically and cached between launches, with a per-class spawn percentage (0% to 100%). Existing disabled classes stay at 0%.
-- Controls for the sky, stars and star count, the sun and moon independently, weather, biome colors, sky colors, and void fog. Existing combined sun/moon settings are migrated automatically.
-- Fog distance and start controls, with optional per-dimension overrides for vanilla, registered mod, and current server dimensions. Blindness, underwater, and lava fog are kept even when normal fog is disabled.
-- Cloud height, distance, scale (0.25x to 4.00x), and translucency controls, plus the optional Minecraft 1.21.6 cloud texture downloaded by AssetMover. Modern Clouds is disabled by default and uses a built-in resource pack with the existing renderer. User resource packs take priority; height, distance, and scale remain controlled by the existing Forge cloud settings.
-- MoreCulling-style item frame LOD: beyond the configured distance, ordinary sprite items render without their edge faces and, where the fixed transform allows, without the hidden back face. Maps and 3D block items retain their normal rendering. It is disabled by default.
-- Render toggles for item frames, armor stands, paintings, pistons, beacon beams, enchanting table books, name tags, light updates, and vanilla screen shaders.
-- Back-face culling for sign text and framed maps. Sign editing and views near the sign plane remain visible. Both features can be disabled independently.
-- Optional entity and tile entity rendering distance limits (0 = vanilla). Config-file class exemptions support exact class names and `package.*`; the Ender Dragon and beacon renderer are exempt by default. These settings affect drawing only, not ticking or server simulation.
-- FPS, coordinate, and JVM heap usage overlays with configurable position and text contrast. Current FPS is smoothed over 0.5 seconds; extended statistics include average FPS, 1% low, and 0.1% low over the last 5 seconds, refreshed every 0.5 seconds. Heap usage shows the percentage and used/max MiB.
-- Mod-name tooltips, per-type toast controls, a steady F3 debug screen, and renderer names in the F3 profiler pie chart.
-- Windowed, borderless, and fullscreen modes, plus Off, On, and Adaptive VSync.
-- Independent unfocused and minimized drawing FPS limits (disabled by default). Minimized takes precedence, or inherits the unfocused limit when set to 0. Rates below 20 FPS skip rendering while keeping the client loop at least 20 Hz for ticking and network processing.
-- Search across Celeritas, Extra, and addon option names and tooltips. The search bar uses Celeritas's translucent widget style, draw context, and native clear button. All words must match; matching options and pages remain visible, with a result count while searching. Ctrl+F focuses the search field, and Escape or the × button clears the query. Hidden pending changes remain available to Apply and Undo.
-- Hold Shift and scroll over a slider row to adjust it by one configured step. Disabled sliders stay unchanged; other wheel input retains normal page scrolling.
+The following settings and features are added by Celeritas Extra. Individual particle and dimension options vary depending on the installed mods and the connected server.
 
-## Settings layout
+### Animations
 
-Extra settings are organized into ten pages: Animations, Particles, Sky/Weather/Colors, Clouds, Fog, Dimension Fog, Entities, Block Rendering, HUD/Overlays, and Extras. Related controls are separated into groups such as item frames, beacon beams, coordinates, debug HUD, and notifications. Particle percentages remain grouped by mod; dimension fog labels include the dimension name so search results retain their context.
+- Toggle all texture animations
+- Toggle water animations
+- Toggle lava animations
+- Toggle fire animations
+- Toggle Nether portal animations
+- Toggle other block texture animations
 
-## Translations
+### Particles
 
-English, Japanese, Simplified Chinese, and Russian share the same translation keys. Equivalent features use the original Sodium Extra/Embeddium Extra, Sodium Extras, MoreCulling, Reese's Sodium Options, and NotFine keys. Vanilla labels use Minecraft 1.12.2's keys. Local translations are retained where upstream translations are missing or untranslated, and descriptions are adapted where this backport behaves differently.
+- Toggle all particles
+- Toggle rain splash particles
+- Toggle particles when blocks are broken
+- Toggle particles while mining blocks
+- Adjust spawn percentages for individual particle classes (0–100%; 0% disables spawning)
+- Automatically discover vanilla and modded particle classes
 
-The old-to-new key mapping and source references are recorded in [translations/upstream-keys.json](translations/upstream-keys.json). Independent features such as radial render distances, JVM-only memory usage, spawn percentages, and per-dimension override toggles retain Celeritas Extra keys.
+### Sky, Weather, and Colors
+
+- Toggle sky rendering
+- Toggle star rendering
+- Adjust the number of stars
+- Toggle sun rendering
+- Toggle moon rendering
+- Toggle rain and snow rendering
+- Toggle biome-specific colors
+- Toggle biome-specific sky colors
+- Toggle void fog
+
+### Clouds
+
+- Toggle cloud rendering
+- Adjust cloud height and render distance
+- Adjust cloud scale (0.25×–4.00×)
+- Select cloud translucency (default, always translucent, or always opaque)
+- Modern Clouds: use the Minecraft 1.21.6 cloud texture
+
+### Fog
+
+- Toggle fog
+- Adjust where fog begins
+- Adjust fog distance
+- Enable or disable per-dimension overrides
+- Toggle fog for individual dimensions
+- Adjust where fog begins for individual dimensions
+- Adjust fog distance for individual dimensions
+- Dimension options for vanilla dimensions, registered mod dimensions, and dimensions on the current server
+- Preserve blindness, underwater, and lava fog even when normal fog is disabled
+
+### Entities and Item Frames
+
+- Toggle item frame rendering
+- Toggle armor stand rendering
+- Toggle painting rendering
+- Toggle player name tags
+- Toggle item frame name tags
+- Limit entity render distance (0 keeps normal behavior)
+- Limit tile entity render distance (0 keeps normal behavior)
+- Specify classes exempt from render distance limits in the configuration file, using fully qualified class names or `package.*`
+- Item frame LOD (0 disables it)
+
+### Block Rendering, Lighting, and Screen Effects
+
+- Toggle piston extension and retraction animation rendering
+- Toggle beacon beam rendering
+- Limit beacon beam height to the world height
+- Toggle enchanting table book rendering
+- Toggle back-face culling for sign text
+- Toggle light updates
+- Prevent vanilla screen shaders from loading, such as special spectator-mode views
+
+### HUD and Overlays
+
+- Display FPS
+- Display coordinates
+- Option to display coordinates even when debug information is restricted
+- Display memory usage percentage
+- Select the overlay position (top left, top right, bottom left, or bottom right)
+- Select overlay text contrast (plain, background, or shadow)
+
+### Debugging, Tooltips, and Notifications
+
+- Adjust the F3 debug screen refresh interval
+- Display renderer names in the F3 profiler pie chart
+- Display the source mod's name in item tooltips
+- Toggle all toast notifications or individual notification types
+
+### Window and FPS Controls
+
+- Select the screen mode (windowed, borderless, or fullscreen)
+- Select VSync (off, on, or adaptive; adaptive requires a supported GPU)
+- Limit FPS while the window is unfocused
+- Limit FPS while the window is minimized
+- Limit FPS on menu screens
+
+### Settings Screen and Controls
+
+- Search settings
+- Display the number of search results
+- Focus the search field with `Ctrl+F`
+- Clear the search with `Esc` or the clear button
+- Hold `Shift` and scroll over a slider row to adjust its value by the configured step
 
 ## Credits
 
-- FlashyReese, creator of Sodium Extra
-- dima_dencep, creator of Rubidium and Embeddium Extra
-- Txni, creator of Sodium Extras
-- FxMorin and the MoreCulling contributors
-- The NotFine and Angelica contributors
-- embeddedt, creator of Celeritas
-- CleanroomMC, for Cleanroom Loader, CleanroomModTemplate, and related tools
-- Everyone who has contributed translations
+- FlashyReese — Creator of Sodium Extra and Reese's Sodium Options
+- dima_dencep — Creator of Rubidium/Embeddium Extra
+- Txni — Creator of Sodium Extras
+- FxMorin — Creator of MoreCulling
+- 1foxy2 — Maintainer of MoreCulling
+- GTNHteam — Maintainers of Angelica
+- mitchej123
+- Embeddedt — Creator of Celeritas and Embeddium
+- CleanroomMC — Creators of Cleanroom Loader, CleanroomModTemplate, and related tools
+- Everyone who provided translation keys
 
-## License
+## AI Usage
 
-Celeritas Extra is licensed under the [LGPL-3.0](LICENSE.md).
-
-## AI usage
-
-Some code in this project was written with AI assistance. Changes are reviewed before they are included.
+Some code and ideas in this project were implemented with assistance from large language models (LLMs).
