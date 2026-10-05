@@ -24,18 +24,18 @@ dependencies {
 // to that API instead of relying on old Celeritas binary compatibility.
 def adapterNames = ['CeleritasExtraGameOptionPages', 'CeleritasExtraOptionPages',
                     'CeleritasExtraOptionsStorage', 'CeleritasExtraOptionsListener']
-def optionSources = layout.projectDirectory.dir('src/main/java/com/sumire/celeritasextra/client/gui')
+def optionSources = layout.projectDirectory.dir('src/main/java/com/sumirelabs/celeritasextra/client/gui')
 def generatedAdapters = layout.buildDirectory.dir('generated/sources/actinium/java')
 def generateActiniumAdapters = tasks.register('generateActiniumAdapters') {
     inputs.files(adapterNames.collect { optionSources.file("${it}.java") })
     outputs.dir(generatedAdapters)
     doLast {
-        def output = new File(generatedAdapters.get().asFile, 'com/sumire/celeritasextra/compat/actinium/gui')
+        def output = new File(generatedAdapters.get().asFile, 'com/sumirelabs/celeritasextra/compat/actinium/gui')
         output.mkdirs()
         adapterNames.each { name ->
             def source = optionSources.file("${name}.java").asFile.getText('UTF-8')
-                    .replace('package com.sumire.celeritasextra.client.gui;',
-                            'package com.sumire.celeritasextra.compat.actinium.gui;\n\nimport com.sumire.celeritasextra.client.gui.CeleritasExtraGameOptions;\nimport com.sumire.celeritasextra.client.gui.Translations;\nimport com.sumire.celeritasextra.client.gui.WindowModeSupport;')
+                    .replace('package com.sumirelabs.celeritasextra.client.gui;',
+                            'package com.sumirelabs.celeritasextra.compat.actinium.gui;\n\nimport com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;\nimport com.sumirelabs.celeritasextra.client.gui.Translations;\nimport com.sumirelabs.celeritasextra.client.gui.WindowModeSupport;')
                     .replace('org.taumc.celeritas.api', 'dhj.embeddedt.embeddium.api')
                     .replace('org.embeddedt.embeddium.impl', 'dhj.embeddedt.embeddium.impl')
             if (name == 'CeleritasExtraGameOptionPages') {

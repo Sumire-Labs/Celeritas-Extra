@@ -1,8 +1,8 @@
 {
   "required": true,
   "priority": 1001,
-  "package": "com.sumire.celeritasextra.mixin",
-  "plugin": "com.sumire.celeritasextra.compat.RendererMixinPlugin",
+  "package": "com.sumirelabs.celeritasextra.mixin",
+  "plugin": "com.sumirelabs.celeritasextra.compat.RendererMixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "target": "@env(DEFAULT)",
   "injectors": {
