@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+import jp.s12kuma01.celeritasextra.compat.ShaderPassCompat;
 import jp.s12kuma01.celeritasextra.client.ItemFrameLodState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
@@ -34,6 +35,7 @@ public class MixinRenderItemFrame {
                                            Operation<Void> original, @Local(argsOnly = true) EntityItemFrame frame) {
         Minecraft mc = Minecraft.getMinecraft();
         if (CeleritasExtraClientMod.options().renderSettings.mapBackFaceCulling
+                && !ShaderPassCompat.isShadowPass()
                 && mc.getRenderViewEntity() != null && frame.facingDirection != null) {
             Vec3d camera = ActiveRenderInfo.projectViewFromEntity(mc.getRenderViewEntity(), mc.getRenderPartialTicks());
             var normal = frame.facingDirection.getDirectionVec();
@@ -78,6 +80,7 @@ public class MixinRenderItemFrame {
         int distance = CeleritasExtraClientMod.options().renderSettings.itemFrameLodDistance;
         Entity view = Minecraft.getMinecraft().getRenderManager().renderViewEntity;
         ItemFrameLodState.active = distance > 0 && view != null
+                && !ShaderPassCompat.isShadowPass()
                 && entity.getDistanceSq(view) > (double) distance * distance;
         try {
             original.call(renderer, stack, transform);

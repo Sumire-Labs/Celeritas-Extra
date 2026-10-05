@@ -2,6 +2,7 @@ package jp.s12kuma01.celeritasextra.mixin.render.entity;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.VisibilityRules;
+import jp.s12kuma01.celeritasextra.compat.ShaderPassCompat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -17,6 +18,7 @@ public class MixinEntityRenderDistance {
     private void celeritasExtra$limitDistance(Entity entity, ICamera camera, double x, double y, double z,
                                               CallbackInfoReturnable<Boolean> cir) {
         var settings = CeleritasExtraClientMod.options().renderSettings;
+        if (ShaderPassCompat.isShadowPass()) return;
         if (entity != Minecraft.getMinecraft().getRenderViewEntity()
                 && settings.entityRenderDistance > 0
                 && !VisibilityRules.exempt(entity.getClass().getName(), settings.entityDistanceExemptions)

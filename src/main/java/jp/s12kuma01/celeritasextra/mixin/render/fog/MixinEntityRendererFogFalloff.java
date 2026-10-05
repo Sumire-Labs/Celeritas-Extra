@@ -4,6 +4,7 @@ import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.CloudPassState;
 import jp.s12kuma01.celeritasextra.client.FogState;
 import jp.s12kuma01.celeritasextra.client.DimensionFog;
+import jp.s12kuma01.celeritasextra.compat.ShaderPassCompat;
 import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -43,7 +44,7 @@ public class MixinEntityRendererFogFalloff {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
         var fog = DimensionFog.current();
 
-        if (FogState.isGameplayFog()) return original;
+        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass()) return original;
 
         // Cloud pass: keep clouds out of fog so extended cloud distance is actually visible.
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {
@@ -76,7 +77,7 @@ public class MixinEntityRendererFogFalloff {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
         var fog = DimensionFog.current();
 
-        if (FogState.isGameplayFog()) return original;
+        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass()) return original;
 
         // Cloud pass: end just beyond the cloud-far start (finite, start < end).
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {

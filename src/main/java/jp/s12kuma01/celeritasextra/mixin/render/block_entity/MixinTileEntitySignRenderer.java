@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.VisibilityRules;
+import jp.s12kuma01.celeritasextra.compat.ShaderPassCompat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiEditSign;
@@ -25,6 +26,7 @@ public class MixinTileEntitySignRenderer {
                                           @Local(argsOnly = true) TileEntitySign sign) {
         Minecraft mc = Minecraft.getMinecraft();
         if (CeleritasExtraClientMod.options().renderSettings.signTextCulling && sign.hasWorld()
+                && !ShaderPassCompat.isShadowPass()
                 && sign.lineBeingEdited < 0 && !(mc.currentScreen instanceof GuiEditSign)
                 && mc.getRenderViewEntity() != null) {
             int metadata = sign.getBlockMetadata();
