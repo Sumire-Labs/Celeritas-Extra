@@ -48,8 +48,10 @@ public final class CeleritasSearchBar extends AbstractWidget {
     private String visibleText(DrawContext context) {
         int width = Math.max(0, textRight(context) - bounds.x() - 7);
         visibleStart = Math.clamp(visibleStart, 0, text.length());
-        if (selection < visibleStart) visibleStart = selection;
-        while (visibleStart < selection && context.getStringWidth(text.substring(visibleStart, selection)) > width)
+        // GuiTextField keeps the active cursor and the other end of a selection
+        // separately. Keep the active cursor visible while extending a selection.
+        if (cursor < visibleStart) visibleStart = cursor;
+        while (visibleStart < cursor && context.getStringWidth(text.substring(visibleStart, cursor)) > width)
             visibleStart++;
         return context.substrByWidth(text.substring(visibleStart), width);
     }
@@ -73,7 +75,7 @@ public final class CeleritasSearchBar extends AbstractWidget {
             context.drawString(TextComponent.literal(label), left, baseline,
                     text.isEmpty() && !focused ? style.textDisabled : style.textDefault, false);
             if (focused && blink) {
-                int caret = Math.clamp(selection - visibleStart, 0, visible.length());
+                int caret = Math.clamp(cursor - visibleStart, 0, visible.length());
                 int x = left + context.getStringWidth(visible.substring(0, caret));
                 context.fill(x, baseline - 1, x + 1, baseline + context.lineHeight(), style.textDefault);
             }

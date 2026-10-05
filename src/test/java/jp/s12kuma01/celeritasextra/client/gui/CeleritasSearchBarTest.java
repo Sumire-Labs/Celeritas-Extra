@@ -50,6 +50,16 @@ class CeleritasSearchBarTest {
         assertEquals(0, bar.cursorAt(drawing.context, 6));
     }
 
+    @Test void selectionDrawsTheCaretAtTheActiveCursorEndpoint() {
+        var drawing = new RecordingContext();
+        var bar = new CeleritasSearchBar(new Dim2i(0, 0, 200, 20), () -> {});
+        bar.update("abcdef", 1, 4, true, true, "Search options...", "1 result");
+        bar.render(drawing.context, -1, -1, 0);
+
+        assertTrue(drawing.fills.stream().anyMatch(fill -> fill[0] == 12 && fill[2] == 13),
+                "The caret should follow cursorPosition, not the selection endpoint");
+    }
+
     private static final class RecordingContext {
         final List<int[]> fills = new ArrayList<>();
         final List<String> labels = new ArrayList<>();
