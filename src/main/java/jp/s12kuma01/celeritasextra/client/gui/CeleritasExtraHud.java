@@ -21,7 +21,7 @@ import java.util.List;
  * Renders the optional FPS and coordinate overlay onto the in-game HUD.
  * <p>
  * Subscribed to the client Forge event bus, it draws the lines enabled in
- * {@link CeleritasExtraGameOptions.ExtraSettings} (FPS with optional high/avg/low detail, player
+ * {@link CeleritasExtraGameOptions.ExtraSettings} (FPS with average/1%/0.1% lows, player
  * coordinates, and a light-updates-disabled warning) in the configured screen corner and with the
  * chosen text contrast. Nothing is drawn while the F3 debug screen is showing or the GUI is hidden.
  */
@@ -53,7 +53,7 @@ public class CeleritasExtraHud {
 
         // FPS display
         if (settings.showFps) {
-            int fps = Minecraft.getDebugFPS();
+            int fps = FrameCounter.getSmoothFps();
             String fpsText = I18n.format("celeritasextra.overlay.fps", fps);
 
             if (settings.showFPSExtended) {

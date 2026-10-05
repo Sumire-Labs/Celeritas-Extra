@@ -112,7 +112,7 @@ public class CeleritasExtraGameOptions {
             // Extra settings
             new BooleanProperty(CAT_EXTRA, "showFps", false, "Show FPS overlay",
                     v -> extraSettings.showFps = v, () -> extraSettings.showFps),
-            new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (high/avg/low)",
+            new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (average/1% low/0.1% low)",
                     v -> extraSettings.showFPSExtended = v, () -> extraSettings.showFPSExtended),
             new BooleanProperty(CAT_EXTRA, "showCoords", false, "Show coordinates overlay",
                     v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),

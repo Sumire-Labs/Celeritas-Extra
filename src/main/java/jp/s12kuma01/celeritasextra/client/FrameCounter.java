@@ -25,10 +25,11 @@ public class FrameCounter {
     private static int sampleHead;
     private static int sampleCount;
 
-    private static long lastFrameTime = 0;
+    private static long lastFrameTime = -1;
     private static long lastCacheTime = 0;
 
     private static int cachedAverageFps = 0;
+    private static int cachedSmoothFps = 0;
     private static int cachedOnePercentLowFps = 0;
     private static int cachedPointOnePercentLowFps = 0;
 
@@ -46,10 +47,13 @@ public class FrameCounter {
         if (event.phase != TickEvent.Phase.START) {
             return;
         }
+        recordFrame(System.nanoTime());
+    }
 
-        long now = System.nanoTime();
+    // Explicit time input keeps rolling-window behavior testable without sleeping.
+    static void recordFrame(long now) {
 
-        if (lastFrameTime != 0) {
+        if (lastFrameTime != -1) {
             long delta = now - lastFrameTime;
             if (delta > 0) {
                 addSample(now, delta);
@@ -66,18 +70,19 @@ public class FrameCounter {
         // Recalculate cached stats every 500ms
         if (now - lastCacheTime >= CACHE_INTERVAL_NS) {
             lastCacheTime = now;
-            recalculate();
+            recalculate(now);
         }
     }
 
     /**
      * Recomputes the cached average FPS and the 1% / 0.1% low metrics from the current sample window,
-     * resetting all three to zero when the window holds no samples.
+     * including the 0.5-second smooth FPS, resetting all metrics when the window holds no samples.
      */
-    private static void recalculate() {
+    private static void recalculate(long now) {
         int size = sampleCount;
         if (size == 0) {
             cachedAverageFps = 0;
+            cachedSmoothFps = 0;
             cachedOnePercentLowFps = 0;
             cachedPointOnePercentLowFps = 0;
             return;
@@ -85,15 +90,22 @@ public class FrameCounter {
 
         long[] deltas = new long[size];
         long totalDelta = 0;
+        long recentDelta = 0;
+        int recentCount = 0;
         for (int i = 0; i < size; i++) {
             long delta = sampleDeltas[(sampleHead + i) % sampleDeltas.length];
             deltas[i] = delta;
             totalDelta += delta;
+            if (now - sampleTimes[(sampleHead + i) % sampleTimes.length] <= CACHE_INTERVAL_NS) {
+                recentDelta += delta;
+                recentCount++;
+            }
         }
 
         Arrays.sort(deltas);
         double avgDelta = (double) totalDelta / size;
-        cachedAverageFps = avgDelta > 0 ? (int) (1_000_000_000.0 / avgDelta) : 0;
+        cachedAverageFps = avgDelta > 0 ? (int) Math.round(1_000_000_000.0 / avgDelta) : 0;
+        cachedSmoothFps = recentCount > 0 ? (int) Math.round(recentCount * 1_000_000_000.0 / recentDelta) : 0;
         cachedOnePercentLowFps = computePercentileLow(deltas, 1.0);
         cachedPointOnePercentLowFps = computePercentileLow(deltas, 0.1);
     }
@@ -134,7 +146,20 @@ public class FrameCounter {
         }
 
         double avgDelta = (double) sum / count;
-        return avgDelta > 0 ? (int) (1_000_000_000.0 / avgDelta) : 0;
+        return avgDelta > 0 ? (int) Math.round(1_000_000_000.0 / avgDelta) : 0;
+    }
+
+    /** Current FPS smoothed over 0.5 seconds, matching Sodium Extra. */
+    public static int getSmoothFps() {
+        return cachedSmoothFps;
+    }
+
+    /** Start a fresh timing window. Render thread only. */
+    static void reset() {
+        sampleHead = sampleCount = 0;
+        lastFrameTime = -1;
+        lastCacheTime = 0;
+        cachedSmoothFps = cachedAverageFps = cachedOnePercentLowFps = cachedPointOnePercentLowFps = 0;
     }
 
     /**
