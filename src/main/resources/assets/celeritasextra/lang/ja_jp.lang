@@ -179,15 +179,3 @@ celeritasextra.option.menu_fps_limit=メニュー画面のFPS上限
 celeritasextra.option.menu_fps_limit.default=標準（30 FPS）
 celeritasextra.option.menu_fps_limit.tooltip=タイトルやワールド選択など、ワールドに入っていないメニュー画面の描画FPSを制限します。0はバニラの30 FPS制限を使用します。非アクティブ時・最小化時の制限も適用されます。Tickと通信のためのクライアントループは最低20 Hzを維持します。
 
-celeritasextra.group.general=全般
-celeritasextra.group.particle_effects=パーティクルの種類
-celeritasextra.group.celestial=太陽・月・星
-celeritasextra.group.weather_colors=天候と色
-celeritasextra.group.cloud_geometry=雲の形状と距離
-celeritasextra.group.atmospheric_fog=大気の霧
-celeritasextra.group.block_entities=ブロックエンティティ
-celeritasextra.group.block_animations=ブロックのアニメーション
-celeritasextra.group.lighting=ライティング
-celeritasextra.group.coordinates=座標
-celeritasextra.group.appearance=表示スタイル
-celeritasextra.group.frame_limits=フレームレート制限

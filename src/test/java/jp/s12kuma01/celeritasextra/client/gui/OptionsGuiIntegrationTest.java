@@ -18,35 +18,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Exercises Celeritas's real TabFrame/OptionPageFrame builders without an OpenGL window. */
 class OptionsGuiIntegrationTest {
-    @Test void groupHeaderCollapseKeepsPendingOptionsAndSearchTemporarilyExpandsThem() throws Exception {
+    @Test void pageGroupsHaveOnlyNativeOptionRowsAndKeepPendingValues() throws Exception {
         var sun = new TestOption("Sun", "Render sun");
         var moon = new TestOption("Moon", "Render moon");
         var fog = new TestOption("Fog", "Distance");
         var first = OptionGroup.createBuilder().add(sun).add(moon).build();
         var second = OptionGroup.createBuilder().add(fog).build();
-        var page = new OptionPage(OptionIdentifier.create("test", "collapsible"), TextComponent.literal("Sky"), List.of(first, second));
-        var state = new OptionsCollapseState();
-        var rebuilds = new java.util.concurrent.atomic.AtomicInteger();
-        var bounds = new Dim2i(10, 20, 200, 100);
-        var frame = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
+        var page = new OptionPage(OptionIdentifier.create("test", "plain_groups"), TextComponent.literal("Sky"), List.of(first, second));
+        var controller = controller(List.of(page));
+        var frame = filteredFrame(controller);
+        var selectedField = CollapsibleTabFrame.class.getDeclaredField("selectedFrame");
+        selectedField.setAccessible(true);
+        var selected = (AbstractFrame) selectedField.get(frame);
+        var body = selected.interactableChildren().filter(child -> child instanceof org.embeddedt.embeddium.impl.gui.frame.OptionPageFrame)
+                .map(child -> (org.embeddedt.embeddium.impl.gui.frame.OptionPageFrame) child).findFirst().orElseThrow();
+        assertEquals(58, body.getDimensions().height(), "No extra group header rows");
+        assertTrue(body.interactableChildren().allMatch(child -> child instanceof ControlElement<?>));
         sun.setValue(9);
-        assertEquals(3, controls(frame).size());
-        assertTrue(frame.mouseClicked(new InteractionContext(){}, 15, 25, 0));
-        assertEquals(1, rebuilds.get());
-        var collapsed = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
-        assertEquals(List.of(fog), controls(collapsed).stream().map(ControlElement::getOption).toList());
-        assertTrue(sun.hasChanged());
+        controller.celeritasExtra$search("fog");
+        assertTrue(controller.celeritasExtra$hasChanges());
+        controller.celeritasExtra$search("");
+        assertEquals(3, controls(filteredFrame(controller)).size());
         assertEquals(9, sun.getValue());
-        assertTrue(collapsed.getDimensions().height() < frame.getDimensions().height());
-        var searching = new CollapsibleOptionPageFrame(bounds, page, option -> option == sun, state, true, rebuilds::incrementAndGet);
-        assertEquals(List.of(sun), controls(searching).stream().map(ControlElement::getOption).toList());
-        assertFalse(searching.mouseClicked(new InteractionContext(){}, 15, 25, 0));
-        var restored = new CollapsibleOptionPageFrame(bounds, page, option -> true, state, false, rebuilds::incrementAndGet);
-        assertEquals(List.of(fog), controls(restored).stream().map(ControlElement::getOption).toList());
-        page.getOptions().forEach(Option::reset);
-        assertFalse(sun.hasChanged());
     }
-
     @Test void modHeadersCollapseTabsWhileRetainingTheSelectedPage() throws Exception {
         var option = new TestOption("Sun", "Render sun");
         var controller = controller(List.of(page("sky", option), page("fog", new TestOption("Fog", "Distance"))));

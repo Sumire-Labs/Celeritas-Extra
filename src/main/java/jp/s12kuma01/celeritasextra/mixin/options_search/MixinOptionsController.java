@@ -4,8 +4,6 @@ import jp.s12kuma01.celeritasextra.client.gui.OptionSearchQuery;
 import jp.s12kuma01.celeritasextra.client.gui.SearchableOptionsController;
 import jp.s12kuma01.celeritasextra.client.gui.OptionsCollapseState;
 import jp.s12kuma01.celeritasextra.client.gui.CollapsibleTabFrame;
-import jp.s12kuma01.celeritasextra.client.gui.CollapsibleOptionPageFrame;
-import org.embeddedt.embeddium.impl.gui.frame.ScrollableFrame;
 import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
 import org.embeddedt.embeddium.impl.gui.frame.AbstractFrame;
 import org.embeddedt.embeddium.impl.gui.frame.BasicFrame;
@@ -87,10 +85,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
         for (OptionPage page : pages) {
             if (page.getOptions().stream().noneMatch(this::celeritasExtra$matches)) continue;
             tabs.computeIfAbsent(page.getId().getModId(), ignored -> new ArrayList<>())
-                    .add(new Tab<>(page.getId(), page.getName(), null, dim -> ScrollableFrame.createBuilder()
-                            .setDimension(dim).setFrame(new CollapsibleOptionPageFrame(dim, page, this::celeritasExtra$matches,
-                                    celeritasExtra$collapse, !celeritasExtra$query.isEmpty(), () -> init(width, height)))
-                            .setVerticalScrollBarOffset(optionPageScrollBarOffset).build()));
+                    .add(Tab.from(page, this::celeritasExtra$matches, optionPageScrollBarOffset));
         }
         cir.setReturnValue(new CollapsibleTabFrame(bounds, font, tabs, celeritasExtra$collapse,
                 !celeritasExtra$query.isEmpty(), tabFrameSelectedTab, tabFrameScrollBarOffset,

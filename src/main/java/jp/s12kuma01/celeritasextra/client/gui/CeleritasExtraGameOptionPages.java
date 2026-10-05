@@ -29,8 +29,7 @@ import java.util.function.Function;
  */
 public class CeleritasExtraGameOptionPages {
 
-    private static OptionGroup.Builder namedGroup(String id, String label) {
-        OptionGroupLabels.register(id, label);
+    private static OptionGroup.Builder group(String id) {
         return OptionGroup.createBuilder().setId(OptionIdentifier.create("celeritasextra", id));
     }
 
@@ -276,11 +275,11 @@ public class CeleritasExtraGameOptionPages {
                 OptionFlag.REQUIRES_ASSET_RELOAD, OptionImpact.MEDIUM, null, new OptionContext("", "animation/"));
         BooleanSupplier animationsOn = () -> allAnimations.getValue();
 
-        groups.add(namedGroup("groups/animation/0", Translations.format("celeritasextra.group.general"))
+        groups.add(group("groups/animation/0")
                 .add(allAnimations)
                 .build());
 
-        groups.add(namedGroup("groups/animation/1", Translations.format("sodium-extra.option.animations"))
+        groups.add(group("groups/animation/1")
                 .add(booleanOption("tile.water.name",
                         (opts, v) -> opts.animationSettings.water = v,
                         opts -> opts.animationSettings.water,
@@ -324,11 +323,11 @@ public class CeleritasExtraGameOptionPages {
                 null, OptionImpact.HIGH, null, new OptionContext("", "particle/"));
         BooleanSupplier particlesOn = () -> allParticles.getValue();
 
-        groups.add(namedGroup("groups/particle/0", Translations.format("celeritasextra.group.general"))
+        groups.add(group("groups/particle/0")
                 .add(allParticles)
                 .build());
 
-        groups.add(namedGroup("groups/particle/1", Translations.format("celeritasextra.group.particle_effects"))
+        groups.add(group("groups/particle/1")
                 .add(booleanOption("subtitles.weather.rain",
                         (opts, v) -> opts.particleSettings.rainSplash = v,
                         opts -> opts.particleSettings.rainSplash,
@@ -364,7 +363,7 @@ public class CeleritasExtraGameOptionPages {
 
                 for (var modEntry : byMod.entrySet()) {
                     var modId = modEntry.getKey();
-                    var groupBuilder = namedGroup("groups/particle/mod/" + modId, modId);
+                    var groupBuilder = group("groups/particle/mod/" + modId);
                     var classEntries = modEntry.getValue();
                     classEntries.sort(Comparator.comparing(Map.Entry::getValue));
 
@@ -407,7 +406,7 @@ public class CeleritasExtraGameOptionPages {
                 OptionFlag.REQUIRES_RENDERER_RELOAD);
         BooleanSupplier starsOn = () -> starsOption.getValue();
 
-        groups.add(namedGroup("groups/sky/0", Translations.format("celeritasextra.group.celestial"))
+        groups.add(group("groups/sky/0")
                 .add(booleanOption("sodium-extra.option.sky",
                         (opts, v) -> opts.detailSettings.sky = v,
                         opts -> opts.detailSettings.sky,
@@ -426,7 +425,7 @@ public class CeleritasExtraGameOptionPages {
                         starsOn, OptionImpact.MEDIUM, OptionFlag.REQUIRES_RENDERER_RELOAD))
                 .build());
 
-        groups.add(namedGroup("groups/sky/1", Translations.format("celeritasextra.group.weather_colors"))
+        groups.add(group("groups/sky/1")
                 .add(booleanOption("soundCategory.weather",
                         (opts, v) -> opts.detailSettings.rainSnow = v,
                         opts -> opts.detailSettings.rainSnow))
@@ -457,12 +456,12 @@ public class CeleritasExtraGameOptionPages {
                 OptionFlag.REQUIRES_ASSET_RELOAD,
                 () -> cloudsOn.getAsBoolean() && ModernCloudAssets.isAvailable());
 
-        groups.add(namedGroup("groups/clouds/0", Translations.format("options.renderClouds"))
+        groups.add(group("groups/clouds/0")
                 .add(cloudsOption)
                 .add(modernCloudsOption)
                 .build());
 
-        groups.add(namedGroup("groups/clouds/1", Translations.format("celeritasextra.group.cloud_geometry"))
+        groups.add(group("groups/clouds/1")
                 .add(sliderOption("sodium-extra.option.cloud_height",
                         CeleritasExtraGameOptions.RenderSettings.USE_WORLD_CLOUD_HEIGHT, 384, 16,
                         v -> TextComponent.literal(v < 0 ? Translations.format("generator.default") : Translations.format("sodium-extra.units.blocks", v)),
@@ -509,7 +508,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.renderSettings.fog);
         BooleanSupplier fogOn = () -> fogOption.getValue();
 
-        groups.add(namedGroup("groups/fog/0", Translations.format("celeritasextra.group.atmospheric_fog"))
+        groups.add(group("groups/fog/0")
                 .add(fogOption)
                 .add(sliderOption("sodium-extra.option.fog_start",
                         0, 200, 10, ControlValueFormatter.percentage(),
@@ -523,7 +522,7 @@ public class CeleritasExtraGameOptionPages {
                         fogOn))
                 .build());
 
-        groups.add(namedGroup("groups/fog/1", Translations.format("options.void_fog"))
+        groups.add(group("groups/fog/1")
                 .add(booleanOption("options.void_fog",
                         (opts, v) -> opts.detailSettings.voidFog = v,
                         opts -> opts.detailSettings.voidFog))
@@ -563,7 +562,7 @@ public class CeleritasExtraGameOptionPages {
                     (opts, value) -> opts.renderSettings.dimensionFog(dimension).fog = value,
                     opts -> opts.renderSettings.dimensionFog(dimension).fog, null, null, overriding, context);
             BooleanSupplier customFogOn = () -> override.getValue() && enabled.getValue();
-            groups.add(namedGroup("groups/dimension_fog/" + dimension, dimensionName).add(override).add(enabled)
+            groups.add(group("groups/dimension_fog/" + dimension).add(override).add(enabled)
                     .add(sliderOption("sodium-extra.option.fog_start", 0, 200, 10, ControlValueFormatter.percentage(),
                             (opts, value) -> opts.renderSettings.dimensionFog(dimension).start = value,
                             opts -> opts.renderSettings.dimensionFog(dimension).start, customFogOn, null, null, context))
@@ -583,7 +582,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.renderSettings.itemFrames);
         BooleanSupplier itemFramesOn = () -> itemFramesOption.getValue();
 
-        groups.add(namedGroup("groups/entities/0", Translations.format("item.frame.name"))
+        groups.add(group("groups/entities/0")
                 .add(itemFramesOption)
                 .add(sliderOption("moreculling.config.option.itemFrameLODRange",
                         0, 256, 1, quantityOrDefault("sodium-extra.units.blocks", "options.off"),
@@ -599,7 +598,7 @@ public class CeleritasExtraGameOptionPages {
                         itemFramesOn))
                 .build());
 
-        groups.add(namedGroup("groups/entities/1", Translations.format("celeritasextra.option.page.entities"))
+        groups.add(group("groups/entities/1")
                 .add(sliderOption("celeritasextra.option.entity_render_distance",
                         0, 256, 1, quantityOrDefault("sodium-extra.units.blocks", "generator.default"),
                         (opts, v) -> opts.renderSettings.entityRenderDistance = v,
@@ -626,7 +625,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.renderSettings.beacons);
         BooleanSupplier beaconsOn = () -> beaconsOption.getValue();
 
-        groups.add(namedGroup("groups/blocks/0", Translations.format("celeritasextra.group.block_entities"))
+        groups.add(group("groups/blocks/0")
                 .add(sliderOption("celeritasextra.option.tile_entity_render_distance",
                         0, 256, 1, quantityOrDefault("sodium-extra.units.blocks", "generator.default"),
                         (opts, v) -> opts.renderSettings.tileEntityRenderDistance = v,
@@ -636,7 +635,7 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.renderSettings.signTextCulling))
                 .build());
 
-        groups.add(namedGroup("groups/blocks/1", Translations.format("sodium-extra.option.beacon_beam"))
+        groups.add(group("groups/blocks/1")
                 .add(beaconsOption)
                 .add(booleanOption("sodium-extra.option.limit_beacon_beam_height",
                         (opts, v) -> opts.renderSettings.limitBeaconBeamHeight = v,
@@ -644,7 +643,7 @@ public class CeleritasExtraGameOptionPages {
                         beaconsOn))
                 .build());
 
-        groups.add(namedGroup("groups/blocks/2", Translations.format("celeritasextra.group.block_animations"))
+        groups.add(group("groups/blocks/2")
                 .add(booleanOption("tile.pistonBase.name",
                         (opts, v) -> opts.renderSettings.pistons = v,
                         opts -> opts.renderSettings.pistons))
@@ -653,7 +652,7 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.renderSettings.enchantingTableBooks))
                 .build());
 
-        groups.add(namedGroup("groups/blocks/3", Translations.format("celeritasextra.group.lighting"))
+        groups.add(group("groups/blocks/3")
                 .add(booleanOption("sodium-extra.option.light_updates",
                         (opts, v) -> opts.renderSettings.lightUpdates = v,
                         opts -> opts.renderSettings.lightUpdates,
@@ -676,7 +675,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.extraSettings.steadyDebugHud);
         BooleanSupplier steadyHudOn = () -> steadyHudOption.getValue();
 
-        groups.add(namedGroup("groups/overlay/0", Translations.format("sodium-extra.option.show_fps"))
+        groups.add(group("groups/overlay/0")
                 .add(showFpsOption)
                 .add(booleanOption("sodium-extra.option.show_fps_extended",
                         (opts, v) -> opts.extraSettings.showFPSExtended = v,
@@ -687,7 +686,7 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.extraSettings.showMemory))
                 .build());
 
-        groups.add(namedGroup("groups/overlay/1", Translations.format("celeritasextra.group.coordinates"))
+        groups.add(group("groups/overlay/1")
                 .add(booleanOption("sodium-extra.option.show_coordinates",
                         (opts, v) -> opts.extraSettings.showCoords = v,
                         opts -> opts.extraSettings.showCoords))
@@ -696,7 +695,7 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.extraSettings.ignoreReducedDebugInfo))
                 .build());
 
-        groups.add(namedGroup("groups/overlay/2", Translations.format("celeritasextra.group.appearance"))
+        groups.add(group("groups/overlay/2")
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
                         .setId(optionId("overlay_corner", CeleritasExtraGameOptions.OverlayCorner.class, OptionContext.NONE))
                         .setName(TextComponent.literal(Translations.format("sodium-extra.option.overlay_corner")))
@@ -726,7 +725,7 @@ public class CeleritasExtraGameOptionPages {
                         .build())
                 .build());
 
-        groups.add(namedGroup("groups/overlay/3", Translations.format("sodium-extra.option.steady_debug_hud"))
+        groups.add(group("groups/overlay/3")
                 .add(steadyHudOption)
                 .add(sliderOption("sodium-extra.option.steady_debug_hud_refresh_interval",
                         CeleritasExtraGameOptions.ExtraSettings.STEADY_DEBUG_HUD_REFRESH_MIN,
@@ -748,7 +747,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.extraSettings.toasts);
         BooleanSupplier toastsOn = () -> toastsOption.getValue();
 
-        groups.add(namedGroup("groups/misc/0", Translations.format("celeritasextra.group.frame_limits"))
+        groups.add(group("groups/misc/0")
                 .add(sliderOption("celeritasextra.option.menu_fps_limit", 0, 240, 1,
                         quantityOrDefault("sodium-extra.overlay.fps", "celeritasextra.option.menu_fps_limit.default"),
                         (opts, value) -> opts.extraSettings.menuFpsLimit = value,
@@ -762,7 +761,7 @@ public class CeleritasExtraGameOptionPages {
                         (opts, value) -> opts.extraSettings.minimizedFpsLimit = value,
                         opts -> opts.extraSettings.minimizedFpsLimit)).build());
 
-        groups.add(namedGroup("groups/misc/1", Translations.format("sodium-extra.option.toasts"))
+        groups.add(group("groups/misc/1")
                 .add(toastsOption)
                 .add(booleanOption("sodium-extra.option.advancement_toast",
                         (opts, v) -> opts.extraSettings.toastAdvancement = v,
@@ -782,7 +781,7 @@ public class CeleritasExtraGameOptionPages {
                         toastsOn))
                 .build());
 
-        groups.add(namedGroup("groups/misc/2", Translations.format("sodium-extra.option.extras"))
+        groups.add(group("groups/misc/2")
                 .add(booleanOption("celeritasextra.option.mod_name_tooltip",
                         (opts, v) -> opts.extraSettings.modNameTooltip = v,
                         opts -> opts.extraSettings.modNameTooltip))

@@ -10,8 +10,8 @@ renderer with Cleanroom Loader and Java 25. Both integrations share the existing
 - Corrected frame LOD for sprite items, including Forge's emissive item path and Actinium's fast item renderer.
 - Added sign-text and framed-map back-face culling, entity/TESR distance limits and per-particle spawn percentages.
 - Added separate sun/moon controls, per-dimension fog overrides and menu/inactive/minimized FPS limits.
-- Organized settings into ten pages with labeled groups and updated all four bundled languages.
-- Celeritas's options screen gains search/filtering, Shift-wheel slider adjustment and collapsible mod and option groups.
+- Organized settings into ten pages and updated all four bundled languages.
+- Celeritas's options screen gains search/filtering, Shift-wheel slider adjustment and collapsible mod categories.
 - Actinium uses its integrated Reese's Sodium Options frontend, including its native search and folding. Native cloud and menu FPS controls take precedence over duplicate Extra controls.
 - Camera-relative culling and fog overrides preserve Iris shadow passes.
 

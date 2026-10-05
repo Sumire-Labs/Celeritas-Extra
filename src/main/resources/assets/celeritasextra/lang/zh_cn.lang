@@ -179,15 +179,3 @@ celeritasextra.option.menu_fps_limit=菜单帧率上限
 celeritasextra.option.menu_fps_limit.default=默认（30 FPS）
 celeritasextra.option.menu_fps_limit.tooltip=限制未进入世界时的菜单绘制帧率，例如标题和世界选择界面。0使用原版的30 FPS限制。后台帧率限制也会生效。客户端循环保持至少20 Hz，以处理游戏刻和网络通信。
 
-celeritasextra.group.general=常规
-celeritasextra.group.particle_effects=粒子效果
-celeritasextra.group.celestial=太阳、月亮与星星
-celeritasextra.group.weather_colors=天气与颜色
-celeritasextra.group.cloud_geometry=云的形状与距离
-celeritasextra.group.atmospheric_fog=大气雾
-celeritasextra.group.block_entities=方块实体
-celeritasextra.group.block_animations=方块动画
-celeritasextra.group.lighting=光照
-celeritasextra.group.coordinates=坐标
-celeritasextra.group.appearance=显示样式
-celeritasextra.group.frame_limits=帧率限制
