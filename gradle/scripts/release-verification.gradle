@@ -27,6 +27,7 @@ tasks.register('verifyReleaseJar') {
             // These hooks combine optional renderer targets and MixinExtras.
             // A nonempty refmap alone would not catch a silently lost remapper.
             [
+                'animation/MixinTextureAtlasSprite': ['updateAnimation()V'],
                 'background_fps/MixinMinecraft': ['getLimitFramerate'],
                 'options_search/MixinOptionsScreen': ['initGui', 'drawScreen', 'mouseClicked'],
                 'render/entity/MixinRenderItemFrame': ['renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V']

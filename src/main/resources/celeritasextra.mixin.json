@@ -19,7 +19,7 @@
     "options_search.MixinGuiScreen",
     "options_search.MixinSliderScroll",
     "options_search.MixinScrollableFrame",
-    "animation.MixinTextureMap",
+    "animation.MixinTextureAtlasSprite",
     "light_updates.MixinWorld",
     "particle.IMixinParticleManager",
     "particle.MixinParticleManager",
