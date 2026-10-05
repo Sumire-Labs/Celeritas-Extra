@@ -11,6 +11,7 @@ import org.taumc.celeritas.api.options.control.ControlValueFormatter;
 import org.taumc.celeritas.api.options.control.CyclingControl;
 import org.taumc.celeritas.api.options.control.SliderControl;
 import org.taumc.celeritas.api.options.control.TickBoxControl;
+import org.taumc.celeritas.api.options.OptionIdentifier;
 import org.taumc.celeritas.api.options.structure.*;
 
 import java.util.*;
@@ -27,6 +28,14 @@ import java.util.function.Function;
  * dependent controls use {@code enabled} predicates so sub-options grey out while their parent is off.
  */
 public class CeleritasExtraGameOptionPages {
+
+    private record OptionContext(String label, String scope) {
+        private static final OptionContext NONE = new OptionContext("", "");
+    }
+
+    private static <T> OptionIdentifier<T> optionId(String key, Class<T> type, OptionContext context) {
+        return OptionIdentifier.create("celeritasextra", context.scope() + key.toLowerCase(Locale.ROOT).replace('$', '/'), type);
+    }
 
     private static final CeleritasExtraOptionsStorage celeritasExtraOpts = new CeleritasExtraOptionsStorage();
 
@@ -137,15 +146,16 @@ public class CeleritasExtraGameOptionPages {
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
             Function<CeleritasExtraGameOptions, Boolean> getter,
             OptionFlag flag, OptionImpact impact, BooleanSupplier enabled) {
-        return booleanOption(translationKey, tooltipKey, setter, getter, flag, impact, enabled, "");
+        return booleanOption(translationKey, tooltipKey, setter, getter, flag, impact, enabled, OptionContext.NONE);
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, Boolean> booleanOption(
             String translationKey, String tooltipKey,
             BiConsumer<CeleritasExtraGameOptions, Boolean> setter,
             Function<CeleritasExtraGameOptions, Boolean> getter,
-            OptionFlag flag, OptionImpact impact, BooleanSupplier enabled, String context) {
+            OptionFlag flag, OptionImpact impact, BooleanSupplier enabled, OptionContext context) {
         var builder = OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                .setId(optionId(translationKey, boolean.class, context))
                 .setName(TextComponent.literal(contextualText(context, translationKey, " · ")))
                 .setTooltip(TextComponent.literal(contextualText(context, tooltipKey, "\n")))
                 .setControl(TickBoxControl::new)
@@ -218,15 +228,16 @@ public class CeleritasExtraGameOptionPages {
             BooleanSupplier enabled,
             OptionImpact impact,
             OptionFlag flag) {
-        return sliderOption(translationKey, min, max, step, formatter, setter, getter, enabled, impact, flag, "");
+        return sliderOption(translationKey, min, max, step, formatter, setter, getter, enabled, impact, flag, OptionContext.NONE);
     }
 
     private static OptionImpl<CeleritasExtraGameOptions, Integer> sliderOption(
             String translationKey, int min, int max, int step, ControlValueFormatter formatter,
             BiConsumer<CeleritasExtraGameOptions, Integer> setter,
             Function<CeleritasExtraGameOptions, Integer> getter,
-            BooleanSupplier enabled, OptionImpact impact, OptionFlag flag, String context) {
+            BooleanSupplier enabled, OptionImpact impact, OptionFlag flag, OptionContext context) {
         var builder = OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                .setId(optionId(translationKey, int.class, context))
                 .setName(TextComponent.literal(contextualText(context, translationKey, " · ")))
                 .setTooltip(TextComponent.literal(contextualText(context, Translations.tooltipKey(translationKey), "\n")))
                 .setControl(option -> new SliderControl(option, min, max, step, formatter))
@@ -237,8 +248,8 @@ public class CeleritasExtraGameOptionPages {
         return builder.build();
     }
 
-    private static String contextualText(String context, String key, String separator) {
-        return context.isEmpty() ? Translations.format(key) : context + separator + Translations.format(key);
+    private static String contextualText(OptionContext context, String key, String separator) {
+        return context.label().isEmpty() ? Translations.format(key) : context.label() + separator + Translations.format(key);
     }
 
     private static ControlValueFormatter quantityOrDefault(String unitKey, String zeroKey) {
@@ -358,6 +369,7 @@ public class CeleritasExtraGameOptionPages {
                         String displayName = simpleClassName + " (" + modId + ")";
 
                         groupBuilder.add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                                .setId(optionId("particle/" + fullClassName, int.class, OptionContext.NONE))
                                 .setName(TextComponent.literal(displayName))
                                 .setTooltip(TextComponent.literal(
                                         Translations.format("celeritasextra.option.particle_spawn_percentage.tooltip", simpleClassName)
@@ -466,6 +478,7 @@ public class CeleritasExtraGameOptionPages {
                         opts -> opts.renderSettings.cloudScale,
                         cloudsOn))
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.CloudTranslucency.class, celeritasExtraOpts)
+                        .setId(optionId("cloud_translucency", CeleritasExtraGameOptions.CloudTranslucency.class, OptionContext.NONE))
                         .setName(TextComponent.literal(Translations.format("options.mode_cloud_translucency")))
                         .setTooltip(TextComponent.literal(Translations.format("options.mode_cloud_translucency.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.CloudTranslucency.class,
@@ -531,7 +544,9 @@ public class CeleritasExtraGameOptionPages {
                         ? DimensionManager.getProviderType(dimension).getName() : Integer.toString(dimension);
             };
             dimensionName += " (" + dimension + ")";
+            var context = new OptionContext(dimensionName, "dimension/" + dimension + "/");
             var override = OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                    .setId(optionId("fog_override", boolean.class, context))
                     .setName(TextComponent.literal(Translations.format("celeritasextra.option.dimension_fog_override", dimensionName)))
                     .setTooltip(TextComponent.literal(Translations.format("celeritasextra.option.dimension_fog_override.tooltip")))
                     .setControl(TickBoxControl::new)
@@ -541,16 +556,16 @@ public class CeleritasExtraGameOptionPages {
             BooleanSupplier overriding = override::getValue;
             var enabled = booleanOption("sodium-extra.option.fog_type.atmospheric", "sodium-extra.option.fog_type.atmospheric.tooltip",
                     (opts, value) -> opts.renderSettings.dimensionFog(dimension).fog = value,
-                    opts -> opts.renderSettings.dimensionFog(dimension).fog, null, null, overriding, dimensionName);
+                    opts -> opts.renderSettings.dimensionFog(dimension).fog, null, null, overriding, context);
             BooleanSupplier customFogOn = () -> override.getValue() && enabled.getValue();
             groups.add(OptionGroup.createBuilder().add(override).add(enabled)
                     .add(sliderOption("sodium-extra.option.fog_start", 0, 200, 10, ControlValueFormatter.percentage(),
                             (opts, value) -> opts.renderSettings.dimensionFog(dimension).start = value,
-                            opts -> opts.renderSettings.dimensionFog(dimension).start, customFogOn, null, null, dimensionName))
+                            opts -> opts.renderSettings.dimensionFog(dimension).start, customFogOn, null, null, context))
                     .add(sliderOption("sodium-extra.option.fog_distance", 0, 32, 1,
                             quantityOrDefault("options.chunks", "generator.default"),
                             (opts, value) -> opts.renderSettings.dimensionFog(dimension).distance = value,
-                            opts -> opts.renderSettings.dimensionFog(dimension).distance, customFogOn, null, null, dimensionName)).build());
+                            opts -> opts.renderSettings.dimensionFog(dimension).distance, customFogOn, null, null, context)).build());
         }
         return new OptionPage(CeleritasExtraOptionPages.DIMENSION_FOG, TextComponent.literal(Translations.format("celeritasextra.option.page.dimension_fog")), ImmutableList.copyOf(groups));
     }
@@ -678,6 +693,7 @@ public class CeleritasExtraGameOptionPages {
 
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
+                        .setId(optionId("overlay_corner", CeleritasExtraGameOptions.OverlayCorner.class, OptionContext.NONE))
                         .setName(TextComponent.literal(Translations.format("sodium-extra.option.overlay_corner")))
                         .setTooltip(TextComponent.literal(Translations.format("sodium-extra.option.overlay_corner.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.OverlayCorner.class,
@@ -691,6 +707,7 @@ public class CeleritasExtraGameOptionPages {
                                 opts -> opts.extraSettings.overlayCorner)
                         .build())
                 .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.TextContrast.class, celeritasExtraOpts)
+                        .setId(optionId("text_contrast", CeleritasExtraGameOptions.TextContrast.class, OptionContext.NONE))
                         .setName(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast")))
                         .setTooltip(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast.tooltip")))
                         .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
