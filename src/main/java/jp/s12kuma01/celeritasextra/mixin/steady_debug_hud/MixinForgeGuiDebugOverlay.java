@@ -1,6 +1,8 @@
 package jp.s12kuma01.celeritasextra.mixin.steady_debug_hud;
 
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.gui.GuiOverlayDebug;
 import net.minecraft.client.gui.ScaledResolution;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,7 +10,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,50 +63,26 @@ public abstract class MixinForgeGuiDebugOverlay {
     /**
      * Cache left side debug text
      */
-    @Inject(
-            method = "call()Ljava/util/List;",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void celeritasExtra$beforeGetLeftDebugText(CallbackInfoReturnable<List<String>> cir) {
-        if (!this.celeritasExtra$rebuild) {
-            cir.setReturnValue(this.celeritasExtra$leftTextCache);
-        }
-    }
-
-    @Inject(
-            method = "call()Ljava/util/List;",
-            at = @At("RETURN")
-    )
-    private void celeritasExtra$afterGetLeftDebugText(CallbackInfoReturnable<List<String>> cir) {
-        if (this.celeritasExtra$rebuild) {
-            this.celeritasExtra$leftTextCache.clear();
-            this.celeritasExtra$leftTextCache.addAll(cir.getReturnValue());
-        }
+    @WrapMethod(method = "call()Ljava/util/List;")
+    private List<String> celeritasExtra$cacheLeftDebugText(Operation<List<String>> original) {
+        // Cache the complete method, including Nothirium/RenderLib's RETURN injections.
+        // Cancelling at HEAD would run those injections on the cached list again each frame.
+        if (!this.celeritasExtra$rebuild) return new ArrayList<>(this.celeritasExtra$leftTextCache);
+        List<String> result = original.call();
+        this.celeritasExtra$leftTextCache.clear();
+        this.celeritasExtra$leftTextCache.addAll(result);
+        return result;
     }
 
     /**
      * Cache right side debug text
      */
-    @Inject(
-            method = "getDebugInfoRight()Ljava/util/List;",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void celeritasExtra$beforeGetRightDebugText(CallbackInfoReturnable<List<String>> cir) {
-        if (!this.celeritasExtra$rebuild) {
-            cir.setReturnValue(this.celeritasExtra$rightTextCache);
-        }
-    }
-
-    @Inject(
-            method = "getDebugInfoRight()Ljava/util/List;",
-            at = @At("RETURN")
-    )
-    private void celeritasExtra$afterGetRightDebugText(CallbackInfoReturnable<List<String>> cir) {
-        if (this.celeritasExtra$rebuild) {
-            this.celeritasExtra$rightTextCache.clear();
-            this.celeritasExtra$rightTextCache.addAll(cir.getReturnValue());
-        }
+    @WrapMethod(method = "getDebugInfoRight()Ljava/util/List;")
+    private List<String> celeritasExtra$cacheRightDebugText(Operation<List<String>> original) {
+        if (!this.celeritasExtra$rebuild) return new ArrayList<>(this.celeritasExtra$rightTextCache);
+        List<String> result = original.call();
+        this.celeritasExtra$rightTextCache.clear();
+        this.celeritasExtra$rightTextCache.addAll(result);
+        return result;
     }
 }
