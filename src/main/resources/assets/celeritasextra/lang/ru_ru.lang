@@ -178,3 +178,16 @@ celeritasextra.option.page.overlay=HUD и оверлеи
 celeritasextra.option.menu_fps_limit=Ограничение FPS в меню
 celeritasextra.option.menu_fps_limit.default=По умолчанию (30 FPS)
 celeritasextra.option.menu_fps_limit.tooltip=Ограничивает FPS отрисовки меню вне мира, например главного меню и выбора мира. 0 использует стандартный предел 30 FPS. Фоновые ограничения также действуют. Цикл клиента для тиков и сети сохраняет частоту не ниже 20 Гц.
+
+celeritasextra.group.general=Общие
+celeritasextra.group.particle_effects=Эффекты частиц
+celeritasextra.group.celestial=Солнце, луна и звёзды
+celeritasextra.group.weather_colors=Погода и цвета
+celeritasextra.group.cloud_geometry=Форма и дальность облаков
+celeritasextra.group.atmospheric_fog=Атмосферный туман
+celeritasextra.group.block_entities=Блок-сущности
+celeritasextra.group.block_animations=Анимации блоков
+celeritasextra.group.lighting=Освещение
+celeritasextra.group.coordinates=Координаты
+celeritasextra.group.appearance=Внешний вид
+celeritasextra.group.frame_limits=Ограничения частоты кадров

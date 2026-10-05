@@ -29,6 +29,8 @@ class ActiniumIntegrationTest {
                 var page = (dhj.embeddedt.embeddium.api.options.structure.OptionPage) pages.getMethod(factory).invoke(null);
                 assertEquals("celeritasextra", page.getId().getModId());
                 assertFalse(page.getOptions().isEmpty());
+                assertTrue(page.getGroups().stream().allMatch(group -> group.getName() != null),
+                        "Actinium's native folding requires labeled groups");
                 assertEquals(page.getOptions().size(), page.getOptions().stream().map(o -> o.getId()).distinct().count());
                 for (var option : page.getOptions()) {
                     assertTrue(allIds.add(option.getId()), "Duplicate ID across pages: " + option.getId());
