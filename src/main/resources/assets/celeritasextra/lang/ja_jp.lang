@@ -176,4 +176,6 @@ celeritasextra.option.extra.inactive_fps=非アクティブ時のFPS上限
 celeritasextra.option.extra.inactive_fps.tooltip=ウィンドウが非アクティブな間の描画FPSを制限します。0はオフです。クライアントのTickと通信は毎秒20回以上維持します。
 celeritasextra.option.extra.minimized_fps=最小化時のFPS上限
 celeritasextra.option.extra.minimized_fps.tooltip=ウィンドウを最小化している間の描画FPSを制限します。0は非アクティブ時の設定を使います。
+celeritasextra.option.render.dimension_fog=Fogの上書き: %s
+celeritasextra.option.render.dimension_fog.tooltip=このディメンション専用の環境Fog設定を使います。無効時は全体設定を使用し、盲目・水・溶岩のFogは維持します。
 celeritasextra.option.particles.spawn_rate.tooltip=%sの発生率を設定します。0%%はオフ、100%%はすべて発生します。

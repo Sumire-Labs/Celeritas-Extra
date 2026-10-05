@@ -176,4 +176,6 @@ celeritasextra.option.extra.inactive_fps=FPS без фокуса
 celeritasextra.option.extra.inactive_fps.tooltip=Ограничивает FPS неактивного окна. 0 отключает ограничение. Тики и сеть обрабатываются не реже 20 Гц.
 celeritasextra.option.extra.minimized_fps=FPS при сворачивании
 celeritasextra.option.extra.minimized_fps.tooltip=Ограничивает FPS свёрнутого окна. 0 использует настройку неактивного окна.
+celeritasextra.option.render.dimension_fog=Переопределить туман: %s
+celeritasextra.option.render.dimension_fog.tooltip=Отдельные настройки атмосферного тумана для измерения. Иначе используются общие настройки. Слепота, вода и лава сохраняются.
 celeritasextra.option.particles.spawn_rate.tooltip=Процент появления %s. 0%% отключает, 100%% сохраняет все частицы.

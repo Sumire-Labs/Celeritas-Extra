@@ -12,6 +12,8 @@ import org.lwjgl.opengl.Display;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -157,6 +159,14 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
             new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
                     v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
+            new IntProperty(CAT_RENDER, "entityRenderDistance", 0, 0, 256, "Entity render distance in blocks (0 = vanilla)",
+                    v -> renderSettings.entityRenderDistance = v, () -> renderSettings.entityRenderDistance),
+            new IntProperty(CAT_RENDER, "tileEntityRenderDistance", 0, 0, 256, "Tile entity render distance in blocks (0 = vanilla)",
+                    v -> renderSettings.tileEntityRenderDistance = v, () -> renderSettings.tileEntityRenderDistance),
+            new IntProperty(CAT_EXTRA, "inactiveFpsLimit", 0, 0, 120, "Unfocused FPS limit (0 = off)",
+                    v -> extraSettings.inactiveFpsLimit = v, () -> extraSettings.inactiveFpsLimit),
+            new IntProperty(CAT_EXTRA, "minimizedFpsLimit", 0, 0, 120, "Minimized FPS limit (0 = off)",
+                    v -> extraSettings.minimizedFpsLimit = v, () -> extraSettings.minimizedFpsLimit),
             new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
                     v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
             new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval",
@@ -213,6 +223,19 @@ public class CeleritasExtraGameOptions {
                 renderSettings.entityDistanceExemptions, "Classes exempt from entity distance culling; package.* is supported");
         renderSettings.tileEntityDistanceExemptions = config.getStringList("tileEntityDistanceExemptions", CAT_RENDER,
                 renderSettings.tileEntityDistanceExemptions, "Classes exempt from tile entity distance culling; package.* is supported");
+        for (String category : config.getCategoryNames()) {
+            if (!category.startsWith("dimension_fog_")) continue;
+            try {
+                int dimension = Integer.parseInt(category.substring("dimension_fog_".length()));
+                DimensionFogSettings fog = renderSettings.dimensionFog(dimension);
+                fog.override = config.getBoolean("override", category, false, "Override global atmospheric fog");
+                fog.fog = config.getBoolean("fog", category, fog.fog, "Enable atmospheric fog");
+                fog.start = config.getInt("start", category, fog.start, 0, 200, "Fog start percentage");
+                fog.distance = config.getInt("distance", category, fog.distance, 0, 32, "Fog distance in chunks (0 = vanilla)");
+            } catch (NumberFormatException ignored) {
+                CeleritasExtraMod.LOGGER.warn("Ignoring invalid dimension fog category: {}", category);
+            }
+        }
 
         // Enum properties
         renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0, 0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
@@ -245,6 +268,13 @@ public class CeleritasExtraGameOptions {
         config.get(CAT_DETAIL, "moon", true).set(detailSettings.moon);
         config.get(CAT_RENDER, "entityDistanceExemptions", new String[0]).set(renderSettings.entityDistanceExemptions);
         config.get(CAT_RENDER, "tileEntityDistanceExemptions", new String[0]).set(renderSettings.tileEntityDistanceExemptions);
+        renderSettings.dimensionFogOverrides.forEach((dimension, fog) -> {
+            String category = "dimension_fog_" + dimension;
+            config.get(category, "override", false).set(fog.override);
+            config.get(category, "fog", true).set(fog.fog);
+            config.get(category, "start", 100).set(fog.start);
+            config.get(category, "distance", 0).set(fog.distance);
+        });
 
         // Enum properties
         config.get(CAT_RENDER, "cloudTranslucency", 0).set(renderSettings.cloudTranslucency.ordinal());
@@ -256,7 +286,6 @@ public class CeleritasExtraGameOptions {
                 .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
         config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
                 .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
-
         config.get(CAT_PARTICLE_CLASSES, "spawnPercentages", new String[0])
                 .set(ParticleClassRegistry.getInstance().getSpawnPercentagesArray());
 
@@ -535,6 +564,22 @@ public class CeleritasExtraGameOptions {
         public int itemFrameLodDistance = 0;
         public boolean signTextCulling = true;
         public boolean mapBackFaceCulling = true;
+        public int entityRenderDistance;
+        public int tileEntityRenderDistance;
+        public String[] entityDistanceExemptions = {"net.minecraft.entity.boss.EntityDragon"};
+        public String[] tileEntityDistanceExemptions = {"net.minecraft.tileentity.TileEntityBeacon"};
+        public final Map<Integer, DimensionFogSettings> dimensionFogOverrides = new TreeMap<>();
+
+        public DimensionFogSettings dimensionFog(int dimension) {
+            return dimensionFogOverrides.computeIfAbsent(dimension, id -> new DimensionFogSettings(fog, fogStart, fogDistance));
+        }
+
+        public ResolvedFog resolveFog(int dimension) {
+            DimensionFogSettings setting = dimensionFogOverrides.get(dimension);
+            return setting != null && setting.override
+                    ? new ResolvedFog(setting.fog, setting.start, setting.distance)
+                    : new ResolvedFog(fog, fogStart, fogDistance);
+        }
         public boolean armorStands = true;
         public boolean paintings = true;
         public boolean pistons = true;
@@ -544,6 +589,21 @@ public class CeleritasExtraGameOptions {
         public boolean playerNameTag = true;
         public boolean itemFrameNameTag = true;
         public boolean preventShaders = false;
+    }
+
+    public record ResolvedFog(boolean enabled, int start, int distance) {}
+
+    public static final class DimensionFogSettings {
+        public boolean override;
+        public boolean fog;
+        public int start;
+        public int distance;
+
+        public DimensionFogSettings(boolean fog, int start, int distance) {
+            this.fog = fog;
+            this.start = start;
+            this.distance = distance;
+        }
     }
 
     /**
@@ -565,7 +625,6 @@ public class CeleritasExtraGameOptions {
         public boolean useAdaptiveSync = false;
         public int inactiveFpsLimit;
         public int minimizedFpsLimit;
-
         public OverlayCorner overlayCorner = OverlayCorner.TOP_LEFT;
         public TextContrast textContrast = TextContrast.SHADOW;
         public boolean steadyDebugHud = STEADY_DEBUG_HUD_DEFAULT;

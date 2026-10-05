@@ -3,6 +3,7 @@ package jp.s12kuma01.celeritasextra.mixin.render.fog;
 import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import jp.s12kuma01.celeritasextra.client.CloudPassState;
 import jp.s12kuma01.celeritasextra.client.FogState;
+import jp.s12kuma01.celeritasextra.client.DimensionFog;
 import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -40,26 +41,24 @@ public class MixinEntityRendererFogFalloff {
     )
     private float modifyFogStart(float original) {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
+        var fog = DimensionFog.current();
+
+        if (FogState.isGameplayFog()) return original;
 
         // Cloud pass: keep clouds out of fog so extended cloud distance is actually visible.
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {
             return cloudFar(rs);
         }
 
-        // Protect gameplay fog (blindness / water / lava): leave it vanilla.
-        if (FogState.isGameplayFog()) {
-            return original;
-        }
-
         // Fog off: do nothing here; disableFog() handles suppression. Never write MAX_VALUE.
-        if (!rs.fog) {
+        if (!fog.enabled()) {
             return original;
         }
 
-        float startPercent = rs.fogStart / 100.0f;
-        if (rs.fogDistance > 0) {
-            float end = (rs.fogDistance + 1) * 16.0f;
-            float start = rs.fogDistance * 16.0f * startPercent;
+        float startPercent = fog.start() / 100.0f;
+        if (fog.distance() > 0) {
+            float end = (fog.distance() + 1) * 16.0f;
+            float start = fog.distance() * 16.0f * startPercent;
             return Math.min(start, end - 0.5f);
         }
 
@@ -75,23 +74,21 @@ public class MixinEntityRendererFogFalloff {
     )
     private float modifyFogEnd(float original) {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
+        var fog = DimensionFog.current();
+
+        if (FogState.isGameplayFog()) return original;
 
         // Cloud pass: end just beyond the cloud-far start (finite, start < end).
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {
             return cloudFar(rs) + 64.0f;
         }
 
-        // Protect gameplay fog (blindness / water / lava): leave it vanilla.
-        if (FogState.isGameplayFog()) {
+        if (!fog.enabled()) {
             return original;
         }
 
-        if (!rs.fog) {
-            return original;
-        }
-
-        if (rs.fogDistance > 0) {
-            return (rs.fogDistance + 1) * 16.0f;
+        if (fog.distance() > 0) {
+            return (fog.distance() + 1) * 16.0f;
         }
 
         return original;

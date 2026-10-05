@@ -6,6 +6,7 @@ import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
 import jp.s12kuma01.celeritasextra.client.render.cloud.ModernCloudAssets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.common.DimensionManager;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.taumc.celeritas.api.options.control.ControlValueFormatter;
 import org.taumc.celeritas.api.options.control.CyclingControl;
@@ -495,12 +496,12 @@ public class CeleritasExtraGameOptionPages {
                         (opts, v) -> opts.renderSettings.itemFrameLodDistance = v,
                         opts -> opts.renderSettings.itemFrameLodDistance,
                         itemFramesOn, OptionImpact.LOW))
-                .add(booleanOption("celeritasextra.option.render.sign_text_culling",
-                        (opts, v) -> opts.renderSettings.signTextCulling = v,
-                        opts -> opts.renderSettings.signTextCulling))
                 .add(booleanOption("celeritasextra.option.render.map_back_face_culling",
                         (opts, v) -> opts.renderSettings.mapBackFaceCulling = v,
                         opts -> opts.renderSettings.mapBackFaceCulling, itemFramesOn))
+                .add(booleanOption("celeritasextra.option.render.sign_text_culling",
+                        (opts, v) -> opts.renderSettings.signTextCulling = v,
+                        opts -> opts.renderSettings.signTextCulling))
                 .add(sliderOption("celeritasextra.option.render.entity_distance",
                         0, 256, 1, ControlValueFormatter.quantityOrDisabled("blocks", "Default"),
                         (opts, v) -> opts.renderSettings.entityRenderDistance = v,
@@ -535,6 +536,35 @@ public class CeleritasExtraGameOptionPages {
                         itemFramesOn))
                 .build());
 
+        // Include vanilla, registered mod dimensions, saved overrides, and the current server dimension.
+        Set<Integer> dimensions = new TreeSet<>(List.of(-1, 0, 1));
+        dimensions.addAll(Arrays.asList(DimensionManager.getStaticDimensionIDs()));
+        dimensions.addAll(celeritasExtraOpts.getData().renderSettings.dimensionFogOverrides.keySet());
+        if (Minecraft.getMinecraft().world != null) dimensions.add(Minecraft.getMinecraft().world.provider.getDimension());
+        for (int dimension : dimensions) {
+            String dimensionName = DimensionManager.isDimensionRegistered(dimension)
+                    ? DimensionManager.getProviderType(dimension).getName() + " (" + dimension + ")" : Integer.toString(dimension);
+            var override = OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+                    .setName(TextComponent.literal(I18n.format("celeritasextra.option.render.dimension_fog", dimensionName)))
+                    .setTooltip(TextComponent.literal(I18n.format("celeritasextra.option.render.dimension_fog.tooltip")))
+                    .setControl(TickBoxControl::new)
+                    .setBinding((opts, value) -> opts.renderSettings.dimensionFog(dimension).override = value,
+                            opts -> opts.renderSettings.dimensionFog(dimension).override)
+                    .build();
+            BooleanSupplier overriding = override::getValue;
+            var enabled = booleanOption("celeritasextra.option.render.fog",
+                    (opts, value) -> opts.renderSettings.dimensionFog(dimension).fog = value,
+                    opts -> opts.renderSettings.dimensionFog(dimension).fog, overriding);
+            BooleanSupplier customFogOn = () -> override.getValue() && enabled.getValue();
+            groups.add(OptionGroup.createBuilder().add(override).add(enabled)
+                    .add(sliderOption("celeritasextra.option.render.fog_start", 0, 200, 10, ControlValueFormatter.percentage(),
+                            (opts, value) -> opts.renderSettings.dimensionFog(dimension).start = value,
+                            opts -> opts.renderSettings.dimensionFog(dimension).start, customFogOn))
+                    .add(sliderOption("celeritasextra.option.render.fog_distance", 0, 32, 1,
+                            ControlValueFormatter.quantityOrDisabled("chunks", "Default"),
+                            (opts, value) -> opts.renderSettings.dimensionFog(dimension).distance = value,
+                            opts -> opts.renderSettings.dimensionFog(dimension).distance, customFogOn)).build());
+        }
         return new OptionPage(CeleritasExtraOptionPages.RENDER, TextComponent.literal(I18n.format("celeritasextra.option.page.render")), ImmutableList.copyOf(groups));
     }
 

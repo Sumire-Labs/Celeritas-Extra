@@ -176,4 +176,6 @@ celeritasextra.option.extra.inactive_fps=Unfocused FPS Limit
 celeritasextra.option.extra.inactive_fps.tooltip=Limits drawing while the window is unfocused. 0 = Off. Client ticks and network processing continue at 20 Hz or more.
 celeritasextra.option.extra.minimized_fps=Minimized FPS Limit
 celeritasextra.option.extra.minimized_fps.tooltip=Limits drawing while the window is minimized. 0 inherits the unfocused limit.
+celeritasextra.option.render.dimension_fog=Override Fog: %s
+celeritasextra.option.render.dimension_fog.tooltip=Use separate atmospheric fog settings for this dimension. Disabled inherits the global settings. Blindness, water, and lava fog are preserved.
 celeritasextra.option.particles.spawn_rate.tooltip=Sets the spawn percentage for %s. 0%% = Off, 100%% = all particles.
