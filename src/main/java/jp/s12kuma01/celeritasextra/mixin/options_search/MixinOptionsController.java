@@ -51,6 +51,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     }
 
     @Override public Dim2i celeritasExtra$searchBounds() { return celeritasExtra$bounds; }
+    @Override public DrawContext celeritasExtra$drawContext() { return font; }
     @Override public int celeritasExtra$optionCount() {
         return pages.stream().mapToInt(page -> page.getOptions().size()).sum();
     }
