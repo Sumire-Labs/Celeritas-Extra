@@ -179,6 +179,17 @@ public class CeleritasExtraGameOptions {
     );
     private Configuration config;
 
+    /** Shared Forge GUI backing store; callers must synchronize live options after editing it. */
+    public Configuration forgeConfiguration() {
+        return config;
+    }
+
+    /** Applies values edited by Forge's GuiConfig without re-reading stale values from disk. */
+    public void applyForgeConfiguration() {
+        loadFromConfig();
+        writeChanges();
+    }
+
     /**
      * Loads options from the given config file, falling back to defaults on any error.
      * <p>

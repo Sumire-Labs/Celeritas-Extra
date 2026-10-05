@@ -179,3 +179,15 @@ celeritasextra.option.menu_fps_limit=菜单帧率上限
 celeritasextra.option.menu_fps_limit.default=默认（30 FPS）
 celeritasextra.option.menu_fps_limit.tooltip=限制未进入世界时的菜单绘制帧率，例如标题和世界选择界面。0使用原版的30 FPS限制。后台帧率限制也会生效。客户端循环保持至少20 Hz，以处理游戏刻和网络通信。
 
+
+# Forge settings screen (Nothirium)
+celeritasextra.gui.extra_settings=Extra 设置…
+celeritasextra.gui.render_settings=渲染设置
+celeritasextra.gui.misc_settings=其他与 HUD 设置
+celeritasextra.gui.window_settings=窗口与垂直同步
+celeritasextra.gui.particle_classes=粒子类设置
+celeritasextra.gui.fog_override=覆盖全局雾设置
+
+celeritasextra.gui.add_entry=添加
+celeritasextra.gui.entity_exemptions=实体距离限制排除列表
+celeritasextra.gui.tile_entity_exemptions=方块实体距离限制排除列表

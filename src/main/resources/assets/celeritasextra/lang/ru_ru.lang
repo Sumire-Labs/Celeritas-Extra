@@ -179,3 +179,15 @@ celeritasextra.option.menu_fps_limit=Ограничение FPS в меню
 celeritasextra.option.menu_fps_limit.default=По умолчанию (30 FPS)
 celeritasextra.option.menu_fps_limit.tooltip=Ограничивает FPS отрисовки меню вне мира, например главного меню и выбора мира. 0 использует стандартный предел 30 FPS. Фоновые ограничения также действуют. Цикл клиента для тиков и сети сохраняет частоту не ниже 20 Гц.
 
+
+# Forge settings screen (Nothirium)
+celeritasextra.gui.extra_settings=Настройки Extra…
+celeritasextra.gui.render_settings=Отрисовка
+celeritasextra.gui.misc_settings=Прочее и оверлеи
+celeritasextra.gui.window_settings=Окно и вертикальная синхронизация
+celeritasextra.gui.particle_classes=Классы частиц
+celeritasextra.gui.fog_override=Переопределить общий туман
+
+celeritasextra.gui.add_entry=Добавить
+celeritasextra.gui.entity_exemptions=Исключения дальности сущностей
+celeritasextra.gui.tile_entity_exemptions=Исключения дальности блок-сущностей

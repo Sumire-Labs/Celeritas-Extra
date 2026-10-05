@@ -15,7 +15,7 @@ import java.io.File;
  * <p>
  * Celeritas Extra layers additional rendering options on top of Celeritas and surfaces
  * them inside the renderer's own options GUI. This class drives the Forge lifecycle: during
- * construction it selects Celeritas or Actinium, then registers the
+ * construction it selects Celeritas, Actinium or Nothirium, then registers the
  * option-GUI construction listeners; during initialization it bootstraps the client
  * configuration.
  * <p>
@@ -24,7 +24,7 @@ import java.io.File;
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
         clientSideOnly = true, acceptableRemoteVersions = "*",
-        dependencies = "required-after:cleanroom@[0.6.10-alpha,);after:celeritas;after:actinium;"
+        dependencies = "required-after:cleanroom@[0.6.10-alpha,);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
                 + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 
@@ -47,8 +47,9 @@ public class CeleritasExtraMod {
     public void construct(FMLConstructionEvent event) {
         boolean actinium = Loader.isModLoaded("actinium");
         boolean celeritas = Loader.isModLoaded("celeritas");
-        if (actinium == celeritas) {
-            throw new IllegalStateException("Celeritas Extra requires exactly one renderer: Celeritas or Actinium");
+        boolean nothirium = Loader.isModLoaded("nothirium");
+        if ((actinium ? 1 : 0) + (celeritas ? 1 : 0) + (nothirium ? 1 : 0) != 1) {
+            throw new IllegalStateException("Celeritas Extra requires exactly one renderer: Celeritas, Actinium or Nothirium");
         }
         if (Loader.isModLoaded("assetmover")) {
             try {
@@ -65,10 +66,12 @@ public class CeleritasExtraMod {
 
         if (actinium) {
             jp.s12kuma01.celeritasextra.compat.actinium.ActiniumOptionsAdapter.register();
+        } else if (nothirium) {
+            jp.s12kuma01.celeritasextra.compat.nothirium.NothiriumOptionsAdapter.register();
         } else {
             jp.s12kuma01.celeritasextra.compat.CeleritasOptionsAdapter.register();
         }
-        LOGGER.info("Registered Celeritas Extra with {} GUI", actinium ? "Actinium" : "Celeritas");
+        LOGGER.info("Registered Celeritas Extra with {} GUI", actinium ? "Actinium" : nothirium ? "Nothirium" : "Celeritas");
     }
 
     /**

@@ -17,7 +17,7 @@ tasks.register('verifyReleaseJar') {
             if (metadata.version != project.version.toString() || metadata.modid != mod_id) {
                 throw new GradleException('Release version or mod ID does not match project metadata')
             }
-            if (metadata.dependencies.contains('celeritas') || metadata.dependencies.contains('actinium')) {
+            if (['celeritas', 'actinium', 'nothirium', 'renderlib'].any { metadata.dependencies.contains(it) }) {
                 throw new GradleException('Release metadata must allow either supported renderer')
             }
             def config = new JsonSlurper().parseText(readText("${mod_id}.mixin.json"))
@@ -53,7 +53,7 @@ tasks.register('verifyReleaseJar') {
                 throw new GradleException('Release manifest does not register the Mixin config')
             }
             zip.entries().each { entry ->
-                if (entry.name.endsWith('.class') && entry.name ==~ /(?:net\/minecraft\/|net\/minecraftforge\/|org\/taumc\/|org\/embeddedt\/|dhj\/embeddedt\/|com\/dhj\/|net\/irisshaders\/|net\/coderbot\/).*/) {
+                if (entry.name.endsWith('.class') && entry.name ==~ /(?:net\/minecraft\/|net\/minecraftforge\/|org\/taumc\/|org\/embeddedt\/|dhj\/embeddedt\/|com\/dhj\/|meldexun\/|net\/irisshaders\/|net\/coderbot\/).*/) {
                     throw new GradleException("Renderer or game dependency bundled in release: ${entry.name}")
                 }
             }

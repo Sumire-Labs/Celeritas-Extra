@@ -179,3 +179,15 @@ celeritasextra.option.menu_fps_limit=Menu FPS Limit
 celeritasextra.option.menu_fps_limit.default=Default (30 FPS)
 celeritasextra.option.menu_fps_limit.tooltip=Limits drawing FPS on menus outside a world, such as the title and world selection screens. 0 uses vanilla's 30 FPS limit. Background limits also apply. Client ticks and networking remain at least 20 Hz.
 
+
+# Forge settings screen (Nothirium)
+celeritasextra.gui.extra_settings=Extra Settings…
+celeritasextra.gui.render_settings=Rendering
+celeritasextra.gui.misc_settings=Miscellaneous & Overlays
+celeritasextra.gui.window_settings=Window & VSync
+celeritasextra.gui.particle_classes=Particle Classes
+celeritasextra.gui.fog_override=Override Global Fog
+
+celeritasextra.gui.add_entry=Add
+celeritasextra.gui.entity_exemptions=Entity Distance Exemptions
+celeritasextra.gui.tile_entity_exemptions=Block Entity Distance Exemptions

@@ -1,6 +1,6 @@
 # Celeritas/Actinium Extra
 
-Celeritas (Actinium) Extra is an unofficial client-side add-on for Celeritas or Actinium, built to run on Cleanroom Loader.
+Celeritas Extra is an unofficial client-side add-on for Celeritas, Actinium or Nothirium, built to run on Cleanroom Loader.
 It provides a wide range of quality-of-life and optimization options, similar to OptiFine and Angelica.
 
 ## Requirements
@@ -11,7 +11,15 @@ It provides a wide range of quality-of-life and optimization options, similar to
 - One of the following:
   - [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build) 2.4.0-dev.4 or newer
   - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization) 0.0.12-alpha or newer
-  - ~~[Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium)~~ (support planned) ????
+  - [Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium) 0.4.9-beta or newer, with its required RenderLib dependency (1.4.5 recommended)
+
+Install exactly one renderer. With Nothirium, open **Video Settings → Extra Settings…** to configure Extra
+through a vanilla-style video settings screen with two-column buttons, sliders and category submenus.
+Changes apply when you press **Done** on the main Extra screen; **Cancel** or **Esc** on that screen
+discards pending edits. Child screens share pending changes; their **Done** or **Esc** returns to the parent.
+This screen includes per-class particle percentages,
+dimension fog, window mode and VSync. Search and Shift-scroll controls remain specific to the renderer-native screens.
+Nothirium support requires Cleanroom too; it does not add support for the original Forge loader.
 
 ### Optional
 

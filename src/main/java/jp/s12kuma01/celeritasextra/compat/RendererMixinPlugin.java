@@ -10,22 +10,29 @@ import java.util.Set;
 /** Chooses renderer-specific hooks before Forge's mod construction phase. */
 public final class RendererMixinPlugin implements IMixinConfigPlugin {
     private boolean actinium;
+    private boolean nothirium;
 
     @Override
     public void onLoad(String mixinPackage) {
         // Query resources without defining optional renderer classes.
         this.actinium = getClass().getClassLoader().getResource("com/dhj/actinium/Actinium.class") != null;
+        this.nothirium = getClass().getClassLoader().getResource("meldexun/nothirium/mc/Nothirium.class") != null;
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return supportsMixin(this.actinium, mixinClassName);
+        return supportsMixin(this.actinium, this.nothirium, mixinClassName);
     }
 
     static boolean supportsMixin(boolean actinium, String name) {
-        if (name.contains(".options_search.")) return !actinium;
+        return supportsMixin(actinium, false, name);
+    }
+
+    static boolean supportsMixin(boolean actinium, boolean nothirium, String name) {
+        if (name.contains(".options_search.")) return !actinium && !nothirium;
         if (name.endsWith(".render.sky.MixinRenderGlobalClouds")) return !actinium;
         if (name.contains(".actinium.")) return actinium;
+        if (name.contains(".nothirium.")) return nothirium;
         return true;
     }
 

@@ -179,3 +179,15 @@ celeritasextra.option.menu_fps_limit=メニュー画面のFPS上限
 celeritasextra.option.menu_fps_limit.default=標準（30 FPS）
 celeritasextra.option.menu_fps_limit.tooltip=タイトルやワールド選択など、ワールドに入っていないメニュー画面の描画FPSを制限します。0はバニラの30 FPS制限を使用します。非アクティブ時・最小化時の制限も適用されます。Tickと通信のためのクライアントループは最低20 Hzを維持します。
 
+
+# Forge settings screen (Nothirium)
+celeritasextra.gui.extra_settings=Extra設定…
+celeritasextra.gui.render_settings=描画設定
+celeritasextra.gui.misc_settings=その他・HUD設定
+celeritasextra.gui.window_settings=ウィンドウ・垂直同期
+celeritasextra.gui.particle_classes=粒子クラス別の設定
+celeritasextra.gui.fog_override=全体の霧設定を上書き
+
+celeritasextra.gui.add_entry=追加
+celeritasextra.gui.entity_exemptions=エンティティ距離制限の除外
+celeritasextra.gui.tile_entity_exemptions=ブロックエンティティ距離制限の除外
