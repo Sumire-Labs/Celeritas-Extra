@@ -268,7 +268,7 @@ public class CeleritasExtraGameOptionPages {
         OptionImpl<CeleritasExtraGameOptions, Boolean> allAnimations = booleanOption("gui.all", "sodium-extra.option.animations_all.tooltip",
                 (opts, v) -> opts.animationSettings.animation = v,
                 opts -> opts.animationSettings.animation,
-                OptionFlag.REQUIRES_ASSET_RELOAD, OptionImpact.MEDIUM, null);
+                OptionFlag.REQUIRES_ASSET_RELOAD, OptionImpact.MEDIUM, null, new OptionContext("", "animation/"));
         BooleanSupplier animationsOn = () -> allAnimations.getValue();
 
         groups.add(OptionGroup.createBuilder()
@@ -316,7 +316,7 @@ public class CeleritasExtraGameOptionPages {
         OptionImpl<CeleritasExtraGameOptions, Boolean> allParticles = booleanOption("gui.all", "sodium-extra.option.particles_all.tooltip",
                 (opts, v) -> opts.particleSettings.particles = v,
                 opts -> opts.particleSettings.particles,
-                null, OptionImpact.HIGH, null);
+                null, OptionImpact.HIGH, null, new OptionContext("", "particle/"));
         BooleanSupplier particlesOn = () -> allParticles.getValue();
 
         groups.add(OptionGroup.createBuilder()
