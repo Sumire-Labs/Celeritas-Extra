@@ -9,9 +9,9 @@ It provides a wide range of quality-of-life and optimization options, similar to
 
 - [Cleanroom Loader](https://download.cleanroommc.com/) 0.6.10-alpha or newer
 - One of the following:
-  - [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build)
-  - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization)
-  - ~~[Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium)~~ (support planned)
+  - [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build) 2.4.0-dev.4 or newer
+  - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization) 0.0.12-alpha or newer
+  - ~~[Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium)~~ (support planned) ????
 
 ### Optional
 
