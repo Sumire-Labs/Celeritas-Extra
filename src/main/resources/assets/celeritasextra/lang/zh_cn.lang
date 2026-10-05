@@ -80,7 +80,7 @@ celeritasextra.option.render.light_updates.tooltip=若禁用，将不处理光�
 celeritasextra.option.render.item_frames=物品展示框
 celeritasextra.option.render.item_frames.tooltip=若启用，将渲染物品展示框。
 celeritasextra.option.render.item_frame_lod_distance=展示框多层次细节范围
-celeritasextra.option.render.item_frame_lod_distance.tooltip=超过此距离（以方块计）时，展示框内的物品将以更少的面渲染，并隐藏展示框内的地图。0 = 关闭。
+celeritasextra.option.render.item_frame_lod_distance.tooltip=超过此距离（方块）后，普通物品省略侧面并保留正面。地图和 3D 方块保持显示。0 = 关闭。
 celeritasextra.option.render.armor_stands=盔甲架
 celeritasextra.option.render.armor_stands.tooltip=若启用，将渲染盔甲架。
 celeritasextra.option.render.paintings=画
