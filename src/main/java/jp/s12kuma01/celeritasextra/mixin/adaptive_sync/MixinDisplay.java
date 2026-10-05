@@ -30,7 +30,7 @@ public class MixinDisplay {
             remap = false
     )
     private static void onSetVSyncEnabled(boolean enable, CallbackInfo ci) {
-        if (CeleritasExtraClientMod.options().extraSettings.useAdaptiveSync && enable) {
+        if (enable && CeleritasExtraClientMod.options().extraSettings.useAdaptiveSync) {
             if (GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
                     || GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear")) {
                 GLFW.glfwSwapInterval(-1);

@@ -79,6 +79,7 @@ public class CeleritasExtraMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         this.configDirectory = event.getModConfigurationDirectory();
+        jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod.setConfigDirectory(this.configDirectory);
         LOGGER.info("Celeritas Extra pre-initialization");
     }
 

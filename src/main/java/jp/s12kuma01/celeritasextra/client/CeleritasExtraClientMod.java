@@ -3,6 +3,7 @@ package jp.s12kuma01.celeritasextra.client;
 import jp.s12kuma01.celeritasextra.CeleritasExtraMod;
 import jp.s12kuma01.celeritasextra.client.gui.CeleritasExtraGameOptions;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
 import java.io.File;
 
@@ -17,15 +18,19 @@ import java.io.File;
 public class CeleritasExtraClientMod {
 
     private static CeleritasExtraGameOptions CONFIG;
-    private static File configDirectory = new File("config");
+    private static File configDirectory;
 
     /**
      * Supplies Forge's canonical configuration directory before the options are loaded.
      */
-    private static void setConfigDirectory(File directory) {
-        if (directory != null && CONFIG == null) {
-            configDirectory = directory;
-        }
+    public static void setConfigDirectory(File directory) {
+        if (directory == null) return;
+        boolean changed = configDirectory != null && !configDirectory.toPath().toAbsolutePath().normalize()
+                .equals(directory.toPath().toAbsolutePath().normalize());
+        configDirectory = directory;
+        // Startup VSync can access options before Forge reaches preInit. If an
+        // early fallback was used, honor Forge's canonical directory now.
+        if (changed && CONFIG != null) CONFIG = loadConfig();
     }
 
     /**
@@ -47,6 +52,11 @@ public class CeleritasExtraClientMod {
      * @return the freshly loaded {@link CeleritasExtraGameOptions}
      */
     private static CeleritasExtraGameOptions loadConfig() {
+        if (configDirectory == null) {
+            Object[] launchData = FMLInjectionData.data();
+            configDirectory = launchData.length > 6 && launchData[6] instanceof File gameDirectory
+                    ? new File(gameDirectory, "config") : new File("config");
+        }
         if (!configDirectory.isDirectory() && !configDirectory.mkdirs()) {
             CeleritasExtraMod.LOGGER.warn("Could not create config directory: {}", configDirectory);
         }

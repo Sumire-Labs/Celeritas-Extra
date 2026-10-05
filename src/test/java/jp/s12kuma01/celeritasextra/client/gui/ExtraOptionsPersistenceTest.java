@@ -1,6 +1,7 @@
 package jp.s12kuma01.celeritasextra.client.gui;
 
 import jp.s12kuma01.celeritasextra.client.particle.ParticleClassRegistry;
+import jp.s12kuma01.celeritasextra.client.CeleritasExtraClientMod;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,33 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraOptionsPersistenceTest {
+    @Test void earlyOptionsUseLaunchDirectoryAndLaterCanonicalDirectoryIsHonored() throws Exception {
+        var configField = CeleritasExtraClientMod.class.getDeclaredField("CONFIG");
+        var directoryField = CeleritasExtraClientMod.class.getDeclaredField("configDirectory");
+        configField.setAccessible(true);
+        directoryField.setAccessible(true);
+        Object previousConfig = configField.get(null);
+        Object previousDirectory = directoryField.get(null);
+        try {
+            configField.set(null, null);
+            directoryField.set(null, null);
+            var earlyDirectory = Files.createDirectories(directory.resolve("config"));
+            Files.writeString(earlyDirectory.resolve("celeritas-extra.cfg"), "extra {\n I:inactiveFpsLimit=37\n}\n");
+            var early = CeleritasExtraClientMod.options();
+            assertEquals(37, early.extraSettings.inactiveFpsLimit);
+            assertEquals(earlyDirectory.toFile(), directoryField.get(null));
+            CeleritasExtraClientMod.setConfigDirectory(earlyDirectory.toFile());
+            assertSame(early, CeleritasExtraClientMod.options(), "Same-directory preInit must retain the existing config");
+            var canonical = Files.createDirectories(directory.resolve("canonical-config"));
+            Files.writeString(canonical.resolve("celeritas-extra.cfg"), "extra {\n I:inactiveFpsLimit=91\n}\n");
+            CeleritasExtraClientMod.setConfigDirectory(canonical.toFile());
+            assertEquals(91, CeleritasExtraClientMod.options().extraSettings.inactiveFpsLimit);
+        } finally {
+            configField.set(null, previousConfig);
+            directoryField.set(null, previousDirectory);
+        }
+    }
+
     @TempDir Path directory;
     private Field minecraftHome;
     private Object previousHome;
