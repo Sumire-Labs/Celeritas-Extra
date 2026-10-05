@@ -166,3 +166,12 @@ sodium-extra.units.ticks=%s ティック
 options.dimensions.minecraft.overworld=オーバーワールド
 options.dimensions.minecraft.the_nether=ネザー
 options.dimensions.minecraft.the_end=ジ・エンド
+
+# Purpose-specific page categories
+celeritasextra.option.page.sky_weather=空・天候・色
+celeritasextra.option.page.clouds=雲
+celeritasextra.option.page.fog=霧
+celeritasextra.option.page.dimension_fog=ディメンション別の霧
+celeritasextra.option.page.entities=エンティティ
+celeritasextra.option.page.block_rendering=ブロック描画
+celeritasextra.option.page.overlay=HUD・表示

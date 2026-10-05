@@ -31,6 +31,10 @@ The mod started as a port of features from Sodium Extra and Rubidium/Embeddium E
 - Search across Celeritas, Extra, and addon option names and tooltips. The search bar uses Celeritas's translucent widget style, draw context, and native clear button. All words must match; matching options and pages remain visible, with a result count while searching. Ctrl+F focuses the search field, and Escape or the × button clears the query. Hidden pending changes remain available to Apply and Undo.
 - Hold Shift and scroll over a slider row to adjust it by one configured step. Disabled sliders stay unchanged; other wheel input retains normal page scrolling.
 
+## Settings layout
+
+Extra settings are organized into ten pages: Animations, Particles, Sky/Weather/Colors, Clouds, Fog, Dimension Fog, Entities, Block Rendering, HUD/Overlays, and Extras. Related controls are separated into groups such as item frames, beacon beams, coordinates, debug HUD, and notifications. Particle percentages remain grouped by mod; dimension fog labels include the dimension name so search results retain their context.
+
 ## Translations
 
 English, Japanese, Simplified Chinese, and Russian share the same translation keys. Equivalent features use the original Sodium Extra/Embeddium Extra, Sodium Extras, MoreCulling, Reese's Sodium Options, and NotFine keys. Vanilla labels use Minecraft 1.12.2's keys. Local translations are retained where upstream translations are missing or untranslated, and descriptions are adapted where this backport behaves differently.

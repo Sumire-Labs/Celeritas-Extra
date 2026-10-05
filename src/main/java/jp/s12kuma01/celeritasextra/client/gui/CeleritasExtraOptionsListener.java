@@ -13,8 +13,7 @@ import java.util.List;
  * Hooks into the Celeritas options GUI so Celeritas Extra can extend it.
  * <p>
  * Two construction events are handled:
- * - {@link OptionGUIConstructionEvent} adds the five Celeritas Extra pages
- * (animation, particle, details, render, extra) built by
+ * - {@link OptionGUIConstructionEvent} adds the Celeritas Extra pages built by
  * {@link CeleritasExtraGameOptionPages}.
  * - {@link OptionGroupConstructionEvent} rewrites the vanilla WINDOW group,
  * swapping the plain Fullscreen and VSync boolean toggles for richer
@@ -32,14 +31,13 @@ public class CeleritasExtraOptionsListener {
     public static void onCeleritasOptionsConstruct(OptionGUIConstructionEvent event) {
         CeleritasExtraMod.LOGGER.info("Registering Celeritas Extra options pages");
 
-        // Register all Celeritas Extra option pages
-        event.addPage(CeleritasExtraGameOptionPages.animation());
-        event.addPage(CeleritasExtraGameOptionPages.particle());
-        event.addPage(CeleritasExtraGameOptionPages.details());
-        event.addPage(CeleritasExtraGameOptionPages.render());
-        event.addPage(CeleritasExtraGameOptionPages.extra());
-
-        CeleritasExtraMod.LOGGER.info("Successfully registered {} Celeritas Extra option pages", 5);
+        var pages = List.of(CeleritasExtraGameOptionPages.animation(), CeleritasExtraGameOptionPages.particle(),
+                CeleritasExtraGameOptionPages.sky(), CeleritasExtraGameOptionPages.clouds(),
+                CeleritasExtraGameOptionPages.fog(), CeleritasExtraGameOptionPages.dimensionFog(),
+                CeleritasExtraGameOptionPages.entities(), CeleritasExtraGameOptionPages.blocks(),
+                CeleritasExtraGameOptionPages.overlay(), CeleritasExtraGameOptionPages.misc());
+        pages.forEach(event::addPage);
+        CeleritasExtraMod.LOGGER.info("Successfully registered {} Celeritas Extra option pages", pages.size());
     }
 
     /**

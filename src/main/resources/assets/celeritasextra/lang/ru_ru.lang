@@ -166,3 +166,12 @@ sodium-extra.units.ticks=Тактов: %s
 options.dimensions.minecraft.overworld=в Верхнем мире
 options.dimensions.minecraft.the_nether=в Незере
 options.dimensions.minecraft.the_end=в Энде
+
+# Purpose-specific page categories
+celeritasextra.option.page.sky_weather=Небо, погода и цвета
+celeritasextra.option.page.clouds=Облака
+celeritasextra.option.page.fog=Туман
+celeritasextra.option.page.dimension_fog=Туман измерений
+celeritasextra.option.page.entities=Сущности
+celeritasextra.option.page.block_rendering=Отрисовка блоков
+celeritasextra.option.page.overlay=HUD и оверлеи

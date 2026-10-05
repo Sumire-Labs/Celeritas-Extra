@@ -975,7 +975,14 @@
     "celeritasextra.option.cloud_translucency.never",
     "celeritasextra.overlay.memory",
     "celeritasextra.search.results",
-    "celeritasextra.search.no_results"
+    "celeritasextra.search.no_results",
+    "celeritasextra.option.page.sky_weather",
+    "celeritasextra.option.page.clouds",
+    "celeritasextra.option.page.fog",
+    "celeritasextra.option.page.dimension_fog",
+    "celeritasextra.option.page.entities",
+    "celeritasextra.option.page.block_rendering",
+    "celeritasextra.option.page.overlay"
   ],
   "sources": {
     "sodium": "https://github.com/FlashyReese/sodium-extra",

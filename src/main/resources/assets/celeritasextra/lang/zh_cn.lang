@@ -166,3 +166,12 @@ sodium-extra.units.ticks=%s刻
 options.dimensions.minecraft.overworld=主世界
 options.dimensions.minecraft.the_nether=下界
 options.dimensions.minecraft.the_end=末地
+
+# Purpose-specific page categories
+celeritasextra.option.page.sky_weather=天空、天气与颜色
+celeritasextra.option.page.clouds=云
+celeritasextra.option.page.fog=雾
+celeritasextra.option.page.dimension_fog=维度雾设置
+celeritasextra.option.page.entities=实体
+celeritasextra.option.page.block_rendering=方块渲染
+celeritasextra.option.page.overlay=HUD 与界面

@@ -166,3 +166,12 @@ sodium-extra.units.ticks=%s tick(s)
 options.dimensions.minecraft.overworld=Overworld
 options.dimensions.minecraft.the_nether=Nether
 options.dimensions.minecraft.the_end=End
+
+# Purpose-specific page categories
+celeritasextra.option.page.sky_weather=Sky, Weather & Colors
+celeritasextra.option.page.clouds=Clouds
+celeritasextra.option.page.fog=Fog
+celeritasextra.option.page.dimension_fog=Dimension Fog
+celeritasextra.option.page.entities=Entities
+celeritasextra.option.page.block_rendering=Block Rendering
+celeritasextra.option.page.overlay=HUD & Overlays
