@@ -2,18 +2,21 @@ package com.sumirelabs.celeritasextra.client.gui;
 
 import com.sumirelabs.celeritasextra.mixin.options_search.MixinOptionsController;
 import com.sumirelabs.celeritasextra.mixin.options_search.MixinSliderScroll;
+import com.sumirelabs.celeritasextra.mixin.options_search.TabFrameAccess;
 import org.embeddedt.embeddium.impl.gui.frame.AbstractFrame;
+import org.embeddedt.embeddium.impl.gui.frame.tab.Tab;
+import org.embeddedt.embeddium.impl.gui.frame.tab.TabFrame;
 import org.embeddedt.embeddium.impl.gui.framework.*;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.taumc.celeritas.api.options.OptionIdentifier;
 import org.taumc.celeritas.api.options.control.*;
 import org.taumc.celeritas.api.options.structure.*;
 import org.junit.jupiter.api.Test;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.*;
 
 /** Exercises Celeritas's real TabFrame/OptionPageFrame builders without an OpenGL window. */
@@ -99,6 +102,33 @@ class OptionsGuiIntegrationTest {
         assertTrue(controls(filteredFrame(controller)).isEmpty());
     }
 
+    @Test void shaderPackActionSurvivesFilteringAndOpensItsScreenWithoutBecomingTheSelectedPage() throws Exception {
+        var sky = page("sky", new TestOption("Sun", "Render sun"));
+        var controller = controller(List.of(sky));
+        var opens = new AtomicInteger();
+        Tab<?> shader = new Tab<>(OptionIdentifier.create("iris", "shader_packs"), TextComponent.literal("Shader Packs"),
+                () -> { opens.incrementAndGet(); return false; }, null);
+        Map<String, List<Tab<?>>> nativeTabs = new LinkedHashMap<>();
+        nativeTabs.put("test", List.of(Tab.from(sky, option -> true, new AtomicReference<>(0))));
+        nativeTabs.put("iris", List.of(shader));
+        AbstractFrame frame = filteredFrame(controller, nativeTabs);
+        assertTrue(frame.mouseClicked(new InteractionContext() { }, 10, 89, 0));
+        assertEquals(1, opens.get(), "The retained native callback must open the shader pack screen");
+        assertEquals(1, controls(frame).size(), "Opening a separate screen must not replace the selected option page");
+        controller.celeritasExtra$search("shader");
+        frame = filteredFrame(controller, nativeTabs);
+        assertEquals(1, controller.celeritasExtra$resultCount(), "Matching action tabs count as search results");
+        assertTrue(controls(frame).isEmpty(), "An action-only result has no option controls");
+        assertTrue(frame.mouseClicked(new InteractionContext() { }, 10, 53, 0));
+        assertEquals(2, opens.get());
+        assertSame(shader, nativeTabs.get("iris").getFirst(), "Filtering must not mutate Celeritas's native tabs");
+        controller.celeritasExtra$search("unmatched");
+        assertTrue(controls(filteredFrame(controller, nativeTabs)).isEmpty());
+        assertEquals(0, controller.celeritasExtra$resultCount());
+        controller.celeritasExtra$search("");
+        assertEquals(1, controls(filteredFrame(controller, nativeTabs)).size());
+    }
+
     @Test void shiftWheelUsesIntervalAndDoesNotChangeDisabledOrUnhoveredSliders() throws Exception {
         var option = new TestOption("Distance", "Blocks");
         var slider = new MixinSliderScroll(option, new Dim2i(0, 0, 200, 20)) {};
@@ -132,11 +162,30 @@ class OptionsGuiIntegrationTest {
         return controller;
     }
     private static AbstractFrame filteredFrame(MixinOptionsController controller) throws Exception {
-        Method method = MixinOptionsController.class.getDeclaredMethod("celeritasExtra$filterOptions", Dim2i.class, CallbackInfoReturnable.class);
+        var pagesField = MixinOptionsController.class.getDeclaredField("pages");
+        pagesField.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        var pages = (List<OptionPage>) pagesField.get(controller);
+        Map<String, List<Tab<?>>> tabs = new LinkedHashMap<>();
+        for (var page : pages) tabs.computeIfAbsent(page.getId().getModId(), ignored -> new ArrayList<>())
+                .add(Tab.from(page, option -> true, new AtomicReference<>(0)));
+        return filteredFrame(controller, tabs);
+    }
+
+    private static AbstractFrame filteredFrame(MixinOptionsController controller, Map<String, List<Tab<?>>> tabs) throws Exception {
+        Method method = MixinOptionsController.class.getDeclaredMethod("celeritasExtra$filterOptions", AbstractFrame.class, Dim2i.class);
         method.setAccessible(true);
-        var callback = new CallbackInfoReturnable<AbstractFrame>("test", true);
-        method.invoke(controller, new Dim2i(0, 30, 400, 200), callback);
-        return callback.getReturnValue();
+        var bounds = new Dim2i(0, 30, 400, 200);
+        return (AbstractFrame) method.invoke(controller, new NativeTabs(bounds, tabs), bounds);
+    }
+
+    private static final class NativeTabs extends TabFrame implements TabFrameAccess {
+        private final Map<String, List<Tab<?>>> tabs;
+        private NativeTabs(Dim2i bounds, Map<String, List<Tab<?>>> tabs) {
+            super(FONT, bounds, false, tabs, () -> { }, new AtomicReference<>(), new AtomicReference<>(0));
+            this.tabs = tabs;
+        }
+        @Override public Map<String, List<Tab<?>>> celeritasExtra$nativeTabs() { return tabs; }
     }
     @SuppressWarnings("unchecked") private static List<ControlElement<?>> controls(AbstractFrame frame) throws Exception {
         Field field = AbstractFrame.class.getDeclaredField("controlElements");

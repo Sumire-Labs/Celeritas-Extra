@@ -47,8 +47,10 @@ public final class CollapsibleTabFrame extends AbstractFrame {
         sidebar = new Dim2i(dim.x(), dim.y(), width, dim.height());
         content = new Dim2i(sidebar.getLimitX(), dim.y(), Math.max(1, dim.width() - width), dim.height());
         selected = tabs.values().stream().flatMap(List::stream)
+                .filter(tab -> tab.frameFunction() != null)
                 .filter(tab -> tab.title().equals(selection.get())).findFirst()
-                .orElseGet(() -> tabs.values().stream().flatMap(List::stream).findFirst().orElse(null));
+                .orElseGet(() -> tabs.values().stream().flatMap(List::stream)
+                        .filter(tab -> tab.frameFunction() != null).findFirst().orElse(null));
         buildFrame();
         // Preserve Celeritas's initial control-element construction for inactive tabs.
         tabs.values().stream().flatMap(List::stream).filter(tab -> tab != selected)

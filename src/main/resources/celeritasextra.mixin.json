@@ -16,6 +16,7 @@
     "actinium.MixinFastLitItemLod",
     "nothirium.MixinRenderLibEntityDistance",
     "options_search.MixinOptionsController",
+    "options_search.TabFrameAccess",
     "options_search.MixinOptionsScreen",
     "options_search.MixinGuiScreen",
     "options_search.MixinSliderScroll",
