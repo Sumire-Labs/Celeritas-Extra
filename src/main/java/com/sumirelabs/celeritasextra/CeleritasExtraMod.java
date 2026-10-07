@@ -68,6 +68,9 @@ public class CeleritasExtraMod {
             com.sumirelabs.celeritasextra.compat.actinium.ActiniumOptionsAdapter.register();
         } else if (nothirium) {
             com.sumirelabs.celeritasextra.compat.nothirium.NothiriumOptionsAdapter.register();
+        } else if (!com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasControllerGui()) {
+            com.sumirelabs.celeritasextra.compat.pintonium.PintoniumOptionsAdapter.register();
+            LOGGER.info("Using standalone Extra settings for the renderer's independent video GUI");
         } else {
             com.sumirelabs.celeritasextra.compat.CeleritasOptionsAdapter.register();
         }

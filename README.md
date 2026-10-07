@@ -21,6 +21,10 @@ This screen includes per-class particle percentages,
 dimension fog, window mode and VSync. Search and Shift-scroll controls remain specific to the renderer-native screens.
 Nothirium support requires Cleanroom too; it does not add support for the original Forge loader.
 
+Celeritas forks with an independent video GUI, including Pintonium, use an **Extra Settings…** button
+in the top-left corner of their video screen. Extra opens the same standalone settings screen used
+with Nothirium, while the renderer keeps its own search and shader controls.
+
 ### Optional
 
 - [AssetMover](https://www.curseforge.com/minecraft/mc-mods/assetmover) 2.5 or newer
