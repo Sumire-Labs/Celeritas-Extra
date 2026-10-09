@@ -137,6 +137,27 @@ The following settings and features are added by Celeritas Extra. Individual par
 - Clear the search with `Esc` or the clear button
 - Hold `Shift` and scroll over a slider row to adjust its value by the configured step
 
+## Building
+
+Build with JDK 25 and the Gradle wrapper:
+
+```sh
+./gradlew clean build
+./gradlew -q printVersion
+```
+
+Cleanroom Versioning derives the version from Git tags. A clean build on an exact release tag such as `0.9.1`
+produces that version; subsequent commits on `main` lead to the next patch with a `dev` suffix.
+Local builds can include `.local` and `.dirty`. Create a SemVer Git tag to select a release version;
+there is no `mod_version` property to update. CI checks out full history and tags for version calculation.
+
+TokenEnvoy replaces `@{...}` markers in `Reference.java` during compilation and in `mcmod.info`
+during resource processing. Source files keep their markers. `build` verifies that the release Jar's
+metadata, compiled constants and Forge annotation all contain the same computed version.
+
+The build follows CleanroomModTemplate's `mixin` branch at `de392c9`, retaining this project's
+renderer adapters, tests and release artifact checks. The development loader is Cleanroom 0.6.13-alpha.
+
 ## Credits
 
 - FlashyReese — Creator of Sodium Extra and Reese's Sodium Options

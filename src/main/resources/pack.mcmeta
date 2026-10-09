@@ -1,0 +1,6 @@
+{
+    "pack": {
+        "description": @{PACK_DESCRIPTION_JSON},
+        "pack_format": 3
+    }
+}

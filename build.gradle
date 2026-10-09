@@ -2,10 +2,11 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'com.gradleup.shadow' version '9.5.1'
+    id 'com.gradleup.shadow' version '9.6.1'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
-    id 'xyz.wagyourtail.unimined' version '1.4.36-kappa'
-    id 'net.kyori.blossom' version '2.2.0'
+    id 'xyz.wagyourtail.unimined' version '1.4.43-kappa'
+    id 'com.cleanroommc.versioning' version '3.3.0'
+    id 'com.cleanroommc.tokenenvoy' version '3.0.0'
 }
 
 import org.jetbrains.gradle.ext.Gradle
@@ -15,7 +16,6 @@ ext {
     access_transformer_locations = "${mod_id}_at.cfg"
 }
 
-version = mod_version
 group = root_package
 
 base {
@@ -58,7 +58,7 @@ unimined.minecraft {
         if (use_access_transformer.toBoolean()) {
             accessTransformer "${rootProject.projectDir}/src/main/resources/$access_transformer_locations"
         }
-        loader "0.6.10-alpha"
+        loader "0.6.13-alpha"
         runs.all {
             systemProperty("crl.dev.mixin", "${mod_id}.mixin.json")
             args += ['--username', minecraft_username]
@@ -113,33 +113,35 @@ processResources {
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
+tokenEnvoy {
+    main {
+        set 'MOD_ID', mod_id
+        set 'MOD_NAME', mod_name
+        set 'MOD_VERSION', project.version.toString()
+        // JSON literals keep quotes, newlines and author names safe in mcmod.info.
+        [MOD_ID: mod_id, MOD_NAME: mod_name, MOD_VERSION: project.version.toString(),
+         MOD_DESCRIPTION: mod_description, MOD_CREDITS: mod_credits, MOD_URL: mod_url,
+         MOD_UPDATE_URL: mod_update_json, MOD_LOGO_PATH: mod_logo_path,
+         MOD_ISSUE_TRACKER: mod_issue_tracker].each { key, value ->
+            set "${key}_JSON", groovy.json.JsonOutput.toJson(value.toString())
+        }
+        set 'MOD_AUTHORS_JSON', groovy.json.JsonOutput.toJson(
+                mod_authors.toString().split(',').findAll { !it.isBlank() }.collect { it.strip() })
+        set 'PACK_DESCRIPTION_JSON', groovy.json.JsonOutput.toJson("${mod_name} Resources".toString())
+        classes {
+            include "${root_package}.${mod_id}.Reference"
+        }
+        resources {
+            include 'mcmod.info', 'pack.mcmeta'
+        }
+    }
+}
+
 sourceSets {
     // Resource-pack tests exercise Minecraft's real fallback resource manager.
     test {
         compileClasspath += sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.compileClasspath
-    }
-    main {
-        blossom {
-            javaSources {
-                property('mod_id', mod_id)
-                property('mod_name', mod_name)
-                property('mod_version', mod_version)
-                property('package', "${root_package}.${mod_id}")
-            }
-            resources {
-                property('mod_id', mod_id)
-                property('mod_name', mod_name)
-                property('mod_version', mod_version)
-                property('mod_description', mod_description)
-                property('mod_authors', mod_authors.toString().split(',').findAll { !it.isBlank() }.collect { "\"${it.strip()}\"" }.join(', '))
-                property('mod_credits', mod_credits)
-                property('mod_url', mod_url)
-                property('mod_update_json', mod_update_json)
-                property('mod_logo_path', mod_logo_path)
-                property('mod_issue_tracker', mod_issue_tracker)
-            }
-        }
     }
 }
 

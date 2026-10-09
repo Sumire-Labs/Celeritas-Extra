@@ -17,6 +17,38 @@ tasks.register('verifyReleaseJar') {
             if (metadata.version != project.version.toString() || metadata.modid != mod_id) {
                 throw new GradleException('Release version or mod ID does not match project metadata')
             }
+            def pack = new JsonSlurper().parseText(readText('pack.mcmeta')).pack
+            if (pack.pack_format != 3 || pack.description != "${mod_name} Resources".toString()) {
+                throw new GradleException('Resource pack metadata contains unresolved or incorrect tokens')
+            }
+            // Check the compiled constants and inlined annotation too: replacing only mcmod.info
+            // would still leave an invalid mod ID/version in Forge's Java entry point.
+            def readClass = { String path ->
+                def entry = zip.getEntry(path)
+                if (entry == null) throw new GradleException("Release artifact is missing ${path}")
+                zip.getInputStream(entry).withCloseable { input ->
+                    java.lang.classfile.ClassFile.of().parse(input.readAllBytes())
+                }
+            }
+            def packagePath = "${root_package}.${mod_id}".replace('.', '/')
+            def reference = readClass("${packagePath}/Reference.class")
+            [MOD_ID: mod_id, MOD_NAME: mod_name, VERSION: project.version.toString()].each { name, expected ->
+                def field = reference.fields().find { it.fieldName().stringValue() == name }
+                def constant = field?.findAttribute(java.lang.classfile.Attributes.constantValue())?.orElse(null)
+                if (constant?.constant()?.constantValue() != expected) {
+                    throw new GradleException("Unresolved or incorrect build constant: Reference.${name}")
+                }
+            }
+            def mod = readClass("${packagePath}/CeleritasExtraMod.class")
+            def annotations = mod.findAttribute(java.lang.classfile.Attributes.runtimeVisibleAnnotations()).orElse(null)
+            def annotation = annotations?.annotations()?.find {
+                it.className().stringValue() == 'Lnet/minecraftforge/fml/common/Mod;'
+            }
+            def values = annotation?.elements()?.findAll { it.name().stringValue() in ['modid', 'name', 'version'] }
+                    ?.collectEntries { [(it.name().stringValue()): it.value().stringValue()] }
+            if (values?.modid != mod_id || values?.version != project.version.toString() || values?.name != mod_name) {
+                throw new GradleException('TokenEnvoy constants were not inlined into the @Mod annotation')
+            }
             if (['celeritas', 'actinium', 'nothirium', 'renderlib'].any { metadata.dependencies.contains(it) }) {
                 throw new GradleException('Release metadata must allow either supported renderer')
             }
