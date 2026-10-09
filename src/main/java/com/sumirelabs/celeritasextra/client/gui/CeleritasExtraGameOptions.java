@@ -5,6 +5,7 @@ import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.ForgeEarlyConfig;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.ConfigManager;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.Display;
 
@@ -472,18 +473,15 @@ public class CeleritasExtraGameOptions {
                 mc.toggleFullscreen();
             }
 
-            switch (mode) {
-                case WINDOWED -> ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
-                case BORDERLESS -> {
-                    ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = true;
-                    mc.toggleFullscreen();
-                }
-                case FULLSCREEN -> {
-                    ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = false;
-                    mc.toggleFullscreen();
-                }
-            }
+            saveBorderlessPreference(mode);
+            if (mode != WINDOWED) mc.toggleFullscreen();
             mc.gameSettings.saveOptions();
+        }
+
+        /** Persist the Cleanroom preference separately from Minecraft's fullscreen flag. */
+        static void saveBorderlessPreference(ScreenMode mode) {
+            ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = mode == BORDERLESS;
+            ConfigManager.sync(ForgeEarlyConfig.class);
         }
     }
 
