@@ -22,8 +22,6 @@ jobs:
           distribution: "temurin"
       - uses: gradle/actions/setup-gradle@v6.1.0
         name: Set up Gradle
-      - name: Add permission
-        run: chmod +x ./gradlew
       - name: Execute Gradle build
         run: ./gradlew clean build verifyReleaseJar
 
