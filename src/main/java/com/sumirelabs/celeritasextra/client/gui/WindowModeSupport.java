@@ -1,7 +1,7 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
 import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-import org.lwjgl.glfw.GLFW;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 
 import java.lang.reflect.Modifier;
 import java.nio.IntBuffer;
@@ -23,7 +23,14 @@ public final class WindowModeSupport {
             return false;
         }
 
-        if (!hasRequiredGlfwMethods(GLFW.class)) {
+        if (WindowCompat.isSdl()) return true;
+        boolean glfwSupported;
+        try {
+            glfwSupported = hasRequiredGlfwMethods(Class.forName("org.lwjgl.glfw.GLFW", false, WindowModeSupport.class.getClassLoader()));
+        } catch (ClassNotFoundException | LinkageError missing) {
+            glfwSupported = false;
+        }
+        if (!glfwSupported) {
             CeleritasExtraMod.LOGGER.warn(
                     "Keeping the standard fullscreen option: GLFW lacks the required window query methods");
             return false;

@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.ForgeEarlyConfig;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.ConfigManager;
-import org.lwjgl.glfw.GLFW;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 import org.lwjgl.opengl.Display;
 
 import java.io.File;
@@ -372,11 +372,10 @@ public class CeleritasExtraGameOptions {
 
         /**
          * Returns only the VSync options supported by the current GPU/driver.
-         * ADAPTIVE requires GLX_EXT_swap_control_tear or WGL_EXT_swap_control_tear.
+         * Uses SDL's swap-interval support on 0.7+, or GLFW's tear-control extensions on 0.6.x.
          */
         public static VerticalSyncOption[] getAvailableOptions() {
-            boolean adaptiveSupported = GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
-                    || GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear");
+            boolean adaptiveSupported = WindowCompat.supportsAdaptiveVsync();
             if (adaptiveSupported) {
                 return values();
             } else {
@@ -420,8 +419,7 @@ public class CeleritasExtraGameOptions {
                     mc.gameSettings.enableVsync = true;
                 }
                 case ADAPTIVE -> {
-                    boolean supported = GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
-                            || GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear");
+                    boolean supported = WindowCompat.supportsAdaptiveVsync();
                     opts.extraSettings.useAdaptiveSync = supported;
                     mc.gameSettings.enableVsync = true;
                 }
@@ -454,7 +452,7 @@ public class CeleritasExtraGameOptions {
          * Gets the current screen mode from the live display state.
          */
         public static ScreenMode getCurrent(CeleritasExtraGameOptions opts) {
-            if (Display.isBorderless()) {
+            if (WindowCompat.isBorderless()) {
                 return BORDERLESS;
             }
             Minecraft minecraft = Minecraft.getMinecraft();
