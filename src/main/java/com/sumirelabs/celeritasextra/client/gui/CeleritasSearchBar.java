@@ -15,6 +15,7 @@ public final class CeleritasSearchBar extends AbstractWidget {
     private final FlatButtonWidget clearButton;
     private String text = "", placeholder = "", results = "";
     private int cursor, selection, visibleStart;
+    private int externalScroll = -1;
     private boolean focused, blink;
 
     public CeleritasSearchBar(Dim2i bounds, Runnable clear) {
@@ -47,6 +48,10 @@ public final class CeleritasSearchBar extends AbstractWidget {
 
     private String visibleText(DrawContext context) {
         int width = Math.max(0, textRight(context) - bounds.x() - 7);
+        if (externalScroll >= 0) {
+            visibleStart = Math.clamp(externalScroll, 0, text.length());
+            return context.substrByWidth(text.substring(visibleStart), width);
+        }
         visibleStart = Math.clamp(visibleStart, 0, text.length());
         // GuiTextField keeps the active cursor and the other end of a selection
         // separately. Keep the active cursor visible while extending a selection.
@@ -107,4 +112,8 @@ public final class CeleritasSearchBar extends AbstractWidget {
 
     @Override public boolean isMouseOver(double x, double y) { return bounds.containsCursor(x, y); }
     public Dim2i bounds() { return bounds; }
+    public Dim2i textBounds(DrawContext context) {
+        return new Dim2i(bounds.x() + 6, bounds.y(), Math.max(1, textRight(context) - bounds.x() - 7), bounds.height());
+    }
+    public void useTextScrollOffset(int offset) { externalScroll = offset; }
 }

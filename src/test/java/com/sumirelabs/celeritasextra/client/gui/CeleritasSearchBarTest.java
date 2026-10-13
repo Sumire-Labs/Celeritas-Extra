@@ -60,6 +60,18 @@ class CeleritasSearchBarTest {
                 "The caret should follow cursorPosition, not the selection endpoint");
     }
 
+    @Test void sdlInputScrollControlsThePaintedTextAndMouseHitTesting() {
+        var drawing = new RecordingContext();
+        var bar = new CeleritasSearchBar(new Dim2i(0, 0, 140, 20), () -> {});
+        bar.update("abcdefghijklmnopqrstuvwxyz", 12, 18, true, true, "Search", "1 result");
+        var area = bar.textBounds(drawing.context);
+        assertEquals(6, area.x());
+        assertTrue(area.getLimitX() < 120, "The IME input area excludes the counter and clear button");
+        bar.useTextScrollOffset(10);
+        bar.render(drawing.context, -1, -1, 0);
+        assertEquals(10, bar.cursorAt(drawing.context, 6));
+    }
+
     private static final class RecordingContext {
         final List<int[]> fills = new ArrayList<>();
         final List<String> labels = new ArrayList<>();

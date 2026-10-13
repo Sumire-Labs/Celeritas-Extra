@@ -5,6 +5,7 @@ import com.sumirelabs.celeritasextra.client.gui.Translations;
 import com.sumirelabs.celeritasextra.client.gui.OptionsSearchScreen;
 import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
 import com.sumirelabs.celeritasextra.client.gui.CeleritasSearchBar;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
@@ -62,7 +63,8 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
 
     @Unique private void celeritasExtra$updateBar() {
         celeritasExtra$bar.update(celeritasExtra$field.getText(), celeritasExtra$field.getCursorPosition(),
-                celeritasExtra$field.getSelectionEnd(), celeritasExtra$field.isFocused(), celeritasExtra$cursorTicks / 6 % 2 == 0,
+                celeritasExtra$field.getSelectionEnd(), celeritasExtra$field.isFocused(),
+                celeritasExtra$cursorTicks / 6 % 2 == 0 && !WindowCompat.composingText(),
                 Translations.format("rso.search_bar_empty"), Translations.format("celeritasextra.search.results",
                         celeritasExtra$searchController().celeritasExtra$resultCount()));
     }
@@ -72,7 +74,18 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         if (celeritasExtra$field == null) return;
         celeritasExtra$updateBar();
         var context = celeritasExtra$searchController().celeritasExtra$drawContext();
+        if (WindowCompat.isSdl()) {
+            var area = celeritasExtra$bar.textBounds(context);
+            celeritasExtra$field.x = area.x();
+            celeritasExtra$field.y = area.y();
+            celeritasExtra$field.width = area.width();
+            celeritasExtra$field.height = area.height();
+            celeritasExtra$field.setSelectionPos(celeritasExtra$field.getSelectionEnd());
+            celeritasExtra$bar.useTextScrollOffset(WindowCompat.textScrollOffset(celeritasExtra$field));
+        }
         celeritasExtra$bar.render(context, mouseX, mouseY, partialTicks);
+        WindowCompat.drawTextInput(celeritasExtra$field, celeritasExtra$field.x,
+                celeritasExtra$bar.bounds().getCenterY() - context.lineHeight() / 2);
         if (celeritasExtra$searchController().celeritasExtra$resultCount() == 0) {
             String empty = Translations.format("celeritasextra.search.no_results");
             context.drawString(empty, (width - context.getStringWidth(empty)) / 2,
