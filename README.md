@@ -13,6 +13,10 @@ It provides a wide range of quality-of-life and optimization options, similar to
   - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization) 0.0.12-alpha or newer
   - [Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium) 0.4.9-beta or newer, with its required RenderLib dependency (1.4.5 recommended)
 
+Window controls support both Cleanroom 0.6.x (GLFW) and 0.7.x (SDL). The selected
+renderer must also support the installed Cleanroom version. Adaptive VSync falls
+back to standard VSync when the driver does not support it.
+
 Install exactly one renderer. With Nothirium, open **Video Settings → Extra Settings…** to configure Extra
 through a vanilla-style video settings screen with two-column buttons, sliders and category submenus.
 Changes apply when you press **Done** on the main Extra screen; **Cancel** or **Esc** on that screen

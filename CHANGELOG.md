@@ -9,6 +9,20 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
+## [Unreleased]
+
+### Added
+
+- Added a Cleanroom 0.7.0 SDL window backend while retaining the 0.6.x GLFW backend.
+
+### Fixed
+
+- Removed direct GLFW dependencies from screen-mode and VSync controls on Cleanroom 0.7.0.
+- Read borderless and minimized states from SDL instead of removed or stubbed legacy Display methods.
+- Apply adaptive VSync through SDL's negative swap interval, falling back to standard VSync on unsupported drivers.
+- Restore the previous swap interval after checking adaptive VSync support.
+- Connected Extra's custom search field to SDL's IME activation, composition and caret layout hooks.
+
 ## [0.9.2]
 
 ### Added
