@@ -9,7 +9,7 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
-## [Unreleased]
+## [0.9.3]
 
 ### Added
 
