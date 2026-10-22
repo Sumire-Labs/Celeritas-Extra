@@ -7,14 +7,15 @@ It provides a wide range of quality-of-life and optimization options, similar to
 
 ### Required
 
-- [Cleanroom Loader](https://download.cleanroommc.com/) 0.6.10-alpha or newer
+- [Cleanroom Loader](https://download.cleanroommc.com/) 0.7.11-alpha or newer within the 0.7.x series
+- Java 25
 - One of the following:
   - [Celeritas](https://github.com/kappa-maintainer/Celeritas-auto-build) 2.4.0-dev.4 or newer
   - [Actinium](https://www.curseforge.com/minecraft/mc-mods/actinium-1-12-2-optimization) 0.0.12-alpha or newer
   - [Nothirium](https://www.curseforge.com/minecraft/mc-mods/nothirium) 0.4.9-beta or newer, with its required RenderLib dependency (1.4.5 recommended)
 
-Window controls support both Cleanroom 0.6.x (GLFW) and 0.7.x (SDL). The selected
-renderer must also support the installed Cleanroom version. Adaptive VSync falls
+Version 0.10.0 uses Cleanroom 0.7.x SDL APIs directly; Cleanroom 0.6.x and 0.7.0 are not supported.
+The selected renderer must also support the installed Cleanroom version. Adaptive VSync falls
 back to standard VSync when the driver does not support it.
 
 Install exactly one renderer. With Nothirium, open **Video Settings → Extra Settings…** to configure Extra
@@ -98,6 +99,9 @@ The following settings and features are added by Celeritas Extra. Individual par
 - Limit tile entity render distance (0 keeps normal behavior)
 - Specify classes exempt from render distance limits in the configuration file, using fully qualified class names or `package.*`
 - Item frame LOD (0 disables it)
+- Experimental static item vertex cache (disabled by default). Reuses supported static item geometry;
+  performance gains vary by system and scene. Dynamic or tinted geometry, Iris, and detected native
+  renderer item caches use the normal rendering path. Limited to 256 entries and 4 MiB of vertex data.
 
 ### Block Rendering, Lighting, and Screen Effects
 
@@ -150,7 +154,7 @@ Build with JDK 25 and the Gradle wrapper:
 ./gradlew -q printVersion
 ```
 
-Cleanroom Versioning derives the version from Git tags. A clean build on an exact release tag such as `0.9.1`
+Cleanroom Versioning derives the version from Git tags. A clean build on an exact release tag such as `0.10.0`
 produces that version; subsequent commits on `main` lead to the next patch with a `dev` suffix.
 Local builds can include `.local` and `.dirty`. Create a SemVer Git tag to select a release version;
 there is no `mod_version` property to update. CI checks out full history and tags for version calculation.
@@ -159,8 +163,9 @@ TokenEnvoy replaces `@{...}` markers in `Reference.java` during compilation and 
 during resource processing. Source files keep their markers. `build` verifies that the release Jar's
 metadata, compiled constants and Forge annotation all contain the same computed version.
 
-The build follows CleanroomModTemplate's `mixin` branch at `de392c9`, retaining this project's
-renderer adapters, tests and release artifact checks. The development loader is Cleanroom 0.6.13-alpha.
+The build adapts Sumire-Labs/ModTemplate's `cleanroom` branch at `ea1bfde`, retaining this project's
+renderer adapters, tests and release artifact checks. It uses CleanroomGradle 0.22.1 and the
+Cleanroom 0.7.11-alpha USERDEV development environment.
 
 ## Credits
 

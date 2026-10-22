@@ -9,6 +9,41 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
+## [0.10.0] - 2026-10-23
+
+### Requirements
+
+- Requires Cleanroom Loader 0.7.11-alpha or newer within the 0.7.x series, and Java 25. Cleanroom 0.6.x and 0.7.0 are no longer supported.
+- Install exactly one supported renderer: Celeritas, Actinium, or Nothirium. The renderer must also support the installed Cleanroom version.
+
+### Added
+
+- Added an experimental static item vertex cache, disabled by default. It reuses vertex output for supported static item geometry while retaining Forge lighting and item-frame LOD. Performance gains vary by system and scene.
+- Bounded the experimental cache to 256 entries and 4 MiB of vertex data. Dynamic geometry, registered item color handlers, Iris, and detected native renderer item caches use the normal rendering path.
+
+### Changed
+
+- Migrated the build to CleanroomGradle 0.22.1 and Cleanroom 0.7.11-alpha USERDEV, adapting Sumire-Labs/ModTemplate's cleanroom branch while retaining renderer adapters and release checks.
+- Updated Gradle to 9.8.2, Cleanroom Versioning to 3.4.0, CleanMix to 0.7.4, and MixinExtras to 0.5.5.
+- Use Cleanroom's SDL APIs directly for window controls and IME integration.
+- Cache sprite animation categories, unchanged HUD text, and render-distance exemption checks.
+- Reuse frame-statistics buffers and select the slowest percentile without sorting the full sample history.
+- Avoid profiler name lookups when profiling is disabled, and close profiling scopes reliably.
+- Calculate sign-text visibility once per render and cache filtered static item-frame LOD geometry.
+- Cache particle policies and skip constructing known vanilla particles when their configured spawn rate is zero. Custom particle factories retain the normal discovery path.
+- Clear item geometry caches when models are reloaded.
+
+### Removed
+
+- Removed the Cleanroom 0.6.x GLFW compatibility backend and reflective SDL compatibility helpers.
+- Removed migration of the legacy combined `sunMoon` setting. Existing separate `sun` and `moon` settings remain supported; the obsolete key is removed when loading the configuration.
+
+### Fixed
+
+- Preserve vertex-buffer position and limit when capturing experimental item-cache entries, preventing corrupted item rendering.
+- Verify production Mixin mappings, the supported loader range, and the absence of references to the removed GLFW backend in release artifacts.
+- Exclude development MCP JARs from GitHub release uploads.
+
 ## [0.9.3]
 
 ### Added

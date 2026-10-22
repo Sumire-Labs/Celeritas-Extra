@@ -36,7 +36,20 @@ jobs:
             cp "$artifact" build/release/
           done
 
+      - name: Extract release notes from changelog
+        shell: bash
+        run: |
+          awk -v tag="$GITHUB_REF_NAME" '
+            /^## \[/ {
+              if (found) exit
+              if (index($0, "## [" tag "]") == 1) { found = 1; next }
+            }
+            found { print }
+            END { if (!found) exit 1 }
+          ' CHANGELOG.md > build/release-notes.md
+          test -s build/release-notes.md
+
       - uses: ncipollo/release-action@v1.21.0
         with:
           artifacts: "build/release/*.jar"
-          generateReleaseNotes: true
+          bodyFile: build/release-notes.md
