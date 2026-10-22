@@ -10,13 +10,23 @@ import net.minecraft.util.EnumFacing;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /** Render-thread state scoped to the vanilla item call inside an item frame. */
 public final class ItemFrameLodState {
     public static boolean active;
+    private static final int MAX_MODELS = 128, MAX_QUADS = 1024;
+    private static final Map<IBakedModel, CachedBucket[]> CACHE = new LinkedHashMap<>(32, 0.75f, true) {
+        @Override protected boolean removeEldestEntry(Map.Entry<IBakedModel, CachedBucket[]> entry) {
+            return size() > MAX_MODELS;
+        }
+    };
 
     private ItemFrameLodState() {
     }
+
+    public static void clearCache() { CACHE.clear(); }
 
     /**
      * MoreCulling's distance LOD targets non-block items: remove sprite edge faces and,
@@ -42,6 +52,12 @@ public final class ItemFrameLodState {
         boolean flipped = ((int) (transform.rotation.x / 180) % 2 != 0)
                 ^ ((int) (transform.rotation.y / 180) % 2 != 0) ^ (transform.scale.z < 0);
         EnumFacing front = flipped ? EnumFacing.NORTH : EnumFacing.SOUTH;
+        int policy = (cullBack ? 1 : 0) | (flipped ? 2 : 0);
+        boolean cacheable = StaticItemGeometry.isStaticModel(model) && state == null && quads.size() <= MAX_QUADS;
+        int bucket = side == null ? 6 : side.ordinal();
+        CachedBucket[] buckets = cacheable ? CACHE.get(model) : null;
+        CachedBucket cached = buckets == null ? null : buckets[bucket];
+        if (cached != null && cached.matches(quads, policy)) return cached.result;
 
         List<BakedQuad> filtered = null;
         for (int i = 0; i < quads.size(); i++) {
@@ -55,6 +71,32 @@ public final class ItemFrameLodState {
                 filtered.add(quad);
             }
         }
-        return filtered == null ? quads : filtered.isEmpty() ? Collections.emptyList() : filtered;
+        List<BakedQuad> result = filtered == null ? quads : filtered.isEmpty() ? Collections.emptyList() : filtered;
+        if (cacheable && quads.stream().allMatch(StaticItemGeometry::isStaticQuad)) {
+            if (buckets == null) {
+                buckets = new CachedBucket[7];
+                CACHE.put(model, buckets);
+            }
+            buckets[bucket] = new CachedBucket(quads, policy, result);
+        }
+        return result;
+    }
+
+    private static final class CachedBucket {
+        final List<BakedQuad> source, result;
+        final BakedQuad[] snapshot;
+        final int policy;
+        CachedBucket(List<BakedQuad> source, int policy, List<BakedQuad> result) {
+            this.source = source;
+            this.policy = policy;
+            this.result = result;
+            snapshot = source.toArray(BakedQuad[]::new);
+        }
+        boolean matches(List<BakedQuad> quads, int policy) {
+            if (this.policy != policy || source != quads || snapshot.length != quads.size()) return false;
+            // Detect in-place list edits too, without allocating a new filtered list.
+            for (int i = 0; i < snapshot.length; i++) if (snapshot[i] != quads.get(i)) return false;
+            return true;
+        }
     }
 }

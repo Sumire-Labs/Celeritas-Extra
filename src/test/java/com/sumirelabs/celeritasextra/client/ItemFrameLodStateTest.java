@@ -10,6 +10,11 @@ import org.lwjgl.util.vector.Vector3f;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import net.minecraftforge.client.model.BakedItemModel;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +26,50 @@ class ItemFrameLodStateTest {
     @AfterEach
     void clearState() {
         ItemFrameLodState.active = false;
+        ItemFrameLodState.clearCache();
+    }
+
+    @Test void forgeGeneratedItemModelsAlsoReuseFilteredGeometry() {
+        ItemFrameLodState.active = true;
+        var model = new BakedItemModel(ImmutableList.copyOf(quads), null, ImmutableMap.of(), ItemOverrideList.NONE, false);
+        var first = ItemFrameLodState.filterLodQuads(model, null, null, 0);
+        assertEquals(List.of(EnumFacing.SOUTH), first.stream().map(BakedQuad::getFace).toList());
+        assertSame(first, ItemFrameLodState.filterLodQuads(model, null, null, 0));
+    }
+
+    @Test void staticGeometryIsReusedAndInPlaceListEditsInvalidateIt() {
+        ItemFrameLodState.active = true;
+        var source = new ArrayList<>(quads);
+        var model = simple(source, ItemTransformVec3f.DEFAULT);
+        var first = ItemFrameLodState.filterLodQuads(model, null, null, 0);
+        assertSame(first, ItemFrameLodState.filterLodQuads(model, null, null, 0));
+        BakedQuad replacement = new BakedQuad(new int[28], -1, EnumFacing.SOUTH, null, true,
+                net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
+        source.set(EnumFacing.SOUTH.ordinal(), replacement);
+        var edited = ItemFrameLodState.filterLodQuads(model, null, null, 0);
+        assertNotSame(first, edited);
+        assertEquals(List.of(replacement), edited);
+        ItemFrameLodState.clearCache();
+        assertNotSame(edited, ItemFrameLodState.filterLodQuads(model, null, null, 0));
+    }
+
+    @Test void changingFixedTransformUpdatesCachedVisibilityPolicy() {
+        ItemFrameLodState.active = true;
+        var transform = new ItemTransformVec3f(new Vector3f(), new Vector3f(), new Vector3f(1, 1, 1));
+        var model = simple(quads, transform);
+        assertEquals(1, ItemFrameLodState.filterLodQuads(model, null, null, 0).size());
+        transform.translation.z = 0.2f;
+        assertEquals(2, ItemFrameLodState.filterLodQuads(model, null, null, 0).size());
+        transform.rotation.y = 45;
+        assertSame(quads, ItemFrameLodState.filterLodQuads(model, null, null, 0));
+    }
+
+    private IBakedModel simple(List<BakedQuad> source, ItemTransformVec3f fixed) {
+        var faces = new EnumMap<EnumFacing, List<BakedQuad>>(EnumFacing.class);
+        for (var side : EnumFacing.values()) faces.put(side, List.of());
+        ItemTransformVec3f none = ItemTransformVec3f.DEFAULT;
+        return new SimpleBakedModel(source, faces, false, false, null,
+                new ItemCameraTransforms(none, none, none, none, none, none, none, fixed), ItemOverrideList.NONE);
     }
 
     @Test
