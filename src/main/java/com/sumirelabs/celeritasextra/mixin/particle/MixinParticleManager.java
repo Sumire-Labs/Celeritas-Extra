@@ -15,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.concurrent.ThreadLocalRandom;
+import net.minecraft.world.World;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 /**
  * Controls particle spawning on {@link ParticleManager}.
@@ -27,6 +30,15 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Mixin(ParticleManager.class)
 public class MixinParticleManager {
+    @WrapOperation(method = "spawnEffectParticle", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/particle/IParticleFactory;createParticle(ILnet/minecraft/world/World;DDDDDD[I)Lnet/minecraft/client/particle/Particle;"))
+    private Particle celeritasExtra$skipDisabledFactory(IParticleFactory factory, int id, World world,
+            double x, double y, double z, double velocityX, double velocityY, double velocityZ,
+            int[] arguments, Operation<Particle> original) {
+        if (ParticleClassRegistry.getInstance().skipVanillaFactory(factory,
+                CeleritasExtraClientMod.options().particleSettings.particles)) return null;
+        return original.call(factory, id, world, x, y, z, velocityX, velocityY, velocityZ, arguments);
+    }
 
     /**
      * Capture the owning mod of each particle factory as it is registered.
@@ -84,14 +96,13 @@ public class MixinParticleManager {
         }
 
         ParticleClassRegistry registry = ParticleClassRegistry.getInstance();
-        registry.recordClass(effect.getClass());
+        int percentage = registry.observeSpawn(effect.getClass());
 
         if (!CeleritasExtraClientMod.options().particleSettings.particles) {
             ci.cancel();
             return;
         }
 
-        int percentage = registry.getSpawnPercentage(effect.getClass().getName());
         if (percentage == 0 || (percentage < 100
                 && !ParticleClassRegistry.acceptSpawn(percentage, ThreadLocalRandom.current().nextInt(100)))) {
             ci.cancel();

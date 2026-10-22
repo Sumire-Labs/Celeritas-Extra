@@ -8,6 +8,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParticleSpawnRateTest {
     private final ParticleClassRegistry registry = ParticleClassRegistry.getInstance();
 
+    @Test void cachedClassPolicyObservesAllSettingsMutationPaths() {
+        String name = getClass().getName();
+        assertEquals(100, registry.observeSpawn(getClass()));
+        registry.setSpawnPercentage(name, 25);
+        assertEquals(25, registry.observeSpawn(getClass()));
+        registry.setClassEnabled(name, false);
+        assertEquals(0, registry.observeSpawn(getClass()));
+        registry.setClassEnabled(name, true);
+        assertEquals(25, registry.observeSpawn(getClass()));
+        registry.loadSpawnPercentages(new String[]{name + "|75"});
+        assertEquals(75, registry.observeSpawn(getClass()));
+        registry.loadDisabledClasses(new String[]{name});
+        assertEquals(0, registry.observeSpawn(getClass()));
+        registry.loadDisabledClasses(new String[0]);
+        assertEquals(75, registry.observeSpawn(getClass()));
+    }
+
+    @Test void vanillaZeroRateSkipsCreationButCustomFactoriesRetainDiscoveryPath() {
+        var factory = new net.minecraft.client.particle.ParticleFlame.Factory();
+        String name = net.minecraft.client.particle.ParticleFlame.class.getName();
+        registry.setSpawnPercentage(name, 50);
+        assertFalse(registry.skipVanillaFactory(factory, true), "Probabilistic filtering must run only once");
+        registry.setSpawnPercentage(name, 0);
+        assertTrue(registry.skipVanillaFactory(factory, true));
+        assertTrue(registry.getDiscoveredClasses().containsKey(name));
+        registry.setSpawnPercentage(name, 100);
+        assertFalse(registry.skipVanillaFactory(factory, true));
+        assertTrue(registry.skipVanillaFactory(factory, false));
+        net.minecraft.client.particle.IParticleFactory custom = (id, world, x, y, z, vx, vy, vz, args) -> null;
+        assertFalse(registry.skipVanillaFactory(custom, false));
+    }
+
     @BeforeEach @AfterEach void reset() {
         registry.loadDisabledClasses(new String[0]);
         registry.loadSpawnPercentages(new String[0]);

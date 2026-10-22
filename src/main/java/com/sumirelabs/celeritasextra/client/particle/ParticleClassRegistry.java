@@ -14,6 +14,7 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Runtime registry for discovered particle classes.
@@ -59,6 +60,23 @@ public class ParticleClassRegistry {
      * Per-session identity guard so the hot path does expensive work at most once per class.
      */
     private final Set<Class<?>> seenClasses = ConcurrentHashMap.newKeySet();
+    private final AtomicLong spawnPolicyVersion = new AtomicLong();
+    private final ClassValue<SpawnEntry> spawnEntries = new ClassValue<>() {
+        @Override protected SpawnEntry computeValue(Class<?> type) { return new SpawnEntry(type.getName()); }
+    };
+    private final ClassValue<FactoryEntry> vanillaFactories = new ClassValue<>() {
+        @Override protected FactoryEntry computeValue(Class<?> factoryType) {
+            Class<?> particle = factoryType.getEnclosingClass();
+            // Only vanilla's ordinary nested Factory classes have this fixed output contract.
+            // Custom, anonymous and specialized factories retain the post-construction path.
+            if (particle != null && Particle.class.isAssignableFrom(particle)
+                    && factoryType.getName().startsWith("net.minecraft.client.particle.")
+                    && factoryType.getName().equals(particle.getName() + "$Factory")) {
+                return new FactoryEntry(particle, spawnEntries.get(particle));
+            }
+            return new FactoryEntry(null, null);
+        }
+    };
 
     /**
      * Set whenever persisted state (discovered cache or disabled set) changes; cleared on save.
@@ -78,6 +96,46 @@ public class ParticleClassRegistry {
     public static ParticleClassRegistry getInstance() {
         return INSTANCE;
     }
+
+    /** One class-identity lookup on the spawn path; settings changes invalidate cached percentages. */
+    public int observeSpawn(Class<?> type) {
+        SpawnEntry entry = spawnEntries.get(type);
+        observe(type, entry);
+        return percentage(entry);
+    }
+
+    /** Avoid creating particles which are deterministically disabled, without sampling twice. */
+    public boolean skipVanillaFactory(IParticleFactory factory, boolean particlesEnabled) {
+        FactoryEntry entry = vanillaFactories.get(factory.getClass());
+        if (entry.particle == null || particlesEnabled && percentage(entry.spawn) != 0) return false;
+        observe(entry.particle, entry.spawn);
+        return true;
+    }
+
+    private void observe(Class<?> type, SpawnEntry entry) {
+        if (!entry.observed) {
+            recordClass(type);
+            entry.observed = true;
+        }
+    }
+
+    private int percentage(SpawnEntry entry) {
+        long version = spawnPolicyVersion.get();
+        SpawnPolicy policy = entry.policy;
+        if (policy == null || policy.version != version) {
+            entry.policy = policy = new SpawnPolicy(version, getSpawnPercentage(entry.name));
+        }
+        return policy.percentage;
+    }
+
+    private static final class SpawnEntry {
+        final String name;
+        volatile boolean observed;
+        volatile SpawnPolicy policy;
+        SpawnEntry(String name) { this.name = name; }
+    }
+    private record SpawnPolicy(long version, int percentage) { }
+    private record FactoryEntry(Class<?> particle, SpawnEntry spawn) { }
 
     /**
      * Derive a non-empty simple name from a fully-qualified (possibly inner/anonymous) class name.
@@ -353,6 +411,7 @@ public class ParticleClassRegistry {
         if (percentage == 0 || percentage == 100) spawnPercentages.remove(className);
         else spawnPercentages.put(className, percentage);
         if (previous != percentage) dirty = true;
+        spawnPolicyVersion.incrementAndGet();
     }
 
     public void loadSpawnPercentages(String[] entries) {
@@ -368,6 +427,7 @@ public class ParticleClassRegistry {
                 // A malformed cache entry must not discard the user's remaining settings.
             }
         }
+        spawnPolicyVersion.incrementAndGet();
     }
 
     public String[] getSpawnPercentagesArray() {
@@ -399,6 +459,7 @@ public class ParticleClassRegistry {
                 : disabledClasses.add(fullClassName);
         if (changed) {
             dirty = true;
+            spawnPolicyVersion.incrementAndGet();
         }
     }
 
@@ -415,6 +476,7 @@ public class ParticleClassRegistry {
                 disabledClasses.add(cls);
             }
         }
+        spawnPolicyVersion.incrementAndGet();
     }
 
     /**
