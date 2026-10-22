@@ -372,7 +372,7 @@ public class CeleritasExtraGameOptions {
 
         /**
          * Returns only the VSync options supported by the current GPU/driver.
-         * Uses SDL's swap-interval support on 0.7+, or GLFW's tear-control extensions on 0.6.x.
+         * Uses SDL's swap-interval support.
          */
         public static VerticalSyncOption[] getAvailableOptions() {
             boolean adaptiveSupported = WindowCompat.supportsAdaptiveVsync();

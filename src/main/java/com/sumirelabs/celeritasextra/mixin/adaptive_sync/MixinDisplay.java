@@ -14,11 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Port of sodium-extra's adaptive_sync.MixinWindow
  * <p>
  * In 1.21.1: Window.updateVsync() with GLFW.glfwSwapInterval redirect
- * In 1.12.2 (Cleanroom): Display.setVSyncEnabled() from the selected compatibility layer
+ * In 1.12.2 (Cleanroom): Display.setVSyncEnabled() provided by LWJGLY
  * <p>
  * Adaptive VSync uses swap interval -1, which enables VSync when FPS is above
  * the monitor refresh rate and disables it when below, reducing stuttering.
- * Uses SDL on Cleanroom 0.7+, and GLFW tear-control extensions on 0.6.x.
+ * Uses SDL on Cleanroom 0.7.x.
  */
 @Mixin(value = Display.class, remap = false)
 public class MixinDisplay {

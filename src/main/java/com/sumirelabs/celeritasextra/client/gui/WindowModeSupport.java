@@ -1,10 +1,7 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
 import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 
-import java.lang.reflect.Modifier;
-import java.nio.IntBuffer;
 import java.util.Locale;
 
 /** Gates the desktop screen-mode control without querying the native window. */
@@ -23,18 +20,6 @@ public final class WindowModeSupport {
             return false;
         }
 
-        if (WindowCompat.isSdl()) return true;
-        boolean glfwSupported;
-        try {
-            glfwSupported = hasRequiredGlfwMethods(Class.forName("org.lwjgl.glfw.GLFW", false, WindowModeSupport.class.getClassLoader()));
-        } catch (ClassNotFoundException | LinkageError missing) {
-            glfwSupported = false;
-        }
-        if (!glfwSupported) {
-            CeleritasExtraMod.LOGGER.warn(
-                    "Keeping the standard fullscreen option: GLFW lacks the required window query methods");
-            return false;
-        }
         return true;
     }
 
@@ -43,23 +28,6 @@ public final class WindowModeSupport {
         return (pojavRenderer != null && !pojavRenderer.isBlank())
                 || osName.toLowerCase(Locale.ROOT).contains("android")
                 || osVersion.toLowerCase(Locale.ROOT).contains("android");
-    }
-
-    static boolean hasRequiredGlfwMethods(Class<?> glfwClass) {
-        try {
-            // Display.isBorderless() uses these IntBuffer overloads. Some mobile shims only
-            // provide array overloads. Inspecting signatures neither initializes GLFW nor
-            // calls the native window APIs, and is not a guarantee of native support.
-            for (String name : new String[]{"glfwGetWindowPos", "glfwGetWindowSize"}) {
-                var method = glfwClass.getMethod(name, long.class, IntBuffer.class, IntBuffer.class);
-                if (!Modifier.isStatic(method.getModifiers()) || method.getReturnType() != void.class) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (NoSuchMethodException | LinkageError | SecurityException e) {
-            return false;
-        }
     }
 
     private static final class SupportHolder {

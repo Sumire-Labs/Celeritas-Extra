@@ -24,7 +24,7 @@ import java.io.File;
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
         clientSideOnly = true, acceptableRemoteVersions = "*",
-        dependencies = "required-after:cleanroom@[0.6.10-alpha,);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
+        dependencies = "required-after:cleanroom@[0.7.11-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
                 + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 

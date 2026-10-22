@@ -1,5 +1,6 @@
 {
   "required": true,
+  "refmap": "@{MIXIN_REFMAP}",
   "priority": 1001,
   "package": "com.sumirelabs.celeritasextra.mixin",
   "plugin": "com.sumirelabs.celeritasextra.compat.RendererMixinPlugin",

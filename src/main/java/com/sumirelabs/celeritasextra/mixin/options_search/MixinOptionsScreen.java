@@ -74,15 +74,13 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         if (celeritasExtra$field == null) return;
         celeritasExtra$updateBar();
         var context = celeritasExtra$searchController().celeritasExtra$drawContext();
-        if (WindowCompat.isSdl()) {
-            var area = celeritasExtra$bar.textBounds(context);
-            celeritasExtra$field.x = area.x();
-            celeritasExtra$field.y = area.y();
-            celeritasExtra$field.width = area.width();
-            celeritasExtra$field.height = area.height();
-            celeritasExtra$field.setSelectionPos(celeritasExtra$field.getSelectionEnd());
-            celeritasExtra$bar.useTextScrollOffset(WindowCompat.textScrollOffset(celeritasExtra$field));
-        }
+        var area = celeritasExtra$bar.textBounds(context);
+        celeritasExtra$field.x = area.x();
+        celeritasExtra$field.y = area.y();
+        celeritasExtra$field.width = area.width();
+        celeritasExtra$field.height = area.height();
+        celeritasExtra$field.setSelectionPos(celeritasExtra$field.getSelectionEnd());
+        celeritasExtra$bar.useTextScrollOffset(WindowCompat.textScrollOffset(celeritasExtra$field));
         celeritasExtra$bar.render(context, mouseX, mouseY, partialTicks);
         WindowCompat.drawTextInput(celeritasExtra$field, celeritasExtra$field.x,
                 celeritasExtra$bar.bounds().getCenterY() - context.lineHeight() / 2);

@@ -1,11 +1,7 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.nio.IntBuffer;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,49 +28,4 @@ class WindowModeSupportTest {
         assertFalse(WindowModeSupport.isMobileRuntime(renderer, osName, osVersion));
     }
 
-    @Test
-    void signatureProbeDoesNotInitializeGlfwOrCallWindowApis() {
-        assertTrue(WindowModeSupport.hasRequiredGlfwMethods(DesktopGlfw.class));
-    }
-
-    @Test
-    void rejectsArrayOnlyShimThatWouldCauseTheReportedLinkageError() {
-        assertFalse(WindowModeSupport.hasRequiredGlfwMethods(ArrayOnlyGlfw.class));
-    }
-
-    @Test
-    void alsoRequiresTheWindowSizeBufferOverload() {
-        assertFalse(WindowModeSupport.hasRequiredGlfwMethods(PositionOnlyGlfw.class));
-    }
-
-    public static class DesktopGlfw {
-        static {
-            failIfCalled();
-        }
-
-        public static void glfwGetWindowPos(long window, IntBuffer x, IntBuffer y) {
-            failIfCalled();
-        }
-
-        public static void glfwGetWindowSize(long window, IntBuffer width, IntBuffer height) {
-            failIfCalled();
-        }
-
-        private static void failIfCalled() {
-            throw new AssertionError("The compatibility probe must not initialize or invoke GLFW");
-        }
-    }
-
-    public static class ArrayOnlyGlfw {
-        public static void glfwGetWindowPos(long window, int[] x, int[] y) {
-        }
-
-        public static void glfwGetWindowSize(long window, int[] width, int[] height) {
-        }
-    }
-
-    public static class PositionOnlyGlfw {
-        public static void glfwGetWindowPos(long window, IntBuffer x, IntBuffer y) {
-        }
-    }
 }

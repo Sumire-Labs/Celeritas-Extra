@@ -3,8 +3,8 @@ import java.util.zip.ZipFile
 
 // Validate the remapped artifact, not just classes on the development classpath.
 tasks.register('verifyReleaseJar') {
-    dependsOn(tasks.named(enable_shadow.toBoolean() ? 'remapShadowJar' : 'remapJar'))
-    def releaseFile = layout.buildDirectory.file("libs/${mod_id}-${project.version}.jar")
+    dependsOn(tasks.named('reobfJar'))
+    def releaseFile = tasks.named('reobfJar').flatMap { it.output }
     inputs.file(releaseFile)
     doLast {
         new ZipFile(releaseFile.get().asFile).withCloseable { zip ->
@@ -49,6 +49,10 @@ tasks.register('verifyReleaseJar') {
             if (values?.modid != mod_id || values?.version != project.version.toString() || values?.name != mod_name) {
                 throw new GradleException('TokenEnvoy constants were not inlined into the @Mod annotation')
             }
+            def dependencies = annotation.elements().find { it.name().stringValue() == 'dependencies' }?.value()?.stringValue()
+            if (!dependencies?.contains('required-after:cleanroom@[0.7.11-alpha,0.8)')) {
+                throw new GradleException('Release annotation must require the supported Cleanroom 0.7.x API')
+            }
             if (['celeritas', 'actinium', 'nothirium', 'renderlib'].any { metadata.dependencies.contains(it) }) {
                 throw new GradleException('Release metadata must allow either supported renderer')
             }
@@ -74,6 +78,7 @@ tasks.register('verifyReleaseJar') {
             def requireEntry = { String name ->
                 if (zip.getEntry(name) == null) throw new GradleException("Release artifact is missing ${name}")
             }
+            requireEntry('META-INF/LICENSE.md')
             config.client.each { name -> requireEntry((config.package + '.' + name).replace('.', '/') + '.class') }
             requireEntry(config.plugin.replace('.', '/') + '.class')
             ['en_us', 'ja_jp', 'ru_ru', 'zh_cn'].each { locale ->
@@ -85,6 +90,12 @@ tasks.register('verifyReleaseJar') {
                 throw new GradleException('Release manifest does not register the Mixin config')
             }
             zip.entries().each { entry ->
+                if (entry.name.endsWith('.class')) {
+                    def bytecode = zip.getInputStream(entry).withCloseable { it.readAllBytes() }
+                    if (new String(bytecode, java.nio.charset.StandardCharsets.ISO_8859_1).contains('org/lwjgl/glfw/')) {
+                        throw new GradleException("Removed GLFW backend referenced by ${entry.name}")
+                    }
+                }
                 if (entry.name.endsWith('.class') && entry.name ==~ /(?:net\/minecraft\/|net\/minecraftforge\/|org\/taumc\/|org\/embeddedt\/|dhj\/embeddedt\/|com\/dhj\/|meldexun\/|net\/irisshaders\/|net\/coderbot\/).*/) {
                     throw new GradleException("Renderer or game dependency bundled in release: ${entry.name}")
                 }

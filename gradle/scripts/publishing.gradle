@@ -1,24 +1,25 @@
-if (publish_to_maven.toBoolean()) {
+// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
+def remotePublishing = publish_to_maven.toBoolean()
+def localPublishing = publish_to_local_maven.toBoolean()
+if (remotePublishing || localPublishing) {
     publishing {
-        repositories {
-            maven {
-                name = maven_name.replaceAll("\\s", "")
-                url = maven_url
-                credentials(PasswordCredentials)
-            }
-        }
         publications {
             mavenJava(MavenPublication) {
-                from components.java // Publish with standard artifacts
-                setGroupId(root_package)// Publish with root package as maven group
-                setArtifactId(mod_id) // Publish artifacts with mod id as the artifact id
-
-                // Custom artifact:
-                // If you want to publish a different artifact to the one outputted when building normally
-                // Create a different gradle task (Jar task), in extra.gradle
-                // Remove the 'from components.java' line above
-                // Add this line (change the task name):
-                // artifacts task_name
+                // Development artifact is MCP-named; runtime artifact is SRG-named.
+                from components.java
+                groupId = root_package
+                artifactId = mod_id
+                artifact(tasks.reobfJar) { classifier = 'srg' }
+            }
+        }
+        if (remotePublishing && !localPublishing) {
+            if (maven_url.isBlank()) throw new GradleException('Set maven_url before enabling publish_to_maven.')
+            repositories {
+                maven {
+                    name = maven_name
+                    url = maven_url
+                    credentials(PasswordCredentials)
+                }
             }
         }
     }

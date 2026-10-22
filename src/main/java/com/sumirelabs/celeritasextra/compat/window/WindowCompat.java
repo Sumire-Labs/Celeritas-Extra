@@ -1,77 +1,41 @@
 package com.sumirelabs.celeritasextra.compat.window;
 
-import org.lwjgl.opengl.Display;
-import net.minecraftforge.common.ForgeEarlyConfig;
+import com.cleanroommc.client.sdl.SDL;
+import com.cleanroommc.client.sdl.SDLHooks;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraftforge.common.ForgeEarlyConfig;
+import org.lwjgl.sdl.SDLVideo;
+import org.lwjgl.system.MemoryStack;
 
-/** Select the window API without linking SDL classes on older Cleanroom versions. */
+/** Window and IME operations for the supported Cleanroom 0.7.x runtime. */
 public final class WindowCompat {
-    interface Backend {
-        boolean borderless();
-        boolean visible();
-        boolean adaptiveSupported();
-        boolean enableAdaptive();
-    }
-
     private WindowCompat() { }
 
-    public static boolean isSdl() { return Holder.BACKEND instanceof SdlWindowBackend; }
-    public static boolean isBorderless() { return Holder.BACKEND.borderless(); }
-    public static boolean isVisible() { return Holder.BACKEND.visible(); }
-    public static boolean supportsAdaptiveVsync() { return Holder.BACKEND.adaptiveSupported(); }
-    public static boolean tryAdaptiveVsync() { return Holder.BACKEND.enableAdaptive(); }
-    public static boolean composingText() { return isSdl() && TextHolder.INPUT.composing(); }
-    public static int textScrollOffset(GuiTextField field) { return isSdl() ? TextHolder.INPUT.scroll(field) : 0; }
-    public static void drawTextInput(GuiTextField field, int x, int y) {
-        if (isSdl()) TextHolder.INPUT.draw(field, x, y);
+    public static boolean isBorderless() {
+        var window = SDL.window();
+        return window != null && window.fullscreen() && ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN;
     }
 
-    private static final class TextHolder {
-        private static final SdlTextInput INPUT = create();
-        private static SdlTextInput create() {
-            try {
-                return new SdlTextInput(Class.forName("com.cleanroommc.client.sdl.SDLHooks", false,
-                        WindowCompat.class.getClassLoader()), GuiTextField.class);
-            } catch (ReflectiveOperationException failure) {
-                throw new IllegalStateException("Unsupported Cleanroom SDL text input API", failure);
+    public static boolean isVisible() {
+        var window = SDL.window();
+        return window != null && !window.minimized() && !window.hidden();
+    }
+
+    public static boolean supportsAdaptiveVsync() {
+        // Preserve the current context's interval: inspecting options must not change VSync.
+        try (var stack = MemoryStack.stackPush()) {
+            var previous = stack.mallocInt(1);
+            if (!SDLVideo.SDL_GL_GetSwapInterval(previous)) return false;
+            if (!SDLVideo.SDL_GL_SetSwapInterval(-1)) return false;
+            if (!SDLVideo.SDL_GL_SetSwapInterval(previous.get(0))) {
+                throw new IllegalStateException("SDL could not restore the swap interval after probing adaptive VSync");
             }
-        }
-    }
-
-    private static final class Holder {
-        private static final Backend BACKEND = create();
-        private static Backend create() {
-            var loader = WindowCompat.class.getClassLoader();
-            try {
-                var sdl = Class.forName("com.cleanroommc.client.sdl.SDL", false, loader);
-                var window = Class.forName("com.cleanroommc.client.sdl.Window", false, loader);
-                var video = Class.forName("org.lwjgl.sdl.SDLVideo", false, loader);
-                return new SdlWindowBackend(sdl, window, video,
-                        () -> ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN);
-            } catch (ClassNotFoundException absent) {
-                // 0.6.x has neither SDL nor its window class.
-                if (loader.getResource("com/cleanroommc/client/sdl/SDL.class") != null) {
-                    throw new IllegalStateException("Cleanroom SDL window dependencies are incomplete", absent);
-                }
-                return new GlfwBackend();
-            } catch (ReflectiveOperationException incompatible) {
-                throw new IllegalStateException("Unsupported Cleanroom SDL window API", incompatible);
-            }
-        }
-    }
-
-    /** Defined only when selected; GLFW is absent from Cleanroom 0.7's runtime. */
-    private static final class GlfwBackend implements Backend {
-        public boolean borderless() { return Display.isBorderless(); }
-        public boolean visible() { return Display.isVisible(); }
-        public boolean adaptiveSupported() {
-            return org.lwjgl.glfw.GLFW.glfwExtensionSupported("GLX_EXT_swap_control_tear")
-                    || org.lwjgl.glfw.GLFW.glfwExtensionSupported("WGL_EXT_swap_control_tear");
-        }
-        public boolean enableAdaptive() {
-            if (!adaptiveSupported()) return false;
-            org.lwjgl.glfw.GLFW.glfwSwapInterval(-1);
             return true;
         }
     }
+
+    public static boolean tryAdaptiveVsync() { return SDLVideo.SDL_GL_SetSwapInterval(-1); }
+    public static boolean composingText() { return SDLHooks.composing(); }
+    public static int textScrollOffset(GuiTextField field) { return field.getLineScrollOffset(); }
+    public static void drawTextInput(GuiTextField field, int x, int y) { SDLHooks.textFieldDraw(field, x, y); }
 }

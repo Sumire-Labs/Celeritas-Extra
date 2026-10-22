@@ -31,7 +31,7 @@ jobs:
           mkdir -p build/release
           for artifact in build/libs/*.jar; do
             case "$artifact" in
-              *-dev.jar|*-shadow.jar) continue ;;
+              *-dev.jar|*-mcp.jar|*-shadow.jar) continue ;;
             esac
             cp "$artifact" build/release/
           done

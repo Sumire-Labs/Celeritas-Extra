@@ -1,0 +1,28 @@
+// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
+cleanroom.runs {
+    ['client', 'server'].each { runName ->
+        named(runName) {
+            configure {
+                // Foundation 0.22.0 otherwise splits Mod/annotation classes between app and launch loaders.
+                // Matches the official 0.7.0 template's development-launch workaround.
+                systemProperty 'foundation.loadsall', true
+                // Remove default debug arguments so the project switch wins.
+                setJvmArgs((jvmArgs ?: []).findAll {
+                    !it.startsWith('-Dmixin.debug.export=') && !it.startsWith('-Dmixin.checks.interfaces=')
+                })
+                username = minecraft_username
+                if (!extra_jvm_args.isBlank()) jvmArgs extra_jvm_args.trim().split(/\s+/).toList()
+                systemProperty 'mixin.debug.export', enable_mixin_debug
+                systemProperty 'mixin.checks.interfaces', enable_mixin_debug
+                if (mixinEnabled) {
+                    systemProperty 'crl.dev.mixin', "${mod_id}.mixin.json"
+                }
+                if (enable_foundation_debug.toBoolean()) {
+                    systemProperty 'foundation.dump', true
+                    systemProperty 'foundation.verbose', true
+                }
+                if (coremodEnabled) systemProperty 'fml.coreMods.load', coremod_plugin_class_name
+            }
+        }
+    }
+}

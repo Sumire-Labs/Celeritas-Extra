@@ -16,7 +16,7 @@ def downloadActiniumApi = tasks.register('downloadActiniumApi') {
     }
 }
 dependencies {
-    modCompileOnly files(actiniumApi).builtBy(downloadActiniumApi)
+    compileOnly deobf(files(actiniumApi).builtBy(downloadActiniumApi))
 }
 
 // Both adapters use the same option definitions and configuration bindings.

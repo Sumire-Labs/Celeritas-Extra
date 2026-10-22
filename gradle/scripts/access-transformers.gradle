@@ -1,0 +1,49 @@
+// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
+// CleanroomGradle applies extra ATs to SRG Minecraft before remapping to MCP.
+// Keep the editable and MCP development-jar AT in MCP names, generate SRG for userdev.
+if (atEnabled) {
+    def sourceAt = layout.projectDirectory.file("src/main/resources/META-INF/${mod_id}_at.cfg")
+    def mappings = tasks.named('extractUserdevMcpToSrg')
+    tasks.register('prepareAccessTransformer') {
+        group = 'build setup'
+        description = 'Converts the editable MCP access transformer to SRG names for userdev.'
+        dependsOn mappings
+        inputs.file(sourceAt)
+        inputs.file(mappings.flatMap { it.output })
+        outputs.file(devAccessTransformer)
+        doLast {
+            def names = net.minecraftforge.srgutils.IMappingFile.load(mappings.get().output.get().asFile)
+            def lines = sourceAt.asFile.readLines('UTF-8').collect { line ->
+                def parts = line.split('#', 2)
+                def rule = parts[0].trim()
+                if (!rule) return line
+                def columns = rule.split(/\s+/)
+                if (columns.length < 2 || columns.length > 3) {
+                    throw new GradleException("Invalid access transformer rule: ${line}")
+                }
+                def originalClass = columns[1].replace('.', '/')
+                def targetClass = names.getClass(originalClass)
+                columns[1] = names.remapClass(originalClass).replace('/', '.')
+                if (columns.length == 3) {
+                    def member = columns[2]
+                    def descriptorStart = member.indexOf('(')
+                    if (descriptorStart >= 0) {
+                        def method = member.substring(0, descriptorStart)
+                        def descriptor = member.substring(descriptorStart)
+                        def mappedMethod = method == '*' || targetClass == null ? method : targetClass.remapMethod(method, descriptor)
+                        columns[2] = mappedMethod + names.remapDescriptor(descriptor)
+                    } else if (member != '*' && targetClass != null) {
+                        columns[2] = targetClass.remapField(member)
+                    }
+                }
+                columns.join(' ') + (parts.length == 2 ? ' #' + parts[1] : '')
+            }
+            def output = devAccessTransformer.get().asFile
+            output.parentFile.mkdirs()
+            output.setText(lines.join('\n') + '\n', 'UTF-8')
+        }
+    }
+    // Transform parameters do not propagate the generated file's task dependency.
+    tasks.withType(JavaCompile).configureEach { dependsOn 'prepareAccessTransformer' }
+    tasks.withType(Javadoc).configureEach { dependsOn 'prepareAccessTransformer' }
+}
