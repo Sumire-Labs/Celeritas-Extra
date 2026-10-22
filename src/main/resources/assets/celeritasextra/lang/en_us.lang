@@ -192,5 +192,5 @@ celeritasextra.gui.add_entry=Add
 celeritasextra.gui.entity_exemptions=Entity Distance Exemptions
 celeritasextra.gui.tile_entity_exemptions=Block Entity Distance Exemptions
 
-celeritasextra.option.item_vertex_cache=Static Item Vertex Cache
-celeritasextra.option.item_vertex_cache.tooltip=Experimental: reuse emitted vertices for static, non-tinted item geometry. Preserves Forge lighting and item-frame LOD. Bypassed with Iris or an existing native item cache. Limited to 256 entries and 4 MiB of vertex data.
+celeritasextra.option.item_vertex_cache=Static Item Vertex Cache (Experimental)
+celeritasextra.option.item_vertex_cache.tooltip=Experimental (default off): reuse emitted vertices for static, non-tinted item geometry. Performance gains vary by system and scene. Preserves Forge lighting and item-frame LOD. Bypassed with Iris or an existing native item cache. Limited to 256 entries and 4 MiB of vertex data.
