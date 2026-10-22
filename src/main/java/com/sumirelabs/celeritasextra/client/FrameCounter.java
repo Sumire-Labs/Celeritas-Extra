@@ -22,6 +22,7 @@ public class FrameCounter {
 
     private static long[] sampleTimes = new long[512];
     private static long[] sampleDeltas = new long[512];
+    private static long[] statisticsDeltas = new long[512];
     private static int sampleHead;
     private static int sampleCount;
 
@@ -92,7 +93,8 @@ public class FrameCounter {
             return;
         }
 
-        long[] deltas = new long[size];
+        if (statisticsDeltas.length < size) statisticsDeltas = new long[sampleDeltas.length];
+        long[] deltas = statisticsDeltas;
         long totalDelta = 0;
         long recentDelta = 0;
         int recentCount = 0;
@@ -106,12 +108,46 @@ public class FrameCounter {
             }
         }
 
-        Arrays.sort(deltas);
+        sortSlowestTail(deltas, size);
         double avgDelta = (double) totalDelta / size;
         cachedAverageFps = avgDelta > 0 ? (int) Math.round(1_000_000_000.0 / avgDelta) : 0;
         cachedSmoothFps = recentCount > 0 ? (int) Math.round(recentCount * 1_000_000_000.0 / recentDelta) : 0;
-        cachedOnePercentLowFps = computePercentileLow(deltas, 1.0);
-        cachedPointOnePercentLowFps = computePercentileLow(deltas, 0.1);
+        cachedOnePercentLowFps = computePercentileLow(deltas, size, 1.0);
+        cachedPointOnePercentLowFps = computePercentileLow(deltas, size, 0.1);
+    }
+
+    /** Only the slowest 1% must be ordered to obtain both percentile averages. */
+    static void sortSlowestTail(long[] values, int size) {
+        if (size < 2) return;
+        int tailStart = size - (int) Math.ceil(size * 0.01);
+        int low = 0, high = size - 1;
+        int remaining = 2 * (32 - Integer.numberOfLeadingZeros(size));
+        while (low < high) {
+            // Bound partition work even for adversarial frame-time sequences.
+            if (remaining-- == 0) {
+                Arrays.sort(values, low, high + 1);
+                break;
+            }
+            long a = values[low], b = values[(low + high) >>> 1], c = values[high];
+            long pivot = Math.max(Math.min(a, b), Math.min(Math.max(a, b), c));
+            int less = low, cursor = low, greater = high;
+            // Three-way partition also handles long runs of identical frame times.
+            while (cursor <= greater) {
+                if (values[cursor] < pivot) swap(values, less++, cursor++);
+                else if (values[cursor] > pivot) swap(values, cursor, greater--);
+                else cursor++;
+            }
+            if (tailStart < less) high = less - 1;
+            else if (tailStart > greater) low = greater + 1;
+            else break;
+        }
+        Arrays.sort(values, tailStart, size);
+    }
+
+    private static void swap(long[] values, int left, int right) {
+        long value = values[left];
+        values[left] = values[right];
+        values[right] = value;
     }
 
     private static void addSample(long time, long delta) {
@@ -139,13 +175,13 @@ public class FrameCounter {
      * Computes the percentile low FPS by averaging the slowest N% of frame deltas.
      * This matches the standard gaming benchmark definition of "1% low" / "0.1% low".
      */
-    private static int computePercentileLow(long[] deltas, double percent) {
-        int count = (int) Math.ceil(deltas.length * (percent / 100.0));
+    private static int computePercentileLow(long[] deltas, int size, double percent) {
+        int count = (int) Math.ceil(size * (percent / 100.0));
         if (count == 0) count = 1;
 
-        // Sorted ascending — take the last `count` entries (slowest frames)
+        // The slowest 1% tail is sorted ascending; both percentiles lie within it.
         long sum = 0;
-        for (int i = deltas.length - count; i < deltas.length; i++) {
+        for (int i = size - count; i < size; i++) {
             sum += deltas[i];
         }
 

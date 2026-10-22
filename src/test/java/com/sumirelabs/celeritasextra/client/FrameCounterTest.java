@@ -2,10 +2,38 @@ package com.sumirelabs.celeritasextra.client;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.Random;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FrameCounterTest {
+    @Test
+    void percentileTailMatchesFullSortingAcrossBoundariesAndFrameDistributions() {
+        var random = new Random(42);
+        int[][] cases = {{1, 1}, {2, 1}, {99, 1}, {100, 1}, {101, 2}, {1000, 10}, {4096, 41}};
+        for (int[] test : cases) {
+            int size = test[0], tail = test[1];
+            for (int pattern = 0; pattern < 5; pattern++) {
+                // Spare capacity contains stale, very slow samples which must never enter the result.
+                long[] actual = new long[size + 16];
+                Arrays.fill(actual, Long.MAX_VALUE);
+                for (int i = 0; i < size; i++) actual[i] = switch (pattern) {
+                    case 0 -> i;
+                    case 1 -> size - i;
+                    case 2 -> 16_666_667;
+                    case 3 -> random.nextInt(5);
+                    default -> random.nextLong(1, 100_000_000);
+                };
+                long[] expected = Arrays.copyOf(actual, size);
+                Arrays.sort(expected);
+                FrameCounter.sortSlowestTail(actual, size);
+                assertArrayEquals(Arrays.copyOfRange(expected, size - tail, size),
+                        Arrays.copyOfRange(actual, size - tail, size), "size=" + size + ", pattern=" + pattern);
+            }
+        }
+    }
     @BeforeEach
     void reset() {
         FrameCounter.reset();
