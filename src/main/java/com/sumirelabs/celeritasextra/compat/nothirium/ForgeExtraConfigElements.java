@@ -164,7 +164,7 @@ final class ForgeExtraConfigElements {
         var source = options.forgeConfiguration().getCategory(category);
         var children = new ArrayList<IConfigElement>();
         for (Property property : source.getOrderedValues()) {
-            if (property.getName().equals("sunMoon") || property.getName().equals("useAdaptiveSync")) continue;
+            if (property.getName().equals("useAdaptiveSync")) continue;
             String key = ForgeExtraTranslations.key(category, property.getName());
             if (key != null) property.setLanguageKey(key);
             if (category.equals("render") && property.getName().equals("cloudTranslucency")) {

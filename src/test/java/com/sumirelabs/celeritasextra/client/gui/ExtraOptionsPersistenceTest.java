@@ -59,13 +59,14 @@ class ExtraOptionsPersistenceTest {
         ParticleClassRegistry.getInstance().markClean();
     }
 
-    @Test void combinedSunMoonSettingMigratesWithoutLosingIndependentChoices() throws Exception {
+    @Test void obsoleteSunMoonIsIgnoredAndIndependentChoicesPersist() throws Exception {
         Path file = directory.resolve("extra.cfg");
         Files.writeString(file, "detail {\n B:sunMoon=false\n}\n");
         var options = CeleritasExtraGameOptions.load(file.toFile());
-        assertFalse(options.detailSettings.sun);
-        assertFalse(options.detailSettings.moon);
-        options.detailSettings.sun = true;
+        assertTrue(options.detailSettings.sun);
+        assertTrue(options.detailSettings.moon);
+        assertFalse(options.forgeConfiguration().hasKey("detail", "sunMoon"));
+        options.detailSettings.moon = false;
         options.writeChanges();
         var reloaded = CeleritasExtraGameOptions.load(file.toFile());
         assertTrue(reloaded.detailSettings.sun);

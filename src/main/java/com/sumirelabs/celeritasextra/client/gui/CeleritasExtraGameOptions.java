@@ -227,11 +227,9 @@ public class CeleritasExtraGameOptions {
         booleanProperties.forEach(p -> p.load(config));
         intProperties.forEach(p -> p.load(config));
 
-        // Preserve the old combined setting when upgrading an existing config.
-        boolean legacySunMoon = config.hasKey(CAT_DETAIL, "sunMoon")
-                ? config.getBoolean("sunMoon", CAT_DETAIL, true, "Legacy combined sun/moon setting") : true;
-        detailSettings.sun = config.getBoolean("sun", CAT_DETAIL, legacySunMoon, "Render the sun");
-        detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, legacySunMoon, "Render the moon");
+        detailSettings.sun = config.getBoolean("sun", CAT_DETAIL, true, "Render the sun");
+        detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, true, "Render the moon");
+        config.getCategory(CAT_DETAIL).remove("sunMoon");
         renderSettings.entityDistanceExemptions = config.getStringList("entityDistanceExemptions", CAT_RENDER,
                 renderSettings.entityDistanceExemptions, "Classes exempt from entity distance culling; package.* is supported");
         renderSettings.tileEntityDistanceExemptions = config.getStringList("tileEntityDistanceExemptions", CAT_RENDER,
