@@ -8,6 +8,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimationControlTest {
+    @Test void cachedCategoryContinuesToObserveSettingsChanges() {
+        var category = AnimationControl.classify("minecraft:blocks/water_still");
+        var settings = new AnimationSettings();
+        assertTrue(AnimationControl.shouldAnimateCategory(settings, category));
+        settings.water = false;
+        assertFalse(AnimationControl.shouldAnimateCategory(settings, category));
+        settings.water = true;
+        settings.animation = false;
+        assertFalse(AnimationControl.shouldAnimateCategory(settings, category));
+    }
     @Test void masterToggleStopsAllSpritesIncludingUnknownAndUnnamedSprites() {
         var settings = new AnimationSettings();
         settings.animation = false;
