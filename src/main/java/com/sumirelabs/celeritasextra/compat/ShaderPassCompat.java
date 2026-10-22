@@ -6,6 +6,7 @@ public final class ShaderPassCompat {
             .getResource("net/irisshaders/iris/api/v0/IrisApi.class") != null;
 
     private ShaderPassCompat() { }
+    public static boolean hasIris() { return HAS_IRIS; }
 
     public static boolean isShadowPass() {
         return HAS_IRIS && IrisAccess.isShadowPass();

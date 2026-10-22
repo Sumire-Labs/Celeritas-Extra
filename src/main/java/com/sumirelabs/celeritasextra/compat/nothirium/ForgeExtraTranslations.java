@@ -34,6 +34,7 @@ final class ForgeExtraTranslations {
             Map.entry("render.fogDistance", "sodium-extra.option.fog_distance"),
             Map.entry("detail.voidFog", "options.void_fog"),
             Map.entry("render.itemFrames", "item.frame.name"),
+            Map.entry("render.itemVertexCache", "celeritasextra.option.item_vertex_cache"),
             Map.entry("render.itemFrameLodDistance", "moreculling.config.option.itemFrameLODRange"),
             Map.entry("render.mapBackFaceCulling", "moreculling.config.option.itemFrameMapCulling"),
             Map.entry("render.itemFrameNameTag", "sodium-extra.option.item_frame_name_tag"),

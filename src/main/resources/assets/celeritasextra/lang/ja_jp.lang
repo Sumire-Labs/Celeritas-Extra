@@ -191,3 +191,6 @@ celeritasextra.gui.fog_override=全体の霧設定を上書き
 celeritasextra.gui.add_entry=追加
 celeritasextra.gui.entity_exemptions=エンティティ距離制限の除外
 celeritasextra.gui.tile_entity_exemptions=ブロックエンティティ距離制限の除外
+
+celeritasextra.option.item_vertex_cache=静的アイテム頂点キャッシュ
+celeritasextra.option.item_vertex_cache.tooltip=実験的機能: 静的で着色のないアイテムの頂点出力を再利用します。Forgeのライティングと額縁LODを維持します。Irisや既存の高速アイテムキャッシュがある場合は使用しません。最大256件・頂点データ4 MiB。

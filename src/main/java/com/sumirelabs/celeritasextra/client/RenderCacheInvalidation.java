@@ -11,5 +11,6 @@ public final class RenderCacheInvalidation {
 
     @SubscribeEvent public static void onModelBake(ModelBakeEvent event) {
         ItemFrameLodState.clearCache();
+        StaticItemVertexCache.INSTANCE.clear();
     }
 }

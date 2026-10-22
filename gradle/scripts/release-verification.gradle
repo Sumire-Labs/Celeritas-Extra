@@ -66,7 +66,12 @@ tasks.register('verifyReleaseJar') {
                 'animation/MixinTextureAtlasSprite': ['updateAnimation()V'],
                 'background_fps/MixinMinecraft': ['getLimitFramerate'],
                 'options_search/MixinOptionsScreen': ['initGui', 'drawScreen', 'mouseClicked'],
-                'render/entity/MixinRenderItemFrame': ['renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V']
+                'render/entity/MixinRenderItemFrame': ['renderItem(Lnet/minecraft/entity/item/EntityItemFrame;)V'],
+                'profiler/MixinRenderManager': ['renderEntity'],
+                'profiler/MixinTileEntityRendererDispatcher': ['render(Lnet/minecraft/tileentity/TileEntity;DDDFIF)V'],
+                'render/block_entity/MixinTileEntitySignRenderer': ['render(Lnet/minecraft/tileentity/TileEntitySign;DDDFIF)V'],
+                'particle/MixinParticleManager': ['spawnEffectParticle'],
+                'item_cache/MixinRenderItemVertexCache': ['renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;ILnet/minecraft/item/ItemStack;)V', 'renderQuads']
             ].each { mixin, selectors ->
                 selectors.each { selector ->
                     def mapped = refmap.mappings["com/sumirelabs/celeritasextra/mixin/${mixin}"]?.get(selector)

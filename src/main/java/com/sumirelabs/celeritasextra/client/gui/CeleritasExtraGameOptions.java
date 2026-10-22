@@ -96,6 +96,8 @@ public class CeleritasExtraGameOptions {
                     v -> renderSettings.signTextCulling = v, () -> renderSettings.signTextCulling),
             new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
                     v -> renderSettings.mapBackFaceCulling = v, () -> renderSettings.mapBackFaceCulling),
+            new BooleanProperty(CAT_RENDER, "itemVertexCache", false, "Reuse static item vertex data (opt-in; bypassed for native caches, Iris and dynamic/tinted geometry)",
+                    v -> renderSettings.itemVertexCache = v, () -> renderSettings.itemVertexCache),
             new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
                     v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),
             new BooleanProperty(CAT_RENDER, "paintings", true, "Enable/disable painting rendering",
@@ -572,6 +574,7 @@ public class CeleritasExtraGameOptions {
         public int itemFrameLodDistance = 0;
         public boolean signTextCulling = true;
         public boolean mapBackFaceCulling = true;
+        public boolean itemVertexCache = false;
         public int entityRenderDistance;
         public int tileEntityRenderDistance;
         public String[] entityDistanceExemptions = {"net.minecraft.entity.boss.EntityDragon"};

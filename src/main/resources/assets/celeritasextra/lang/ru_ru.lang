@@ -191,3 +191,6 @@ celeritasextra.gui.fog_override=Переопределить общий тума
 celeritasextra.gui.add_entry=Добавить
 celeritasextra.gui.entity_exemptions=Исключения дальности сущностей
 celeritasextra.gui.tile_entity_exemptions=Исключения дальности блок-сущностей
+
+celeritasextra.option.item_vertex_cache=Кэш вершин статичных предметов
+celeritasextra.option.item_vertex_cache.tooltip=Экспериментально: повторно использовать вершины статичной геометрии без окраски. Сохраняет освещение Forge и LOD рамок. Не используется с Iris или встроенным кэшем рендера. Лимит: 256 записей и 4 МиБ данных вершин.

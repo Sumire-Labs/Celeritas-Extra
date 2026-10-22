@@ -576,6 +576,8 @@ public class CeleritasExtraGameOptionPages {
 
     public static OptionPage entities() {
         List<OptionGroup> groups = new ArrayList<>();
+        groups.add(OptionGroup.createBuilder().add(booleanOption("celeritasextra.option.item_vertex_cache",
+                (opts, v) -> opts.renderSettings.itemVertexCache = v, opts -> opts.renderSettings.itemVertexCache)).build());
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> itemFramesOption = booleanOption("item.frame.name",
                 (opts, v) -> opts.renderSettings.itemFrames = v,

@@ -191,3 +191,6 @@ celeritasextra.gui.fog_override=覆盖全局雾设置
 celeritasextra.gui.add_entry=添加
 celeritasextra.gui.entity_exemptions=实体距离限制排除列表
 celeritasextra.gui.tile_entity_exemptions=方块实体距离限制排除列表
+
+celeritasextra.option.item_vertex_cache=静态物品顶点缓存
+celeritasextra.option.item_vertex_cache.tooltip=实验功能：复用无染色静态物品的顶点数据，保留 Forge 光照和物品展示框 LOD。存在 Iris 或渲染器内置物品缓存时停用。最多 256 项及 4 MiB 顶点数据。
