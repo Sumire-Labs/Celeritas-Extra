@@ -2,6 +2,7 @@ package com.sumirelabs.celeritasextra.client.gui;
 
 import com.sumirelabs.celeritasextra.CeleritasExtraMod;
 import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
+import com.sumirelabs.celeritasextra.client.VisibilityRules.ExemptionCache;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.ForgeEarlyConfig;
 import net.minecraftforge.common.config.Configuration;
@@ -273,6 +274,7 @@ public class CeleritasExtraGameOptions {
      * marked clean.
      */
     public void writeChanges() {
+        renderSettings.invalidateExemptions();
         booleanProperties.forEach(p -> p.save(config));
         intProperties.forEach(p -> p.save(config));
         config.get(CAT_DETAIL, "sun", true).set(detailSettings.sun);
@@ -574,6 +576,21 @@ public class CeleritasExtraGameOptions {
         public int tileEntityRenderDistance;
         public String[] entityDistanceExemptions = {"net.minecraft.entity.boss.EntityDragon"};
         public String[] tileEntityDistanceExemptions = {"net.minecraft.tileentity.TileEntityBeacon"};
+        private final ExemptionCache entityExemptions = new ExemptionCache();
+        private final ExemptionCache tileExemptions = new ExemptionCache();
+
+        public boolean isEntityDistanceExempt(Class<?> type) {
+            return entityExemptions.matches(type, entityDistanceExemptions);
+        }
+
+        public boolean isTileEntityDistanceExempt(Class<?> type) {
+            return tileExemptions.matches(type, tileEntityDistanceExemptions);
+        }
+
+        private void invalidateExemptions() {
+            entityExemptions.invalidate();
+            tileExemptions.invalidate();
+        }
         public final Map<Integer, DimensionFogSettings> dimensionFogOverrides = new TreeMap<>();
 
         public DimensionFogSettings dimensionFog(int dimension) {

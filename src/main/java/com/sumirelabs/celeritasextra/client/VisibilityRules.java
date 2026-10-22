@@ -20,4 +20,32 @@ public final class VisibilityRules {
         }
         return false;
     }
+
+    /** Per-settings cache; replacing the rules or saving in-place edits rebuilds class decisions. */
+    public static final class ExemptionCache {
+        private volatile State state;
+
+        public boolean matches(Class<?> type, String[] rules) {
+            State current = state;
+            if (current == null || current.source != rules) state = current = new State(rules);
+            return current.matches.get(type);
+        }
+
+        public void invalidate() { state = null; }
+
+        private static final class State {
+            final String[] source;
+            final ClassValue<Boolean> matches;
+
+            State(String[] rules) {
+                source = rules;
+                String[] snapshot = rules.clone();
+                matches = new ClassValue<>() {
+                    @Override protected Boolean computeValue(Class<?> type) {
+                        return exempt(type.getName(), snapshot);
+                    }
+                };
+            }
+        }
+    }
 }

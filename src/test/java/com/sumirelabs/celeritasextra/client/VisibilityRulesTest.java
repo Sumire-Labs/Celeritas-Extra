@@ -25,4 +25,18 @@ class VisibilityRulesTest {
         assertTrue(VisibilityRules.exempt("mod.visual.effects.Beam", exclusions));
         assertFalse(VisibilityRules.exempt("mod.visualizer.Beam", exclusions));
     }
+
+    @Test void cachedClassesFollowReplacedRulesAndInvalidatedInPlaceEdits() {
+        var cache = new VisibilityRules.ExemptionCache();
+        String[] rules = {"java.lang.*"};
+        assertTrue(cache.matches(String.class, rules));
+        assertFalse(cache.matches(getClass(), rules));
+        rules = new String[]{getClass().getName()};
+        assertFalse(cache.matches(String.class, rules));
+        assertTrue(cache.matches(getClass(), rules));
+        rules[0] = "java.lang.String";
+        cache.invalidate();
+        assertTrue(cache.matches(String.class, rules));
+        assertFalse(cache.matches(getClass(), rules));
+    }
 }

@@ -23,7 +23,7 @@ public class MixinTileEntityRenderDistance {
         var settings = CeleritasExtraClientMod.options().renderSettings;
         if (ShaderPassCompat.isShadowPass()) return;
         if (settings.tileEntityRenderDistance > 0
-                && !VisibilityRules.exempt(tile.getClass().getName(), settings.tileEntityDistanceExemptions)
+                && !settings.isTileEntityDistanceExempt(tile.getClass())
                 && VisibilityRules.beyondDistance(tile.getDistanceSq(entityX, entityY, entityZ), settings.tileEntityRenderDistance)) ci.cancel();
     }
 }

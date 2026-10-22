@@ -21,7 +21,7 @@ public class MixinEntityRenderDistance {
         if (ShaderPassCompat.isShadowPass()) return;
         if (entity != Minecraft.getMinecraft().getRenderViewEntity()
                 && settings.entityRenderDistance > 0
-                && !VisibilityRules.exempt(entity.getClass().getName(), settings.entityDistanceExemptions)
+                && !settings.isEntityDistanceExempt(entity.getClass())
                 && VisibilityRules.beyondDistance(entity.getDistanceSq(x, y, z), settings.entityRenderDistance)) {
             cir.setReturnValue(false);
         }
