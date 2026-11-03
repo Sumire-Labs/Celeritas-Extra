@@ -64,3 +64,14 @@ hs_err_*.log
 
 # Gradle wrapper (optional - uncomment if you want to commit wrapper)
 # !gradle/wrapper/gradle-wrapper.jar
+
+# CleanroomDevEnv build and development outputs
+**/build/
+!src/**/build/
+run/
+gradle-app.setting
+.gradletasknamecache
+__pycache__/
+RELEASE_NOTES.md
+!gradle-wrapper.jar
+!gradle-wrapper.properties

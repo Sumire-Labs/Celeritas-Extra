@@ -9,6 +9,20 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
+## [0.10.1] - Unreleased
+
+### Requirements
+
+- Requires Cleanroom Loader 0.7.14-alpha or newer within the 0.7.x series. The optional AssetMover integration now requires AssetMover 3.0.1 or newer.
+
+### Changed
+
+- Replaced the development template with Sumire-Labs/CleanroomDevEnv (`1ccd9f6`), retaining renderer integrations and additional production JAR checks.
+- Updated the development environment to Cleanroom 0.7.14-alpha, CleanroomGradle 0.23.0, AssetMover 3.0.1, and JUnit 6.1.3. CleanMix and MixinExtras now follow the selected loader automatically.
+- Adopted the template's Spotless formatter and import-order rules, and formatted existing Java sources and tests.
+- Adopted the template's Gradle Wrapper, native SRG access-transformer configuration, publishing tasks, Windows/Linux CI, and weekly Renovate configuration.
+- Retained curated changelog release notes and exclusion of MCP development JARs from release uploads.
+
 ## [0.10.0] - 2026-10-23
 
 ### Requirements

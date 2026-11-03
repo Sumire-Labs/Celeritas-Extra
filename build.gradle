@@ -1,9 +1,6 @@
 import groovy.json.JsonOutput
 import org.jetbrains.gradle.ext.Gradle
 
-// Build scaffolding adapted from Sumire-Labs/ModTemplate ea1bfde.
-// Blue Oak Model License 1.0.0: https://blueoakcouncil.org/license/1.0.0
-
 plugins {
     id 'com.cleanroommc.versioning' version '3.4.0'
     id 'java-library'
@@ -12,24 +9,24 @@ plugins {
     id 'com.cleanroommc.tokenenvoy' version '3.0.0'
     id 'com.gradleup.shadow' version '9.6.1' apply false
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
+    id 'com.diffplug.spotless' version '8.11.0' apply false
+    id 'me.modmuss50.mod-publish-plugin' version '2.2.1' apply false
 }
 
 group = root_package
 base.archivesName = mod_id
 ext.mixinEnabled = enable_mixin.toBoolean()
 ext.shadowEnabled = enable_shadow.toBoolean()
-ext.atEnabled = use_access_transformer.toBoolean()
-ext.coremodEnabled = is_coremod.toBoolean()
+ext.accessTransformerNames = access_transformers.tokenize()
+ext.atEnabled = !accessTransformerNames.empty
+ext.coremodEnabled = !coremod_plugin_class.isBlank()
+ext.spotlessEnabled = enable_spotless.toBoolean()
 ext.modPackage = root_package
-ext.devAccessTransformer = layout.buildDirectory.file("generated/access-transformers/${mod_id}_at.cfg")
 
 if (shadowEnabled) apply plugin: 'com.gradleup.shadow'
 
 if (!(mod_id ==~ /[a-z][a-z0-9_-]*/)) {
     throw new GradleException('mod_id must start with a lowercase letter and contain only lowercase letters, numbers, underscores or hyphens.')
-}
-if (coremodEnabled && coremod_plugin_class_name.isBlank()) {
-    throw new GradleException('Set coremod_plugin_class_name before enabling is_coremod.')
 }
 
 java {
@@ -48,26 +45,31 @@ configurations {
 dependencies {
     // Cleanroom Mod development uses USERDEV, not the LOADER development mode.
     implementation cleanroom.userdev(cleanroom_version) {
-        if (atEnabled) accessTransformers.from(files(devAccessTransformer).builtBy('prepareAccessTransformer'))
-    }
-    if (mixinEnabled) {
-        // Loader runtime dependencies are not necessarily exposed on the API compile classpath.
-        compileOnly("com.cleanroommc:cleanmix:${cleanmix_version}") { transitive = false }
-        compileOnly("com.cleanroommc:mixinextras-common:${mixinextras_version}") { transitive = false }
-        // CleanroomGradle selects annotation processors from the loader's dependency graph.
+        accessTransformers.from(accessTransformerNames.collect { "src/main/resources/META-INF/${it}" })
     }
     if (use_asset_mover.toBoolean()) implementation "com.cleanroommc:assetmover:${asset_mover_version}"
     if (enable_junit_testing.toBoolean()) {
-        testImplementation 'org.junit.jupiter:junit-jupiter:6.0.3'
+        testImplementation 'org.junit.jupiter:junit-jupiter:6.1.3'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
+}
+if (mixinEnabled) {
+    // Use exactly the Mixin APIs that CleanroomGradle selects as processors from this Loader.
+    // Its public compile classpath does not expose these runtime libraries automatically.
+    configurations.compileOnly.dependencies.addAllLater(providers.provider {
+        configurations.annotationProcessor.allDependencies.findAll {
+            it.group == 'com.cleanroommc' && it.name in ['cleanmix', 'mixinextras-common']
+        }.collect { it.copy().tap { transitive = false } }
+    })
 }
 sourceSets.main {
     if (mixinEnabled) java.srcDir 'src/mixin/java'
     if (coremodEnabled) java.srcDir 'src/coremod/java'
-    if (!atEnabled) resources.exclude 'META-INF/*_at.cfg'
+    resources.exclude { detail -> detail.path.startsWith('META-INF/') && detail.name.endsWith('_at.cfg') &&
+            !accessTransformerNames.contains(detail.name) }
     if (!mixinEnabled) resources.exclude '*.mixin.json'
 }
+if (!enable_junit_testing.toBoolean()) sourceSets.test.java.setSrcDirs([])
 
 // Java constants are replaced before inlining. Escape JSON values independently.
 tokenEnvoy {
@@ -76,6 +78,8 @@ tokenEnvoy {
         set 'MOD_NAME', mod_name
         set 'MOD_VERSION', project.version.toString()
         set 'MOD_PACKAGE', modPackage
+        set 'CLIENT_PROXY', "${modPackage}.proxy.ClientProxy".toString()
+        set 'SERVER_PROXY', "${modPackage}.proxy.CommonProxy".toString()
         set 'MIXIN_REFMAP', providers.gradleProperty('cg.userdev.refmap')
         set 'MOD_ID_JSON', JsonOutput.toJson(mod_id)
         set 'MOD_NAME_JSON', JsonOutput.toJson(mod_name)
@@ -84,11 +88,11 @@ tokenEnvoy {
         set 'MOD_AUTHORS_JSON', JsonOutput.toJson(mod_authors.split(',').collect { it.trim() }.findAll { it })
         set 'MOD_CREDITS_JSON', JsonOutput.toJson(mod_credits)
         set 'MOD_URL_JSON', JsonOutput.toJson(mod_url)
-        set 'MOD_UPDATE_URL_JSON', JsonOutput.toJson(mod_update_json)
-        set 'MOD_LOGO_PATH_JSON', JsonOutput.toJson(mod_logo_path)
+        set 'MOD_UPDATE_JSON_JSON', JsonOutput.toJson(mod_update_json)
+        set 'MOD_LOGO_JSON', JsonOutput.toJson(mod_logo_path)
         set 'MOD_ISSUE_TRACKER_JSON', JsonOutput.toJson(mod_issue_tracker)
         set 'PACK_DESCRIPTION_JSON', JsonOutput.toJson("${mod_name} Resources".toString())
-        classes { include '**/Reference.class' }
+        classes { include '**/Reference.class', '**/CeleritasExtraMod.class' }
         resources { include 'mcmod.info', 'pack.mcmeta', '*.mixin.json' }
     }
 }
@@ -97,19 +101,19 @@ processResources {
     rename 'modid.mixin.json', "${mod_id}.mixin.json"
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
-tasks.matching { it.name in ['jar', 'sourcesJar', 'shadowJar'] }.configureEach {
-    from(files('LICENSE.md')) { into 'META-INF' }
+tasks.withType(Jar).configureEach {
+    from('LICENSE.md') { into 'META-INF' }
 }
 test {
+    enabled = enable_junit_testing.toBoolean()
     useJUnitPlatform()
     if (show_testing_output.toBoolean()) testLogging.showStandardStreams = true
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'
-apply from: 'gradle/scripts/actinium.gradle'
-apply from: 'gradle/scripts/access-transformers.gradle'
 apply from: 'gradle/scripts/mixin.gradle'
 apply from: 'gradle/scripts/runs.gradle'
+apply from: 'gradle/scripts/spotless.gradle'
 
 idea {
     module { inheritOutputDirs = true; downloadSources = true }
@@ -117,8 +121,8 @@ idea {
         '1. Build'(Gradle) { taskNames = ['build'] }
         '2. Run Client'(Gradle) { taskNames = ['runClient'] }
         '3. Run Server'(Gradle) { taskNames = ['runServer'] }
+        if (spotlessEnabled) '4. Apply Spotless'(Gradle) { taskNames = ['spotlessApply'] }
     }
-    if (atEnabled) project.settings.taskTriggers.beforeSync tasks.named('prepareAccessTransformer')
 }
 
 jar {
@@ -127,10 +131,12 @@ jar {
     manifest {
         attributes 'ModType': 'CRL'
         if (mixinEnabled) attributes 'MixinConfigs': "${mod_id}.mixin.json"
-        if (atEnabled) attributes 'FMLAT': "${mod_id}_at.cfg"
+        if (atEnabled) attributes 'FMLAT': accessTransformerNames.join(' ')
         if (coremodEnabled) {
-            attributes 'FMLCorePlugin': coremod_plugin_class_name,
-                    'FMLCorePluginContainsFMLMod': coremod_includes_mod
+            attributes 'FMLCorePlugin': coremod_plugin_class
+            if (coremod_includes_mod.toBoolean()) {
+                attributes 'FMLCorePluginContainsFMLMod': 'true', 'ForceLoadAsMod': 'true'
+            }
         }
     }
     doFirst {
@@ -145,6 +151,7 @@ if (shadowEnabled) {
         dependsOn tasks.jar
         configurations = [project.configurations.shade]
         archiveClassifier = 'shadow-mcp'
+        destinationDirectory = layout.buildDirectory.dir('intermediates/shadow')
         from(project.configurations.contain) { into '/' }
         // Shadow already inherits the jar manifest; inheriting it again can create a cycle.
     }
@@ -153,9 +160,8 @@ if (shadowEnabled) {
         archiveClassifier.set('')
     }
 }
-reobfJar { legacyAccessTransformers.set(atEnabled) }
 apply from: 'gradle/scripts/publishing.gradle'
-apply from: 'gradle/scripts/release-verification.gradle'
+apply from: 'gradle/scripts/verification.gradle'
 apply from: 'gradle/scripts/extra.gradle'
 
 // Upload sites use alpha/beta/release; RC builds are published in their beta channel.
@@ -168,8 +174,15 @@ tasks.register('printReleaseType') {
     doLast { println inputs.properties.releaseType }
 }
 
-// Resource-pack tests use Minecraft's resource manager and optional renderer APIs.
-sourceSets.test {
-    compileClasspath += sourceSets.main.compileClasspath
-    runtimeClasspath += sourceSets.main.compileClasspath
+tasks.register('printReleaseInfo') {
+    def releaseType = versioning.stage.map { stage ->
+        def name = stage.name().toLowerCase(Locale.ROOT)
+        name == 'rc' ? 'beta' : name
+    }
+    inputs.property('info', releaseType.map { type -> JsonOutput.toJson([
+            version: project.version.toString(), type: type,
+            maven: publish_to_maven.toBoolean() && !publish_to_local_maven.toBoolean(),
+            curseforge: !curseforge_project_id.isBlank(), modrinth: !modrinth_project_id.isBlank()
+    ]) })
+    doLast { println inputs.properties.info }
 }

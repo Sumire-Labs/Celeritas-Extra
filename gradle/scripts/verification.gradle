@@ -1,0 +1,79 @@
+import groovy.json.JsonSlurper
+import java.util.jar.JarFile
+
+// Verify the distributable, rather than just the development classes.
+def verifyModJar = tasks.register('verifyModJar') {
+    group = 'verification'
+    description = 'Checks Mod metadata and Mixin packaging in the SRG distribution jar.'
+    dependsOn tasks.named('reobfJar')
+    inputs.file(tasks.named('reobfJar').flatMap { it.output })
+    inputs.property('modId', mod_id)
+    inputs.property('modVersion', versioning.version)
+    inputs.property('mixinEnabled', mixinEnabled)
+    inputs.property('coremodEnabled', coremodEnabled)
+    inputs.property('atEnabled', atEnabled)
+    inputs.property('coremodClass', coremod_plugin_class)
+    inputs.property('accessTransformers', accessTransformerNames)
+    inputs.property('nativeRefmap', providers.gradleProperty('cg.userdev.refmap'))
+    doLast {
+        def expected = inputs.properties
+        new JarFile(inputs.files.singleFile).withCloseable { jar ->
+            ['META-INF/LICENSE.md'].each { path ->
+                if (jar.getJarEntry(path) == null) throw new GradleException("Missing license notice: ${path}")
+            }
+            def json = { name ->
+                def entry = jar.getJarEntry(name)
+                if (entry == null) throw new GradleException("Missing jar resource: ${name}")
+                jar.getInputStream(entry).withCloseable { new JsonSlurper().parse(it, 'UTF-8') }
+            }
+            def metadata = json('mcmod.info')
+            if (metadata.size() != 1 || metadata[0].modid != expected.modId || metadata[0].version != expected.modVersion) {
+                throw new GradleException('Distribution metadata does not match the Mod ID and Git version.')
+            }
+            if (jar.manifest.mainAttributes.getValue('ModType') != 'CRL') {
+                throw new GradleException('Missing Cleanroom-only ModType manifest attribute.')
+            }
+            def at = jar.manifest.mainAttributes.getValue('FMLAT')
+            if (expected.atEnabled) {
+                if (at != expected.accessTransformers.join(' ') || expected.accessTransformers.any {
+                    jar.getJarEntry("META-INF/${it}") == null
+                }) {
+                    throw new GradleException('Missing access transformer or FMLAT manifest attribute.')
+                }
+            } else if (at != null || jar.entries().toList().any { it.name.endsWith('_at.cfg') }) {
+                throw new GradleException('Access transformer leaked into the disabled variant.')
+            }
+            def coremod = jar.manifest.mainAttributes.getValue('FMLCorePlugin')
+            if (expected.coremodEnabled) {
+                if (coremod != expected.coremodClass || jar.getJarEntry(coremod.replace('.', '/') + '.class') == null) {
+                    throw new GradleException('Missing coremod class or incorrect FMLCorePlugin attribute.')
+                }
+            } else if (coremod != null) {
+                throw new GradleException('Coremod manifest attribute leaked into the disabled variant.')
+            }
+            jar.entries().toList().findAll { !it.directory &&
+                (it.name.endsWith('.class') || it.name in ['mcmod.info', 'pack.mcmeta'] || it.name.endsWith('.mixin.json'))
+            }.each { entry ->
+                def text = jar.getInputStream(entry).withCloseable { new String(it.readAllBytes(), 'ISO-8859-1') }
+                if (text.contains('@{')) throw new GradleException("Unresolved token in ${entry.name}")
+            }
+            def configs = jar.manifest.mainAttributes.getValue('MixinConfigs')
+            if (expected.mixinEnabled) {
+                if (configs != "${expected.modId}.mixin.json") throw new GradleException('Incorrect MixinConfigs attribute.')
+                def config = json(configs)
+                def refmap = json(config.refmap)
+                if (!refmap.mappings) throw new GradleException('Missing Mixin mappings in the native refmap.')
+                (config.mixins + config.client + config.server).each { name ->
+                    def classFile = (config.package + '.' + name).replace('.', '/') + '.class'
+                    if (jar.getJarEntry(classFile) == null) throw new GradleException("Missing Mixin class: ${name}")
+                }
+            } else if (configs != null || jar.entries().toList().any {
+                it.name == expected.nativeRefmap || it.name.endsWith('.mixin.json') || it.name.endsWith('.refmap.json')
+            }) {
+                throw new GradleException('Mixin resources leaked into the disabled variant.')
+            }
+        }
+        logger.lifecycle('Verified distributable Mod jar (Mixin {}).', expected.mixinEnabled ? 'ON' : 'OFF')
+    }
+}
+tasks.named('check') { dependsOn verifyModJar }

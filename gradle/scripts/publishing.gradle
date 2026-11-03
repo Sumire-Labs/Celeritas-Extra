@@ -1,4 +1,3 @@
-// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
 def remotePublishing = publish_to_maven.toBoolean()
 def localPublishing = publish_to_local_maven.toBoolean()
 if (remotePublishing || localPublishing) {
@@ -10,6 +9,18 @@ if (remotePublishing || localPublishing) {
                 groupId = root_package
                 artifactId = mod_id
                 artifact(tasks.reobfJar) { classifier = 'srg' }
+                pom {
+                    name = mod_name
+                    description = mod_description
+                    if (!mod_url.isBlank()) url = mod_url
+                    licenses {
+                        license {
+                            name = 'GNU Lesser General Public License v3.0'
+                            url = 'https://www.gnu.org/licenses/lgpl-3.0.html'
+                            distribution = 'repo'
+                        }
+                    }
+                }
             }
         }
         if (remotePublishing && !localPublishing) {
@@ -18,9 +29,49 @@ if (remotePublishing || localPublishing) {
                 maven {
                     name = maven_name
                     url = maven_url
-                    credentials(PasswordCredentials)
+                    credentials {
+                        username = providers.environmentVariable('MAVEN_USERNAME')
+                                .orElse(providers.gradleProperty("${maven_name}Username")).orNull
+                        password = providers.environmentVariable('MAVEN_PASSWORD')
+                                .orElse(providers.gradleProperty("${maven_name}Password")).orNull
+                    }
                 }
             }
+        }
+    }
+}
+
+// The same runtime artifact is used for CurseForge and Modrinth.
+apply plugin: 'me.modmuss50.mod-publish-plugin'
+publishMods {
+    file = tasks.named('reobfJar').flatMap { it.output }
+    version = project.version.toString()
+    displayName = "${mod_name} ${project.version}"
+    type = versioning.stage.map { stage ->
+        switch (stage.name()) {
+            case 'ALPHA': return me.modmuss50.mpp.ReleaseType.ALPHA
+            case 'BETA': case 'RC': return me.modmuss50.mpp.ReleaseType.BETA
+            default: return me.modmuss50.mpp.ReleaseType.STABLE
+        }
+    }
+    modLoaders.add('forge')
+    maxRetries = 5
+    def notes = providers.environmentVariable('CHANGELOG_FILE').orElse('RELEASE_NOTES.md')
+    changelog = providers.fileContents(layout.projectDirectory.file(notes)).asText.orElse('')
+    if (!curseforge_project_id.isBlank()) {
+        curseforge {
+            projectId = curseforge_project_id
+            accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
+            minecraftVersions.add('1.12.2')
+            client = true
+            server = false
+        }
+    }
+    if (!modrinth_project_id.isBlank()) {
+        modrinth {
+            projectId = modrinth_project_id
+            accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+            minecraftVersions.add('1.12.2')
         }
     }
 }

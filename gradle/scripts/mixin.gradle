@@ -1,4 +1,3 @@
-// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
 // Refmap generation and processor versions are provided by CleanroomGradle.
 // The extra mapping output also preserves @Shadow/@Overwrite member renaming.
 if (mixinEnabled) {

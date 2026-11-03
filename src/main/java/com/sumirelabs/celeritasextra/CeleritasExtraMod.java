@@ -23,8 +23,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * The mod is {@code clientSideOnly} and accepts any remote version, so it can join
  * servers that do not have it installed.
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.11-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
-    + "after:assetmover@[2.5,)")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.14-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
+    + "after:assetmover@[3.0.1,)")
 public class CeleritasExtraMod {
 
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_NAME);

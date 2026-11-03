@@ -1,0 +1,69 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["gradle", "gradle-wrapper", "github-actions", "custom.regex"],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["* 0-5 * * 1"],
+  "updateNotScheduled": false,
+  "branchPrefix": "renovate-weekly/",
+  "dependencyDashboard": false,
+  "automerge": false,
+  "prConcurrentLimit": 1,
+  "prHourlyLimit": 0,
+  "rebaseWhen": "behind-base-branch",
+  "constraints": {
+    "java": "25"
+  },
+  "packageRules": [
+    {
+      "description": "Collect all available updates into one reviewed weekly PR, including major updates.",
+      "matchPackageNames": ["*"],
+      "groupName": "weekly dependencies",
+      "groupSlug": "weekly-dependencies",
+      "separateMajorMinor": false,
+      "separateMinorPatch": false,
+      "separateMultipleMajor": false
+    },
+    {
+      "matchDatasources": ["maven"],
+      "matchDepTypes": ["plugin"],
+      "registryUrls": ["https://plugins.gradle.org/m2/"]
+    },
+    {
+      "matchDatasources": ["maven"],
+      "matchPackageNames": ["com.cleanroommc*"],
+      "registryUrls": ["https://maven.cleanroommc.com"]
+    },
+    {
+      "description": "Maven Central is supplied by CleanroomGradle at runtime and is invisible to static extraction.",
+      "matchDatasources": ["maven"],
+      "matchPackageNames": ["org.junit.jupiter:*", "org.junit.platform:*"],
+      "registryUrls": ["https://repo.maven.apache.org/maven2"]
+    },
+    {
+      "description": "The Java 25 language/runtime baseline is intentional; setup-java resolves its current patch release.",
+      "matchDatasources": ["java-version"],
+      "matchPackageNames": ["java-jdk"],
+      "enabled": false
+    },
+    {
+      "description": "Cleanroom publishes alpha releases; keep this native 0.7.x template on that line.",
+      "matchPackageNames": ["com.cleanroommc:cleanroom-userdev"],
+      "ignoreUnstable": false,
+      "allowedVersions": "/^0\\.7\\.\\d+(?:-(?:alpha|beta|rc)(?:\\.\\d+)?)?$/"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^gradle\\.properties$/"],
+      "matchStrings": [
+        "(?:^|\\r?\\n)cleanroom_version[ \\t]*=[ \\t]*(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "com.cleanroommc:cleanroom-userdev",
+      "registryUrlTemplate": "https://maven.cleanroommc.com",
+      "versioningTemplate": "gradle"
+    }
+  ]
+}

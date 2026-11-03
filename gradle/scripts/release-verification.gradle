@@ -30,7 +30,7 @@ tasks.register('verifyReleaseJar') {
                     java.lang.classfile.ClassFile.of().parse(input.readAllBytes())
                 }
             }
-            def packagePath = "${root_package}.${mod_id}".replace('.', '/')
+            def packagePath = modPackage.replace('.', '/')
             def reference = readClass("${packagePath}/Reference.class")
             [MOD_ID: mod_id, MOD_NAME: mod_name, VERSION: project.version.toString()].each { name, expected ->
                 def field = reference.fields().find { it.fieldName().stringValue() == name }
@@ -50,7 +50,7 @@ tasks.register('verifyReleaseJar') {
                 throw new GradleException('TokenEnvoy constants were not inlined into the @Mod annotation')
             }
             def dependencies = annotation.elements().find { it.name().stringValue() == 'dependencies' }?.value()?.stringValue()
-            if (!dependencies?.contains('required-after:cleanroom@[0.7.11-alpha,0.8)')) {
+            if (!dependencies?.contains('required-after:cleanroom@[0.7.14-alpha,0.8)')) {
                 throw new GradleException('Release annotation must require the supported Cleanroom 0.7.x API')
             }
             if (['celeritas', 'actinium', 'nothirium', 'renderlib'].any { metadata.dependencies.contains(it) }) {

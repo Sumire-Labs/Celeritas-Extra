@@ -1,1 +1,18 @@
-// Project-specific Gradle extensions; applied after dependencies and release verification.
+// Project-specific customizations. Applied after the template scripts.
+// With enable_shadow=true:
+// shadowJar { relocate 'org.example.library', "${modPackage}.internal.library" }
+
+// Celeritas Extra integrations and checks, kept separate from the development template.
+apply from: 'gradle/scripts/actinium.gradle'
+apply from: 'gradle/scripts/release-verification.gradle'
+
+dependencies {
+    // Despite its dev suffix, the committed renderer uses SRG Minecraft names.
+    compileOnly deobf(fileTree(dir: 'libs', include: ['*.jar']))
+}
+
+// Resource-pack tests use Minecraft's resource manager and optional renderer APIs.
+sourceSets.test {
+    compileClasspath += sourceSets.main.compileClasspath
+    runtimeClasspath += sourceSets.main.compileClasspath
+}

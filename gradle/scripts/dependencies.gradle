@@ -1,10 +1,20 @@
 repositories {
+    // CleanroomGradle supplies CleanroomMC, Mojang and Maven Central.
     maven { name = 'CurseMaven'; url = 'https://cursemaven.com' }
     maven { name = 'CleanroomCurseMaven'; url = 'https://curse.cleanroommc.com' }
     maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+    // CleanroomGradle uses exclusive repositories; this same flag enables its local repository.
+    if (providers.gradleProperty('cg.repos.enableLocal').orElse('false').get().toBoolean()) mavenLocal()
 }
-
 dependencies {
-    // Despite its dev suffix, the committed Celeritas jar uses SRG Minecraft names.
-    compileOnly deobf(fileTree(dir: 'libs', include: ['*.jar']))
+    // SRG Mod: implementation deobf('group:artifact:version')
+    // Compile-only Mod: compileOnly deobf('group:artifact:version')
+    // Runtime-only Mod: runtimeOnly deobf('group:artifact:version')
+    // MCP development jar: implementation 'group:artifact:version:dev'
+    // Ordinary library: implementation 'group:artifact:version'
+    // Embedded jar: contain 'group:artifact:version'
+    // Shaded library (enable_shadow=true): shade 'group:artifact:version'
+    // Relocation rules go in extra.gradle.
+    // CleanMix/MixinExtras are compileOnly here; the Loader supplies them at runtime.
+    // LWJGL compatibility follows the selected Cleanroom userdev.
 }

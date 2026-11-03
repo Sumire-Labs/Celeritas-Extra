@@ -7,8 +7,8 @@
     "authorList": @{MOD_AUTHORS_JSON},
     "credits": @{MOD_CREDITS_JSON},
     "url": @{MOD_URL_JSON},
-    "updateJSON": @{MOD_UPDATE_URL_JSON},
-    "logoFile": @{MOD_LOGO_PATH_JSON},
+    "updateJSON": @{MOD_UPDATE_JSON_JSON},
+    "logoFile": @{MOD_LOGO_JSON},
     "dependencies": ["cleanroom"],
     "modProperties": {
         "issueTrackerUrl": @{MOD_ISSUE_TRACKER_JSON}

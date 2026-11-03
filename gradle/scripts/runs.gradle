@@ -1,12 +1,10 @@
-// Adapted from Sumire-Labs/ModTemplate (Blue Oak 1.0.0): https://blueoakcouncil.org/license/1.0.0
 cleanroom.runs {
     ['client', 'server'].each { runName ->
         named(runName) {
             configure {
-                // Foundation 0.22.0 otherwise splits Mod/annotation classes between app and launch loaders.
-                // Matches the official 0.7.0 template's development-launch workaround.
+                // Matches the official template's Foundation development-launch workaround.
                 systemProperty 'foundation.loadsall', true
-                // Remove default debug arguments so the project switch wins.
+                // CleanroomGradle adds these as raw JVM arguments; let the template switch win.
                 setJvmArgs((jvmArgs ?: []).findAll {
                     !it.startsWith('-Dmixin.debug.export=') && !it.startsWith('-Dmixin.checks.interfaces=')
                 })
@@ -21,7 +19,7 @@ cleanroom.runs {
                     systemProperty 'foundation.dump', true
                     systemProperty 'foundation.verbose', true
                 }
-                if (coremodEnabled) systemProperty 'fml.coreMods.load', coremod_plugin_class_name
+                if (coremodEnabled) systemProperty 'fml.coreMods.load', coremod_plugin_class
             }
         }
     }
