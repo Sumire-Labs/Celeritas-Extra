@@ -1,13 +1,13 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
-import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-
 import java.util.Locale;
+
+import com.sumirelabs.celeritasextra.CeleritasExtraMod;
 
 /** Gates the desktop screen-mode control without querying the native window. */
 public final class WindowModeSupport {
-    private WindowModeSupport() {
-    }
+
+    private WindowModeSupport() {}
 
     public static boolean canOfferBorderless() {
         return SupportHolder.AVAILABLE;
@@ -15,7 +15,7 @@ public final class WindowModeSupport {
 
     private static boolean detectSupport() {
         if (isMobileRuntime(System.getenv("POJAV_RENDERER"),
-                System.getProperty("os.name", ""), System.getProperty("os.version", ""))) {
+            System.getProperty("os.name", ""), System.getProperty("os.version", ""))) {
             CeleritasExtraMod.LOGGER.info("Keeping the standard fullscreen option on a mobile runtime");
             return false;
         }
@@ -26,12 +26,15 @@ public final class WindowModeSupport {
     static boolean isMobileRuntime(String pojavRenderer, String osName, String osVersion) {
         // Android OpenJDK can report Linux; Zalith/Pojav also identify their renderer this way.
         return (pojavRenderer != null && !pojavRenderer.isBlank())
-                || osName.toLowerCase(Locale.ROOT).contains("android")
-                || osVersion.toLowerCase(Locale.ROOT).contains("android");
+            || osName.toLowerCase(Locale.ROOT).contains("android")
+            || osVersion.toLowerCase(Locale.ROOT).contains("android");
     }
 
     private static final class SupportHolder {
+
         // Resolve once, when the options GUI first needs the decision.
         private static final boolean AVAILABLE = detectSupport();
+
     }
+
 }

@@ -1,7 +1,8 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import org.taumc.celeritas.api.options.structure.OptionStorage;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 
 /**
  * Bridges Celeritas Extra's settings into the Celeritas options framework.
@@ -29,4 +30,5 @@ public class CeleritasExtraOptionsStorage implements OptionStorage<CeleritasExtr
     public void save() {
         CeleritasExtraClientMod.options().writeChanges();
     }
+
 }

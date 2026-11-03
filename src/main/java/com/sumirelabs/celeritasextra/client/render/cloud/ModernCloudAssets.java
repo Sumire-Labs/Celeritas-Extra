@@ -1,11 +1,5 @@
 package com.sumirelabs.celeritasextra.client.render.cloud;
 
-import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.MetadataSerializer;
-import net.minecraft.util.ResourceLocation;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -15,13 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.sumirelabs.celeritasextra.CeleritasExtraMod;
+
+import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.client.resources.data.IMetadataSection;
+import net.minecraft.client.resources.data.MetadataSerializer;
+import net.minecraft.util.ResourceLocation;
+
 /** Supplies the acquired cloud pattern above other resource packs while Modern Clouds is enabled. */
 public final class ModernCloudAssets implements IResourcePack {
 
-    public static final ResourceLocation CLOUD_TEXTURE =
-            new ResourceLocation("celeritasextra", "textures/environment/clouds_1_21_6.png");
-    private static final ResourceLocation VANILLA_CLOUD_TEXTURE =
-            new ResourceLocation("minecraft", "textures/environment/clouds.png");
+    public static final ResourceLocation CLOUD_TEXTURE = new ResourceLocation("celeritasextra",
+        "textures/environment/clouds_1_21_6.png");
+    private static final ResourceLocation VANILLA_CLOUD_TEXTURE = new ResourceLocation("minecraft",
+        "textures/environment/clouds.png");
 
     private static boolean available;
     private final byte[] texture;
@@ -46,7 +47,7 @@ public final class ModernCloudAssets implements IResourcePack {
             // Follow Minecraft's pack initialization order. AssetMover waits for pending
             // downloads in getResourceDomains(); probing files first races that download.
             if (!source.getResourceDomains().contains("celeritasextra")
-                    || !source.resourceExists(CLOUD_TEXTURE)) {
+                || !source.resourceExists(CLOUD_TEXTURE)) {
                 continue;
             }
             try (InputStream stream = source.getInputStream(CLOUD_TEXTURE)) {
@@ -100,4 +101,5 @@ public final class ModernCloudAssets implements IResourcePack {
     public String getPackName() {
         return "Celeritas Extra Modern Cloud Texture";
     }
+
 }

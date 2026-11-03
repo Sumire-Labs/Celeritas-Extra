@@ -1,10 +1,5 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.CloudRenderer;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,6 +8,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.CloudRenderer;
 
 /**
  * Controls cloud render distance and cloud scale via Forge's existing CloudRenderer.
@@ -30,18 +32,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = CloudRenderer.class, remap = false)
 public class MixinCloudRenderer {
 
-    @Shadow
-    private int renderDistance;
+    @Shadow private int renderDistance;
 
     @Shadow
-    private void dispose() {
-    }
+    private void dispose() {}
 
-    @Unique
-    private int celeritasExtra$prevCloudDist = -1;
+    @Unique private int celeritasExtra$prevCloudDist = -1;
 
-    @Unique
-    private int celeritasExtra$prevCloudScale = -1;
+    @Unique private int celeritasExtra$prevCloudScale = -1;
 
     // ========================
     // Cloud Distance
@@ -56,7 +54,7 @@ public class MixinCloudRenderer {
         int cloudDist = options.cloudDistance;
         int cloudScale = options.cloudScale;
         if (cloudDist != celeritasExtra$prevCloudDist
-                || cloudScale != celeritasExtra$prevCloudScale) {
+            || cloudScale != celeritasExtra$prevCloudScale) {
             dispose();
             celeritasExtra$prevCloudDist = cloudDist;
             celeritasExtra$prevCloudScale = cloudScale;
@@ -66,12 +64,7 @@ public class MixinCloudRenderer {
     /**
      * Bypass the dirty-check when a custom cloud distance is active.
      */
-    @Redirect(
-            method = "checkSettings",
-            at = @At(value = "FIELD",
-                    target = "Lnet/minecraftforge/client/CloudRenderer;renderDistance:I",
-                    opcode = Opcodes.GETFIELD)
-    )
+    @Redirect(method = "checkSettings", at = @At(value = "FIELD", target = "Lnet/minecraftforge/client/CloudRenderer;renderDistance:I", opcode = Opcodes.GETFIELD))
     private int celeritasExtra$redirectDirtyCheck(CloudRenderer self) {
         int cloudDist = CeleritasExtraClientMod.options().renderSettings.cloudDistance;
         if (cloudDist > 0) {
@@ -83,12 +76,7 @@ public class MixinCloudRenderer {
     /**
      * Override the render distance used for cloud geometry extent.
      */
-    @Redirect(
-            method = "vertices",
-            at = @At(value = "FIELD",
-                    target = "Lnet/minecraftforge/client/CloudRenderer;renderDistance:I",
-                    opcode = Opcodes.GETFIELD)
-    )
+    @Redirect(method = "vertices", at = @At(value = "FIELD", target = "Lnet/minecraftforge/client/CloudRenderer;renderDistance:I", opcode = Opcodes.GETFIELD))
     private int celeritasExtra$redirectCloudDistance(CloudRenderer self) {
         int cloudDist = CeleritasExtraClientMod.options().renderSettings.cloudDistance;
         return cloudDist > 0 ? cloudDist : this.renderDistance;
@@ -108,4 +96,5 @@ public class MixinCloudRenderer {
         int cloudScale = CeleritasExtraClientMod.options().renderSettings.cloudScale;
         return Math.max(1, original * cloudScale / RenderSettings.CLOUD_SCALE_VANILLA);
     }
+
 }

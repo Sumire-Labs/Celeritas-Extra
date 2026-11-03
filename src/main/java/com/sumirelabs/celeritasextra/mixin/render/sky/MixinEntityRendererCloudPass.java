@@ -1,16 +1,18 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.CloudPassState;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.CloudPassState;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.RenderGlobal;
 
 /**
  * Makes the cloud render distance setting actually take effect.
@@ -31,13 +33,13 @@ public class MixinEntityRendererCloudPass {
 
     @Inject(method = "renderCloudsCheck", at = @At("HEAD"))
     private void celeritasExtra$beginCloudPass(RenderGlobal renderGlobalIn, float partialTicks, int pass,
-                                               double x, double y, double z, CallbackInfo ci) {
+        double x, double y, double z, CallbackInfo ci) {
         CloudPassState.inCloudPass = true;
     }
 
     @Inject(method = "renderCloudsCheck", at = @At("RETURN"))
     private void celeritasExtra$endCloudPass(RenderGlobal renderGlobalIn, float partialTicks, int pass,
-                                             double x, double y, double z, CallbackInfo ci) {
+        double x, double y, double z, CallbackInfo ci) {
         CloudPassState.inCloudPass = false;
     }
 
@@ -46,22 +48,16 @@ public class MixinEntityRendererCloudPass {
      * renderCloudsCheck, the {@code farPlaneDistance * 4} call) so the extended cloud mesh
      * is not GPU-clipped. Keeps vanilla behavior when cloud distance is unset/smaller.
      */
-    @ModifyArg(
-            method = "renderCloudsCheck",
-            at = @At(value = "INVOKE",
-                    target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V",
-                    remap = false,
-                    ordinal = 0),
-            index = 3
-    )
+    @ModifyArg(method = "renderCloudsCheck", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V", remap = false, ordinal = 0), index = 3)
     private float celeritasExtra$widenCloudFarPlane(float original) {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
         if (CloudPassState.cloudsEnabled(rs) && rs.cloudDistance > 0 && CloudPassState.usesDefaultCloudRenderer()) {
             int distance = CloudPassState.effectiveCloudDistanceChunks(
-                    rs, Minecraft.getMinecraft().gameSettings.renderDistanceChunks);
+                rs, Minecraft.getMinecraft().gameSettings.renderDistanceChunks);
             return Math.max(original,
-                    CloudPassState.cloudFar(distance, rs.cloudScale) + 128.0F);
+                CloudPassState.cloudFar(distance, rs.cloudScale) + 128.0F);
         }
         return original;
     }
+
 }

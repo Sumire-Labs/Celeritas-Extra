@@ -1,9 +1,10 @@
 package com.sumirelabs.celeritasextra.client;
 
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,4 +37,5 @@ class CloudPassStateTest {
         assertEquals(2_080.0F, CloudPassState.cloudHorizontalRangeBlocks(65));
         assertEquals(4_096.0F, CloudPassState.cloudHorizontalRangeBlocks(128));
     }
+
 }

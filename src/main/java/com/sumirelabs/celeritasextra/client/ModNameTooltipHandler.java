@@ -1,5 +1,10 @@
 package com.sumirelabs.celeritasextra.client;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -11,10 +16,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Appends the source mod's display name to item tooltips — the "Mod Name Tooltip" behaviour,
@@ -35,8 +36,7 @@ public final class ModNameTooltipHandler {
      */
     private static final String MOD_NAME_FORMAT = TextFormatting.BLUE.toString() + TextFormatting.ITALIC;
 
-    private ModNameTooltipHandler() {
-    }
+    private ModNameTooltipHandler() {}
 
     /**
      * Appends the source mod's display name as the final tooltip line when the feature is enabled and
@@ -94,4 +94,5 @@ public final class ModNameTooltipHandler {
         }
         return false;
     }
+
 }

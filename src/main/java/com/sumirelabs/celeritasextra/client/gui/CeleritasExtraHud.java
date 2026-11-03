@@ -1,7 +1,12 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.FrameCounter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -12,10 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Renders the optional FPS, coordinate, and JVM heap overlay onto the in-game HUD.
@@ -52,21 +53,25 @@ public class CeleritasExtraHud {
 
         CeleritasExtraGameOptions.ExtraSettings settings = CeleritasExtraClientMod.options().extraSettings;
         boolean warnLightUpdates = !CeleritasExtraClientMod.options().renderSettings.lightUpdates;
-        if (!settings.showFps && !settings.showCoords && !settings.showMemory && !warnLightUpdates) return;
+        if (!settings.showFps && !settings.showCoords && !settings.showMemory && !warnLightUpdates)
+            return;
 
         TEXT.beginFrame(System.nanoTime(), mc.gameSettings.language, Locale.getDefault());
         lines.clear();
 
         if (settings.showFps) {
             lines.add(TEXT.fps(FrameCounter.getSmoothFps(), FrameCounter.getAverageFps(),
-                    FrameCounter.getOnePercentLowFps(), FrameCounter.getPointOnePercentLowFps(), settings.showFPSExtended));
+                FrameCounter.getOnePercentLowFps(), FrameCounter.getPointOnePercentLowFps(), settings.showFPSExtended));
         }
         if (settings.showCoords && (settings.ignoreReducedDebugInfo || !mc.isReducedDebug())) {
             EntityPlayer player = mc.player;
-            if (player != null) lines.add(TEXT.coordinates(player.posX, player.posY, player.posZ));
+            if (player != null)
+                lines.add(TEXT.coordinates(player.posX, player.posY, player.posZ));
         }
-        if (settings.showMemory) lines.add(TEXT.memory());
-        if (warnLightUpdates) lines.add(TEXT.lightWarning());
+        if (settings.showMemory)
+            lines.add(TEXT.memory());
+        if (warnLightUpdates)
+            lines.add(TEXT.lightWarning());
 
         if (lines.isEmpty()) {
             return;
@@ -83,9 +88,9 @@ public class CeleritasExtraHud {
 
         // Calculate starting Y position based on corner
         boolean isBottom = corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_LEFT ||
-                corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
+            corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
         boolean isRight = corner == CeleritasExtraGameOptions.OverlayCorner.TOP_RIGHT ||
-                corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
+            corner == CeleritasExtraGameOptions.OverlayCorner.BOTTOM_RIGHT;
 
         int y = isBottom ? screenHeight - fontRenderer.FONT_HEIGHT - 2 : 2;
 
@@ -108,7 +113,8 @@ public class CeleritasExtraHud {
     /**
      * Draws a string with the specified text contrast mode
      */
-    private static void drawString(FontRenderer fontRenderer, String text, int x, int y, int textWidth, CeleritasExtraGameOptions.TextContrast textContrast) {
+    private static void drawString(FontRenderer fontRenderer, String text, int x, int y, int textWidth,
+        CeleritasExtraGameOptions.TextContrast textContrast) {
         int textColor = HUD_TEXT_COLOR;
 
         switch (textContrast) {
@@ -120,4 +126,5 @@ public class CeleritasExtraHud {
             default -> fontRenderer.drawString(text, x, y, textColor);
         }
     }
+
 }

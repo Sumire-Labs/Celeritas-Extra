@@ -1,27 +1,34 @@
 package com.sumirelabs.celeritasextra.client;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.client.model.pipeline.LightUtil;
-import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 import net.minecraftforge.client.model.BakedItemModel;
+import net.minecraftforge.client.model.pipeline.LightUtil;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class StaticItemVertexCacheTest {
-    @Test void forgeGeneratedItemsAndUnpackedQuadsReuseTheirActualEmittedBytes() {
+
+    @Test
+    void forgeGeneratedItemsAndUnpackedQuadsReuseTheirActualEmittedBytes() {
         var format = DefaultVertexFormats.ITEM;
         var quad = new UnpackedBakedQuad(new float[4][format.getElementCount()][4], -1,
-                EnumFacing.SOUTH, null, true, format);
+            EnumFacing.SOUTH, null, true, format);
         var quads = List.<BakedQuad>of(quad);
-        var model = new BakedItemModel(ImmutableList.copyOf(quads), null, ImmutableMap.of(), ItemOverrideList.NONE, false);
+        var model = new BakedItemModel(ImmutableList.copyOf(quads), null, ImmutableMap.of(), ItemOverrideList.NONE,
+            false);
         var cache = new StaticItemVertexCache(8, 4096);
         var buffer = new BufferBuilder(256);
         buffer.begin(7, format);
@@ -49,11 +56,14 @@ class StaticItemVertexCacheTest {
 
     private SimpleBakedModel model(List<BakedQuad> quads) {
         var faces = new EnumMap<EnumFacing, List<BakedQuad>>(EnumFacing.class);
-        for (var face : EnumFacing.values()) faces.put(face, List.of());
-        return new SimpleBakedModel(quads, faces, false, false, null, ItemCameraTransforms.DEFAULT, ItemOverrideList.NONE);
+        for (var face : EnumFacing.values())
+            faces.put(face, List.of());
+        return new SimpleBakedModel(quads, faces, false, false, null, ItemCameraTransforms.DEFAULT,
+            ItemOverrideList.NONE);
     }
 
-    @Test void replayPreservesForgeVertexBytesAndDoesNotCaptureEarlierVertices() {
+    @Test
+    void replayPreservesForgeVertexBytesAndDoesNotCaptureEarlierVertices() {
         var quads = List.of(quad(-1), quad(-1));
         var model = model(quads);
         var cache = new StaticItemVertexCache(8, 4096);
@@ -61,7 +71,8 @@ class StaticItemVertexCacheTest {
         buffer.begin(7, DefaultVertexFormats.ITEM);
         LightUtil.renderQuadColor(buffer, quads.get(0), -1);
         int start = buffer.getVertexCount();
-        for (var quad : quads) LightUtil.renderQuadColor(buffer, quad, 0xff804020);
+        for (var quad : quads)
+            LightUtil.renderQuadColor(buffer, quad, 0xff804020);
         buffer.getByteBuffer().position(24).limit(64);
         int[] expected = StaticItemVertexCache.capture(buffer, start);
         assertEquals(24, buffer.getByteBuffer().position());
@@ -76,7 +87,8 @@ class StaticItemVertexCacheTest {
         buffer.finishDrawing();
     }
 
-    @Test void rebuiltListsHitButTintAndMutatedGeometryDoNotReuseOldBytes() {
+    @Test
+    void rebuiltListsHitButTintAndMutatedGeometryDoNotReuseOldBytes() {
         var quad = quad(-1);
         var quads = List.of(quad);
         var model = model(quads);
@@ -97,7 +109,8 @@ class StaticItemVertexCacheTest {
         assertNull(cache.get(tintedModel, tinted, -1, false));
     }
 
-    @Test void capacityAndByteLimitsEvictAndReloadClearsEntries() {
+    @Test
+    void capacityAndByteLimitsEvictAndReloadClearsEntries() {
         var quads = List.of(quad(-1));
         var first = model(quads);
         var second = model(quads);
@@ -116,12 +129,15 @@ class StaticItemVertexCacheTest {
         assertNull(tiny.get(first, quads, -1, true));
     }
 
-    @Test void customQuadImplementationsAreNotFrozen() {
-        var custom = new BakedQuad(new int[28], -1, EnumFacing.SOUTH, null, true, DefaultVertexFormats.ITEM) { };
+    @Test
+    void customQuadImplementationsAreNotFrozen() {
+        var custom = new BakedQuad(new int[28], -1, EnumFacing.SOUTH, null, true, DefaultVertexFormats.ITEM) {
+        };
         var quads = List.<BakedQuad>of(custom);
         var cache = new StaticItemVertexCache(8, 4096);
         var model = model(quads);
         cache.put(model, quads, -1, true, new int[28]);
         assertNull(cache.get(model, quads, -1, true));
     }
+
 }

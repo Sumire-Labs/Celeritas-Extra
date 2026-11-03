@@ -1,12 +1,15 @@
 package com.sumirelabs.celeritasextra.client;
 
 import org.lwjgl.opengl.Display;
-import net.minecraft.client.Minecraft;
+
 import com.sumirelabs.celeritasextra.compat.RendererCompat;
 import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 
+import net.minecraft.client.Minecraft;
+
 /** Limits drawing without dropping the 20 Hz client tick/network processing cadence. */
 public final class BackgroundFrameLimiter {
+
     private static final FrameSchedule SCHEDULE = new FrameSchedule();
     private static boolean renderFrame = true;
 
@@ -14,10 +17,12 @@ public final class BackgroundFrameLimiter {
 
     public static int currentLimit() {
         var settings = CeleritasExtraClientMod.options().extraSettings;
-        if (!Display.isCreated()) return 0;
+        if (!Display.isCreated())
+            return 0;
         Minecraft mc = Minecraft.getMinecraft();
         boolean menu = mc.world == null && mc.currentScreen != null;
-        int requested = selectLimit(Display.isActive(), WindowCompat.isVisible(), settings.inactiveFpsLimit, settings.minimizedFpsLimit);
+        int requested = selectLimit(Display.isActive(), WindowCompat.isVisible(), settings.inactiveFpsLimit,
+            settings.minimizedFpsLimit);
         int menuLimit = RendererCompat.isActinium() ? 0 : settings.menuFpsLimit;
         requested = combineMenuLimit(requested, menu, menuLimit);
         int nativeLimit = menu ? RendererCompat.menuFramerate(30) : mc.gameSettings.limitFramerate;
@@ -30,15 +35,17 @@ public final class BackgroundFrameLimiter {
     }
 
     public static int combineMenuLimit(int background, boolean menu, int menuLimit) {
-        if (!menu || menuLimit == 0) return background;
+        if (!menu || menuLimit == 0)
+            return background;
         return background > 0 ? Math.min(background, menuLimit) : menuLimit;
     }
 
     public static int currentNormalLimit(int vanilla) {
-        if (RendererCompat.isActinium()) return vanilla;
+        if (RendererCompat.isActinium())
+            return vanilla;
         Minecraft mc = Minecraft.getMinecraft();
         return normalLimit(vanilla, mc.world == null && mc.currentScreen != null,
-                CeleritasExtraClientMod.options().extraSettings.menuFpsLimit);
+            CeleritasExtraClientMod.options().extraSettings.menuFpsLimit);
     }
 
     public static int selectLimit(boolean active, boolean visible, int inactive, int minimized) {
@@ -54,9 +61,12 @@ public final class BackgroundFrameLimiter {
         renderFrame = SCHEDULE.allow(now, currentLimit());
     }
 
-    public static boolean shouldRender() { return renderFrame; }
+    public static boolean shouldRender() {
+        return renderFrame;
+    }
 
     public static final class FrameSchedule {
+
         private long lastDraw = -1;
         private int previousLimit;
 
@@ -69,5 +79,7 @@ public final class BackgroundFrameLimiter {
             }
             return false;
         }
+
     }
+
 }

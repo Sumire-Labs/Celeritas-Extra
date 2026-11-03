@@ -1,10 +1,12 @@
 package com.sumirelabs.celeritasextra.mixin.sky_colors;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.world.biome.Biome;
 
 /**
  * Toggles biome-based sky coloring (Sodium Extra's "Sky Colors").
@@ -28,4 +30,5 @@ public class MixinBiome {
         }
         return temperature;
     }
+
 }

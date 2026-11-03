@@ -1,11 +1,12 @@
 package com.sumirelabs.celeritasextra.client;
 
+import java.io.File;
+
 import com.sumirelabs.celeritasextra.CeleritasExtraMod;
 import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
+
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
-
-import java.io.File;
 
 /**
  * Client-side entry point that owns Celeritas Extra's configuration.
@@ -24,13 +25,15 @@ public class CeleritasExtraClientMod {
      * Supplies Forge's canonical configuration directory before the options are loaded.
      */
     public static void setConfigDirectory(File directory) {
-        if (directory == null) return;
+        if (directory == null)
+            return;
         boolean changed = configDirectory != null && !configDirectory.toPath().toAbsolutePath().normalize()
-                .equals(directory.toPath().toAbsolutePath().normalize());
+            .equals(directory.toPath().toAbsolutePath().normalize());
         configDirectory = directory;
         // Startup VSync can access options before Forge reaches preInit. If an
         // early fallback was used, honor Forge's canonical directory now.
-        if (changed && CONFIG != null) CONFIG = loadConfig();
+        if (changed && CONFIG != null)
+            CONFIG = loadConfig();
     }
 
     /**
@@ -55,7 +58,8 @@ public class CeleritasExtraClientMod {
         if (configDirectory == null) {
             Object[] launchData = FMLInjectionData.data();
             configDirectory = launchData.length > 6 && launchData[6] instanceof File gameDirectory
-                    ? new File(gameDirectory, "config") : new File("config");
+                ? new File(gameDirectory, "config")
+                : new File("config");
         }
         if (!configDirectory.isDirectory() && !configDirectory.mkdirs()) {
             CeleritasExtraMod.LOGGER.warn("Could not create config directory: {}", configDirectory);
@@ -76,4 +80,5 @@ public class CeleritasExtraClientMod {
             options();
         }
     }
+
 }

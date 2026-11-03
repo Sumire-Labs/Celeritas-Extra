@@ -1,14 +1,17 @@
 package com.sumirelabs.celeritasextra.client.particle;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParticleSpawnRateTest {
+
     private final ParticleClassRegistry registry = ParticleClassRegistry.getInstance();
 
-    @Test void cachedClassPolicyObservesAllSettingsMutationPaths() {
+    @Test
+    void cachedClassPolicyObservesAllSettingsMutationPaths() {
         String name = getClass().getName();
         assertEquals(100, registry.observeSpawn(getClass()));
         registry.setSpawnPercentage(name, 25);
@@ -25,7 +28,8 @@ class ParticleSpawnRateTest {
         assertEquals(75, registry.observeSpawn(getClass()));
     }
 
-    @Test void vanillaZeroRateSkipsCreationButCustomFactoriesRetainDiscoveryPath() {
+    @Test
+    void vanillaZeroRateSkipsCreationButCustomFactoriesRetainDiscoveryPath() {
         var factory = new net.minecraft.client.particle.ParticleFlame.Factory();
         String name = net.minecraft.client.particle.ParticleFlame.class.getName();
         registry.setSpawnPercentage(name, 50);
@@ -40,13 +44,16 @@ class ParticleSpawnRateTest {
         assertFalse(registry.skipVanillaFactory(custom, false));
     }
 
-    @BeforeEach @AfterEach void reset() {
+    @BeforeEach
+    @AfterEach
+    void reset() {
         registry.loadDisabledClasses(new String[0]);
         registry.loadSpawnPercentages(new String[0]);
         registry.markClean();
     }
 
-    @Test void defaultsAndLegacyDisabledClassesArePreserved() {
+    @Test
+    void defaultsAndLegacyDisabledClassesArePreserved() {
         assertEquals(100, registry.getSpawnPercentage("example.Smoke"));
         registry.loadDisabledClasses(new String[]{"example.Smoke"});
         registry.loadSpawnPercentages(new String[]{"example.Smoke|50"});
@@ -57,8 +64,10 @@ class ParticleSpawnRateTest {
         assertTrue(registry.isDirty());
     }
 
-    @Test void settingsRoundTripAndMalformedEntriesDoNotDiscardValidOnes() {
-        registry.loadSpawnPercentages(new String[]{"example.Smoke|50", "bad", "example.Bad|nan", "example.High|150", "example.Low|-5"});
+    @Test
+    void settingsRoundTripAndMalformedEntriesDoNotDiscardValidOnes() {
+        registry.loadSpawnPercentages(
+            new String[]{"example.Smoke|50", "bad", "example.Bad|nan", "example.High|150", "example.Low|-5"});
         assertEquals(50, registry.getSpawnPercentage("example.Smoke"));
         assertEquals(100, registry.getSpawnPercentage("example.High"));
         assertEquals(0, registry.getSpawnPercentage("example.Low"));
@@ -71,11 +80,15 @@ class ParticleSpawnRateTest {
         assertEquals(100, registry.getSpawnPercentage("example.Smoke"));
     }
 
-    @Test void percentageHasExactAcceptanceAcrossTheHundredPossibleRolls() {
+    @Test
+    void percentageHasExactAcceptanceAcrossTheHundredPossibleRolls() {
         for (int percentage : new int[]{0, 1, 25, 50, 99, 100}) {
             int accepted = 0;
-            for (int roll = 0; roll < 100; roll++) if (ParticleClassRegistry.acceptSpawn(percentage, roll)) accepted++;
+            for (int roll = 0; roll < 100; roll++)
+                if (ParticleClassRegistry.acceptSpawn(percentage, roll))
+                    accepted++;
             assertEquals(percentage, accepted);
         }
     }
+
 }

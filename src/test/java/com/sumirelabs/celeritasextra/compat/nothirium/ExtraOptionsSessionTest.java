@@ -1,16 +1,19 @@
 package com.sumirelabs.celeritasextra.compat.nothirium;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.DummyConfigElement.DummyCategoryElement;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraOptionsSessionTest {
-    @Test void editsAcrossChildPagesStayPendingAndOnlyCommitChangedEntries() {
+
+    @Test
+    void editsAcrossChildPagesStayPendingAndOnlyCommitChangedEntries() {
         var toggleProperty = new Property("sky", "true", Property.Type.BOOLEAN);
         toggleProperty.setDefaultValue("true");
         var distanceProperty = new Property("distance", "8", Property.Type.INTEGER);
@@ -36,7 +39,8 @@ class ExtraOptionsSessionTest {
         assertEquals(0, distanceProperty.getInt());
     }
 
-    @Test void cancelDoesNotPublishChangesAndEditingAnArrayCannotMutateTheSnapshot() {
+    @Test
+    void cancelDoesNotPublishChangesAndEditingAnArrayCannotMutateTheSnapshot() {
         var property = new Property("exemptions", new String[]{"example.Beacon"}, Property.Type.STRING);
         var element = new ConfigElement(property);
         var session = new ExtraOptionsSession(List.of(element));
@@ -53,4 +57,5 @@ class ExtraOptionsSessionTest {
         session.commit();
         assertArrayEquals(new String[]{"example.*"}, property.getStringList());
     }
+
 }

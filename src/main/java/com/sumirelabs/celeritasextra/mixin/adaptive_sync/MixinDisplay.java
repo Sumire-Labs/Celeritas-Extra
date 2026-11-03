@@ -1,13 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.adaptive_sync;
 
-import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.CeleritasExtraMod;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
 
 /**
  * Implements adaptive VSync by intercepting Display.setVSyncEnabled()
@@ -23,12 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Display.class, remap = false)
 public class MixinDisplay {
 
-    @Inject(
-            method = "setVSyncEnabled",
-            at = @At("HEAD"),
-            cancellable = true,
-            remap = false
-    )
+    @Inject(method = "setVSyncEnabled", at = @At("HEAD"), cancellable = true, remap = false)
     private static void onSetVSyncEnabled(boolean enable, CallbackInfo ci) {
         if (enable && CeleritasExtraClientMod.options().extraSettings.useAdaptiveSync) {
             if (WindowCompat.tryAdaptiveVsync()) {
@@ -40,4 +36,5 @@ public class MixinDisplay {
             }
         }
     }
+
 }

@@ -1,27 +1,31 @@
 package com.sumirelabs.celeritasextra.client;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.EnumFacing;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.lwjgl.util.vector.Vector3f;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import net.minecraftforge.client.model.BakedItemModel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.client.model.BakedItemModel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemFrameLodStateTest {
+
     private final List<BakedQuad> quads = Arrays.stream(EnumFacing.values())
-            .map(face -> new BakedQuad(new int[28], -1, face, null, true,
-                    net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM)).toList();
+        .map(face -> new BakedQuad(new int[28], -1, face, null, true,
+            net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM))
+        .toList();
 
     @AfterEach
     void clearState() {
@@ -29,22 +33,25 @@ class ItemFrameLodStateTest {
         ItemFrameLodState.clearCache();
     }
 
-    @Test void forgeGeneratedItemModelsAlsoReuseFilteredGeometry() {
+    @Test
+    void forgeGeneratedItemModelsAlsoReuseFilteredGeometry() {
         ItemFrameLodState.active = true;
-        var model = new BakedItemModel(ImmutableList.copyOf(quads), null, ImmutableMap.of(), ItemOverrideList.NONE, false);
+        var model = new BakedItemModel(ImmutableList.copyOf(quads), null, ImmutableMap.of(), ItemOverrideList.NONE,
+            false);
         var first = ItemFrameLodState.filterLodQuads(model, null, null, 0);
         assertEquals(List.of(EnumFacing.SOUTH), first.stream().map(BakedQuad::getFace).toList());
         assertSame(first, ItemFrameLodState.filterLodQuads(model, null, null, 0));
     }
 
-    @Test void staticGeometryIsReusedAndInPlaceListEditsInvalidateIt() {
+    @Test
+    void staticGeometryIsReusedAndInPlaceListEditsInvalidateIt() {
         ItemFrameLodState.active = true;
         var source = new ArrayList<>(quads);
         var model = simple(source, ItemTransformVec3f.DEFAULT);
         var first = ItemFrameLodState.filterLodQuads(model, null, null, 0);
         assertSame(first, ItemFrameLodState.filterLodQuads(model, null, null, 0));
         BakedQuad replacement = new BakedQuad(new int[28], -1, EnumFacing.SOUTH, null, true,
-                net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
+            net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
         source.set(EnumFacing.SOUTH.ordinal(), replacement);
         var edited = ItemFrameLodState.filterLodQuads(model, null, null, 0);
         assertNotSame(first, edited);
@@ -53,7 +60,8 @@ class ItemFrameLodStateTest {
         assertNotSame(edited, ItemFrameLodState.filterLodQuads(model, null, null, 0));
     }
 
-    @Test void changingFixedTransformUpdatesCachedVisibilityPolicy() {
+    @Test
+    void changingFixedTransformUpdatesCachedVisibilityPolicy() {
         ItemFrameLodState.active = true;
         var transform = new ItemTransformVec3f(new Vector3f(), new Vector3f(), new Vector3f(1, 1, 1));
         var model = simple(quads, transform);
@@ -66,10 +74,11 @@ class ItemFrameLodStateTest {
 
     private IBakedModel simple(List<BakedQuad> source, ItemTransformVec3f fixed) {
         var faces = new EnumMap<EnumFacing, List<BakedQuad>>(EnumFacing.class);
-        for (var side : EnumFacing.values()) faces.put(side, List.of());
+        for (var side : EnumFacing.values())
+            faces.put(side, List.of());
         ItemTransformVec3f none = ItemTransformVec3f.DEFAULT;
         return new SimpleBakedModel(source, faces, false, false, null,
-                new ItemCameraTransforms(none, none, none, none, none, none, none, fixed), ItemOverrideList.NONE);
+            new ItemCameraTransforms(none, none, none, none, none, none, none, fixed), ItemOverrideList.NONE);
     }
 
     @Test
@@ -90,32 +99,51 @@ class ItemFrameLodStateTest {
     @Test
     void translatedItemKeepsBothDepthFacesAndOffAxisItemKeepsEverything() {
         ItemFrameLodState.active = true;
-        ItemTransformVec3f translated = new ItemTransformVec3f(new Vector3f(), new Vector3f(0, 0, 0.2f), new Vector3f(1, 1, 1));
-        assertEquals(List.of(EnumFacing.NORTH, EnumFacing.SOUTH), filter(false, translated).stream().map(BakedQuad::getFace).toList());
-        ItemTransformVec3f rotated = new ItemTransformVec3f(new Vector3f(0, 45, 0), new Vector3f(), new Vector3f(1, 1, 1));
+        ItemTransformVec3f translated = new ItemTransformVec3f(new Vector3f(), new Vector3f(0, 0, 0.2f),
+            new Vector3f(1, 1, 1));
+        assertEquals(List.of(EnumFacing.NORTH, EnumFacing.SOUTH),
+            filter(false, translated).stream().map(BakedQuad::getFace).toList());
+        ItemTransformVec3f rotated = new ItemTransformVec3f(new Vector3f(0, 45, 0), new Vector3f(),
+            new Vector3f(1, 1, 1));
         assertSame(quads, filter(false, rotated));
     }
 
     @Test
     void halfTurnSelectsTheOppositeModelFace() {
         ItemFrameLodState.active = true;
-        ItemTransformVec3f rotated = new ItemTransformVec3f(new Vector3f(0, 180, 0), new Vector3f(), new Vector3f(1, 1, 1));
+        ItemTransformVec3f rotated = new ItemTransformVec3f(new Vector3f(0, 180, 0), new Vector3f(),
+            new Vector3f(1, 1, 1));
         assertEquals(List.of(EnumFacing.NORTH), filter(false, rotated).stream().map(BakedQuad::getFace).toList());
     }
 
     private List<BakedQuad> filter(boolean gui3d, ItemTransformVec3f fixed) {
         IBakedModel model = new IBakedModel() {
-            public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) { return quads; }
-            public boolean isAmbientOcclusion() { return false; }
-            public boolean isGui3d() { return gui3d; }
-            public boolean isBuiltInRenderer() { return false; }
-            public TextureAtlasSprite getParticleTexture() { return null; }
-            public ItemOverrideList getOverrides() { return ItemOverrideList.NONE; }
+
+            public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+                return quads;
+            }
+            public boolean isAmbientOcclusion() {
+                return false;
+            }
+            public boolean isGui3d() {
+                return gui3d;
+            }
+            public boolean isBuiltInRenderer() {
+                return false;
+            }
+            public TextureAtlasSprite getParticleTexture() {
+                return null;
+            }
+            public ItemOverrideList getOverrides() {
+                return ItemOverrideList.NONE;
+            }
             public ItemCameraTransforms getItemCameraTransforms() {
                 ItemTransformVec3f none = ItemTransformVec3f.DEFAULT;
                 return new ItemCameraTransforms(none, none, none, none, none, none, none, fixed);
             }
+
         };
         return ItemFrameLodState.filterLodQuads(model, null, null, 0);
     }
+
 }

@@ -1,12 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.CloudPassState;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.CloudTranslucency;
-import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.CloudPassState;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.CloudTranslucency;
+
+import net.minecraft.client.renderer.EntityRenderer;
 
 /**
  * Controls cloud translucency behavior.
@@ -21,10 +23,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererCloudTranslucency {
 
-    @ModifyConstant(
-            method = "renderWorldPass",
-            constant = @Constant(doubleValue = 128.0D)
-    )
+    @ModifyConstant(method = "renderWorldPass", constant = @Constant(doubleValue = 128.0D))
     private double celeritasExtra$modifyCloudTranslucencyCheck(double original) {
         var options = CeleritasExtraClientMod.options();
         CloudTranslucency mode = options.renderSettings.cloudTranslucency;
@@ -36,4 +35,5 @@ public class MixinEntityRendererCloudTranslucency {
         }
         return CloudPassState.cloudHeight((float) original);
     }
+
 }

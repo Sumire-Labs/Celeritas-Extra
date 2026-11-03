@@ -1,11 +1,13 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.world.WorldProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.world.WorldProvider;
 
 /**
  * Overrides the world's cloud altitude only when a custom cloud height is configured.
@@ -27,4 +29,5 @@ public class MixinWorldProvider {
             cir.setReturnValue((float) configuredHeight);
         }
     }
+
 }

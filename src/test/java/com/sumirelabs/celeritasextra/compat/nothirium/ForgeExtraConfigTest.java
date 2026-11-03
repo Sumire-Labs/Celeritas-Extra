@@ -1,19 +1,23 @@
 package com.sumirelabs.celeritasextra.compat.nothirium;
 
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
-import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.nio.file.Path;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
+import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
+
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ForgeExtraConfigTest {
+
     @TempDir Path directory;
 
-    @Test void forgeEditsApplyToLiveOptionsAndPersistWithoutReloadingStaleDiskValues() throws Exception {
+    @Test
+    void forgeEditsApplyToLiveOptionsAndPersistWithoutReloadingStaleDiskValues() throws Exception {
         var home = FMLInjectionData.class.getDeclaredField("minecraftHome");
         home.setAccessible(true);
         Object previous = home.get(null);
@@ -23,13 +27,15 @@ class ForgeExtraConfigTest {
             var file = directory.resolve("extra.cfg").toFile();
             var options = CeleritasExtraGameOptions.load(file);
             var config = options.forgeConfiguration();
-            new net.minecraftforge.common.config.ConfigElement(config.getCategory("render").get("entityRenderDistance")).set(72);
+            new net.minecraftforge.common.config.ConfigElement(config.getCategory("render").get("entityRenderDistance"))
+                .set(72);
             config.getCategory("detail").get("stars").set(false);
             config.getCategory("extra").get("menuFpsLimit").set(45);
             config.get("dimension_fog_-1", "override", false).set(true);
             config.get("dimension_fog_-1", "distance", 0).set(8);
             config.getCategory("particle_classes").get("spawnPercentages").set(new String[]{"example.Particle|25"});
-            assertEquals(0, options.renderSettings.entityRenderDistance, "Pending GUI edits must not change live settings");
+            assertEquals(0, options.renderSettings.entityRenderDistance,
+                "Pending GUI edits must not change live settings");
             options.applyForgeConfiguration();
             assertEquals(72, options.renderSettings.entityRenderDistance);
             assertFalse(options.detailSettings.stars);
@@ -48,12 +54,13 @@ class ForgeExtraConfigTest {
         }
     }
 
-    @Test void enumControlsUseNamesAndPreserveTheExistingOrdinalFileFormat() {
+    @Test
+    void enumControlsUseNamesAndPreserveTheExistingOrdinalFileFormat() {
         var property = new net.minecraftforge.common.config.Property("textContrast", "2",
-                net.minecraftforge.common.config.Property.Type.INTEGER);
+            net.minecraftforge.common.config.Property.Type.INTEGER);
         property.setDefaultValue("2");
         var element = ForgeExtraConfigElements.enumElement(property, CeleritasExtraGameOptions.TextContrast.values(),
-                new String[]{"None", "Background", "Shadow"});
+            new String[]{"None", "Background", "Shadow"});
         assertEquals("SHADOW", element.get());
         assertEquals("SHADOW", element.getDefault());
         element.set("BACKGROUND");
@@ -61,4 +68,5 @@ class ForgeExtraConfigTest {
         assertEquals("BACKGROUND", element.get());
         assertEquals("SHADOW", element.getDefault(), "Editing must preserve reset-to-default behavior");
     }
+
 }

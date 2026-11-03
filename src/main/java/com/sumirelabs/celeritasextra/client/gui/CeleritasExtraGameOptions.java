@@ -1,15 +1,5 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
-import com.sumirelabs.celeritasextra.CeleritasExtraMod;
-import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
-import com.sumirelabs.celeritasextra.client.VisibilityRules.ExemptionCache;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.ForgeEarlyConfig;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.ConfigManager;
-import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
-import org.lwjgl.opengl.Display;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +7,18 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import org.lwjgl.opengl.Display;
+
+import com.sumirelabs.celeritasextra.CeleritasExtraMod;
+import com.sumirelabs.celeritasextra.client.VisibilityRules.ExemptionCache;
+import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.ForgeEarlyConfig;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.Configuration;
 
 /**
  * Central store for all Celeritas Extra configuration values.
@@ -45,142 +47,144 @@ public class CeleritasExtraGameOptions {
     public final RenderSettings renderSettings = new RenderSettings();
     public final ExtraSettings extraSettings = new ExtraSettings();
     private final List<BooleanProperty> booleanProperties = Arrays.asList(
-            // Animation settings
-            new BooleanProperty(CAT_ANIMATION, "animation", true, "Enable/disable all animations",
-                    v -> animationSettings.animation = v, () -> animationSettings.animation),
-            new BooleanProperty(CAT_ANIMATION, "water", true, "Enable/disable water animations",
-                    v -> animationSettings.water = v, () -> animationSettings.water),
-            new BooleanProperty(CAT_ANIMATION, "lava", true, "Enable/disable lava animations",
-                    v -> animationSettings.lava = v, () -> animationSettings.lava),
-            new BooleanProperty(CAT_ANIMATION, "fire", true, "Enable/disable fire animations",
-                    v -> animationSettings.fire = v, () -> animationSettings.fire),
-            new BooleanProperty(CAT_ANIMATION, "portal", true, "Enable/disable portal animations",
-                    v -> animationSettings.portal = v, () -> animationSettings.portal),
-            new BooleanProperty(CAT_ANIMATION, "blockAnimations", true, "Enable/disable block animations",
-                    v -> animationSettings.blockAnimations = v, () -> animationSettings.blockAnimations),
-            // Particle settings
-            new BooleanProperty(CAT_PARTICLE, "particles", true, "Enable/disable all particles",
-                    v -> particleSettings.particles = v, () -> particleSettings.particles),
-            new BooleanProperty(CAT_PARTICLE, "rainSplash", true, "Enable/disable rain splash particles",
-                    v -> particleSettings.rainSplash = v, () -> particleSettings.rainSplash),
-            new BooleanProperty(CAT_PARTICLE, "blockBreak", true, "Enable/disable block break particles",
-                    v -> particleSettings.blockBreak = v, () -> particleSettings.blockBreak),
-            new BooleanProperty(CAT_PARTICLE, "blockBreaking", true, "Enable/disable block breaking particles",
-                    v -> particleSettings.blockBreaking = v, () -> particleSettings.blockBreaking),
-            // Detail settings
-            new BooleanProperty(CAT_DETAIL, "sky", true, "Enable/disable sky rendering",
-                    v -> detailSettings.sky = v, () -> detailSettings.sky),
-            new BooleanProperty(CAT_DETAIL, "stars", true, "Enable/disable star rendering",
-                    v -> detailSettings.stars = v, () -> detailSettings.stars),
-            new BooleanProperty(CAT_DETAIL, "rainSnow", true, "Enable/disable rain and snow rendering",
-                    v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
-            new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
-                    v -> detailSettings.biomeColors = v, () -> detailSettings.biomeColors),
-            new BooleanProperty(CAT_DETAIL, "skyColors", true, "Enable/disable biome-based sky colors",
-                    v -> detailSettings.skyColors = v, () -> detailSettings.skyColors),
-            new BooleanProperty(CAT_DETAIL, "voidFog", true, "Enable/disable void fog",
-                    v -> detailSettings.voidFog = v, () -> detailSettings.voidFog),
-            // Render settings
-            new BooleanProperty(CAT_RENDER, "fog", true, "Enable/disable fog rendering",
-                    v -> renderSettings.fog = v, () -> renderSettings.fog),
-            new BooleanProperty(CAT_RENDER, "clouds", true, "Enable/disable cloud rendering",
-                    v -> renderSettings.clouds = v, () -> renderSettings.clouds),
-            new BooleanProperty(CAT_RENDER, "modernClouds", false,
-                    "Use the Minecraft 1.21.6 cloud texture (downloaded by AssetMover 2.5)",
-                    v -> renderSettings.modernClouds = v, () -> renderSettings.modernClouds),
-            new BooleanProperty(CAT_RENDER, "lightUpdates", true, "Enable/disable light updates",
-                    v -> renderSettings.lightUpdates = v, () -> renderSettings.lightUpdates),
-            new BooleanProperty(CAT_RENDER, "itemFrames", true, "Enable/disable item frame rendering",
-                    v -> renderSettings.itemFrames = v, () -> renderSettings.itemFrames),
-            new BooleanProperty(CAT_RENDER, "signTextCulling", true, "Skip sign text when viewed from behind",
-                    v -> renderSettings.signTextCulling = v, () -> renderSettings.signTextCulling),
-            new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
-                    v -> renderSettings.mapBackFaceCulling = v, () -> renderSettings.mapBackFaceCulling),
-            new BooleanProperty(CAT_RENDER, "itemVertexCache", false, "Experimental: reuse static item vertex data (default off; performance gains vary; bypassed for native caches, Iris and dynamic/tinted geometry)",
-                    v -> renderSettings.itemVertexCache = v, () -> renderSettings.itemVertexCache),
-            new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
-                    v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),
-            new BooleanProperty(CAT_RENDER, "paintings", true, "Enable/disable painting rendering",
-                    v -> renderSettings.paintings = v, () -> renderSettings.paintings),
-            new BooleanProperty(CAT_RENDER, "pistons", true, "Enable/disable piston animation rendering",
-                    v -> renderSettings.pistons = v, () -> renderSettings.pistons),
-            new BooleanProperty(CAT_RENDER, "beacons", true, "Enable/disable beacon beam rendering",
-                    v -> renderSettings.beacons = v, () -> renderSettings.beacons),
-            new BooleanProperty(CAT_RENDER, "limitBeaconBeamHeight", false, "Limit beacon beam to world height",
-                    v -> renderSettings.limitBeaconBeamHeight = v, () -> renderSettings.limitBeaconBeamHeight),
-            new BooleanProperty(CAT_RENDER, "enchantingTableBooks", true, "Enable/disable enchanting table book rendering",
-                    v -> renderSettings.enchantingTableBooks = v, () -> renderSettings.enchantingTableBooks),
-            new BooleanProperty(CAT_RENDER, "playerNameTag", true, "Enable/disable player name tag rendering",
-                    v -> renderSettings.playerNameTag = v, () -> renderSettings.playerNameTag),
-            new BooleanProperty(CAT_RENDER, "itemFrameNameTag", true, "Enable/disable item frame name tag rendering",
-                    v -> renderSettings.itemFrameNameTag = v, () -> renderSettings.itemFrameNameTag),
-            new BooleanProperty(CAT_RENDER, "preventShaders", false, "Prevent accidental shader activation",
-                    v -> renderSettings.preventShaders = v, () -> renderSettings.preventShaders),
-            // Extra settings
-            new BooleanProperty(CAT_EXTRA, "showFps", false, "Show FPS overlay",
-                    v -> extraSettings.showFps = v, () -> extraSettings.showFps),
-            new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (average/1% low/0.1% low)",
-                    v -> extraSettings.showFPSExtended = v, () -> extraSettings.showFPSExtended),
-            new BooleanProperty(CAT_EXTRA, "showCoords", false, "Show coordinates overlay",
-                    v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
-            new BooleanProperty(CAT_EXTRA, "showMemory", false, "Show JVM heap usage overlay (used/max MiB)",
-                    v -> extraSettings.showMemory = v, () -> extraSettings.showMemory),
-            new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
-                    v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
-            new BooleanProperty(CAT_EXTRA, "steadyDebugHud", ExtraSettings.STEADY_DEBUG_HUD_DEFAULT,
-                    "Reduce F3 debug screen update frequency",
-                    v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud),
-            new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
-                    v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync),
-            new BooleanProperty(CAT_EXTRA, "toasts", true, "Master toggle for toast pop-ups",
-                    v -> extraSettings.toasts = v, () -> extraSettings.toasts),
-            new BooleanProperty(CAT_EXTRA, "toastAdvancement", true, "Show advancement toasts",
-                    v -> extraSettings.toastAdvancement = v, () -> extraSettings.toastAdvancement),
-            new BooleanProperty(CAT_EXTRA, "toastRecipe", true, "Show recipe toasts",
-                    v -> extraSettings.toastRecipe = v, () -> extraSettings.toastRecipe),
-            new BooleanProperty(CAT_EXTRA, "toastTutorial", true, "Show tutorial toasts",
-                    v -> extraSettings.toastTutorial = v, () -> extraSettings.toastTutorial),
-            new BooleanProperty(CAT_EXTRA, "toastSystem", true, "Show system toasts",
-                    v -> extraSettings.toastSystem = v, () -> extraSettings.toastSystem),
-            new BooleanProperty(CAT_EXTRA, "modNameTooltip", false, "Show the source mod's name at the bottom of item tooltips",
-                    v -> extraSettings.modNameTooltip = v, () -> extraSettings.modNameTooltip)
-    );
+        // Animation settings
+        new BooleanProperty(CAT_ANIMATION, "animation", true, "Enable/disable all animations",
+            v -> animationSettings.animation = v, () -> animationSettings.animation),
+        new BooleanProperty(CAT_ANIMATION, "water", true, "Enable/disable water animations",
+            v -> animationSettings.water = v, () -> animationSettings.water),
+        new BooleanProperty(CAT_ANIMATION, "lava", true, "Enable/disable lava animations",
+            v -> animationSettings.lava = v, () -> animationSettings.lava),
+        new BooleanProperty(CAT_ANIMATION, "fire", true, "Enable/disable fire animations",
+            v -> animationSettings.fire = v, () -> animationSettings.fire),
+        new BooleanProperty(CAT_ANIMATION, "portal", true, "Enable/disable portal animations",
+            v -> animationSettings.portal = v, () -> animationSettings.portal),
+        new BooleanProperty(CAT_ANIMATION, "blockAnimations", true, "Enable/disable block animations",
+            v -> animationSettings.blockAnimations = v, () -> animationSettings.blockAnimations),
+        // Particle settings
+        new BooleanProperty(CAT_PARTICLE, "particles", true, "Enable/disable all particles",
+            v -> particleSettings.particles = v, () -> particleSettings.particles),
+        new BooleanProperty(CAT_PARTICLE, "rainSplash", true, "Enable/disable rain splash particles",
+            v -> particleSettings.rainSplash = v, () -> particleSettings.rainSplash),
+        new BooleanProperty(CAT_PARTICLE, "blockBreak", true, "Enable/disable block break particles",
+            v -> particleSettings.blockBreak = v, () -> particleSettings.blockBreak),
+        new BooleanProperty(CAT_PARTICLE, "blockBreaking", true, "Enable/disable block breaking particles",
+            v -> particleSettings.blockBreaking = v, () -> particleSettings.blockBreaking),
+        // Detail settings
+        new BooleanProperty(CAT_DETAIL, "sky", true, "Enable/disable sky rendering",
+            v -> detailSettings.sky = v, () -> detailSettings.sky),
+        new BooleanProperty(CAT_DETAIL, "stars", true, "Enable/disable star rendering",
+            v -> detailSettings.stars = v, () -> detailSettings.stars),
+        new BooleanProperty(CAT_DETAIL, "rainSnow", true, "Enable/disable rain and snow rendering",
+            v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
+        new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
+            v -> detailSettings.biomeColors = v, () -> detailSettings.biomeColors),
+        new BooleanProperty(CAT_DETAIL, "skyColors", true, "Enable/disable biome-based sky colors",
+            v -> detailSettings.skyColors = v, () -> detailSettings.skyColors),
+        new BooleanProperty(CAT_DETAIL, "voidFog", true, "Enable/disable void fog",
+            v -> detailSettings.voidFog = v, () -> detailSettings.voidFog),
+        // Render settings
+        new BooleanProperty(CAT_RENDER, "fog", true, "Enable/disable fog rendering",
+            v -> renderSettings.fog = v, () -> renderSettings.fog),
+        new BooleanProperty(CAT_RENDER, "clouds", true, "Enable/disable cloud rendering",
+            v -> renderSettings.clouds = v, () -> renderSettings.clouds),
+        new BooleanProperty(CAT_RENDER, "modernClouds", false,
+            "Use the Minecraft 1.21.6 cloud texture (downloaded by AssetMover 2.5)",
+            v -> renderSettings.modernClouds = v, () -> renderSettings.modernClouds),
+        new BooleanProperty(CAT_RENDER, "lightUpdates", true, "Enable/disable light updates",
+            v -> renderSettings.lightUpdates = v, () -> renderSettings.lightUpdates),
+        new BooleanProperty(CAT_RENDER, "itemFrames", true, "Enable/disable item frame rendering",
+            v -> renderSettings.itemFrames = v, () -> renderSettings.itemFrames),
+        new BooleanProperty(CAT_RENDER, "signTextCulling", true, "Skip sign text when viewed from behind",
+            v -> renderSettings.signTextCulling = v, () -> renderSettings.signTextCulling),
+        new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
+            v -> renderSettings.mapBackFaceCulling = v, () -> renderSettings.mapBackFaceCulling),
+        new BooleanProperty(CAT_RENDER, "itemVertexCache", false,
+            "Experimental: reuse static item vertex data (default off; performance gains vary; bypassed for native caches, Iris and dynamic/tinted geometry)",
+            v -> renderSettings.itemVertexCache = v, () -> renderSettings.itemVertexCache),
+        new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
+            v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),
+        new BooleanProperty(CAT_RENDER, "paintings", true, "Enable/disable painting rendering",
+            v -> renderSettings.paintings = v, () -> renderSettings.paintings),
+        new BooleanProperty(CAT_RENDER, "pistons", true, "Enable/disable piston animation rendering",
+            v -> renderSettings.pistons = v, () -> renderSettings.pistons),
+        new BooleanProperty(CAT_RENDER, "beacons", true, "Enable/disable beacon beam rendering",
+            v -> renderSettings.beacons = v, () -> renderSettings.beacons),
+        new BooleanProperty(CAT_RENDER, "limitBeaconBeamHeight", false, "Limit beacon beam to world height",
+            v -> renderSettings.limitBeaconBeamHeight = v, () -> renderSettings.limitBeaconBeamHeight),
+        new BooleanProperty(CAT_RENDER, "enchantingTableBooks", true, "Enable/disable enchanting table book rendering",
+            v -> renderSettings.enchantingTableBooks = v, () -> renderSettings.enchantingTableBooks),
+        new BooleanProperty(CAT_RENDER, "playerNameTag", true, "Enable/disable player name tag rendering",
+            v -> renderSettings.playerNameTag = v, () -> renderSettings.playerNameTag),
+        new BooleanProperty(CAT_RENDER, "itemFrameNameTag", true, "Enable/disable item frame name tag rendering",
+            v -> renderSettings.itemFrameNameTag = v, () -> renderSettings.itemFrameNameTag),
+        new BooleanProperty(CAT_RENDER, "preventShaders", false, "Prevent accidental shader activation",
+            v -> renderSettings.preventShaders = v, () -> renderSettings.preventShaders),
+        // Extra settings
+        new BooleanProperty(CAT_EXTRA, "showFps", false, "Show FPS overlay",
+            v -> extraSettings.showFps = v, () -> extraSettings.showFps),
+        new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (average/1% low/0.1% low)",
+            v -> extraSettings.showFPSExtended = v, () -> extraSettings.showFPSExtended),
+        new BooleanProperty(CAT_EXTRA, "showCoords", false, "Show coordinates overlay",
+            v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
+        new BooleanProperty(CAT_EXTRA, "showMemory", false, "Show JVM heap usage overlay (used/max MiB)",
+            v -> extraSettings.showMemory = v, () -> extraSettings.showMemory),
+        new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
+            v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
+        new BooleanProperty(CAT_EXTRA, "steadyDebugHud", ExtraSettings.STEADY_DEBUG_HUD_DEFAULT,
+            "Reduce F3 debug screen update frequency",
+            v -> extraSettings.steadyDebugHud = v, () -> extraSettings.steadyDebugHud),
+        new BooleanProperty(CAT_EXTRA, "useAdaptiveSync", false, "Enable adaptive VSync (swap interval -1)",
+            v -> extraSettings.useAdaptiveSync = v, () -> extraSettings.useAdaptiveSync),
+        new BooleanProperty(CAT_EXTRA, "toasts", true, "Master toggle for toast pop-ups",
+            v -> extraSettings.toasts = v, () -> extraSettings.toasts),
+        new BooleanProperty(CAT_EXTRA, "toastAdvancement", true, "Show advancement toasts",
+            v -> extraSettings.toastAdvancement = v, () -> extraSettings.toastAdvancement),
+        new BooleanProperty(CAT_EXTRA, "toastRecipe", true, "Show recipe toasts",
+            v -> extraSettings.toastRecipe = v, () -> extraSettings.toastRecipe),
+        new BooleanProperty(CAT_EXTRA, "toastTutorial", true, "Show tutorial toasts",
+            v -> extraSettings.toastTutorial = v, () -> extraSettings.toastTutorial),
+        new BooleanProperty(CAT_EXTRA, "toastSystem", true, "Show system toasts",
+            v -> extraSettings.toastSystem = v, () -> extraSettings.toastSystem),
+        new BooleanProperty(CAT_EXTRA, "modNameTooltip", false,
+            "Show the source mod's name at the bottom of item tooltips",
+            v -> extraSettings.modNameTooltip = v, () -> extraSettings.modNameTooltip));
     private final List<IntProperty> intProperties = Arrays.asList(
-            new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
-                    v -> renderSettings.fogStart = v, () -> renderSettings.fogStart),
-            new IntProperty(CAT_RENDER, "fogDistance", 0, 0, 32, "Fog distance in chunks (0 = use render distance)",
-                    v -> renderSettings.fogDistance = v, () -> renderSettings.fogDistance),
-            new IntProperty(CAT_RENDER, "cloudHeight", RenderSettings.USE_WORLD_CLOUD_HEIGHT,
-                    RenderSettings.USE_WORLD_CLOUD_HEIGHT, 384,
-                    "Cloud height (-16 = use the current dimension's default)",
-                    v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
-            new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 128, "Cloud render distance in chunks (0 = use render distance)",
-                    v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
-            new IntProperty(CAT_RENDER, "cloudScale", RenderSettings.CLOUD_SCALE_VANILLA,
-                    RenderSettings.CLOUD_SCALE_MIN, RenderSettings.CLOUD_SCALE_MAX,
-                    "Cloud scale (1 = 0.25x, 4 = vanilla, 16 = 4.00x)",
-                    v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
-            new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
-                    v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
-            new IntProperty(CAT_RENDER, "entityRenderDistance", 0, 0, 256, "Entity render distance in blocks (0 = vanilla)",
-                    v -> renderSettings.entityRenderDistance = v, () -> renderSettings.entityRenderDistance),
-            new IntProperty(CAT_RENDER, "tileEntityRenderDistance", 0, 0, 256, "Tile entity render distance in blocks (0 = vanilla)",
-                    v -> renderSettings.tileEntityRenderDistance = v, () -> renderSettings.tileEntityRenderDistance),
-            new IntProperty(CAT_EXTRA, "menuFpsLimit", 0, 0, 240, "FPS limit outside a world (0 = vanilla)",
-                    v -> extraSettings.menuFpsLimit = v, () -> extraSettings.menuFpsLimit),
-            new IntProperty(CAT_EXTRA, "inactiveFpsLimit", 0, 0, 120, "Unfocused FPS limit (0 = off)",
-                    v -> extraSettings.inactiveFpsLimit = v, () -> extraSettings.inactiveFpsLimit),
-            new IntProperty(CAT_EXTRA, "minimizedFpsLimit", 0, 0, 120, "Minimized FPS limit (0 = off)",
-                    v -> extraSettings.minimizedFpsLimit = v, () -> extraSettings.minimizedFpsLimit),
-            new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
-                    v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
-            new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval",
-                    ExtraSettings.STEADY_DEBUG_HUD_REFRESH_DEFAULT,
-                    ExtraSettings.STEADY_DEBUG_HUD_REFRESH_MIN,
-                    ExtraSettings.STEADY_DEBUG_HUD_REFRESH_MAX,
-                    "F3 debug screen refresh interval in ticks",
-                    v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval)
-    );
+        new IntProperty(CAT_RENDER, "fogStart", 100, 0, 200, "Fog start distance percentage (100 = default)",
+            v -> renderSettings.fogStart = v, () -> renderSettings.fogStart),
+        new IntProperty(CAT_RENDER, "fogDistance", 0, 0, 32, "Fog distance in chunks (0 = use render distance)",
+            v -> renderSettings.fogDistance = v, () -> renderSettings.fogDistance),
+        new IntProperty(CAT_RENDER, "cloudHeight", RenderSettings.USE_WORLD_CLOUD_HEIGHT,
+            RenderSettings.USE_WORLD_CLOUD_HEIGHT, 384,
+            "Cloud height (-16 = use the current dimension's default)",
+            v -> renderSettings.cloudHeight = v, () -> renderSettings.cloudHeight),
+        new IntProperty(CAT_RENDER, "cloudDistance", 0, 0, 128,
+            "Cloud render distance in chunks (0 = use render distance)",
+            v -> renderSettings.cloudDistance = v, () -> renderSettings.cloudDistance),
+        new IntProperty(CAT_RENDER, "cloudScale", RenderSettings.CLOUD_SCALE_VANILLA,
+            RenderSettings.CLOUD_SCALE_MIN, RenderSettings.CLOUD_SCALE_MAX,
+            "Cloud scale (1 = 0.25x, 4 = vanilla, 16 = 4.00x)",
+            v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
+        new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
+            v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
+        new IntProperty(CAT_RENDER, "entityRenderDistance", 0, 0, 256, "Entity render distance in blocks (0 = vanilla)",
+            v -> renderSettings.entityRenderDistance = v, () -> renderSettings.entityRenderDistance),
+        new IntProperty(CAT_RENDER, "tileEntityRenderDistance", 0, 0, 256,
+            "Tile entity render distance in blocks (0 = vanilla)",
+            v -> renderSettings.tileEntityRenderDistance = v, () -> renderSettings.tileEntityRenderDistance),
+        new IntProperty(CAT_EXTRA, "menuFpsLimit", 0, 0, 240, "FPS limit outside a world (0 = vanilla)",
+            v -> extraSettings.menuFpsLimit = v, () -> extraSettings.menuFpsLimit),
+        new IntProperty(CAT_EXTRA, "inactiveFpsLimit", 0, 0, 120, "Unfocused FPS limit (0 = off)",
+            v -> extraSettings.inactiveFpsLimit = v, () -> extraSettings.inactiveFpsLimit),
+        new IntProperty(CAT_EXTRA, "minimizedFpsLimit", 0, 0, 120, "Minimized FPS limit (0 = off)",
+            v -> extraSettings.minimizedFpsLimit = v, () -> extraSettings.minimizedFpsLimit),
+        new IntProperty(CAT_DETAIL, "totalStars", 1500, 500, 32000, "Number of stars to render",
+            v -> detailSettings.totalStars = v, () -> detailSettings.totalStars),
+        new IntProperty(CAT_EXTRA, "steadyDebugHudRefreshInterval",
+            ExtraSettings.STEADY_DEBUG_HUD_REFRESH_DEFAULT,
+            ExtraSettings.STEADY_DEBUG_HUD_REFRESH_MIN,
+            ExtraSettings.STEADY_DEBUG_HUD_REFRESH_MAX,
+            "F3 debug screen refresh interval in ticks",
+            v -> extraSettings.steadyDebugHudRefreshInterval = v, () -> extraSettings.steadyDebugHudRefreshInterval));
     private Configuration config;
 
     /** Shared Forge GUI backing store; callers must synchronize live options after editing it. */
@@ -234,37 +238,46 @@ public class CeleritasExtraGameOptions {
         detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, true, "Render the moon");
         config.getCategory(CAT_DETAIL).remove("sunMoon");
         renderSettings.entityDistanceExemptions = config.getStringList("entityDistanceExemptions", CAT_RENDER,
-                renderSettings.entityDistanceExemptions, "Classes exempt from entity distance culling; package.* is supported");
+            renderSettings.entityDistanceExemptions,
+            "Classes exempt from entity distance culling; package.* is supported");
         renderSettings.tileEntityDistanceExemptions = config.getStringList("tileEntityDistanceExemptions", CAT_RENDER,
-                renderSettings.tileEntityDistanceExemptions, "Classes exempt from tile entity distance culling; package.* is supported");
+            renderSettings.tileEntityDistanceExemptions,
+            "Classes exempt from tile entity distance culling; package.* is supported");
         for (String category : config.getCategoryNames()) {
-            if (!category.startsWith("dimension_fog_")) continue;
+            if (!category.startsWith("dimension_fog_"))
+                continue;
             try {
                 int dimension = Integer.parseInt(category.substring("dimension_fog_".length()));
                 DimensionFogSettings fog = renderSettings.dimensionFog(dimension);
                 fog.override = config.getBoolean("override", category, false, "Override global atmospheric fog");
                 fog.fog = config.getBoolean("fog", category, fog.fog, "Enable atmospheric fog");
                 fog.start = config.getInt("start", category, fog.start, 0, 200, "Fog start percentage");
-                fog.distance = config.getInt("distance", category, fog.distance, 0, 32, "Fog distance in chunks (0 = vanilla)");
+                fog.distance = config.getInt("distance", category, fog.distance, 0, 32,
+                    "Fog distance in chunks (0 = vanilla)");
             } catch (NumberFormatException ignored) {
                 CeleritasExtraMod.LOGGER.warn("Ignoring invalid dimension fog category: {}", category);
             }
         }
 
         // Enum properties
-        renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0, 0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
-        extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0, OverlayCorner.values().length - 1, "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
-        extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0, TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
+        renderSettings.cloudTranslucency = CloudTranslucency.values()[config.getInt("cloudTranslucency", CAT_RENDER, 0,
+            0, CloudTranslucency.values().length - 1, "Cloud translucency mode (0 = Default, 1 = Always, 2 = Never)")];
+        extraSettings.overlayCorner = OverlayCorner.values()[config.getInt("overlayCorner", CAT_EXTRA, 0, 0,
+            OverlayCorner.values().length - 1,
+            "Overlay corner position (0=TopLeft, 1=TopRight, 2=BottomLeft, 3=BottomRight)")];
+        extraSettings.textContrast = TextContrast.values()[config.getInt("textContrast", CAT_EXTRA, 2, 0,
+            TextContrast.values().length - 1, "Text contrast mode (0=None, 1=Background, 2=Shadow)")];
 
         // Particle class filter
         String[] disabledClasses = config.getStringList("disabledClasses", CAT_PARTICLE_CLASSES,
-                new String[0], "List of disabled particle class names");
+            new String[0], "List of disabled particle class names");
         ParticleClassRegistry.getInstance().loadDisabledClasses(disabledClasses);
-        ParticleClassRegistry.getInstance().loadSpawnPercentages(config.getStringList("spawnPercentages", CAT_PARTICLE_CLASSES,
+        ParticleClassRegistry.getInstance()
+            .loadSpawnPercentages(config.getStringList("spawnPercentages", CAT_PARTICLE_CLASSES,
                 new String[0], "Per-class spawn percentages: full.class.Name|percentage (0-100)"));
 
         String[] discoveredClasses = config.getStringList("discoveredClasses", CAT_PARTICLE_CLASSES,
-                new String[0], "Cached list of discovered particle classes (auto-populated)");
+            new String[0], "Cached list of discovered particle classes (auto-populated)");
         ParticleClassRegistry.getInstance().loadDiscoveredClasses(discoveredClasses);
     }
 
@@ -282,7 +295,8 @@ public class CeleritasExtraGameOptions {
         config.get(CAT_DETAIL, "sun", true).set(detailSettings.sun);
         config.get(CAT_DETAIL, "moon", true).set(detailSettings.moon);
         config.get(CAT_RENDER, "entityDistanceExemptions", new String[0]).set(renderSettings.entityDistanceExemptions);
-        config.get(CAT_RENDER, "tileEntityDistanceExemptions", new String[0]).set(renderSettings.tileEntityDistanceExemptions);
+        config.get(CAT_RENDER, "tileEntityDistanceExemptions", new String[0])
+            .set(renderSettings.tileEntityDistanceExemptions);
         renderSettings.dimensionFogOverrides.forEach((dimension, fog) -> {
             String category = "dimension_fog_" + dimension;
             config.get(category, "override", false).set(fog.override);
@@ -298,11 +312,11 @@ public class CeleritasExtraGameOptions {
 
         // Particle class filter
         config.get(CAT_PARTICLE_CLASSES, "disabledClasses", new String[0])
-                .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
+            .set(ParticleClassRegistry.getInstance().getDisabledClassesArray());
         config.get(CAT_PARTICLE_CLASSES, "discoveredClasses", new String[0])
-                .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
+            .set(ParticleClassRegistry.getInstance().getDiscoveredClassesArray());
         config.get(CAT_PARTICLE_CLASSES, "spawnPercentages", new String[0])
-                .set(ParticleClassRegistry.getInstance().getSpawnPercentagesArray());
+            .set(ParticleClassRegistry.getInstance().getSpawnPercentagesArray());
 
         config.save();
         ParticleClassRegistry.getInstance().markClean();
@@ -312,10 +326,11 @@ public class CeleritasExtraGameOptions {
      * Overlay corner positions for FPS/coordinate/memory display
      */
     public enum OverlayCorner {
-        TOP_LEFT("sodium-extra.option.overlay_corner.top_left"),
-        TOP_RIGHT("sodium-extra.option.overlay_corner.top_right"),
-        BOTTOM_LEFT("sodium-extra.option.overlay_corner.bottom_left"),
-        BOTTOM_RIGHT("sodium-extra.option.overlay_corner.bottom_right");
+
+        TOP_LEFT("sodium-extra.option.overlay_corner.top_left"), TOP_RIGHT(
+            "sodium-extra.option.overlay_corner.top_right"), BOTTOM_LEFT(
+                "sodium-extra.option.overlay_corner.bottom_left"), BOTTOM_RIGHT(
+                    "sodium-extra.option.overlay_corner.bottom_right");
 
         private final String translationKey;
 
@@ -326,6 +341,7 @@ public class CeleritasExtraGameOptions {
         public String getLocalizedName() {
             return Translations.format(this.translationKey);
         }
+
     }
 
     /**
@@ -335,9 +351,9 @@ public class CeleritasExtraGameOptions {
      * - SHADOW: a drop shadow behind the glyphs
      */
     public enum TextContrast {
-        NONE("sodium-extra.option.text_contrast.none"),
-        BACKGROUND("sodium-extra.option.text_contrast.background"),
-        SHADOW("sodium-extra.option.text_contrast.shadow");
+
+        NONE("sodium-extra.option.text_contrast.none"), BACKGROUND(
+            "sodium-extra.option.text_contrast.background"), SHADOW("sodium-extra.option.text_contrast.shadow");
 
         private final String translationKey;
 
@@ -348,6 +364,7 @@ public class CeleritasExtraGameOptions {
         public String getLocalizedName() {
             return Translations.format(this.translationKey);
         }
+
     }
 
     /**
@@ -358,9 +375,8 @@ public class CeleritasExtraGameOptions {
      * support for {@code GLX_EXT_swap_control_tear} / {@code WGL_EXT_swap_control_tear}
      */
     public enum VerticalSyncOption {
-        OFF("options.off"),
-        ON("options.on"),
-        ADAPTIVE("sodium-extra.option.use_adaptive_sync.name");
+
+        OFF("options.off"), ON("options.on"), ADAPTIVE("sodium-extra.option.use_adaptive_sync.name");
 
         private final String translationKey;
 
@@ -429,6 +445,7 @@ public class CeleritasExtraGameOptions {
             Display.setVSyncEnabled(mc.gameSettings.enableVsync);
             mc.gameSettings.saveOptions();
         }
+
     }
 
     /**
@@ -436,9 +453,9 @@ public class CeleritasExtraGameOptions {
      * Borderless uses Cleanroom's built-in Display.toggleBorderless() via ForgeEarlyConfig.
      */
     public enum ScreenMode {
-        WINDOWED("sodium.extras.options.screen.windowed"),
-        BORDERLESS("sodium.extras.options.screen.borderless"),
-        FULLSCREEN("options.fullscreen");
+
+        WINDOWED("sodium.extras.options.screen.windowed"), BORDERLESS(
+            "sodium.extras.options.screen.borderless"), FULLSCREEN("options.fullscreen");
 
         private final String translationKey;
 
@@ -467,14 +484,16 @@ public class CeleritasExtraGameOptions {
         public static void apply(CeleritasExtraGameOptions opts, ScreenMode mode) {
             var mc = Minecraft.getMinecraft();
             var previous = getCurrent(opts);
-            if (previous == mode) return;
+            if (previous == mode)
+                return;
 
             if (previous != WINDOWED) {
                 mc.toggleFullscreen();
             }
 
             saveBorderlessPreference(mode);
-            if (mode != WINDOWED) mc.toggleFullscreen();
+            if (mode != WINDOWED)
+                mc.toggleFullscreen();
             mc.gameSettings.saveOptions();
         }
 
@@ -483,6 +502,7 @@ public class CeleritasExtraGameOptions {
             ForgeEarlyConfig.WINDOW_BORDERLESS_REPLACES_FULLSCREEN = mode == BORDERLESS;
             ConfigManager.sync(ForgeEarlyConfig.class);
         }
+
     }
 
     /**
@@ -492,9 +512,9 @@ public class CeleritasExtraGameOptions {
      * - NEVER: clouds are never translucent
      */
     public enum CloudTranslucency {
-        DEFAULT("celeritasextra.option.cloud_translucency.default"),
-        ALWAYS("celeritasextra.option.cloud_translucency.always"),
-        NEVER("celeritasextra.option.cloud_translucency.never");
+
+        DEFAULT("celeritasextra.option.cloud_translucency.default"), ALWAYS(
+            "celeritasextra.option.cloud_translucency.always"), NEVER("celeritasextra.option.cloud_translucency.never");
 
         private final String translationKey;
 
@@ -505,6 +525,7 @@ public class CeleritasExtraGameOptions {
         public String getLocalizedName() {
             return Translations.format(this.translationKey);
         }
+
     }
 
     /**
@@ -512,12 +533,14 @@ public class CeleritasExtraGameOptions {
      * water, lava, fire, portal, and general block-animation controls.
      */
     public static class AnimationSettings {
+
         public boolean animation = true;
         public boolean water = true;
         public boolean lava = true;
         public boolean fire = true;
         public boolean portal = true;
         public boolean blockAnimations = true;
+
     }
 
     /**
@@ -525,10 +548,12 @@ public class CeleritasExtraGameOptions {
      * rain-splash, block-break, and block-breaking particles.
      */
     public static class ParticleSettings {
+
         public boolean particles = true;
         public boolean rainSplash = true;
         public boolean blockBreak = true;
         public boolean blockBreaking = true;
+
     }
 
     /**
@@ -536,6 +561,7 @@ public class CeleritasExtraGameOptions {
      * and sky colors, and void fog) plus the {@code totalStars} count.
      */
     public static class DetailSettings {
+
         public boolean sky = true;
         public boolean stars = true;
         public boolean sun = true;
@@ -545,6 +571,7 @@ public class CeleritasExtraGameOptions {
         public boolean skyColors = true;
         public boolean voidFog = true;
         public int totalStars = 1500;
+
     }
 
     /**
@@ -553,6 +580,7 @@ public class CeleritasExtraGameOptions {
      * paintings, pistons, and beacon beams.
      */
     public static class RenderSettings {
+
         /** Slider sentinel meaning "preserve WorldProvider#getCloudHeight()". */
         public static final int USE_WORLD_CLOUD_HEIGHT = -16;
         public static final int CLOUD_SCALE_MIN = 1;
@@ -597,14 +625,15 @@ public class CeleritasExtraGameOptions {
         public final Map<Integer, DimensionFogSettings> dimensionFogOverrides = new TreeMap<>();
 
         public DimensionFogSettings dimensionFog(int dimension) {
-            return dimensionFogOverrides.computeIfAbsent(dimension, id -> new DimensionFogSettings(fog, fogStart, fogDistance));
+            return dimensionFogOverrides.computeIfAbsent(dimension,
+                id -> new DimensionFogSettings(fog, fogStart, fogDistance));
         }
 
         public ResolvedFog resolveFog(int dimension) {
             DimensionFogSettings setting = dimensionFogOverrides.get(dimension);
             return setting != null && setting.override
-                    ? new ResolvedFog(setting.fog, setting.start, setting.distance)
-                    : new ResolvedFog(fog, fogStart, fogDistance);
+                ? new ResolvedFog(setting.fog, setting.start, setting.distance)
+                : new ResolvedFog(fog, fogStart, fogDistance);
         }
         public boolean armorStands = true;
         public boolean paintings = true;
@@ -615,11 +644,14 @@ public class CeleritasExtraGameOptions {
         public boolean playerNameTag = true;
         public boolean itemFrameNameTag = true;
         public boolean preventShaders = false;
+
     }
 
-    public record ResolvedFog(boolean enabled, int start, int distance) {}
+    public record ResolvedFog(boolean enabled, int start, int distance) {
+    }
 
     public static final class DimensionFogSettings {
+
         public boolean override;
         public boolean fog;
         public int start;
@@ -630,6 +662,7 @@ public class CeleritasExtraGameOptions {
             this.start = start;
             this.distance = distance;
         }
+
     }
 
     /**
@@ -638,6 +671,7 @@ public class CeleritasExtraGameOptions {
      * mod-name tooltip.
      */
     public static class ExtraSettings {
+
         public static final boolean STEADY_DEBUG_HUD_DEFAULT = true;
         public static final int STEADY_DEBUG_HUD_REFRESH_MIN = 1;
         public static final int STEADY_DEBUG_HUD_REFRESH_DEFAULT = 1;
@@ -662,6 +696,7 @@ public class CeleritasExtraGameOptions {
         public boolean toastTutorial = true;
         public boolean toastSystem = true;
         public boolean modNameTooltip = false;
+
     }
 
     /**
@@ -671,7 +706,8 @@ public class CeleritasExtraGameOptions {
      * boolean options can be loaded from and saved to the {@link Configuration} uniformly.
      */
     private record BooleanProperty(String category, String key, boolean defaultValue, String comment,
-                                   Consumer<Boolean> setter, Supplier<Boolean> getter) {
+        Consumer<Boolean> setter, Supplier<Boolean> getter) {
+
         /**
          * Reads the entry from {@code config} (creating it with its default if absent) into the bound field.
          */
@@ -685,6 +721,7 @@ public class CeleritasExtraGameOptions {
         void save(Configuration config) {
             config.get(category, key, defaultValue).set(getter.get());
         }
+
     }
 
     /**
@@ -694,7 +731,8 @@ public class CeleritasExtraGameOptions {
      * {@link Configuration} clamps values to on load.
      */
     private record IntProperty(String category, String key, int defaultValue, int min, int max, String comment,
-                               Consumer<Integer> setter, Supplier<Integer> getter) {
+        Consumer<Integer> setter, Supplier<Integer> getter) {
+
         /**
          * Reads and clamps the entry from {@code config} (creating it with its default if absent) into the bound field.
          */
@@ -708,5 +746,7 @@ public class CeleritasExtraGameOptions {
         void save(Configuration config) {
             config.get(category, key, defaultValue).set(getter.get());
         }
+
     }
+
 }

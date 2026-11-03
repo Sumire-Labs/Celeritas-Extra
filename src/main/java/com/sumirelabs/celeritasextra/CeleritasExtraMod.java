@@ -1,14 +1,15 @@
 package com.sumirelabs.celeritasextra;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.event.FMLConstructionEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * Main mod entry point for Celeritas Extra, a client-only renderer companion.
@@ -22,16 +23,13 @@ import java.io.File;
  * The mod is {@code clientSideOnly} and accepts any remote version, so it can join
  * servers that do not have it installed.
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION,
-        clientSideOnly = true, acceptableRemoteVersions = "*",
-        dependencies = "required-after:cleanroom@[0.7.11-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
-                + "after:assetmover@[2.5,)")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.11-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
+    + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_NAME);
 
-    @Mod.Instance
-    public static CeleritasExtraMod INSTANCE;
+    @Mod.Instance public static CeleritasExtraMod INSTANCE;
 
     private File configDirectory;
 
@@ -49,16 +47,17 @@ public class CeleritasExtraMod {
         boolean celeritas = Loader.isModLoaded("celeritas");
         boolean nothirium = Loader.isModLoaded("nothirium");
         if ((actinium ? 1 : 0) + (celeritas ? 1 : 0) + (nothirium ? 1 : 0) != 1) {
-            throw new IllegalStateException("Celeritas Extra requires exactly one renderer: Celeritas, Actinium or Nothirium");
+            throw new IllegalStateException(
+                "Celeritas Extra requires exactly one renderer: Celeritas, Actinium or Nothirium");
         }
         if (Loader.isModLoaded("assetmover")) {
             try {
                 com.sumirelabs.celeritasextra.compat.assetmover.AssetMoverCompat
-                        .registerModernCloudTexture();
+                    .registerModernCloudTexture();
                 LOGGER.info("Requested the Minecraft 1.21.6 cloud texture through AssetMover");
             } catch (RuntimeException | LinkageError throwable) {
                 LOGGER.error("AssetMover integration failed; the modern cloud texture was not requested",
-                        throwable);
+                    throwable);
             }
         } else {
             LOGGER.info("AssetMover is not installed; the modern cloud texture will not be downloaded");
@@ -74,7 +73,8 @@ public class CeleritasExtraMod {
         } else {
             com.sumirelabs.celeritasextra.compat.CeleritasOptionsAdapter.register();
         }
-        LOGGER.info("Registered Celeritas Extra with {} GUI", actinium ? "Actinium" : nothirium ? "Nothirium" : "Celeritas");
+        LOGGER.info("Registered Celeritas Extra with {} GUI",
+            actinium ? "Actinium" : nothirium ? "Nothirium" : "Celeritas");
     }
 
     /**
@@ -101,8 +101,9 @@ public class CeleritasExtraMod {
     public void init(FMLInitializationEvent event) {
         if (net.minecraftforge.fml.common.FMLCommonHandler.instance().getEffectiveSide().isClient()) {
             com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod
-                    .onClientInit(this.configDirectory);
+                .onClientInit(this.configDirectory);
         }
         LOGGER.info("Celeritas Extra initialized");
     }
+
 }

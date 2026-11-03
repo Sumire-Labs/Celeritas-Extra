@@ -1,14 +1,16 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.Tessellator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.Tessellator;
 
 /**
  * Toggles rendering of the sun and moon discs.
@@ -20,36 +22,12 @@ import org.spongepowered.asm.mixin.injection.Slice;
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobalSunMoon {
 
-    @WrapOperation(
-            method = "renderSky(FI)V",
-            slice = @Slice(
-                    from = @At(value = "FIELD",
-                            target = "Lnet/minecraft/client/renderer/RenderGlobal;SUN_TEXTURES:Lnet/minecraft/util/ResourceLocation;"),
-                    to = @At(value = "FIELD",
-                            target = "Lnet/minecraft/client/renderer/RenderGlobal;MOON_PHASES_TEXTURES:Lnet/minecraft/util/ResourceLocation;")
-            ),
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/Tessellator;draw()V"
-            )
-    )
+    @WrapOperation(method = "renderSky(FI)V", slice = @Slice(from = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/RenderGlobal;SUN_TEXTURES:Lnet/minecraft/util/ResourceLocation;"), to = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/RenderGlobal;MOON_PHASES_TEXTURES:Lnet/minecraft/util/ResourceLocation;")), at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/Tessellator;draw()V"))
     private void celeritasExtra$drawSun(Tessellator tessellator, Operation<Void> original) {
         this.celeritasExtra$drawOrDiscard(tessellator, original, CeleritasExtraClientMod.options().detailSettings.sun);
     }
 
-    @WrapOperation(
-            method = "renderSky(FI)V",
-            slice = @Slice(
-                    from = @At(value = "FIELD",
-                            target = "Lnet/minecraft/client/renderer/RenderGlobal;MOON_PHASES_TEXTURES:Lnet/minecraft/util/ResourceLocation;"),
-                    to = @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/multiplayer/WorldClient;getStarBrightness(F)F")
-            ),
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/Tessellator;draw()V"
-            )
-    )
+    @WrapOperation(method = "renderSky(FI)V", slice = @Slice(from = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/RenderGlobal;MOON_PHASES_TEXTURES:Lnet/minecraft/util/ResourceLocation;"), to = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getStarBrightness(F)F")), at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/Tessellator;draw()V"))
     private void celeritasExtra$drawMoon(Tessellator tessellator, Operation<Void> original) {
         this.celeritasExtra$drawOrDiscard(tessellator, original, CeleritasExtraClientMod.options().detailSettings.moon);
     }
@@ -63,4 +41,5 @@ public class MixinRenderGlobalSunMoon {
             tessellator.getBuffer().reset();
         }
     }
+
 }

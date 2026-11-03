@@ -15,8 +15,7 @@ import net.minecraft.init.MobEffects;
  */
 public final class FogState {
 
-    private FogState() {
-    }
+    private FogState() {}
 
     /**
      * Returns whether the active view entity is subject to gameplay-critical fog that must be preserved.
@@ -33,9 +32,10 @@ public final class FogState {
             return false;
         }
         if (view instanceof EntityLivingBase
-                && ((EntityLivingBase) view).isPotionActive(MobEffects.BLINDNESS)) {
+            && ((EntityLivingBase) view).isPotionActive(MobEffects.BLINDNESS)) {
             return true;
         }
         return view.isInsideOfMaterial(Material.WATER) || view.isInsideOfMaterial(Material.LAVA);
     }
+
 }

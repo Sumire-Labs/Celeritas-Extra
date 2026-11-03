@@ -1,19 +1,25 @@
 package com.sumirelabs.celeritasextra.client.gui;
 
-import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.io.TempDir;
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
+
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraOptionsPersistenceTest {
-    @Test void earlyOptionsUseLaunchDirectoryAndLaterCanonicalDirectoryIsHonored() throws Exception {
+
+    @Test
+    void earlyOptionsUseLaunchDirectoryAndLaterCanonicalDirectoryIsHonored() throws Exception {
         var configField = CeleritasExtraClientMod.class.getDeclaredField("CONFIG");
         var directoryField = CeleritasExtraClientMod.class.getDeclaredField("configDirectory");
         configField.setAccessible(true);
@@ -29,7 +35,8 @@ class ExtraOptionsPersistenceTest {
             assertEquals(37, early.extraSettings.inactiveFpsLimit);
             assertEquals(earlyDirectory.toFile(), directoryField.get(null));
             CeleritasExtraClientMod.setConfigDirectory(earlyDirectory.toFile());
-            assertSame(early, CeleritasExtraClientMod.options(), "Same-directory preInit must retain the existing config");
+            assertSame(early, CeleritasExtraClientMod.options(),
+                "Same-directory preInit must retain the existing config");
             var canonical = Files.createDirectories(directory.resolve("canonical-config"));
             Files.writeString(canonical.resolve("celeritas-extra.cfg"), "extra {\n I:inactiveFpsLimit=91\n}\n");
             CeleritasExtraClientMod.setConfigDirectory(canonical.toFile());
@@ -44,7 +51,8 @@ class ExtraOptionsPersistenceTest {
     private Field minecraftHome;
     private Object previousHome;
 
-    @BeforeEach void initializeForgeConfigContext() throws Exception {
+    @BeforeEach
+    void initializeForgeConfigContext() throws Exception {
         // Forge's real config parser expects the launcher to have supplied a game directory.
         minecraftHome = FMLInjectionData.class.getDeclaredField("minecraftHome");
         minecraftHome.setAccessible(true);
@@ -52,14 +60,16 @@ class ExtraOptionsPersistenceTest {
         minecraftHome.set(null, directory.toFile());
     }
 
-    @AfterEach void restoreForgeConfigContext() throws Exception {
+    @AfterEach
+    void restoreForgeConfigContext() throws Exception {
         minecraftHome.set(null, previousHome);
         ParticleClassRegistry.getInstance().loadDisabledClasses(new String[0]);
         ParticleClassRegistry.getInstance().loadSpawnPercentages(new String[0]);
         ParticleClassRegistry.getInstance().markClean();
     }
 
-    @Test void obsoleteSunMoonIsIgnoredAndIndependentChoicesPersist() throws Exception {
+    @Test
+    void obsoleteSunMoonIsIgnoredAndIndependentChoicesPersist() throws Exception {
         Path file = directory.resolve("extra.cfg");
         Files.writeString(file, "detail {\n B:sunMoon=false\n}\n");
         var options = CeleritasExtraGameOptions.load(file.toFile());
@@ -73,7 +83,8 @@ class ExtraOptionsPersistenceTest {
         assertFalse(reloaded.detailSettings.moon);
     }
 
-    @Test void dimensionFogFallsBackToGlobalAndOverridesPersist() {
+    @Test
+    void dimensionFogFallsBackToGlobalAndOverridesPersist() {
         var settings = new CeleritasExtraGameOptions.RenderSettings();
         settings.fogDistance = 12;
         settings.fogStart = 80;
@@ -92,7 +103,8 @@ class ExtraOptionsPersistenceTest {
         assertEquals(20, settings.resolveFog(-1).distance());
     }
 
-    @Test void newSettingsAndRatesSurviveSaveReload() {
+    @Test
+    void newSettingsAndRatesSurviveSaveReload() {
         Path file = directory.resolve("extra.cfg");
         var options = CeleritasExtraGameOptions.load(file.toFile());
         options.renderSettings.entityRenderDistance = 48;
@@ -120,4 +132,5 @@ class ExtraOptionsPersistenceTest {
         assertEquals(25, ParticleClassRegistry.getInstance().getSpawnPercentage("example.Smoke"));
         ParticleClassRegistry.getInstance().loadSpawnPercentages(new String[0]);
     }
+
 }

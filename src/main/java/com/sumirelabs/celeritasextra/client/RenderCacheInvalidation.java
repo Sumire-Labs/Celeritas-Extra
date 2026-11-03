@@ -7,10 +7,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public final class RenderCacheInvalidation {
-    private RenderCacheInvalidation() { }
 
-    @SubscribeEvent public static void onModelBake(ModelBakeEvent event) {
+    private RenderCacheInvalidation() {}
+
+    @SubscribeEvent
+    public static void onModelBake(ModelBakeEvent event) {
         ItemFrameLodState.clearCache();
         StaticItemVertexCache.INSTANCE.clear();
     }
+
 }

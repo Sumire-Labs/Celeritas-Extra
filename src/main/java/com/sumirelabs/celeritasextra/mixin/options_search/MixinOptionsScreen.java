@@ -1,33 +1,37 @@
 package com.sumirelabs.celeritasextra.mixin.options_search;
 
-import com.sumirelabs.celeritasextra.client.gui.Translations;
-
-import com.sumirelabs.celeritasextra.client.gui.OptionsSearchScreen;
-import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasSearchBar;
-import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
 import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
 import org.embeddedt.embeddium.impl.util.Dim2i;
-import org.taumc.celeritas.impl.gui.VintageInteractionContext;
 import org.lwjgl.input.Keyboard;
-import org.taumc.celeritas.impl.gui.CeleritasVideoOptionsScreen;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.taumc.celeritas.impl.gui.CeleritasVideoOptionsScreen;
+import org.taumc.celeritas.impl.gui.VintageInteractionContext;
+
+import com.sumirelabs.celeritasextra.client.gui.CeleritasSearchBar;
+import com.sumirelabs.celeritasextra.client.gui.OptionsSearchScreen;
+import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
+import com.sumirelabs.celeritasextra.client.gui.Translations;
+import com.sumirelabs.celeritasextra.compat.window.WindowCompat;
+
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 
 @Mixin(value = CeleritasVideoOptionsScreen.class, remap = false)
 public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSearchScreen {
-    @Shadow @Final private CeleritasVideoOptionsController controller;
+
+    @Shadow
+    @Final private CeleritasVideoOptionsController controller;
     @Unique private GuiTextField celeritasExtra$field;
     @Unique private CeleritasSearchBar celeritasExtra$bar;
     @Unique private int celeritasExtra$cursorTicks;
     @Unique private boolean celeritasExtra$repeatBefore;
     @Unique private boolean celeritasExtra$opened;
 
-    @Unique private SearchableOptionsController celeritasExtra$searchController() {
+    @Unique
+    private SearchableOptionsController celeritasExtra$searchController() {
         return (SearchableOptionsController) controller;
     }
 
@@ -40,7 +44,8 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         Dim2i bounds = celeritasExtra$searchController().celeritasExtra$searchBounds();
         celeritasExtra$bar = new CeleritasSearchBar(bounds, this::celeritasExtra$clear);
         // Keep vanilla's editing/clipboard behavior, but never invoke its drawing methods.
-        celeritasExtra$field = new GuiTextField(0, fontRenderer, bounds.x(), bounds.y(), bounds.width(), bounds.height());
+        celeritasExtra$field = new GuiTextField(0, fontRenderer, bounds.x(), bounds.y(), bounds.width(),
+            bounds.height());
         celeritasExtra$field.setEnableBackgroundDrawing(false);
         celeritasExtra$field.setMaxStringLength(128);
         celeritasExtra$field.setText(text);
@@ -54,24 +59,27 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         Keyboard.enableRepeatEvents(true);
     }
 
-    @Unique private void celeritasExtra$clear() {
+    @Unique
+    private void celeritasExtra$clear() {
         celeritasExtra$field.setText("");
         celeritasExtra$field.setFocused(true);
         celeritasExtra$cursorTicks = 0;
         celeritasExtra$searchController().celeritasExtra$search("");
     }
 
-    @Unique private void celeritasExtra$updateBar() {
+    @Unique
+    private void celeritasExtra$updateBar() {
         celeritasExtra$bar.update(celeritasExtra$field.getText(), celeritasExtra$field.getCursorPosition(),
-                celeritasExtra$field.getSelectionEnd(), celeritasExtra$field.isFocused(),
-                celeritasExtra$cursorTicks / 6 % 2 == 0 && !WindowCompat.composingText(),
-                Translations.format("rso.search_bar_empty"), Translations.format("celeritasextra.search.results",
-                        celeritasExtra$searchController().celeritasExtra$resultCount()));
+            celeritasExtra$field.getSelectionEnd(), celeritasExtra$field.isFocused(),
+            celeritasExtra$cursorTicks / 6 % 2 == 0 && !WindowCompat.composingText(),
+            Translations.format("rso.search_bar_empty"), Translations.format("celeritasextra.search.results",
+                celeritasExtra$searchController().celeritasExtra$resultCount()));
     }
 
     @Inject(method = "drawScreen", at = @At("RETURN"), remap = true)
     private void celeritasExtra$drawSearch(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
-        if (celeritasExtra$field == null) return;
+        if (celeritasExtra$field == null)
+            return;
         celeritasExtra$updateBar();
         var context = celeritasExtra$searchController().celeritasExtra$drawContext();
         var area = celeritasExtra$bar.textBounds(context);
@@ -83,32 +91,39 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         celeritasExtra$bar.useTextScrollOffset(WindowCompat.textScrollOffset(celeritasExtra$field));
         celeritasExtra$bar.render(context, mouseX, mouseY, partialTicks);
         WindowCompat.drawTextInput(celeritasExtra$field, celeritasExtra$field.x,
-                celeritasExtra$bar.bounds().getCenterY() - context.lineHeight() / 2);
+            celeritasExtra$bar.bounds().getCenterY() - context.lineHeight() / 2);
         if (celeritasExtra$searchController().celeritasExtra$resultCount() == 0) {
             String empty = Translations.format("celeritasextra.search.no_results");
             context.drawString(empty, (width - context.getStringWidth(empty)) / 2,
-                    celeritasExtra$bar.bounds().getLimitY() + 30, 0x90FFFFFF);
+                celeritasExtra$bar.bounds().getLimitY() + 30, 0x90FFFFFF);
         }
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true, remap = true)
     private void celeritasExtra$clickSearch(int mouseX, int mouseY, int button, CallbackInfo ci) {
-        if (celeritasExtra$field == null) return;
+        if (celeritasExtra$field == null)
+            return;
         celeritasExtra$updateBar();
         if (celeritasExtra$bar.clickClear(VintageInteractionContext.INSTANCE, mouseX, mouseY, button)) {
             ci.cancel();
         } else if (button == 0 && celeritasExtra$bar.isMouseOver(mouseX, mouseY)) {
             celeritasExtra$field.setFocused(true);
-            int cursor = celeritasExtra$bar.cursorAt(celeritasExtra$searchController().celeritasExtra$drawContext(), mouseX);
-            if (GuiScreen.isShiftKeyDown()) celeritasExtra$field.setSelectionPos(cursor);
-            else celeritasExtra$field.setCursorPosition(cursor);
+            int cursor = celeritasExtra$bar.cursorAt(celeritasExtra$searchController().celeritasExtra$drawContext(),
+                mouseX);
+            if (GuiScreen.isShiftKeyDown())
+                celeritasExtra$field.setSelectionPos(cursor);
+            else
+                celeritasExtra$field.setCursorPosition(cursor);
             celeritasExtra$cursorTicks = 0;
             ci.cancel();
-        } else celeritasExtra$field.setFocused(false);
+        } else
+            celeritasExtra$field.setFocused(false);
     }
 
-    @Override public boolean celeritasExtra$searchKey(char character, int key) {
-        if (celeritasExtra$field == null) return false;
+    @Override
+    public boolean celeritasExtra$searchKey(char character, int key) {
+        if (celeritasExtra$field == null)
+            return false;
         if (GuiScreen.isCtrlKeyDown() && key == Keyboard.KEY_F) {
             celeritasExtra$field.setFocused(true);
             return true;
@@ -125,7 +140,8 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
             }
             return celeritasExtra$searchController().celeritasExtra$hasChanges();
         }
-        if (!celeritasExtra$field.isFocused()) return false;
+        if (!celeritasExtra$field.isFocused())
+            return false;
         celeritasExtra$cursorTicks = 0;
         String before = celeritasExtra$field.getText();
         celeritasExtra$field.textboxKeyTyped(character, key);
@@ -134,14 +150,17 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         return true;
     }
 
-    @Override public void celeritasExtra$tickSearch() {
+    @Override
+    public void celeritasExtra$tickSearch() {
         celeritasExtra$cursorTicks++;
     }
 
-    @Override public void celeritasExtra$closeSearch() {
+    @Override
+    public void celeritasExtra$closeSearch() {
         if (celeritasExtra$opened) {
             Keyboard.enableRepeatEvents(celeritasExtra$repeatBefore);
             celeritasExtra$opened = false;
         }
     }
+
 }

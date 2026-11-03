@@ -1,11 +1,13 @@
 package com.sumirelabs.celeritasextra.mixin.render.fog;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.world.WorldProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.world.WorldProvider;
 
 /**
  * Suppresses the distance-based void fog that darkens the view near the world bottom.
@@ -18,15 +20,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererVoidFog {
 
-    @Redirect(
-            method = "updateFogColor(F)V",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/WorldProvider;getVoidFogYFactor()D")
-    )
+    @Redirect(method = "updateFogColor(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldProvider;getVoidFogYFactor()D"))
     private double celeritasExtra$toggleVoidFog(WorldProvider provider) {
         if (!CeleritasExtraClientMod.options().detailSettings.voidFog) {
             return 1.0D;
         }
         return provider.getVoidFogYFactor();
     }
+
 }

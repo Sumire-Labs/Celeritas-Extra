@@ -1,18 +1,20 @@
 package com.sumirelabs.celeritasextra.client;
 
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.BufferBuilder;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+
 /** Bounded CPU-side vertex reuse; draw calls, lighting segments and GL state stay with Forge. */
 public final class StaticItemVertexCache {
+
     public static final StaticItemVertexCache INSTANCE = new StaticItemVertexCache(256, 4 * 1024 * 1024);
     private final int maxEntries, maxBytes;
     private final Map<Key, int[]> entries = new LinkedHashMap<>(32, 0.75f, true);
@@ -29,7 +31,8 @@ public final class StaticItemVertexCache {
     }
 
     public int[] get(IBakedModel model, List<BakedQuad> quads, int color, boolean noStackTint) {
-        if (!eligible(model, quads, color, noStackTint)) return null;
+        if (!eligible(model, quads, color, noStackTint))
+            return null;
         return getPrepared(model, quads, color);
     }
 
@@ -40,14 +43,18 @@ public final class StaticItemVertexCache {
     }
 
     public void put(IBakedModel model, List<BakedQuad> quads, int color, boolean noStackTint, int[] vertices) {
-        if (!eligible(model, quads, color, noStackTint)) return;
+        if (!eligible(model, quads, color, noStackTint))
+            return;
         int sourceInts = 0;
-        for (var quad : quads) sourceInts += quad.getVertexData().length;
+        for (var quad : quads)
+            sourceInts += quad.getVertexData().length;
         long cost = ((long) vertices.length + sourceInts) * Integer.BYTES;
-        if (cost > maxBytes) return;
+        if (cost > maxBytes)
+            return;
         probe.set(model, quads, color);
         // A nested render may have populated the same entry while the caller emitted vertices.
-        if (entries.containsKey(probe)) return;
+        if (entries.containsKey(probe))
+            return;
         while (!entries.isEmpty() && (entries.size() >= maxEntries || retainedBytes + cost > maxBytes)) {
             Iterator<Map.Entry<Key, int[]>> iterator = entries.entrySet().iterator();
             var oldest = iterator.next();
@@ -59,7 +66,11 @@ public final class StaticItemVertexCache {
         retainedBytes += (int) cost;
     }
 
-    public void clear() { entries.clear(); retainedBytes = 0; probe.release(); }
+    public void clear() {
+        entries.clear();
+        retainedBytes = 0;
+        probe.release();
+    }
 
     public static int[] capture(BufferBuilder buffer, int firstVertex) {
         int stride = buffer.getVertexFormat().getIntegerSize();
@@ -72,19 +83,23 @@ public final class StaticItemVertexCache {
     }
 
     private static boolean eligible(IBakedModel model, List<BakedQuad> quads, int color, boolean noStackTint) {
-        if (!StaticItemGeometry.isStaticModel(model) || quads.isEmpty() || quads.size() > 1024) return false;
+        if (!StaticItemGeometry.isStaticModel(model) || quads.isEmpty() || quads.size() > 1024)
+            return false;
         for (var quad : quads) {
             if (!StaticItemGeometry.isStaticQuad(quad) || quad.getFormat() != DefaultVertexFormats.ITEM
-                    || quad.getVertexData().length != DefaultVertexFormats.ITEM.getIntegerSize() * 4
-                    || color == -1 && !noStackTint && quad.hasTintIndex()) return false;
+                || quad.getVertexData().length != DefaultVertexFormats.ITEM.getIntegerSize() * 4
+                || color == -1 && !noStackTint && quad.hasTintIndex())
+                return false;
             var sprite = quad.getSprite();
             // Do not bypass renderer sprite-activation hooks or dynamic UV updates.
-            if (sprite != null && (sprite.getClass() != TextureAtlasSprite.class || sprite.hasAnimationMetadata())) return false;
+            if (sprite != null && (sprite.getClass() != TextureAtlasSprite.class || sprite.hasAnimationMetadata()))
+                return false;
         }
         return true;
     }
 
     private static final class Key {
+
         IBakedModel model;
         List<BakedQuad> quads;
         int[][] sourceData;
@@ -94,7 +109,8 @@ public final class StaticItemVertexCache {
             this.quads = quads;
             this.color = color;
             hash = 31 * System.identityHashCode(model) + color;
-            for (var quad : quads) hash = 31 * hash + System.identityHashCode(quad) + Arrays.hashCode(quad.getVertexData());
+            for (var quad : quads)
+                hash = 31 * hash + System.identityHashCode(quad) + Arrays.hashCode(quad.getVertexData());
         }
         Key snapshot() {
             Key key = new Key();
@@ -109,15 +125,29 @@ public final class StaticItemVertexCache {
             }
             return key;
         }
-        int[] data(int index) { return sourceData == null ? quads.get(index).getVertexData() : sourceData[index]; }
-        void release() { model = null; quads = null; }
-        @Override public int hashCode() { return hash; }
-        @Override public boolean equals(Object other) {
-            if (!(other instanceof Key key) || model != key.model || color != key.color || quads.size() != key.quads.size()) return false;
+        int[] data(int index) {
+            return sourceData == null ? quads.get(index).getVertexData() : sourceData[index];
+        }
+        void release() {
+            model = null;
+            quads = null;
+        }
+        @Override
+        public int hashCode() {
+            return hash;
+        }
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof Key key) || model != key.model || color != key.color
+                || quads.size() != key.quads.size())
+                return false;
             for (int i = 0; i < quads.size(); i++) {
-                if (quads.get(i) != key.quads.get(i) || !Arrays.equals(data(i), key.data(i))) return false;
+                if (quads.get(i) != key.quads.get(i) || !Arrays.equals(data(i), key.data(i)))
+                    return false;
             }
             return true;
         }
+
     }
+
 }

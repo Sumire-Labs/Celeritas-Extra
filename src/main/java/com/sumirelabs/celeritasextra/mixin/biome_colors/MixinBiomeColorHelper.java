@@ -1,12 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.biome_colors;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.world.biome.BiomeColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.world.biome.BiomeColorHelper;
 
 /**
  * Disables biome-specific tinting on {@link BiomeColorHelper}.
@@ -20,21 +22,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BiomeColorHelper.class)
 public class MixinBiomeColorHelper {
 
-    @Unique
-    private static final int DEFAULT_GRASS_COLOR = 0x91BD59;
-    @Unique
-    private static final int DEFAULT_WATER_COLOR = 0xFFFFFF;
-    @Unique
-    private static final int DEFAULT_FOLIAGE_COLOR = 0x59AE30;
+    @Unique private static final int DEFAULT_GRASS_COLOR = 0x91BD59;
+    @Unique private static final int DEFAULT_WATER_COLOR = 0xFFFFFF;
+    @Unique private static final int DEFAULT_FOLIAGE_COLOR = 0x59AE30;
 
     /**
      * Override grass color with default value when biome colors are disabled
      */
-    @Inject(
-            method = "getGrassColorAtPos",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "getGrassColorAtPos", at = @At("HEAD"), cancellable = true)
     private static void overrideGrassColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
             cir.setReturnValue(DEFAULT_GRASS_COLOR);
@@ -44,11 +39,7 @@ public class MixinBiomeColorHelper {
     /**
      * Override water color with default value when biome colors are disabled
      */
-    @Inject(
-            method = "getWaterColorAtPos",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "getWaterColorAtPos", at = @At("HEAD"), cancellable = true)
     private static void overrideWaterColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
             cir.setReturnValue(DEFAULT_WATER_COLOR);
@@ -58,14 +49,11 @@ public class MixinBiomeColorHelper {
     /**
      * Override foliage color with default value when biome colors are disabled
      */
-    @Inject(
-            method = "getFoliageColorAtPos",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "getFoliageColorAtPos", at = @At("HEAD"), cancellable = true)
     private static void overrideFoliageColor(CallbackInfoReturnable<Integer> cir) {
         if (!CeleritasExtraClientMod.options().detailSettings.biomeColors) {
             cir.setReturnValue(DEFAULT_FOLIAGE_COLOR);
         }
     }
+
 }

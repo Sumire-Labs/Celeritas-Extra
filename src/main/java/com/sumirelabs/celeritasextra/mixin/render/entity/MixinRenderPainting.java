@@ -1,12 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.render.entity;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.entity.RenderPainting;
-import net.minecraft.entity.item.EntityPainting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.entity.RenderPainting;
+import net.minecraft.entity.item.EntityPainting;
 
 /**
  * Toggles painting rendering via {@link RenderPainting}.
@@ -18,14 +20,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderPainting.class)
 public class MixinRenderPainting {
 
-    @Inject(
-            method = "doRender(Lnet/minecraft/entity/item/EntityPainting;DDDFF)V",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void doRender(EntityPainting entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityPainting;DDDFF)V", at = @At("HEAD"), cancellable = true)
+    public void doRender(EntityPainting entity, double x, double y, double z, float entityYaw, float partialTicks,
+        CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.paintings) {
             ci.cancel();
         }
     }
+
 }

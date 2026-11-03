@@ -1,11 +1,12 @@
 package com.sumirelabs.celeritasextra.mixin.particle;
 
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.ParticleManager;
+import java.util.Map;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.Map;
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.ParticleManager;
 
 /**
  * Accessor mixin for {@link ParticleManager} that exposes its private particle-factory registry.
@@ -21,4 +22,5 @@ public interface IMixinParticleManager {
      */
     @Accessor("particleTypes")
     Map<Integer, IParticleFactory> getParticleTypes();
+
 }

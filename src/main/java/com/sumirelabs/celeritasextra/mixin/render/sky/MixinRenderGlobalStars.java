@@ -1,14 +1,16 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.RenderGlobal;
 
 /**
  * Controls star visibility and the number of stars generated on {@code RenderGlobal}.
@@ -26,26 +28,18 @@ public class MixinRenderGlobalStars {
      * Control star rendering by wrapping the star brightness calculation.
      * Returns 0.0f when stars are disabled, preventing star rendering.
      */
-    @WrapOperation(
-            method = "renderSky(FI)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/multiplayer/WorldClient;getStarBrightness(F)F"
-            )
-    )
+    @WrapOperation(method = "renderSky(FI)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getStarBrightness(F)F"))
     private float celeritasExtra$getStarBrightness(WorldClient world, float partialTicks,
-                                                    Operation<Float> original) {
+        Operation<Float> original) {
         if (!CeleritasExtraClientMod.options().detailSettings.stars) {
             return 0.0f;
         }
         return original.call(world, partialTicks);
     }
 
-    @ModifyConstant(
-            method = "renderStars(Lnet/minecraft/client/renderer/BufferBuilder;)V",
-            constant = @Constant(intValue = 1500)
-    )
+    @ModifyConstant(method = "renderStars(Lnet/minecraft/client/renderer/BufferBuilder;)V", constant = @Constant(intValue = 1500))
     private int celeritasExtra$starCount(int vanillaCount) {
         return CeleritasExtraClientMod.options().detailSettings.totalStars;
     }
+
 }

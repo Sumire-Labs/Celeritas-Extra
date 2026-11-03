@@ -1,11 +1,13 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.RenderGlobal;
 
 /**
  * Toggles vanilla cloud rendering on and off.
@@ -23,14 +25,11 @@ public class MixinRenderGlobalClouds {
     /**
      * Control cloud rendering
      */
-    @Inject(
-            method = "renderClouds",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
     private void renderClouds(float partialTicks, int pass, double x, double y, double z, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.clouds) {
             ci.cancel();
         }
     }
+
 }

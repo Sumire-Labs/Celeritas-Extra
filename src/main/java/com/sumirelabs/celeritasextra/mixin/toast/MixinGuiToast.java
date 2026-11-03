@@ -1,12 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.toast;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
-import net.minecraft.client.gui.toasts.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
+
+import net.minecraft.client.gui.toasts.*;
 
 /**
  * Suppresses toast pop-ups (advancement / recipe / tutorial / system) per user config.
@@ -20,11 +22,12 @@ public class MixinGuiToast {
         CeleritasExtraGameOptions.ExtraSettings settings = CeleritasExtraClientMod.options().extraSettings;
 
         if (!settings.toasts
-                || (toastIn instanceof AdvancementToast && !settings.toastAdvancement)
-                || (toastIn instanceof RecipeToast && !settings.toastRecipe)
-                || (toastIn instanceof TutorialToast && !settings.toastTutorial)
-                || (toastIn instanceof SystemToast && !settings.toastSystem)) {
+            || (toastIn instanceof AdvancementToast && !settings.toastAdvancement)
+            || (toastIn instanceof RecipeToast && !settings.toastRecipe)
+            || (toastIn instanceof TutorialToast && !settings.toastTutorial)
+            || (toastIn instanceof SystemToast && !settings.toastSystem)) {
             ci.cancel();
         }
     }
+
 }

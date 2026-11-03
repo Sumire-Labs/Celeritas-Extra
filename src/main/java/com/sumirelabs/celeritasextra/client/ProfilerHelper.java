@@ -9,11 +9,15 @@ import net.minecraft.profiler.Profiler;
 public final class ProfilerHelper {
 
     private static final ClassValue<String> NAME_CACHE = new ClassValue<>() {
-        @Override protected String computeValue(Class<?> type) { return type.getSimpleName(); }
+
+        @Override
+        protected String computeValue(Class<?> type) {
+            return type.getSimpleName();
+        }
+
     };
 
-    private ProfilerHelper() {
-    }
+    private ProfilerHelper() {}
 
     /**
      * Pushes a profiler section named after the renderer's simple class name.
@@ -42,6 +46,8 @@ public final class ProfilerHelper {
      * The successful-start token avoids a second renderer lookup and also works in a finally block.
      */
     public static void endSection(Profiler profiler, boolean started) {
-        if (started && profiler != null) profiler.endSection();
+        if (started && profiler != null)
+            profiler.endSection();
     }
+
 }

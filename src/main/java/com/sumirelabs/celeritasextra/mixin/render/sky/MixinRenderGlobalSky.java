@@ -1,11 +1,13 @@
 package com.sumirelabs.celeritasextra.mixin.render.sky;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.RenderGlobal;
 
 /**
  * Toggles the vanilla sky box on and off.
@@ -24,14 +26,11 @@ public class MixinRenderGlobalSky {
      * Control sky rendering
      * In 1.12.2, sky rendering is in renderSky method
      */
-    @Inject(
-            method = "renderSky(FI)V",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "renderSky(FI)V", at = @At("HEAD"), cancellable = true)
     private void renderSky(float partialTicks, int pass, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().detailSettings.sky) {
             ci.cancel();
         }
     }
+
 }

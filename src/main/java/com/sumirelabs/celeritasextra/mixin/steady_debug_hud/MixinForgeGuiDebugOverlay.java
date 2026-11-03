@@ -1,18 +1,20 @@
 package com.sumirelabs.celeritasextra.mixin.steady_debug_hud;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.client.gui.GuiOverlayDebug;
-import net.minecraft.client.gui.ScaledResolution;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.gui.GuiOverlayDebug;
+import net.minecraft.client.gui.ScaledResolution;
 
 /**
  * Throttles how often the F3 debug overlay text is rebuilt.
@@ -28,29 +30,22 @@ import java.util.List;
 @Mixin(GuiOverlayDebug.class)
 public abstract class MixinForgeGuiDebugOverlay {
 
-    @Unique
-    private final List<String> celeritasExtra$leftTextCache = new ArrayList<>();
-    @Unique
-    private final List<String> celeritasExtra$rightTextCache = new ArrayList<>();
-    @Unique
-    private long celeritasExtra$nextUpdateNanos;
-    @Unique
-    private boolean celeritasExtra$rebuild = true;
+    @Unique private final List<String> celeritasExtra$leftTextCache = new ArrayList<>();
+    @Unique private final List<String> celeritasExtra$rightTextCache = new ArrayList<>();
+    @Unique private long celeritasExtra$nextUpdateNanos;
+    @Unique private boolean celeritasExtra$rebuild = true;
 
     /**
      * Control when to rebuild debug text
      */
-    @Inject(
-            method = "renderDebugInfo",
-            at = @At("HEAD")
-    )
+    @Inject(method = "renderDebugInfo", at = @At("HEAD"))
     private void celeritasExtra$beforeRenderDebugInfo(ScaledResolution resolution, CallbackInfo ci) {
         if (CeleritasExtraClientMod.options().extraSettings.steadyDebugHud) {
             long now = System.nanoTime();
             if (now >= this.celeritasExtra$nextUpdateNanos) {
                 this.celeritasExtra$rebuild = true;
                 this.celeritasExtra$nextUpdateNanos = now
-                        + CeleritasExtraClientMod.options().extraSettings.steadyDebugHudRefreshInterval
+                    + CeleritasExtraClientMod.options().extraSettings.steadyDebugHudRefreshInterval
                         * 50_000_000L;
             } else {
                 this.celeritasExtra$rebuild = false;
@@ -67,7 +62,8 @@ public abstract class MixinForgeGuiDebugOverlay {
     private List<String> celeritasExtra$cacheLeftDebugText(Operation<List<String>> original) {
         // Cache the complete method, including Nothirium/RenderLib's RETURN injections.
         // Cancelling at HEAD would run those injections on the cached list again each frame.
-        if (!this.celeritasExtra$rebuild) return new ArrayList<>(this.celeritasExtra$leftTextCache);
+        if (!this.celeritasExtra$rebuild)
+            return new ArrayList<>(this.celeritasExtra$leftTextCache);
         List<String> result = original.call();
         this.celeritasExtra$leftTextCache.clear();
         this.celeritasExtra$leftTextCache.addAll(result);
@@ -79,10 +75,12 @@ public abstract class MixinForgeGuiDebugOverlay {
      */
     @WrapMethod(method = "getDebugInfoRight()Ljava/util/List;")
     private List<String> celeritasExtra$cacheRightDebugText(Operation<List<String>> original) {
-        if (!this.celeritasExtra$rebuild) return new ArrayList<>(this.celeritasExtra$rightTextCache);
+        if (!this.celeritasExtra$rebuild)
+            return new ArrayList<>(this.celeritasExtra$rightTextCache);
         List<String> result = original.call();
         this.celeritasExtra$rightTextCache.clear();
         this.celeritasExtra$rightTextCache.addAll(result);
         return result;
     }
+
 }

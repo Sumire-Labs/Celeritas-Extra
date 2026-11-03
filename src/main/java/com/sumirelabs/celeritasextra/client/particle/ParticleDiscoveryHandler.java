@@ -1,6 +1,7 @@
 package com.sumirelabs.celeritasextra.client.particle;
 
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraftforge.event.world.WorldEvent;
@@ -78,4 +79,5 @@ public class ParticleDiscoveryHandler {
             CeleritasExtraClientMod.options().writeChanges();
         }
     }
+
 }

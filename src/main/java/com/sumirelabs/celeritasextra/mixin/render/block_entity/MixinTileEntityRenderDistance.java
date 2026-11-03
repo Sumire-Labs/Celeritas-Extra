@@ -1,18 +1,21 @@
 package com.sumirelabs.celeritasextra.mixin.render.block_entity;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.VisibilityRules;
-import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.tileentity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.VisibilityRules;
+import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
+
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.tileentity.TileEntity;
+
 @Mixin(TileEntityRendererDispatcher.class)
 public class MixinTileEntityRenderDistance {
+
     @Shadow public double entityX;
     @Shadow public double entityY;
     @Shadow public double entityZ;
@@ -21,9 +24,13 @@ public class MixinTileEntityRenderDistance {
     @Inject(method = "render(Lnet/minecraft/tileentity/TileEntity;FI)V", at = @At("HEAD"), cancellable = true)
     private void celeritasExtra$limitDistance(TileEntity tile, float partialTicks, int destroyStage, CallbackInfo ci) {
         var settings = CeleritasExtraClientMod.options().renderSettings;
-        if (ShaderPassCompat.isShadowPass()) return;
+        if (ShaderPassCompat.isShadowPass())
+            return;
         if (settings.tileEntityRenderDistance > 0
-                && !settings.isTileEntityDistanceExempt(tile.getClass())
-                && VisibilityRules.beyondDistance(tile.getDistanceSq(entityX, entityY, entityZ), settings.tileEntityRenderDistance)) ci.cancel();
+            && !settings.isTileEntityDistanceExempt(tile.getClass())
+            && VisibilityRules.beyondDistance(tile.getDistanceSq(entityX, entityY, entityZ),
+                settings.tileEntityRenderDistance))
+            ci.cancel();
     }
+
 }

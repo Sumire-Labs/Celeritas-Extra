@@ -1,12 +1,12 @@
 package com.sumirelabs.celeritasextra.client;
 
+import java.util.Arrays;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
 
 /**
  * Tracks per-frame timing data over a rolling 5-second window
@@ -93,7 +93,8 @@ public class FrameCounter {
             return;
         }
 
-        if (statisticsDeltas.length < size) statisticsDeltas = new long[sampleDeltas.length];
+        if (statisticsDeltas.length < size)
+            statisticsDeltas = new long[sampleDeltas.length];
         long[] deltas = statisticsDeltas;
         long totalDelta = 0;
         long recentDelta = 0;
@@ -118,7 +119,8 @@ public class FrameCounter {
 
     /** Only the slowest 1% must be ordered to obtain both percentile averages. */
     static void sortSlowestTail(long[] values, int size) {
-        if (size < 2) return;
+        if (size < 2)
+            return;
         int tailStart = size - (int) Math.ceil(size * 0.01);
         int low = 0, high = size - 1;
         int remaining = 2 * (32 - Integer.numberOfLeadingZeros(size));
@@ -133,13 +135,19 @@ public class FrameCounter {
             int less = low, cursor = low, greater = high;
             // Three-way partition also handles long runs of identical frame times.
             while (cursor <= greater) {
-                if (values[cursor] < pivot) swap(values, less++, cursor++);
-                else if (values[cursor] > pivot) swap(values, cursor, greater--);
-                else cursor++;
+                if (values[cursor] < pivot)
+                    swap(values, less++, cursor++);
+                else if (values[cursor] > pivot)
+                    swap(values, cursor, greater--);
+                else
+                    cursor++;
             }
-            if (tailStart < less) high = less - 1;
-            else if (tailStart > greater) low = greater + 1;
-            else break;
+            if (tailStart < less)
+                high = less - 1;
+            else if (tailStart > greater)
+                low = greater + 1;
+            else
+                break;
         }
         Arrays.sort(values, tailStart, size);
     }
@@ -177,7 +185,8 @@ public class FrameCounter {
      */
     private static int computePercentileLow(long[] deltas, int size, double percent) {
         int count = (int) Math.ceil(size * (percent / 100.0));
-        if (count == 0) count = 1;
+        if (count == 0)
+            count = 1;
 
         // The slowest 1% tail is sorted ascending; both percentiles lie within it.
         long sum = 0;
@@ -222,4 +231,5 @@ public class FrameCounter {
     public static int getPointOnePercentLowFps() {
         return cachedPointOnePercentLowFps;
     }
+
 }

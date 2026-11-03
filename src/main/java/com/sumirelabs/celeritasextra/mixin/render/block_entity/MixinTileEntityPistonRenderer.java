@@ -1,12 +1,14 @@
 package com.sumirelabs.celeritasextra.mixin.render.block_entity;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import net.minecraft.client.renderer.tileentity.TileEntityPistonRenderer;
-import net.minecraft.tileentity.TileEntityPiston;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
+import net.minecraft.client.renderer.tileentity.TileEntityPistonRenderer;
+import net.minecraft.tileentity.TileEntityPiston;
 
 /**
  * Toggles moving-piston rendering via {@link TileEntityPistonRenderer}.
@@ -19,14 +21,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TileEntityPistonRenderer.class)
 public class MixinTileEntityPistonRenderer {
 
-    @Inject(
-            method = "render(Lnet/minecraft/tileentity/TileEntityPiston;DDDFIF)V",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void render(TileEntityPiston te, double x, double y, double z, float partialTicks, int destroyStage, float alpha, CallbackInfo ci) {
+    @Inject(method = "render(Lnet/minecraft/tileentity/TileEntityPiston;DDDFIF)V", at = @At("HEAD"), cancellable = true)
+    public void render(TileEntityPiston te, double x, double y, double z, float partialTicks, int destroyStage,
+        float alpha, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().renderSettings.pistons) {
             ci.cancel();
         }
     }
+
 }

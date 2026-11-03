@@ -1,23 +1,26 @@
 package com.sumirelabs.celeritasextra.mixin.particle;
 
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.particle.ParticleClassRegistry;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import java.util.concurrent.ThreadLocalRandom;
-import net.minecraft.world.World;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 /**
  * Controls particle spawning on {@link ParticleManager}.
@@ -30,13 +33,14 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
  */
 @Mixin(ParticleManager.class)
 public class MixinParticleManager {
-    @WrapOperation(method = "spawnEffectParticle", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/particle/IParticleFactory;createParticle(ILnet/minecraft/world/World;DDDDDD[I)Lnet/minecraft/client/particle/Particle;"))
+
+    @WrapOperation(method = "spawnEffectParticle", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/IParticleFactory;createParticle(ILnet/minecraft/world/World;DDDDDD[I)Lnet/minecraft/client/particle/Particle;"))
     private Particle celeritasExtra$skipDisabledFactory(IParticleFactory factory, int id, World world,
-            double x, double y, double z, double velocityX, double velocityY, double velocityZ,
-            int[] arguments, Operation<Particle> original) {
+        double x, double y, double z, double velocityX, double velocityY, double velocityZ,
+        int[] arguments, Operation<Particle> original) {
         if (ParticleClassRegistry.getInstance().skipVanillaFactory(factory,
-                CeleritasExtraClientMod.options().particleSettings.particles)) return null;
+            CeleritasExtraClientMod.options().particleSettings.particles))
+            return null;
         return original.call(factory, id, world, x, y, z, velocityX, velocityY, velocityZ, arguments);
     }
 
@@ -68,7 +72,7 @@ public class MixinParticleManager {
     @Inject(method = "addBlockDestroyEffects", at = @At("HEAD"), cancellable = true)
     public void addBlockDestroyEffects(BlockPos pos, IBlockState state, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles ||
-                !CeleritasExtraClientMod.options().particleSettings.blockBreak) {
+            !CeleritasExtraClientMod.options().particleSettings.blockBreak) {
             ci.cancel();
         }
     }
@@ -79,7 +83,7 @@ public class MixinParticleManager {
     @Inject(method = "addBlockHitEffects(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;)V", at = @At("HEAD"), cancellable = true)
     public void addBlockHitEffects(BlockPos pos, EnumFacing side, CallbackInfo ci) {
         if (!CeleritasExtraClientMod.options().particleSettings.particles ||
-                !CeleritasExtraClientMod.options().particleSettings.blockBreaking) {
+            !CeleritasExtraClientMod.options().particleSettings.blockBreaking) {
             ci.cancel();
         }
     }
@@ -104,8 +108,9 @@ public class MixinParticleManager {
         }
 
         if (percentage == 0 || (percentage < 100
-                && !ParticleClassRegistry.acceptSpawn(percentage, ThreadLocalRandom.current().nextInt(100)))) {
+            && !ParticleClassRegistry.acceptSpawn(percentage, ThreadLocalRandom.current().nextInt(100)))) {
             ci.cancel();
         }
     }
+
 }

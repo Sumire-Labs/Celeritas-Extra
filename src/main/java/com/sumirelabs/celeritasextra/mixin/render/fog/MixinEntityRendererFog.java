@@ -1,14 +1,16 @@
 package com.sumirelabs.celeritasextra.mixin.render.fog;
 
-import com.sumirelabs.celeritasextra.client.FogState;
-import com.sumirelabs.celeritasextra.client.DimensionFog;
-import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.sumirelabs.celeritasextra.client.DimensionFog;
+import com.sumirelabs.celeritasextra.client.FogState;
+import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
+
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 
 /**
  * Toggles OpenGL fog off when fog rendering is disabled in the render config.
@@ -21,14 +23,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderer.class)
 public class MixinEntityRendererFog {
 
-    @Inject(
-            method = "setupFog",
-            at = @At("RETURN")
-    )
+    @Inject(method = "setupFog", at = @At("RETURN"))
     private void disableFogAfterSetup(int startCoords, float partialTicks, CallbackInfo ci) {
         if (!ShaderPassCompat.isShadowPass()
-                && !DimensionFog.current().enabled() && !FogState.isGameplayFog()) {
+            && !DimensionFog.current().enabled() && !FogState.isGameplayFog()) {
             GlStateManager.disableFog();
         }
     }
+
 }

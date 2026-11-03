@@ -1,17 +1,19 @@
 package com.sumirelabs.celeritasextra.mixin.render.fog;
 
-import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
-import com.sumirelabs.celeritasextra.client.CloudPassState;
-import com.sumirelabs.celeritasextra.client.FogState;
-import com.sumirelabs.celeritasextra.client.DimensionFog;
-import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
-import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.CloudPassState;
+import com.sumirelabs.celeritasextra.client.DimensionFog;
+import com.sumirelabs.celeritasextra.client.FogState;
+import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions;
+import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 
 /**
  * Fog falloff control — adjusts the GL_LINEAR fog start/end distances.
@@ -32,19 +34,15 @@ public class MixinEntityRendererFogFalloff {
     /**
      * Vanilla GL_LINEAR fog end == farPlaneDistance; used to keep custom fog start below the end.
      */
-    @Shadow
-    private float farPlaneDistance;
+    @Shadow private float farPlaneDistance;
 
-    @ModifyArg(
-            method = "setupFog",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;setFogStart(F)V"),
-            index = 0
-    )
+    @ModifyArg(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;setFogStart(F)V"), index = 0)
     private float modifyFogStart(float original) {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
         var fog = DimensionFog.current();
 
-        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass()) return original;
+        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass())
+            return original;
 
         // Cloud pass: keep clouds out of fog so extended cloud distance is actually visible.
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {
@@ -68,16 +66,13 @@ public class MixinEntityRendererFogFalloff {
         return Math.min(start, farPlaneDistance - 0.5f);
     }
 
-    @ModifyArg(
-            method = "setupFog",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;setFogEnd(F)V"),
-            index = 0
-    )
+    @ModifyArg(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;setFogEnd(F)V"), index = 0)
     private float modifyFogEnd(float original) {
         CeleritasExtraGameOptions.RenderSettings rs = CeleritasExtraClientMod.options().renderSettings;
         var fog = DimensionFog.current();
 
-        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass()) return original;
+        if (FogState.isGameplayFog() || ShaderPassCompat.isShadowPass())
+            return original;
 
         // Cloud pass: end just beyond the cloud-far start (finite, start < end).
         if (CloudPassState.inCloudPass && extendsCloudRange(rs)) {
@@ -97,15 +92,16 @@ public class MixinEntityRendererFogFalloff {
 
     private static boolean extendsCloudRange(CeleritasExtraGameOptions.RenderSettings settings) {
         return CloudPassState.cloudsEnabled(settings) && settings.cloudDistance > 0
-                && CloudPassState.usesDefaultCloudRenderer();
+            && CloudPassState.usesDefaultCloudRenderer();
     }
 
     private static int effectiveCloudDistance(CeleritasExtraGameOptions.RenderSettings settings) {
         return CloudPassState.effectiveCloudDistanceChunks(
-                settings, Minecraft.getMinecraft().gameSettings.renderDistanceChunks);
+            settings, Minecraft.getMinecraft().gameSettings.renderDistanceChunks);
     }
 
     private static float cloudFar(CeleritasExtraGameOptions.RenderSettings settings) {
         return CloudPassState.cloudFar(effectiveCloudDistance(settings), settings.cloudScale);
     }
+
 }

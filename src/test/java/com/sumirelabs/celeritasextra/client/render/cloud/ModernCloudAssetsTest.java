@@ -1,15 +1,5 @@
 package com.sumirelabs.celeritasextra.client.render.cloud;
 
-import net.minecraft.client.resources.FallbackResourceManager;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.MetadataSerializer;
-import net.minecraft.util.ResourceLocation;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -19,9 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import net.minecraft.client.resources.FallbackResourceManager;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.client.resources.data.IMetadataSection;
+import net.minecraft.client.resources.data.MetadataSerializer;
+import net.minecraft.util.ResourceLocation;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ModernCloudAssetsTest {
+
     private static final ResourceLocation CLOUD = new ResourceLocation("minecraft", "textures/environment/clouds.png");
     private static final IResourcePack VANILLA = new TestPack(Map.of(CLOUD, new byte[]{1}));
     private static final IResourcePack ACQUIRED = new TestPack(Map.of(ModernCloudAssets.CLOUD_TEXTURE, new byte[]{2}));
@@ -30,6 +32,7 @@ class ModernCloudAssetsTest {
     @ValueSource(booleans = {false, true})
     void waitsForPackInitializationBeforeCheckingTheDownloadedTexture(boolean enabled) throws IOException {
         IResourcePack delayed = new TestPack(Map.of(ModernCloudAssets.CLOUD_TEXTURE, new byte[]{2})) {
+
             private boolean ready;
 
             @Override
@@ -43,6 +46,7 @@ class ModernCloudAssetsTest {
             public boolean resourceExists(ResourceLocation location) {
                 return ready && super.resourceExists(location);
             }
+
         };
 
         List<IResourcePack> result = ModernCloudAssets.withCloudTexture(List.of(VANILLA, delayed), enabled);
@@ -69,13 +73,13 @@ class ModernCloudAssetsTest {
         IResourcePack server = new TestPack(Map.of(CLOUD, new byte[]{4}));
 
         assertArrayEquals(new byte[]{2}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED, user), true)));
+            List.of(VANILLA, ACQUIRED, user), true)));
         assertArrayEquals(new byte[]{2}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED, user, server), true)));
+            List.of(VANILLA, ACQUIRED, user, server), true)));
         assertArrayEquals(new byte[]{3}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED, user), false)));
+            List.of(VANILLA, ACQUIRED, user), false)));
         assertArrayEquals(new byte[]{4}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED, user, server), false)));
+            List.of(VANILLA, ACQUIRED, user, server), false)));
     }
 
     @Test
@@ -117,18 +121,20 @@ class ModernCloudAssetsTest {
     void highestPrioritySourceIsUsedOnEveryReload() throws IOException {
         IResourcePack replacement = new TestPack(Map.of(ModernCloudAssets.CLOUD_TEXTURE, new byte[]{5}));
         assertArrayEquals(new byte[]{5}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED, replacement), true)));
+            List.of(VANILLA, ACQUIRED, replacement), true)));
         assertArrayEquals(new byte[]{2}, readCloud(ModernCloudAssets.withCloudTexture(
-                List.of(VANILLA, ACQUIRED), true)));
+            List.of(VANILLA, ACQUIRED), true)));
     }
 
     @Test
     void unreadableAssetLeavesVanillaAvailable() throws IOException {
         IResourcePack broken = new TestPack(Map.of(ModernCloudAssets.CLOUD_TEXTURE, new byte[0])) {
+
             @Override
             public InputStream getInputStream(ResourceLocation location) throws IOException {
                 throw new IOException("Download is unavailable");
             }
+
         };
         List<IResourcePack> original = List.of(VANILLA, broken);
 
@@ -146,6 +152,7 @@ class ModernCloudAssetsTest {
     }
 
     private static class TestPack implements IResourcePack {
+
         private final Map<ResourceLocation, byte[]> resources;
 
         private TestPack(Map<ResourceLocation, byte[]> resources) {
@@ -154,23 +161,36 @@ class ModernCloudAssetsTest {
 
         @Override
         public InputStream getInputStream(ResourceLocation location) throws IOException {
-            if (!resourceExists(location)) throw new FileNotFoundException(location.toString());
+            if (!resourceExists(location))
+                throw new FileNotFoundException(location.toString());
             return new ByteArrayInputStream(resources.get(location));
         }
 
         @Override
-        public boolean resourceExists(ResourceLocation location) { return resources.containsKey(location); }
+        public boolean resourceExists(ResourceLocation location) {
+            return resources.containsKey(location);
+        }
 
         @Override
-        public Set<String> getResourceDomains() { return Set.of("minecraft", "celeritasextra"); }
+        public Set<String> getResourceDomains() {
+            return Set.of("minecraft", "celeritasextra");
+        }
 
         @Override
-        public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer serializer, String section) { return null; }
+        public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer serializer, String section) {
+            return null;
+        }
 
         @Override
-        public BufferedImage getPackImage() { return null; }
+        public BufferedImage getPackImage() {
+            return null;
+        }
 
         @Override
-        public String getPackName() { return "Test pack"; }
+        public String getPackName() {
+            return "Test pack";
+        }
+
     }
+
 }

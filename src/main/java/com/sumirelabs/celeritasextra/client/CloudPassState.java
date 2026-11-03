@@ -2,6 +2,7 @@ package com.sumirelabs.celeritasextra.client;
 
 import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
 import com.sumirelabs.celeritasextra.compat.RendererCompat;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -32,8 +33,7 @@ public final class CloudPassState {
      */
     public static boolean inCloudPass = false;
 
-    private CloudPassState() {
-    }
+    private CloudPassState() {}
 
     /**
      * Far distance (in blocks) that must be reached for clouds to render out to the
@@ -50,7 +50,7 @@ public final class CloudPassState {
     public static float cloudFar(int cloudDistance, int cloudScale) {
         float verticalDistance = verticalDistanceToClouds();
         float cellSize = 12.0F * Math.max(RenderSettings.CLOUD_SCALE_MIN, cloudScale)
-                / RenderSettings.CLOUD_SCALE_VANILLA;
+            / RenderSettings.CLOUD_SCALE_VANILLA;
         float gridSnapMargin = Math.max(16.0F, MathHelper.SQRT_2 * cellSize * 2.0F);
 
         float horizontalDistance = cloudHorizontalRangeBlocks(cloudDistance);
@@ -83,8 +83,8 @@ public final class CloudPassState {
     public static boolean usesDefaultCloudRenderer() {
         Minecraft minecraft = Minecraft.getMinecraft();
         return minecraft.world != null
-                && minecraft.world.provider != null
-                && minecraft.world.provider.getCloudRenderer() == null;
+            && minecraft.world.provider != null
+            && minecraft.world.provider.getCloudRenderer() == null;
     }
 
     /**
@@ -103,7 +103,8 @@ public final class CloudPassState {
         float cloudHeight = cloudHeight(128.0F);
         Entity viewEntity = minecraft.getRenderViewEntity();
         return viewEntity == null
-                ? Math.abs(cloudHeight)
-                : (float) Math.abs(cloudHeight - viewEntity.posY);
+            ? Math.abs(cloudHeight)
+            : (float) Math.abs(cloudHeight - viewEntity.posY);
     }
+
 }
