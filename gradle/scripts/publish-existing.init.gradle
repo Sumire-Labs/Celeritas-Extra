@@ -9,5 +9,10 @@ allprojects {
         def publisher = extensions.findByName('publishMods')
         if (publisher == null) throw new GradleException('This release does not configure publishMods.')
         publisher.file.set(new File(artifact))
+        // Older release tags have the applied-script ReleaseType classpath bug as well.
+        def releaseTypes = [ALPHA: publisher.ALPHA, BETA: publisher.BETA, RC: publisher.BETA, RELEASE: publisher.STABLE]
+        publisher.type.set(versioning.stage.map { stage ->
+            releaseTypes[stage.name()]
+        })
     }
 }

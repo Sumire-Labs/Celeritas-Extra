@@ -43,16 +43,15 @@ if (remotePublishing || localPublishing) {
 
 // The same runtime artifact is used for CurseForge and Modrinth.
 apply plugin: 'me.modmuss50.mod-publish-plugin'
+// Use the public DSL constants: applied scripts cannot import the optional plugin's classes.
+def publisher = extensions.getByName('publishMods')
+def releaseTypes = [ALPHA: publisher.ALPHA, BETA: publisher.BETA, RC: publisher.BETA, RELEASE: publisher.STABLE]
 publishMods {
     file = tasks.named('reobfJar').flatMap { it.output }
     version = project.version.toString()
     displayName = "${mod_name} ${project.version}"
     type = versioning.stage.map { stage ->
-        switch (stage.name()) {
-            case 'ALPHA': return me.modmuss50.mpp.ReleaseType.ALPHA
-            case 'BETA': case 'RC': return me.modmuss50.mpp.ReleaseType.BETA
-            default: return me.modmuss50.mpp.ReleaseType.STABLE
-        }
+        releaseTypes[stage.name()]
     }
     modLoaders.add('forge')
     maxRetries = 5
