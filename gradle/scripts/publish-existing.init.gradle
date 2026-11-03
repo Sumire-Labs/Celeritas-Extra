@@ -1,0 +1,13 @@
+// Used only by the manual existing-release publisher. Upload the already-published GitHub
+// artifact instead of rebuilding a tag with later publishing configuration changes.
+allprojects {
+    afterEvaluate {
+        def artifact = System.getenv('RELEASE_ARTIFACT')
+        if (artifact == null || !new File(artifact).isFile()) {
+            throw new GradleException('RELEASE_ARTIFACT must name an existing release jar.')
+        }
+        def publisher = extensions.findByName('publishMods')
+        if (publisher == null) throw new GradleException('This release does not configure publishMods.')
+        publisher.file.set(new File(artifact))
+    }
+}

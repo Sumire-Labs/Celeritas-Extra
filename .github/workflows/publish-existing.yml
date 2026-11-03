@@ -1,0 +1,102 @@
+name: Publish existing release to CurseForge and Modrinth
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing GitHub release tag
+        required: true
+        default: '0.10.1-release'
+        type: string
+      curseforge:
+        description: Publish to CurseForge
+        default: true
+        type: boolean
+      modrinth:
+        description: Publish to Modrinth
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: external-release-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Select publishing destinations
+        id: projects
+        env:
+          TAG: ${{ inputs.tag }}
+          PUBLISH_CURSEFORGE: ${{ inputs.curseforge }}
+          PUBLISH_MODRINTH: ${{ inputs.modrinth }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          [[ "$TAG" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta|rc|release))?$ ]] || { echo 'Invalid version tag.' >&2; exit 1; }
+          cf=''
+          mr=''
+          if [[ "$PUBLISH_CURSEFORGE" == true ]]; then
+            cf=$(awk '$1 == "curseforge_project_id" { print $3 }' gradle.properties)
+            [[ -n "$cf" && -n "$CURSEFORGE_TOKEN" ]] || { echo 'CurseForge project ID or token missing.' >&2; exit 1; }
+          fi
+          if [[ "$PUBLISH_MODRINTH" == true ]]; then
+            mr=$(awk '$1 == "modrinth_project_id" { print $3 }' gradle.properties)
+            [[ -n "$mr" && -n "$MODRINTH_TOKEN" ]] || { echo 'Modrinth project ID or token missing.' >&2; exit 1; }
+          fi
+          [[ -n "$cf$mr" ]] || { echo 'Select at least one destination.' >&2; exit 1; }
+          echo "curseforge=$cf" >> "$GITHUB_OUTPUT"
+          echo "modrinth=$mr" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+          path: release-source
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: false
+      - uses: actions/setup-java@v6.1.0
+        with:
+          java-version: '25'
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v6.4.1
+      - name: Read tagged version
+        id: release
+        working-directory: release-source
+        run: |
+          info=$(./gradlew -q --console=plain printReleaseInfo)
+          echo "version=$(jq -r .version <<< "$info")" >> "$GITHUB_OUTPUT"
+      - name: Download published artifact and release notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > release.json
+          [[ $(jq -r .draft release.json) == false ]] || { echo 'Release is still a draft.' >&2; exit 1; }
+          jq -r .body release.json > RELEASE_NOTES.md
+          artifact="celeritasextra-${VERSION}.jar"
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$artifact" --dir release-assets
+          digest=$(jq -r --arg name "$artifact" '.assets[] | select(.name == $name) | .digest // empty' release.json)
+          [[ "$digest" == sha256:* ]] || { echo 'GitHub asset SHA-256 missing.' >&2; exit 1; }
+          printf '%s  %s\n' "${digest#sha256:}" "release-assets/$artifact" | sha256sum --check
+          echo "RELEASE_ARTIFACT=$GITHUB_WORKSPACE/release-assets/$artifact" >> "$GITHUB_ENV"
+          echo "CHANGELOG_FILE=$GITHUB_WORKSPACE/RELEASE_NOTES.md" >> "$GITHUB_ENV"
+      - name: Publish existing artifact
+        working-directory: release-source
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_PROJECT_ID: ${{ steps.projects.outputs.curseforge }}
+          MODRINTH_PROJECT_ID: ${{ steps.projects.outputs.modrinth }}
+        run: |
+          ./gradlew -I "$GITHUB_WORKSPACE/gradle/scripts/publish-existing.init.gradle" publishMods --console=plain \
+            -Ppublish_to_maven=false \
+            "-Pcurseforge_project_id=$CURSEFORGE_PROJECT_ID" \
+            "-Pmodrinth_project_id=$MODRINTH_PROJECT_ID"
