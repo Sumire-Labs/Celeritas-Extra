@@ -73,9 +73,9 @@ jobs:
         run: ./gradlew clean build --console=plain
       - name: Extract release notes from changelog
         env:
-          TAG: ${{ github.ref_name }}
+          VERSION: ${{ steps.release.outputs.version }}
         run: |
-          awk -v tag="${TAG#v}" '
+          awk -v tag="$VERSION" '
             /^## \[/ {
               if (found) exit
               if (index($0, "## [" tag "]") == 1) { found = 1; next }
