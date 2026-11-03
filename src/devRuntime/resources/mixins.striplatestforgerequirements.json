@@ -1,0 +1,10 @@
+{
+  "package": "com.sumirelabs.celeritasextra.devruntime.stripforgereq.mixin",
+  "required": true,
+  "minVersion": "0.8.7",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["DiscoveryMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

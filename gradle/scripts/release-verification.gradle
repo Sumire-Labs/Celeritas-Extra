@@ -95,6 +95,10 @@ tasks.register('verifyReleaseJar') {
                 throw new GradleException('Release manifest does not register the Mixin config')
             }
             zip.entries().each { entry ->
+                if (entry.name.contains('/devruntime/') || entry.name.startsWith('com/cleanroommc/stripforgereq/') ||
+                        entry.name == 'mixins.striplatestforgerequirements.json') {
+                    throw new GradleException("Development-only helper bundled in release: ${entry.name}")
+                }
                 if (entry.name.endsWith('.class')) {
                     def bytecode = zip.getInputStream(entry).withCloseable { it.readAllBytes() }
                     if (new String(bytecode, java.nio.charset.StandardCharsets.ISO_8859_1).contains('org/lwjgl/glfw/')) {

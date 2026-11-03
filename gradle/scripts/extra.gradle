@@ -3,6 +3,7 @@
 // shadowJar { relocate 'org.example.library', "${modPackage}.internal.library" }
 
 // Celeritas Extra integrations and checks, kept separate from the development template.
+apply from: 'gradle/scripts/dev-runtime.gradle'
 apply from: 'gradle/scripts/actinium.gradle'
 apply from: 'gradle/scripts/release-verification.gradle'
 

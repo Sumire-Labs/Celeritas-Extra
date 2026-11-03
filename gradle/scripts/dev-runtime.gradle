@@ -1,0 +1,44 @@
+// Cleanroom 0.7.14 discovers annotation types before early Mixins are prepared, which loads
+// FMLModContainer too soon for StripLatestForgeRequirements 1.0's original injection target.
+// Keep that helper's coremod and resources, but strip the same metadata after candidate discovery.
+// This compatibility jar is only on the development classpath, never in the distributable.
+def originalStripHelper = configurations.create('originalStripHelper') {
+    canBeConsumed = false
+    transitive = false
+}
+dependencies {
+    add(originalStripHelper.name, 'com.cleanroommc:strip-latest-forge-requirements:1.0:dev')
+}
+
+sourceSets {
+    devRuntime {
+        compileClasspath += sourceSets.main.compileClasspath
+    }
+}
+tasks.named('compileDevRuntimeJava', JavaCompile) {
+    options.compilerArgs.add('-proc:none')
+}
+
+def stripCompatibilityJar = tasks.register('stripForgeRequirementsCompatibilityJar', Jar) {
+    group = 'build setup'
+    description = 'Builds the development-only Forge requirement helper with late discovery hooks.'
+    archiveFileName = 'strip-latest-forge-requirements-1.0-compat.jar'
+    destinationDirectory = layout.buildDirectory.dir('dev-runtime')
+    from(sourceSets.devRuntime.output)
+    from({ zipTree(originalStripHelper.singleFile) }) {
+        exclude 'META-INF/MANIFEST.MF', 'mixins.striplatestforgerequirements.json',
+                'com/cleanroommc/stripforgereq/mixin/**'
+    }
+    manifest {
+        attributes 'FMLCorePlugin': 'com.cleanroommc.stripforgereq.StripLatestForgeRequirements'
+    }
+}
+
+configurations.runtimeClasspath.exclude group: 'com.cleanroommc', module: 'strip-latest-forge-requirements'
+dependencies {
+    runtimeOnly files(stripCompatibilityJar.flatMap { it.archiveFile }).builtBy(stripCompatibilityJar)
+}
+sourceSets.test {
+    compileClasspath += sourceSets.devRuntime.output
+    runtimeClasspath += sourceSets.devRuntime.output
+}

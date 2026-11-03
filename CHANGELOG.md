@@ -23,6 +23,10 @@ and tagged commit history.
 - Adopted the template's Gradle Wrapper, native SRG access-transformer configuration, publishing tasks, Windows/Linux CI, and weekly Renovate configuration.
 - Retained curated changelog release notes and exclusion of MCP development JARs from release uploads.
 
+### Fixed
+
+- Fixed the development-only StripLatestForgeRequirements Mixin preparation error with Cleanroom 0.7.14. Forge requirement filtering now runs after JAR/directory candidate discovery, preserving the helper's behavior without targeting an already-loaded class. The compatibility helper is excluded from release artifacts.
+
 ## [0.10.0] - 2026-10-23
 
 ### Requirements
