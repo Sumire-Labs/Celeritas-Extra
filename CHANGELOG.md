@@ -9,11 +9,11 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
-## [0.10.1]
+## [0.10.1] - 2026-11-03
 
 ### Requirements
 
-- Update DevEnv, Requires Cleanroom Loader 0.7.14-alpha or newer. The optional AssetMover integration now requires AssetMover 3.0.1 or newer.
+- Requires Cleanroom Loader 0.7.14-alpha or newer within the 0.7.x series, and Java 25. The optional AssetMover integration now requires AssetMover 3.0.1 or newer.
 
 ### Changed
 
