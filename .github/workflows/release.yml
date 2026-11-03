@@ -4,17 +4,61 @@ on:
   push:
     tags:
       - "*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish
+        required: true
+        type: string
+      release_type:
+        description: Upload channel (auto derives it from the tag)
+        type: choice
+        options: [auto, release, beta, alpha]
+        default: auto
+      publish_github:
+        description: Create a GitHub release (disable if it already exists)
+        type: boolean
+        default: false
+      publish_curseforge:
+        description: Publish to CurseForge
+        type: boolean
+        default: true
+      publish_modrinth:
+        description: Publish to Modrinth
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           fetch-tags: true
+          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/tags/{0}', inputs.tag) || github.ref }}
+
+      - name: Validate publishing credentials
+        shell: bash
+        env:
+          PUBLISH_CF: ${{ github.event_name == 'push' || inputs.publish_curseforge }}
+          PUBLISH_MR: ${{ github.event_name == 'push' || inputs.publish_modrinth }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          if [[ "$PUBLISH_CF" == true ]]; then
+            : "${CURSEFORGE_TOKEN:?Set the CURSEFORGE_TOKEN Actions secret}"
+          fi
+          if [[ "$PUBLISH_MR" == true ]]; then
+            : "${MODRINTH_TOKEN:?Set the MODRINTH_TOKEN Actions secret}"
+          fi
       - name: Set up JDK 25
         uses: actions/setup-java@v5.2.0
         with:
@@ -26,8 +70,30 @@ jobs:
         run: ./gradlew clean build verifyReleaseJar
 
       - name: Select release artifacts
+        id: release
         shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+          REQUESTED_TYPE: ${{ inputs.release_type || 'auto' }}
         run: |
+          set -euo pipefail
+          version=$(./gradlew -q --console=plain printVersion | tail -n 1)
+          # Versioning strips explicit stage suffixes from artifact versions.
+          tag_version=$(printf '%s' "${RELEASE_TAG#v}" | sed -E 's/-(alpha|beta|rc|release)$//I')
+          if [[ "$version" != "$tag_version" ]]; then
+            echo "Tag $RELEASE_TAG does not match Gradle version $version"
+            exit 1
+          fi
+          release_type="$REQUESTED_TYPE"
+          if [[ "$release_type" == auto ]]; then
+            release_type=$(./gradlew -q --console=plain printReleaseType | tail -n 1)
+          fi
+          case "$release_type" in alpha|beta|release) ;; *) echo "Invalid release channel: $release_type"; exit 1 ;; esac
+          file="build/libs/celeritasextra-${version}.jar"
+          test -f "$file"
+          echo "file=$file" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "type=$release_type" >> "$GITHUB_OUTPUT"
           mkdir -p build/release
           for artifact in build/libs/*.jar; do
             case "$artifact" in
@@ -38,8 +104,10 @@ jobs:
 
       - name: Extract release notes from changelog
         shell: bash
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
         run: |
-          awk -v tag="$GITHUB_REF_NAME" '
+          awk -v tag="$RELEASE_VERSION" '
             /^## \[/ {
               if (found) exit
               if (index($0, "## [" tag "]") == 1) { found = 1; next }
@@ -50,6 +118,38 @@ jobs:
           test -s build/release-notes.md
 
       - uses: ncipollo/release-action@v1.21.0
+        if: github.event_name == 'push' || inputs.publish_github
         with:
+          tag: ${{ inputs.tag || github.ref_name }}
           artifacts: "build/release/*.jar"
           bodyFile: build/release-notes.md
+          prerelease: ${{ steps.release.outputs.type != 'release' }}
+
+      - name: Publish runtime mod to CurseForge
+        if: github.event_name == 'push' || inputs.publish_curseforge
+        uses: Kir-Antipov/mc-publish@v3
+        with:
+          curseforge-id: '1451214'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: ${{ steps.release.outputs.file }}
+          loaders: forge
+          game-versions: 1.12.2
+          java: '25'
+          version: ${{ steps.release.outputs.version }}
+          version-type: ${{ steps.release.outputs.type }}
+          changelog-file: build/release-notes.md
+
+      - name: Publish runtime mod to Modrinth
+        if: github.event_name == 'push' || inputs.publish_modrinth
+        uses: Kir-Antipov/mc-publish@v3
+        with:
+          modrinth-id: LXQekDcE
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: ${{ steps.release.outputs.file }}
+          loaders: forge
+          environment: client
+          game-versions: 1.12.2
+          java: '25'
+          version: ${{ steps.release.outputs.version }}
+          version-type: ${{ steps.release.outputs.type }}
+          changelog-file: build/release-notes.md
