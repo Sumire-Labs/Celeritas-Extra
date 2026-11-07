@@ -17,7 +17,7 @@ It provides a wide range of quality-of-life and optimization options, similar to
 
 ### Optional
 
-- [AssetMover](https://www.curseforge.com/minecraft/mc-mods/assetmover) 3.0.1 or newer
+- [AssetMover](https://www.curseforge.com/minecraft/mc-mods/assetmover) 2.5 or newer for the Modern Clouds texture
 
 ## Features
 

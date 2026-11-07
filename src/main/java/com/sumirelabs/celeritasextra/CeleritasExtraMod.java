@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * servers that do not have it installed.
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.14-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
-    + "after:assetmover@[3.0.1,)")
+    + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_NAME);

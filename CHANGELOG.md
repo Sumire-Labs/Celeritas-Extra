@@ -9,6 +9,18 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
+## [0.10.2] - 2026-11-07
+
+### Changed
+
+- The experimental static item vertex cache now draws supported Forge item segments directly from cached GPU buffers, with reusable vertex array state. This avoids regenerating or re-uploading vertices on GPU cache hits while preserving Forge lighting and item-frame LOD.
+- The cache remains off by default. Unsupported render paths retain the existing CPU cache or normal rendering, and the cache is bypassed with Iris or a renderer's native item cache.
+
+### Fixed
+
+- Lowered the optional AssetMover requirement to 2.5 so Modern Clouds works with the version available on CurseForge.
+- Fixed release-type selection for automated CurseForge and Modrinth publishing.
+
 ## [0.10.1] - 2026-11-03
 
 ### Requirements
