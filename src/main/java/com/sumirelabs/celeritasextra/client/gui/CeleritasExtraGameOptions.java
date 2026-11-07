@@ -99,7 +99,7 @@ public class CeleritasExtraGameOptions {
         new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
             v -> renderSettings.mapBackFaceCulling = v, () -> renderSettings.mapBackFaceCulling),
         new BooleanProperty(CAT_RENDER, "itemVertexCache", false,
-            "Experimental: reuse static item vertex data (default off; performance gains vary; bypassed for native caches, Iris and dynamic/tinted geometry)",
+            "Experimental: reuse static item vertices, drawing from GPU buffers when supported (default off; bypassed for native caches, Iris and dynamic/tinted geometry)",
             v -> renderSettings.itemVertexCache = v, () -> renderSettings.itemVertexCache),
         new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
             v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),

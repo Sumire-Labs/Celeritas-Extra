@@ -124,7 +124,8 @@ class StaticItemVertexCacheTest {
         assertNull(cache.get(second, quads, -1, true));
         cache.clear();
         assertNull(cache.get(first, quads, -1, true));
-        var tiny = new StaticItemVertexCache(8, 100);
+        // CPU vertices and their key would fit, but not with the reserved GPU copy.
+        var tiny = new StaticItemVertexCache(8, 300);
         tiny.put(first, quads, -1, true, vertices);
         assertNull(tiny.get(first, quads, -1, true));
     }

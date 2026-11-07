@@ -1,5 +1,6 @@
 package com.sumirelabs.celeritasextra.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -13,7 +14,7 @@ public final class RenderCacheInvalidation {
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent event) {
         ItemFrameLodState.clearCache();
-        StaticItemVertexCache.INSTANCE.clear();
+        Minecraft.getMinecraft().addScheduledTask(StaticItemVertexCache.INSTANCE::clear);
     }
 
 }

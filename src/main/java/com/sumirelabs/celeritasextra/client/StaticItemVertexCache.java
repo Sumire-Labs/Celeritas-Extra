@@ -12,12 +12,12 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
-/** Bounded CPU-side vertex reuse; draw calls, lighting segments and GL state stay with Forge. */
+/** Bounded CPU and GPU vertex reuse, scoped to static item geometry. */
 public final class StaticItemVertexCache {
 
     public static final StaticItemVertexCache INSTANCE = new StaticItemVertexCache(256, 4 * 1024 * 1024);
     private final int maxEntries, maxBytes;
-    private final Map<Key, int[]> entries = new LinkedHashMap<>(32, 0.75f, true);
+    private final Map<Key, Entry> entries = new LinkedHashMap<>(32, 0.75f, true);
     private final Key probe = new Key();
     private int retainedBytes;
 
@@ -39,7 +39,28 @@ public final class StaticItemVertexCache {
     /** Lookup after canCache succeeded; avoids repeating the geometry checks on every hit. */
     public int[] getPrepared(IBakedModel model, List<BakedQuad> quads, int color) {
         probe.set(model, quads, color);
-        return entries.get(probe);
+        Entry entry = entries.get(probe);
+        return entry == null ? null : entry.vertices;
+    }
+
+    /** Draw a complete Forge segment without emitting or copying vertices on a GPU cache hit. */
+    public boolean drawPrepared(BufferBuilder buffer, IBakedModel model, List<BakedQuad> quads, int color) {
+        if (buffer.getVertexCount() != 0 || !StaticItemVbo.supports(buffer.getVertexFormat()))
+            return false;
+        probe.set(model, quads, color);
+        Entry entry = entries.get(probe);
+        if (entry == null)
+            return false;
+        if (!entry.uploadAttempted) {
+            entry.uploadAttempted = true;
+            entry.vbo = StaticItemVbo.upload(entry.vertices);
+        }
+        if (entry.vbo == null)
+            return false;
+        entry.vbo.draw();
+        buffer.finishDrawing();
+        buffer.reset();
+        return true;
     }
 
     public void put(IBakedModel model, List<BakedQuad> quads, int color, boolean noStackTint, int[] vertices) {
@@ -48,7 +69,8 @@ public final class StaticItemVertexCache {
         int sourceInts = 0;
         for (var quad : quads)
             sourceInts += quad.getVertexData().length;
-        long cost = ((long) vertices.length + sourceInts) * Integer.BYTES;
+        // Reserve space for the GPU allocation as well as the CPU fallback and key snapshot.
+        long cost = (2L * vertices.length + sourceInts) * Integer.BYTES;
         if (cost > maxBytes)
             return;
         probe.set(model, quads, color);
@@ -56,17 +78,23 @@ public final class StaticItemVertexCache {
         if (entries.containsKey(probe))
             return;
         while (!entries.isEmpty() && (entries.size() >= maxEntries || retainedBytes + cost > maxBytes)) {
-            Iterator<Map.Entry<Key, int[]>> iterator = entries.entrySet().iterator();
+            Iterator<Map.Entry<Key, Entry>> iterator = entries.entrySet().iterator();
             var oldest = iterator.next();
-            retainedBytes -= oldest.getKey().sourceBytes + oldest.getValue().length * Integer.BYTES;
+            retainedBytes -= oldest.getValue().bytes;
+            oldest.getValue().delete();
             iterator.remove();
         }
         Key key = probe.snapshot();
-        entries.put(key, vertices);
+        entries.put(key, new Entry(vertices, (int) cost));
         retainedBytes += (int) cost;
     }
 
+    public boolean hasEntries() {
+        return !entries.isEmpty();
+    }
+
     public void clear() {
+        entries.values().forEach(Entry::delete);
         entries.clear();
         retainedBytes = 0;
         probe.release();
@@ -98,12 +126,31 @@ public final class StaticItemVertexCache {
         return true;
     }
 
+    private static final class Entry {
+
+        final int[] vertices;
+        final int bytes;
+        StaticItemVbo vbo;
+        boolean uploadAttempted;
+
+        Entry(int[] vertices, int bytes) {
+            this.vertices = vertices;
+            this.bytes = bytes;
+        }
+
+        void delete() {
+            if (vbo != null)
+                vbo.delete();
+        }
+
+    }
+
     private static final class Key {
 
         IBakedModel model;
         List<BakedQuad> quads;
         int[][] sourceData;
-        int color, hash, sourceBytes;
+        int color, hash;
         void set(IBakedModel model, List<BakedQuad> quads, int color) {
             this.model = model;
             this.quads = quads;
@@ -121,7 +168,6 @@ public final class StaticItemVertexCache {
             key.sourceData = new int[quads.size()][];
             for (int i = 0; i < quads.size(); i++) {
                 key.sourceData[i] = quads.get(i).getVertexData().clone();
-                key.sourceBytes += key.sourceData[i].length * Integer.BYTES;
             }
             return key;
         }

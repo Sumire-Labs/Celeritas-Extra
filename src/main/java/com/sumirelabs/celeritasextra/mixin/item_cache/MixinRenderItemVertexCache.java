@@ -11,6 +11,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.StaticItemGeometry;
+import com.sumirelabs.celeritasextra.client.StaticItemSegmentRenderer;
 import com.sumirelabs.celeritasextra.client.StaticItemVertexCache;
 import com.sumirelabs.celeritasextra.compat.RendererCompat;
 import com.sumirelabs.celeritasextra.compat.ShaderPassCompat;
@@ -25,7 +26,7 @@ import net.minecraft.item.ItemStack;
 
 /** Reuses emitted vertex bytes without replacing Forge's emissive/light-segmentation renderer. */
 @Mixin(RenderItem.class)
-public class MixinRenderItemVertexCache {
+public class MixinRenderItemVertexCache implements StaticItemSegmentRenderer {
 
     @Unique private IBakedModel celeritasExtra$staticModel;
     @Shadow
@@ -34,7 +35,10 @@ public class MixinRenderItemVertexCache {
     @WrapMethod(method = "renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;ILnet/minecraft/item/ItemStack;)V")
     private void celeritasExtra$scopeModel(IBakedModel model, int color, ItemStack stack, Operation<Void> original) {
         IBakedModel previous = celeritasExtra$staticModel;
-        celeritasExtra$staticModel = CeleritasExtraClientMod.options().renderSettings.itemVertexCache
+        boolean enabled = CeleritasExtraClientMod.options().renderSettings.itemVertexCache;
+        if (!enabled && StaticItemVertexCache.INSTANCE.hasEntries())
+            StaticItemVertexCache.INSTANCE.clear();
+        celeritasExtra$staticModel = enabled
             && !RendererCompat.hasNativeItemCache() && !ShaderPassCompat.hasIris()
             && ((Object) this).getClass() == RenderItem.class && StaticItemGeometry.isStaticModel(model) ? model : null;
         try {
@@ -48,20 +52,14 @@ public class MixinRenderItemVertexCache {
     private void celeritasExtra$reuseVertices(BufferBuilder buffer, List<BakedQuad> quads, int color,
         ItemStack stack, Operation<Void> original) {
         IBakedModel model = celeritasExtra$staticModel;
-        if (model == null || buffer.getClass() != BufferBuilder.class
-            || buffer.getVertexFormat() != DefaultVertexFormats.ITEM || buffer.getDrawMode() != 7
-            || buffer.isColorDisabled() || !(buffer instanceof BufferBuilderOffsets offsets)
-            || offsets.celeritasExtra$xOffset() != 0 || offsets.celeritasExtra$yOffset() != 0
-            || offsets.celeritasExtra$zOffset() != 0) {
+        if (!celeritasExtra$eligibleBuffer(buffer)) {
             original.call(buffer, quads, color, stack);
             return;
         }
         var cache = StaticItemVertexCache.INSTANCE;
         // Forge marks every generated item layer as tinted, including ordinary swords.
         // No registered handler means colorMultiplier is always -1; registered handlers stay live.
-        boolean noStackTint = stack.isEmpty()
-            || itemColors.getClass() == ItemColors.class && itemColors instanceof ItemColorsAccess access
-                && !access.celeritasExtra$itemColorMap().containsKey(stack.getItem().delegate);
+        boolean noStackTint = celeritasExtra$noStackTint(stack);
         if (!cache.canCache(model, quads, color, noStackTint)) {
             original.call(buffer, quads, color, stack);
             return;
@@ -79,6 +77,31 @@ public class MixinRenderItemVertexCache {
             return;
         int[] data = StaticItemVertexCache.capture(buffer, start);
         cache.put(model, quads, color, noStackTint, data);
+    }
+
+    @Override
+    public boolean celeritasExtra$drawCachedSegment(BufferBuilder buffer, List<BakedQuad> quads, int color,
+        ItemStack stack) {
+        var cache = StaticItemVertexCache.INSTANCE;
+        return celeritasExtra$eligibleBuffer(buffer)
+            && cache.canCache(celeritasExtra$staticModel, quads, color, celeritasExtra$noStackTint(stack))
+            && cache.drawPrepared(buffer, celeritasExtra$staticModel, quads, color);
+    }
+
+    @Unique
+    private boolean celeritasExtra$eligibleBuffer(BufferBuilder buffer) {
+        return celeritasExtra$staticModel != null && buffer.getClass() == BufferBuilder.class
+            && buffer.getVertexFormat() == DefaultVertexFormats.ITEM && buffer.getDrawMode() == 7
+            && !buffer.isColorDisabled() && buffer instanceof BufferBuilderOffsets offsets
+            && offsets.celeritasExtra$xOffset() == 0 && offsets.celeritasExtra$yOffset() == 0
+            && offsets.celeritasExtra$zOffset() == 0;
+    }
+
+    @Unique
+    private boolean celeritasExtra$noStackTint(ItemStack stack) {
+        return stack.isEmpty()
+            || itemColors.getClass() == ItemColors.class && itemColors instanceof ItemColorsAccess access
+                && !access.celeritasExtra$itemColorMap().containsKey(stack.getItem().delegate);
     }
 
 }
