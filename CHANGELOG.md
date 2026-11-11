@@ -9,6 +9,15 @@ Release dates use Japan Standard Time (UTC+09:00). Entries are based on the
 [published GitHub release notes](https://github.com/Sumire-Labs/Celeritas-Extra/releases)
 and tagged commit history.
 
+## [Unreleased]
+
+### Changed
+
+- Updated the development environment to Sumire-Labs/CleanroomDevEnv `590d46c`, migrating the Gradle build and project-specific integration scripts to Kotlin DSL.
+- Enabled parallel builds and configuration caching, including cache-compatible renderer adapter generation and production JAR verification.
+- Adopted Felt license and Java header checks while retaining LGPLv3, and moved Spotless configuration under `gradle/spotless/`.
+- Improved changelog section extraction for release publishing while retaining explicit stable-stage handling, MCP artifact filtering, and Windows CI coverage.
+
 ## [0.10.2] - 2026-11-07
 
 ### Changed

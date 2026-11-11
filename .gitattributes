@@ -2,6 +2,7 @@
 .gitattributes text eol=lf
 .gitignore text eol=lf
 *.gradle text eol=lf
+*.gradle.kts text eol=lf
 *.properties text eol=lf
 *.java text eol=lf
 *.json text eol=lf
