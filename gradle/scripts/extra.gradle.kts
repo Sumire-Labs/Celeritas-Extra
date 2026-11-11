@@ -6,7 +6,6 @@ buildscript {
     }
 }
 
-apply(from = "gradle/scripts/actinium.gradle.kts")
 apply(from = "gradle/scripts/dev-runtime.gradle.kts")
 apply(from = "gradle/scripts/release-verification.gradle.kts")
 
@@ -20,4 +19,9 @@ val sources = extensions.getByType<SourceSetContainer>()
 sources.named("test") {
     compileClasspath += sources.getByName("main").compileClasspath
     runtimeClasspath += sources.getByName("main").compileClasspath
+}
+
+// Do not retain empty package directories from removed integrations in the source archive.
+tasks.withType<Jar>().matching { it.name == "sourcesJar" }.configureEach {
+    includeEmptyDirs = false
 }

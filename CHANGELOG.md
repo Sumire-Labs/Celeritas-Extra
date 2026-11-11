@@ -17,6 +17,11 @@ and tagged commit history.
 - Enabled parallel builds and configuration caching, including cache-compatible renderer adapter generation and production JAR verification.
 - Adopted Felt license and Java header checks while retaining LGPLv3, and moved Spotless configuration under `gradle/spotless/`.
 - Improved changelog section extraction for release publishing while retaining explicit stable-stage handling, MCP artifact filtering, and Windows CI coverage.
+- Resolve the optional Iris shadow-pass API independently of renderer development dependencies, retaining conservative shadow-pass behavior when an API cannot be queried.
+
+### Removed
+
+- Removed Actinium integration, generated option adapters, the fast-item LOD hook, and its development dependency. Actinium targets Cleanroom 0.6.x and does not support the 0.7.x runtime required by current Celeritas Extra versions. Celeritas and Nothirium integrations remain supported.
 
 ## [0.10.2] - 2026-11-07
 

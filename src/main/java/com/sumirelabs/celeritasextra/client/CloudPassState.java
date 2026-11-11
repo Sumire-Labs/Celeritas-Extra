@@ -7,7 +7,6 @@
 package com.sumirelabs.celeritasextra.client;
 
 import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.RenderSettings;
-import com.sumirelabs.celeritasextra.compat.RendererCompat;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -23,9 +22,9 @@ import net.minecraft.util.math.MathHelper;
  */
 public final class CloudPassState {
 
-    /** Actinium owns the cloud toggle; Extra's saved toggle applies to Celeritas. */
+    /** Extra's saved cloud toggle applies to the supported renderers. */
     public static boolean cloudsEnabled(RenderSettings settings) {
-        return RendererCompat.isActinium() ? Minecraft.getMinecraft().gameSettings.clouds != 0 : settings.clouds;
+        return settings.clouds;
     }
 
     /**

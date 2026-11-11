@@ -30,28 +30,25 @@ class NothiriumIntegrationTest {
 
     @Test
     void nothiriumSelectsCommonHooksAndRenderLibWithoutSodiumGuiTargets() {
-        assertFalse(RendererMixinPlugin.supportsMixin(false, true, "extra.mixin.options_search.MixinOptionsScreen"));
-        assertFalse(RendererMixinPlugin.supportsMixin(false, true, "extra.mixin.actinium.MixinFastLitItemLod"));
+        assertFalse(RendererMixinPlugin.supportsMixin(true, true, "extra.mixin.options_search.MixinOptionsScreen"));
         assertTrue(
+            RendererMixinPlugin.supportsMixin(true, true, "extra.mixin.nothirium.MixinRenderLibEntityDistance"));
+        assertFalse(
             RendererMixinPlugin.supportsMixin(false, true, "extra.mixin.nothirium.MixinRenderLibEntityDistance"));
-        assertFalse(
-            RendererMixinPlugin.supportsMixin(false, false, "extra.mixin.nothirium.MixinRenderLibEntityDistance"));
-        assertFalse(
-            RendererMixinPlugin.supportsMixin(true, false, "extra.mixin.nothirium.MixinRenderLibEntityDistance"));
-        assertTrue(RendererMixinPlugin.supportsMixin(false, true, "extra.mixin.render.sky.MixinRenderGlobalClouds"));
-        assertTrue(RendererMixinPlugin.supportsMixin(false, true,
+        assertTrue(RendererMixinPlugin.supportsMixin(true, true, "extra.mixin.render.sky.MixinRenderGlobalClouds"));
+        assertTrue(RendererMixinPlugin.supportsMixin(true, true,
             "extra.mixin.render.block_entity.MixinTileEntityRenderDistance"));
     }
 
     @Test
-    void forgeAdapterLinksWithoutEitherRendererApiOrNothiriumApi() throws Exception {
+    void forgeAdapterLinksWithoutPrivateRendererApis() throws Exception {
         var classes = RendererMixinPlugin.class.getProtectionDomain().getCodeSource().getLocation();
         try (var isolated = new URLClassLoader(new java.net.URL[]{classes}, getClass().getClassLoader()) {
 
             @Override
             protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
                 if (name.startsWith("org.taumc.") || name.startsWith("org.embeddedt.")
-                    || name.startsWith("dhj.") || name.startsWith("com.dhj.") || name.startsWith("meldexun.")) {
+                    || name.startsWith("meldexun.")) {
                     throw new ClassNotFoundException("Optional renderer API unavailable: " + name);
                 }
                 if (name.startsWith("com.sumirelabs.celeritasextra.compat.nothirium.")) {

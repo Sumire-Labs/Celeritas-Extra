@@ -22,14 +22,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * <p>
  * Celeritas Extra layers additional rendering options on top of Celeritas and surfaces
  * them inside the renderer's own options GUI. This class drives the Forge lifecycle: during
- * construction it selects Celeritas, Actinium or Nothirium, then registers the
+ * construction it selects Celeritas or Nothirium, then registers the
  * option-GUI construction listeners; during initialization it bootstraps the client
  * configuration.
  * <p>
  * The mod is {@code clientSideOnly} and accepts any remote version, so it can join
  * servers that do not have it installed.
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.14-alpha,0.8);after:celeritas;after:actinium;after:nothirium@[0.4.9-beta,);"
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, clientSideOnly = true, acceptableRemoteVersions = "*", dependencies = "required-after:cleanroom@[0.7.14-alpha,0.8);after:celeritas;after:nothirium@[0.4.9-beta,);"
     + "after:assetmover@[2.5,)")
 public class CeleritasExtraMod {
 
@@ -49,12 +49,11 @@ public class CeleritasExtraMod {
      */
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
-        boolean actinium = Loader.isModLoaded("actinium");
         boolean celeritas = Loader.isModLoaded("celeritas");
         boolean nothirium = Loader.isModLoaded("nothirium");
-        if ((actinium ? 1 : 0) + (celeritas ? 1 : 0) + (nothirium ? 1 : 0) != 1) {
+        if (celeritas == nothirium) {
             throw new IllegalStateException(
-                "Celeritas Extra requires exactly one renderer: Celeritas, Actinium or Nothirium");
+                "Celeritas Extra requires exactly one renderer: Celeritas or Nothirium");
         }
         if (Loader.isModLoaded("assetmover")) {
             try {
@@ -69,9 +68,7 @@ public class CeleritasExtraMod {
             LOGGER.info("AssetMover is not installed; the modern cloud texture will not be downloaded");
         }
 
-        if (actinium) {
-            com.sumirelabs.celeritasextra.compat.actinium.ActiniumOptionsAdapter.register();
-        } else if (nothirium) {
+        if (nothirium) {
             com.sumirelabs.celeritasextra.compat.nothirium.NothiriumOptionsAdapter.register();
         } else if (!com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasControllerGui()) {
             com.sumirelabs.celeritasextra.compat.pintonium.PintoniumOptionsAdapter.register();
@@ -80,7 +77,7 @@ public class CeleritasExtraMod {
             com.sumirelabs.celeritasextra.compat.CeleritasOptionsAdapter.register();
         }
         LOGGER.info("Registered Celeritas Extra with {} GUI",
-            actinium ? "Actinium" : nothirium ? "Nothirium" : "Celeritas");
+            nothirium ? "Nothirium" : "Celeritas");
     }
 
     /**

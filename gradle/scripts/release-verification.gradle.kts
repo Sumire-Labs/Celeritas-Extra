@@ -55,7 +55,7 @@ val verifyReleaseJar = tasks.register("verifyReleaseJar") {
             if (values["dependencies"]?.contains("required-after:cleanroom@[0.7.14-alpha,0.8)") != true)
                 throw GradleException("Release must require the supported Cleanroom 0.7.x API")
             val dependencies = metadata["dependencies"] as List<*>
-            if (listOf("celeritas", "actinium", "nothirium", "renderlib").any { it in dependencies })
+            if (listOf("celeritas", "nothirium", "renderlib").any { it in dependencies })
                 throw GradleException("Metadata must allow any supported renderer")
             val config = json("$id.mixin.json")
             val refmap = json(config["refmap"] as String)["mappings"] as Map<*, *>

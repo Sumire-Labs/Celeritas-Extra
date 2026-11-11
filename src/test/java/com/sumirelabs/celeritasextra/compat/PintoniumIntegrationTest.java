@@ -36,12 +36,12 @@ class PintoniumIntegrationTest {
             "controller", "Lsome/fork/AnotherController;"))));
         for (String mixin : List.of("MixinOptionsScreen", "MixinOptionsController", "MixinGuiScreen",
             "MixinSliderScroll", "MixinScrollableFrame")) {
-            assertFalse(RendererMixinPlugin.supportsMixin(false, false, false, "extra.mixin.options_search." + mixin));
+            assertFalse(RendererMixinPlugin.supportsMixin(false, false, "extra.mixin.options_search." + mixin));
         }
         assertTrue(
-            RendererMixinPlugin.supportsMixin(false, false, false, "extra.mixin.render.sky.MixinCloudResources"));
+            RendererMixinPlugin.supportsMixin(false, false, "extra.mixin.render.sky.MixinCloudResources"));
         assertTrue(
-            RendererMixinPlugin.supportsMixin(false, false, false, "extra.mixin.animation.MixinTextureAtlasSprite"));
+            RendererMixinPlugin.supportsMixin(false, false, "extra.mixin.animation.MixinTextureAtlasSprite"));
     }
 
     @Test
@@ -51,7 +51,7 @@ class PintoniumIntegrationTest {
             assertTrue(CeleritasGuiCompatibility.hasControllerGui(input));
         }
         assertTrue(
-            RendererMixinPlugin.supportsMixin(false, false, true, "extra.mixin.options_search.MixinOptionsScreen"));
+            RendererMixinPlugin.supportsMixin(false, true, "extra.mixin.options_search.MixinOptionsScreen"));
     }
 
     @Test
@@ -61,7 +61,7 @@ class PintoniumIntegrationTest {
 
             @Override
             protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-                if (name.startsWith("org.taumc.") || name.startsWith("org.embeddedt.") || name.startsWith("dhj.")) {
+                if (name.startsWith("org.taumc.") || name.startsWith("org.embeddedt.")) {
                     throw new ClassNotFoundException("Private renderer API unavailable: " + name);
                 }
                 if (name.startsWith("com.sumirelabs.celeritasextra.compat.pintonium.")
