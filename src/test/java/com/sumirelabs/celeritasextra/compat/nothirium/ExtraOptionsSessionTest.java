@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2026 Pepelys
+ * Copyright (c) 2026 Sumire Labs
+ * SPDX-License-Identifier: LGPL-3.0-only
+ */
+
 package com.sumirelabs.celeritasextra.compat.nothirium;
 
 import java.util.List;
