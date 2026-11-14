@@ -19,8 +19,11 @@ public final class RenderCacheInvalidation {
 
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent event) {
-        ItemFrameLodState.clearCache();
-        Minecraft.getMinecraft().addScheduledTask(StaticItemVertexCache.INSTANCE::clear);
+        // Both caches are owned by the render thread, including the LOD cache's access-order map.
+        Minecraft.getMinecraft().addScheduledTask(() -> {
+            ItemFrameLodState.clearCache();
+            StaticItemVertexCache.INSTANCE.clear();
+        });
     }
 
 }

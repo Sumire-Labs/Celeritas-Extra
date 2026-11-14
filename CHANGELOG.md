@@ -23,6 +23,10 @@ and tagged commit history.
 
 - Removed Actinium integration, generated option adapters, the fast-item LOD hook, and its development dependency. Actinium targets Cleanroom 0.6.x and does not support the 0.7.x runtime required by current Celeritas Extra versions. Celeritas and Nothirium integrations remain supported.
 
+### Fixed
+
+- Clear both item-frame LOD and vertex caches on the render thread when models are rebaked, avoiding concurrent LOD-cache mutation when a model bake event originates off-thread.
+
 ## [0.10.2] - 2026-11-07
 
 ### Changed
