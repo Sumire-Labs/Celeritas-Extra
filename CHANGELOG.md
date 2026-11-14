@@ -25,6 +25,8 @@ and tagged commit history.
 
 ### Fixed
 
+- Start Shift+Tab navigation at the last text field when no field is focused in the standalone list editor.
+- Show VSync as off when the vanilla VSync setting is disabled, even if the adaptive-sync preference remains enabled.
 - Clear both item-frame LOD and vertex caches on the render thread when models are rebaked, avoiding concurrent LOD-cache mutation when a model bake event originates off-thread.
 
 ## [0.10.2] - 2026-11-07

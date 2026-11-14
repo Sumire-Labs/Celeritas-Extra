@@ -414,13 +414,10 @@ public class CeleritasExtraGameOptions {
          * @return the mode reflecting the game's present configuration
          */
         public static VerticalSyncOption getCurrent(CeleritasExtraGameOptions opts) {
-            if (opts.extraSettings.useAdaptiveSync) {
-                return ADAPTIVE;
-            } else if (Minecraft.getMinecraft().gameSettings.enableVsync) {
-                return ON;
-            } else {
+            if (!Minecraft.getMinecraft().gameSettings.enableVsync) {
                 return OFF;
             }
+            return opts.extraSettings.useAdaptiveSync ? ADAPTIVE : ON;
         }
 
         /**

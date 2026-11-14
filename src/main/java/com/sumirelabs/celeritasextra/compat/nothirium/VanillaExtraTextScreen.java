@@ -130,7 +130,10 @@ final class VanillaExtraTextScreen extends GuiScreen {
             for (int i = 0; i < fields.size(); i++)
                 if (fields.get(i).isFocused())
                     focused = i;
-            int next = Math.floorMod(focused + (isShiftKeyDown() ? -1 : 1), fields.size());
+            boolean backwards = isShiftKeyDown();
+            int next = focused < 0
+                ? (backwards ? fields.size() - 1 : 0)
+                : Math.floorMod(focused + (backwards ? -1 : 1), fields.size());
             for (int i = 0; i < fields.size(); i++)
                 fields.get(i).setFocused(i == next);
         } else
