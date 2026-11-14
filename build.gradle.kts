@@ -4,14 +4,19 @@ import me.modmuss50.mpp.ReleaseType
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import groovy.json.JsonOutput
 import net.minecraftforge.renamer.gradle.RenameJar
+import org.gradle.api.attributes.Bundling
+import org.gradle.api.attributes.Category
+import org.gradle.api.attributes.LibraryElements
+import org.gradle.api.attributes.Usage
+import org.gradle.api.attributes.java.TargetJvmEnvironment
+import org.gradle.api.attributes.java.TargetJvmVersion
 import org.jetbrains.gradle.ext.Gradle
 import org.jetbrains.gradle.ext.runConfigurations
 import org.jetbrains.gradle.ext.settings
 
-// Development scaffold: Sumire-Labs/CleanroomDevEnv 590d46c.
+// Development scaffold: Sumire-Labs/CleanroomDevEnv 6b24e5c.
 
 plugins {
-    id("com.sumirelabs.felt") version "0.3.0"
     id("com.cleanroommc.versioning") version "3.4.0"
     `java-library`
     `maven-publish`
@@ -65,6 +70,18 @@ configurations.implementation { extendsFrom(contain) }
 if (shadowEnabled) {
     val shade = configurations.create("shade")
     configurations.implementation { extendsFrom(shade) }
+}
+
+listOfNotNull(contain, configurations.findByName("shade")).forEach { embedded ->
+    embedded.isCanBeConsumed = false
+    embedded.attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.JAR))
+        attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+        attribute(TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE, objects.named(TargetJvmEnvironment.STANDARD_JVM))
+        attributeProvider(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, java.toolchain.languageVersion.map { it.asInt() })
+    }
 }
 
 dependencies {
@@ -121,7 +138,7 @@ tokenEnvoy {
         set("MOD_LOGO_JSON", JsonOutput.toJson(propertyString("mod_logo_path")))
         set("MOD_ISSUE_TRACKER_JSON", JsonOutput.toJson(propertyString("mod_issue_tracker")))
         set("PACK_DESCRIPTION_JSON", JsonOutput.toJson("$modName Resources"))
-        classes { include("**/Reference.class", "**/CeleritasExtraMod.class") }
+        classes { include("**/*.class") }
         resources { include("mcmod.info", "pack.mcmeta", "*.mixin.json") }
     }
 }
@@ -248,6 +265,13 @@ if (remotePublishing || localPublishing) {
                     name.set(modName)
                     description.set(modDescription)
                     if (modUrl.isNotBlank()) url.set(modUrl)
+                    licenses {
+                        license {
+                            name.set("GNU Lesser General Public License v3.0 only")
+                            url.set("https://spdx.org/licenses/LGPL-3.0-only.html")
+                            distribution.set("repo")
+                        }
+                    }
                 }
             }
         }
@@ -324,6 +348,3 @@ tasks.register("printReleaseInfo") {
     })
     doLast { println(inputs.properties.getValue("info")) }
 }
-
-// Check maintained sources; generated adapters inherit the header from their inputs.
-felt { sources.setFrom(fileTree("src") { include("**/*.java") }) }

@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import java.io.DataInputStream
 import java.util.jar.JarFile
 import net.minecraftforge.renamer.gradle.RenameJar
 
@@ -84,12 +85,47 @@ val verifyModJar = tasks.register("verifyModJar") {
             } else if (coremod != null || entries.any { it.name.startsWith(root_package.replace('.', '/') + "/core/") }) {
                 throw GradleException("Coremod classes or manifest attribute leaked into the disabled variant.")
             }
+            val unresolvedToken = Regex("@\\{[^{}\\r\\n]+}")
             entries.filter {
                 !it.isDirectory && (it.name.endsWith(".class") || it.name in listOf("mcmod.info", "pack.mcmeta") ||
                     it.name.endsWith(".mixin.json"))
             }.forEach { entry ->
-                val text = jar.getInputStream(entry).use { it.readBytes().toString(Charsets.ISO_8859_1) }
-                if (text.contains("@{")) throw GradleException("Unresolved token in ${entry.name}")
+                fun checkText(text: String) {
+                    if (unresolvedToken.containsMatchIn(text)) {
+                        throw GradleException("Unresolved token in ${entry.name}")
+                    }
+                }
+                if (entry.name.endsWith(".class")) {
+                    // Only constant-pool text can contain tokens; numeric values and bytecode are binary.
+                    DataInputStream(jar.getInputStream(entry)).use { input ->
+                        if (input.readInt() != 0xCAFEBABE.toInt()) {
+                            throw GradleException("Invalid class file: ${entry.name}")
+                        }
+                        input.readInt() // minor_version and major_version
+                        val count = input.readUnsignedShort()
+                        var index = 1
+                        while (index < count) {
+                            when (val tag = input.readUnsignedByte()) {
+                                1 -> checkText(input.readUTF())
+                                3, 4 -> input.readInt()
+                                5, 6 -> {
+                                    input.readLong()
+                                    index++ // Long and double constants occupy two entries.
+                                }
+                                7, 8, 16, 19, 20 -> input.readUnsignedShort()
+                                9, 10, 11, 12, 17, 18 -> input.readInt()
+                                15 -> {
+                                    input.readUnsignedByte()
+                                    input.readUnsignedShort()
+                                }
+                                else -> throw GradleException("Unknown constant-pool tag $tag in ${entry.name}")
+                            }
+                            index++
+                        }
+                    }
+                } else {
+                    checkText(jar.getInputStream(entry).use { it.readBytes().toString(Charsets.UTF_8) })
+                }
             }
             val configs = attributes.getValue("MixinConfigs")
             if (mixinEnabled) {

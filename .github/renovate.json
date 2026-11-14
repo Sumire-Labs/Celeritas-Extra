@@ -87,17 +87,6 @@
       ],
       "ignoreUnstable": false,
       "allowedVersions": "/^0\\.7\\.\\d+(?:-(?:alpha|beta|rc)(?:\\.\\d+)?)?$/"
-    },
-    {
-      "matchDatasources": [
-        "maven"
-      ],
-      "matchPackageNames": [
-        "com.sumirelabs*"
-      ],
-      "registryUrls": [
-        "https://artifact.sumirelabs.com/maven/releases"
-      ]
     }
   ],
   "customManagers": [

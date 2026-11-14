@@ -13,9 +13,9 @@ and tagged commit history.
 
 ### Changed
 
-- Updated the development environment to Sumire-Labs/CleanroomDevEnv `590d46c`, migrating the Gradle build and project-specific integration scripts to Kotlin DSL.
+- Updated the development environment to Sumire-Labs/CleanroomDevEnv `6b24e5c`, migrating the Gradle build and project-specific integration scripts to Kotlin DSL.
 - Enabled parallel builds and configuration caching, including cache-compatible renderer adapter generation and production JAR verification.
-- Adopted Felt license and Java header checks while retaining LGPLv3, and moved Spotless configuration under `gradle/spotless/`.
+- Moved Spotless configuration under `gradle/spotless/`. Followed the template's removal of Felt while retaining the project's existing LGPLv3 license and source notices.
 - Improved changelog section extraction for release publishing while retaining explicit stable-stage handling, MCP artifact filtering, and Windows CI coverage.
 - Resolve the optional Iris shadow-pass API independently of renderer development dependencies, retaining conservative shadow-pass behavior when an API cannot be queried.
 
@@ -25,6 +25,7 @@ and tagged commit history.
 
 ### Fixed
 
+- Apply TokenEnvoy replacements to all compiled Mod classes, validate unresolved tokens in constant-pool text rather than binary class data, and select runtime JAR variants for embedded/shaded dependencies.
 - Start Shift+Tab navigation at the last text field when no field is focused in the standalone list editor.
 - Show VSync as off when the vanilla VSync setting is disabled, even if the adaptive-sync preference remains enabled.
 - Clear both item-frame LOD and vertex caches on the render thread when models are rebaked, avoiding concurrent LOD-cache mutation when a model bake event originates off-thread.

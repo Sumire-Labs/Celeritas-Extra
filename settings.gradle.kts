@@ -1,11 +1,5 @@
 pluginManagement {
     repositories {
-        maven("https://artifact.sumirelabs.com/maven/releases") {
-            content {
-                includeGroup("com.sumirelabs")
-                includeGroup("com.sumirelabs.felt")
-            }
-        }
         maven("https://maven.cleanroommc.com")
         gradlePluginPortal()
     }
