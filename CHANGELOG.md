@@ -25,6 +25,7 @@ and tagged commit history.
 
 ### Fixed
 
+- Preserve the requested average FPS for background limits below 20 FPS that do not divide the 20 Hz client loop, without catch-up bursts after stalls.
 - Preserve the block-entity dispatcher's null/invalid-tile handling when adding renderer profiler sections.
 - Apply TokenEnvoy replacements to all compiled Mod classes, validate unresolved tokens in constant-pool text rather than binary class data, and select runtime JAR variants for embedded/shaded dependencies.
 - Start Shift+Tab navigation at the last text field when no field is focused in the standalone list editor.

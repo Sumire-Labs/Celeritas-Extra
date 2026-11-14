@@ -70,17 +70,31 @@ public final class BackgroundFrameLimiter {
 
     public static final class FrameSchedule {
 
-        private long lastDraw = -1;
+        private long nextDraw;
         private int previousLimit;
+        private boolean scheduled;
 
         public boolean allow(long now, int limit) {
             boolean changed = limit != previousLimit;
             previousLimit = limit;
-            if (limit == 0 || limit >= 20 || changed || lastDraw == -1 || now - lastDraw >= 1_000_000_000L / limit) {
-                lastDraw = now;
+            if (limit <= 0 || limit >= 20) {
+                scheduled = false;
                 return true;
             }
-            return false;
+            long interval = 1_000_000_000L / limit;
+            if (changed || !scheduled) {
+                scheduled = true;
+                nextDraw = now + interval;
+                return true;
+            }
+            if (now - nextDraw < 0)
+                return false;
+            // Keep fractional-loop time instead of rounding every interval up to a full loop.
+            nextDraw += interval;
+            // A stall should start a fresh schedule, without a burst of catch-up frames.
+            if (now - nextDraw >= 0)
+                nextDraw = now + interval;
+            return true;
         }
 
     }

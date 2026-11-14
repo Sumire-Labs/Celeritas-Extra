@@ -56,4 +56,26 @@ class BackgroundFrameLimiterTest {
         assertFalse(schedule.allow(240_000_000, 1));
     }
 
+    @Test
+    void nonDivisorLimitsRetainTheirAverageAtTwentyHz() {
+        for (int limit = 1; limit < 20; limit++) {
+            var schedule = new BackgroundFrameLimiter.FrameSchedule();
+            int draws = 0;
+            for (long now = 0; now < 10_000_000_000L; now += 50_000_000L)
+                if (schedule.allow(now, limit))
+                    draws++;
+            assertEquals(limit * 10, draws, "Requested FPS: " + limit);
+        }
+    }
+
+    @Test
+    void longStallDoesNotCauseCatchUpDraws() {
+        var schedule = new BackgroundFrameLimiter.FrameSchedule();
+        assertTrue(schedule.allow(0, 5));
+        assertTrue(schedule.allow(10_000_000_000L, 5));
+        assertFalse(schedule.allow(10_050_000_000L, 5));
+        assertFalse(schedule.allow(10_199_999_999L, 5));
+        assertTrue(schedule.allow(10_200_000_000L, 5));
+    }
+
 }
