@@ -11,26 +11,30 @@ and tagged commit history.
 
 ## [Unreleased]
 
+## [0.10.3] - 2026-11-14
+
 ### Changed
 
-- Updated the development environment to Sumire-Labs/CleanroomDevEnv `6b24e5c`, migrating the Gradle build and project-specific integration scripts to Kotlin DSL.
-- Enabled parallel builds and configuration caching, including cache-compatible renderer adapter generation and production JAR verification.
-- Moved Spotless configuration under `gradle/spotless/`. Followed the template's removal of Felt while retaining the project's existing LGPLv3 license and source notices.
-- Improved changelog section extraction for release publishing while retaining explicit stable-stage handling, MCP artifact filtering, and Windows CI coverage.
-- Resolve the optional Iris shadow-pass API independently of renderer development dependencies, retaining conservative shadow-pass behavior when an API cannot be queried.
+- Updated the development environment to Sumire-Labs/CleanroomDevEnv `6b24e5c` and migrated the Gradle build and project-specific scripts to Kotlin DSL.
+- Updated Gradle to 9.9.0 and GitHub Actions setup-java to 6.2.0.
+- Enabled parallel builds and configuration caching, including production JAR verification.
+- Moved Spotless configuration to `gradle/spotless/` and removed Felt, following the template update. The project's LGPLv3 license and source notices remain in place.
+- Updated release-note extraction to handle BOMs, CRLF line endings, and headings inside code fences. Stable-stage handling, MCP artifact filtering, and Windows CI coverage remain supported.
+- Resolved the optional Iris shadow-pass API independently of renderer development dependencies. Camera-based optimizations stay disabled when the API cannot report the shadow-pass state.
 
 ### Removed
 
-- Removed Actinium integration, generated option adapters, the fast-item LOD hook, and its development dependency. Actinium targets Cleanroom 0.6.x and does not support the 0.7.x runtime required by current Celeritas Extra versions. Celeritas and Nothirium integrations remain supported.
+- Removed Actinium integration, generated option adapters, its fast-item LOD hook, and the development dependency. Actinium supports Cleanroom 0.6.x; Celeritas Extra requires 0.7.x. Celeritas and Nothirium integrations remain supported.
 
 ### Fixed
 
-- Preserve the requested average FPS for background limits below 20 FPS that do not divide the 20 Hz client loop, without catch-up bursts after stalls.
-- Preserve the block-entity dispatcher's null/invalid-tile handling when adding renderer profiler sections.
-- Apply TokenEnvoy replacements to all compiled Mod classes, validate unresolved tokens in constant-pool text rather than binary class data, and select runtime JAR variants for embedded/shaded dependencies.
-- Start Shift+Tab navigation at the last text field when no field is focused in the standalone list editor.
-- Show VSync as off when the vanilla VSync setting is disabled, even if the adaptive-sync preference remains enabled.
-- Clear both item-frame LOD and vertex caches on the render thread when models are rebaked, avoiding concurrent LOD-cache mutation when a model bake event originates off-thread.
+- Fixed background FPS limits below 20 falling short of the selected rate. For example, a 15 FPS limit could produce about 10 FPS. The scheduler now carries timing remainders forward and avoids catch-up bursts after stalls.
+- Fixed a crash when the block-entity dispatcher receives a null tile. Profiling also respects the dispatcher's invalid-tile check.
+- Applied TokenEnvoy replacements to all compiled Mod classes, including renamed entry points.
+- Fixed false unresolved-token reports by checking class constant-pool text, and selected runtime JAR variants for embedded and shaded dependencies.
+- Fixed Shift+Tab starting at the wrong field when no field is focused in the standalone list editor. It now selects the last field.
+- Fixed VSync showing as enabled when the vanilla VSync setting is off and the saved adaptive-sync preference is on.
+- Moved both item-frame LOD and vertex-cache invalidation to the render thread when models are rebaked, preventing concurrent cache access during asynchronous model baking.
 
 ## [0.10.2] - 2026-11-07
 
@@ -592,3 +596,7 @@ and tagged commit history.
 
 - Initial public release of Celeritas Extra for Minecraft 1.12.2 with Cleanroom Loader and Celeritas.
 - Animation and particle toggles, graphics and rendering options, and quality-of-life features backported from Embeddium/Rubidium Extra.
+
+[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...HEAD
+[0.10.3]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.2-release...0.10.3-release
+[0.10.2]: https://github.com/Sumire-Labs/Celeritas-Extra/releases/tag/0.10.2-release
