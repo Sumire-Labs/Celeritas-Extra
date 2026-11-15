@@ -202,3 +202,6 @@ celeritasextra.option.item_frame_three_faces=物品展示框三面剔除
 celeritasextra.option.item_frame_three_faces.tooltip=实验性功能：在指定距离外使用 MoreCulling 的三方向面选择。默认开启，起始距离为 4 格。斜向旋转的展示框和带旋转变换的模型不使用此分支。阴影通道保持正常渲染。
 celeritasextra.option.item_frame_three_face_distance=方块面剔除距离
 celeritasextra.option.item_frame_three_face_distance.tooltip=开始剔除物品展示框内方块面的最小距离（方块）。
+
+celeritasextra.option.rain_snow_culling=雨雪视锥剔除
+celeritasextra.option.rain_snow_culling.tooltip=跳过摄像机视野外的雨雪柱。自定义天气渲染器和阴影通道保持正常渲染。

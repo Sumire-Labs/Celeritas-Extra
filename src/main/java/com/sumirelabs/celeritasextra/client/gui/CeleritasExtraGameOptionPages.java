@@ -455,6 +455,8 @@ public class CeleritasExtraGameOptionPages {
             .add(booleanOption("soundCategory.weather",
                 (opts, v) -> opts.detailSettings.rainSnow = v,
                 opts -> opts.detailSettings.rainSnow))
+            .add(booleanOption("celeritasextra.option.rain_snow_culling",
+                (opts, v) -> opts.detailSettings.rainSnowCulling = v, opts -> opts.detailSettings.rainSnowCulling))
             .add(booleanOption("sodium-extra.option.sky_colors",
                 (opts, v) -> opts.detailSettings.skyColors = v,
                 opts -> opts.detailSettings.skyColors))

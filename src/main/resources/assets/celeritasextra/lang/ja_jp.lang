@@ -202,3 +202,6 @@ celeritasextra.option.item_frame_three_faces=額縁内アイテムの3面カリ�
 celeritasextra.option.item_frame_three_faces.tooltip=実験的機能：指定距離より遠い額縁で、MoreCullingと同じ判定により3方向の面を描画します。初期値はON、適用距離は4ブロックです。斜め45度の額縁や回転したモデルはこの処理の対象外です。シャドウパスは通常描画を維持します。
 celeritasextra.option.item_frame_three_face_distance=ブロック面カリング距離
 celeritasextra.option.item_frame_three_face_distance.tooltip=額縁内ブロックの面カリングを適用し始める距離（ブロック単位）。
+
+celeritasextra.option.rain_snow_culling=雨雪の視錐台カリング
+celeritasextra.option.rain_snow_culling.tooltip=カメラの視界外にある雨雪の列の描画を省略します。Mod独自の天候描画とシャドウパスは通常の描画を維持します。

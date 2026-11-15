@@ -29,6 +29,7 @@ final class ForgeExtraTranslations {
         Map.entry("detail.moon", "sodium-extra.option.moon"),
         Map.entry("detail.totalStars", "options.total_stars"),
         Map.entry("detail.rainSnow", "soundCategory.weather"),
+        Map.entry("detail.rainSnowCulling", "celeritasextra.option.rain_snow_culling"),
         Map.entry("detail.skyColors", "sodium-extra.option.sky_colors"),
         Map.entry("detail.biomeColors", "sodium-extra.option.biome_colors"),
         Map.entry("render.clouds", "options.renderClouds"),

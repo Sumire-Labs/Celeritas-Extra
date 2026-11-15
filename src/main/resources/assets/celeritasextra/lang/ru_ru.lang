@@ -202,3 +202,6 @@ celeritasextra.option.item_frame_three_faces=Отсечение трёх гра�
 celeritasextra.option.item_frame_three_faces.tooltip=Экспериментальная функция: выбор трёх направлений по алгоритму MoreCulling. По умолчанию включена с расстояния 4 блока. Диагональные повороты рамок и повёрнутые модели не используют эту ветку. Проходы теней сохраняют обычную отрисовку.
 celeritasextra.option.item_frame_three_face_distance=Дистанция отсечения граней блоков
 celeritasextra.option.item_frame_three_face_distance.tooltip=Минимальное расстояние в блоках для отсечения граней блоков в рамках.
+
+celeritasextra.option.rain_snow_culling=Отсечение дождя и снега
+celeritasextra.option.rain_snow_culling.tooltip=Пропускает столбцы осадков вне поля зрения. Особые погодные рендереры и проходы теней сохраняют обычную отрисовку.

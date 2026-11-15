@@ -82,6 +82,8 @@ public class CeleritasExtraGameOptions {
             v -> detailSettings.stars = v, () -> detailSettings.stars),
         new BooleanProperty(CAT_DETAIL, "rainSnow", true, "Enable/disable rain and snow rendering",
             v -> detailSettings.rainSnow = v, () -> detailSettings.rainSnow),
+        new BooleanProperty(CAT_DETAIL, "rainSnowCulling", true, "Cull rain and snow columns outside the view frustum",
+            v -> detailSettings.rainSnowCulling = v, () -> detailSettings.rainSnowCulling),
         new BooleanProperty(CAT_DETAIL, "biomeColors", true, "Enable/disable biome-specific colors",
             v -> detailSettings.biomeColors = v, () -> detailSettings.biomeColors),
         new BooleanProperty(CAT_DETAIL, "skyColors", true, "Enable/disable biome-based sky colors",
@@ -576,6 +578,7 @@ public class CeleritasExtraGameOptions {
         public boolean sun = true;
         public boolean moon = true;
         public boolean rainSnow = true;
+        public boolean rainSnowCulling = true;
         public boolean biomeColors = true;
         public boolean skyColors = true;
         public boolean voidFog = true;

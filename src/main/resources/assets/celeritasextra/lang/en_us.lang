@@ -202,3 +202,6 @@ celeritasextra.option.item_frame_three_faces=Item Frame 3-Face Culling
 celeritasextra.option.item_frame_three_faces.tooltip=Experimental: use MoreCulling's three-direction selection beyond the selected distance. Enabled by default, starting at 4 blocks. Diagonal frame rotations and rotated model transforms do not use this branch. Shadow passes keep normal rendering.
 celeritasextra.option.item_frame_three_face_distance=Block Face Culling Distance
 celeritasextra.option.item_frame_three_face_distance.tooltip=Minimum distance in blocks before item-frame block face culling applies.
+
+celeritasextra.option.rain_snow_culling=Rain/Snow Frustum Culling
+celeritasextra.option.rain_snow_culling.tooltip=Skip rain and snow columns outside the camera view. Custom weather renderers and shadow passes retain normal rendering.
