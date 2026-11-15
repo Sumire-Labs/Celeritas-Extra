@@ -66,9 +66,9 @@ class OptionsGuiIntegrationTest {
         var controller = controller(List.of(page("first", description, typo), page("second", partial, exact)));
         partial.setValue(9);
         controller.celeritasExtra$search("cloud");
-        assertEquals(List.of(exact, partial, description, typo),
+        assertEquals(List.of(exact, partial, description),
             controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
-        assertEquals(4, controller.celeritasExtra$resultCount());
+        assertEquals(3, controller.celeritasExtra$resultCount());
         assertEquals(9, partial.getValue());
         controller.celeritasExtra$search("");
         assertEquals(List.of(description, typo),
@@ -218,7 +218,7 @@ class OptionsGuiIntegrationTest {
         }, 10, 89, 0));
         assertEquals(1, opens.get(), "The retained native callback must open the shader pack screen");
         assertEquals(1, controls(frame).size(), "Opening a separate screen must not replace the selected option page");
-        controller.celeritasExtra$search("shader");
+        controller.celeritasExtra$search("shader packs");
         frame = filteredFrame(controller, nativeTabs);
         assertEquals(1, controller.celeritasExtra$resultCount(), "Matching action tabs count as search results");
         assertTrue(controls(frame).isEmpty(), "An action-only result has no option controls");

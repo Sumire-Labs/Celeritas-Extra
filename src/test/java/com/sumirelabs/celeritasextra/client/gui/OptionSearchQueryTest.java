@@ -6,6 +6,9 @@
 
 package com.sumirelabs.celeritasextra.client.gui;
 
+import java.util.List;
+import java.util.function.Function;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,16 +16,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionSearchQueryTest {
 
     @Test
-    void ranksNamesAboveDescriptionsAndTypos() {
+    void ranksWithUpstreamIdfAndLimitsResultsToFifteen() {
         var query = new OptionSearchQuery("cloud");
-        assertTrue(query.score("Cloud", "") > query.score("Cloud Height", ""));
-        assertTrue(query.score("Cloud Height", "") > query.score("Sky", "Cloud controls"));
-        assertTrue(query.score("Sky", "Cloud controls") > query.score("Cluod", ""));
-        assertTrue(new OptionSearchQuery("cluod").matches("Cloud height"));
+        var results = query.rank(List.of("Cloud", "Cloud Height", "Sky Cloud controls", "Cluod"), Function.identity());
+        assertEquals("Cloud", results.getFirst().item());
+        assertTrue(results.getFirst().score() > results.getLast().score());
+        assertFalse(new OptionSearchQuery("cluod").matches("Cloud height"),
+            "RSO's token coverage rejects this transposition");
+        assertTrue(new OptionSearchQuery("clod").matches("Cloud height"));
         assertTrue(new OptionSearchQuery("rendring").matches("Rendering distance"));
         assertFalse(new OptionSearchQuery("fg").matches("Fog"));
         assertFalse(new OptionSearchQuery("月光").matches("日光"));
         assertFalse(new OptionSearchQuery("cloud missing").matches("Cloud height"));
+        assertEquals(15, query.rank(java.util.stream.IntStream.range(0, 30)
+            .mapToObj(i -> "Cloud " + i).toList(), Function.identity()).size());
+        assertTrue(new OptionSearchQuery("eclairage").matches("Éclairage"));
     }
 
     @Test

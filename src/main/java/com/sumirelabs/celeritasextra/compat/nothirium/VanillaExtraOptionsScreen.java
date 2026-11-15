@@ -8,9 +8,7 @@ package com.sumirelabs.celeritasextra.compat.nothirium;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -89,12 +87,9 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         var matcher = new OptionSearchQuery(query);
         displayed = matcher.isEmpty()
             ? entries
-            : session.properties(entries).stream()
-                .map(element -> Map.entry(element, matcher.score(label(element),
-                    String.valueOf(element.getComment()) + "\n" + element.getName())))
-                .filter(entry -> entry.getValue() > 0)
-                .sorted(Map.Entry.<IConfigElement, Integer>comparingByValue(Comparator.reverseOrder()))
-                .map(Map.Entry::getKey).toList();
+            : matcher.rank(session.properties(entries), element -> label(element) + " "
+                + (element.getComment() == null ? "" : element.getComment()))
+                .stream().map(result -> result.item()).toList();
         int startY = Math.max(62, height / 6);
         int columns = width >= 320 ? 2 : 1;
         int rows = Math.max(1, (height - startY - 72) / 24);

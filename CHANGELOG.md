@@ -14,7 +14,7 @@ and tagged commit history.
 ### Added
 
 - Added per-option Undo and Reset to Default controls that appear when an action is available. Defaults are available for Extra and Celeritas settings, and other mods can supply defaults through the option capability. Changes remain pending until Apply or Done; the standalone Extra screen also supports list settings.
-- Added typo-tolerant Latin-word search and a result list ranked across option pages. Exact names take priority over description matches and typo suggestions. Native action tabs remain available, and the standalone Extra screen now has search.
+- Ported the search engine from Reese's Sodium Options 2.2.5, including Unicode n-grams, IDF weighting, token coverage, and Levenshtein reranking. Search uses the upstream thresholds and 15-result default, preserves native action tabs, and is also available in the standalone Extra screen.
 - Added optional three-face culling for supported block models in item frames, disabled by default, with a configurable minimum distance. Diagonal frame rotations, unsupported transforms, special models, and shadow passes retain normal rendering.
 
 ### Fixed

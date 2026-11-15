@@ -53,16 +53,19 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique private Dim2i celeritasExtra$bounds = new Dim2i(0, 0, 0, 0);
     @Unique private int celeritasExtra$results = -1;
     @Unique private int celeritasExtra$actionResults;
+    @Unique private List<Option<?>> celeritasExtra$ranked;
     @Unique private final OptionsCollapseState celeritasExtra$collapse = new OptionsCollapseState();
 
     @Inject(method = "init", at = @At("HEAD"))
     private void celeritasExtra$refreshCount(int width, int height, CallbackInfo ci) {
         celeritasExtra$results = -1;
+        celeritasExtra$ranked = null;
     }
 
     @Override
     public void celeritasExtra$search(String query) {
         celeritasExtra$query = new OptionSearchQuery(query);
+        celeritasExtra$ranked = null;
         celeritasExtra$results = -1;
         optionPageScrollBarOffset.set(0);
         tabFrameScrollBarOffset.set(0);
@@ -89,22 +92,26 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Override
     public int celeritasExtra$resultCount() {
         if (celeritasExtra$results < 0)
-            celeritasExtra$results = (int) pages.stream()
-                .flatMap(page -> page.getOptions().stream()).filter(this::celeritasExtra$matches).count()
-                + celeritasExtra$actionResults;
+            celeritasExtra$results = (celeritasExtra$query.isEmpty()
+                ? celeritasExtra$optionCount()
+                : celeritasExtra$rankedOptions().size()) + celeritasExtra$actionResults;
         return celeritasExtra$results;
     }
 
     @Unique
     private boolean celeritasExtra$matches(Option<?> option) {
-        return celeritasExtra$score(option) > 0;
+        return celeritasExtra$query.isEmpty() || celeritasExtra$rankedOptions().contains(option);
     }
 
     @Unique
-    private int celeritasExtra$score(Option<?> option) {
-        return celeritasExtra$query.score(font.extractString(option.getName()),
-            font.extractString(option.getTooltip()) + "\n" + option.getName()
-                + "\n" + (option.getId() == null ? "" : option.getId()));
+    private List<Option<?>> celeritasExtra$rankedOptions() {
+        if (celeritasExtra$ranked == null) {
+            List<Option<?>> options = pages.stream().flatMap(page -> page.getOptions().stream()).distinct().toList();
+            celeritasExtra$ranked = celeritasExtra$query.rank(options,
+                option -> font.extractString(option.getName()) + " " + font.extractString(option.getTooltip()))
+                .stream().<Option<?>>map(result -> result.item()).toList();
+        }
+        return celeritasExtra$ranked;
     }
 
     @Inject(method = "parentBasicFrameBuilder", at = @At("HEAD"))
@@ -122,12 +129,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
         celeritasExtra$actionResults = 0;
         boolean searching = !celeritasExtra$query.isEmpty();
         if (searching) {
-            var ranked = pages.stream().flatMap(page -> page.getOptions().stream())
-                .distinct().<Map.Entry<Option<?>, Integer>>map(
-                    option -> Map.entry(option, celeritasExtra$score(option)))
-                .filter(entry -> entry.getValue() > 0)
-                .sorted(Map.Entry.<Option<?>, Integer>comparingByValue().reversed())
-                .map(Map.Entry::getKey).toList();
+            var ranked = celeritasExtra$rankedOptions();
             if (!ranked.isEmpty()) {
                 var filter = new OptionActionFrame.Ranked(ranked);
                 tabs.put("celeritasextra", new ArrayList<>(List.of(new Tab<>(
