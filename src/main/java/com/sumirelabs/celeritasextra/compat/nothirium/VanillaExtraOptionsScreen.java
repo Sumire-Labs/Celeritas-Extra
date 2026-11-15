@@ -16,6 +16,7 @@ import org.lwjgl.input.Mouse;
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.Translations;
+import com.sumirelabs.celeritasextra.client.gui.search.SearchIndex;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
@@ -44,6 +45,7 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     private long hoverStarted;
     private GuiTextField search;
     private List<IConfigElement> displayed;
+    private SearchIndex<IConfigElement> searchIndex;
     private boolean repeatBefore, opened;
 
     public VanillaExtraOptionsScreen(GuiScreen parent) {
@@ -85,10 +87,12 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         }
         Keyboard.enableRepeatEvents(true);
         var matcher = new OptionSearchQuery(query);
+        if (searchIndex == null)
+            searchIndex = OptionSearchQuery.index(session.properties(entries), element -> label(element) + " "
+                + (element.getComment() == null ? "" : element.getComment()));
         displayed = matcher.isEmpty()
             ? entries
-            : matcher.rank(session.properties(entries), element -> label(element) + " "
-                + (element.getComment() == null ? "" : element.getComment()))
+            : matcher.results(searchIndex)
                 .stream().map(result -> result.item()).toList();
         int startY = Math.max(62, height / 6);
         int columns = width >= 320 ? 2 : 1;

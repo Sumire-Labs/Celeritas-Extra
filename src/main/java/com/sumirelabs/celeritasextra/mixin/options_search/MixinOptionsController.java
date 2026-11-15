@@ -30,6 +30,7 @@ import com.sumirelabs.celeritasextra.client.gui.OptionActionFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.OptionsCollapseState;
 import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
+import com.sumirelabs.celeritasextra.client.gui.search.SearchIndex;
 
 @Mixin(value = CeleritasVideoOptionsController.class, remap = false)
 public abstract class MixinOptionsController implements SearchableOptionsController {
@@ -54,6 +55,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique private int celeritasExtra$results = -1;
     @Unique private int celeritasExtra$actionResults;
     @Unique private List<Option<?>> celeritasExtra$ranked;
+    @Unique private SearchIndex<Option<?>> celeritasExtra$searchIndex;
     @Unique private final OptionsCollapseState celeritasExtra$collapse = new OptionsCollapseState();
 
     @Inject(method = "init", at = @At("HEAD"))
@@ -106,9 +108,13 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique
     private List<Option<?>> celeritasExtra$rankedOptions() {
         if (celeritasExtra$ranked == null) {
-            List<Option<?>> options = pages.stream().flatMap(page -> page.getOptions().stream()).distinct().toList();
-            celeritasExtra$ranked = celeritasExtra$query.rank(options,
-                option -> font.extractString(option.getName()) + " " + font.extractString(option.getTooltip()))
+            if (celeritasExtra$searchIndex == null) {
+                List<Option<?>> options = pages.stream().flatMap(page -> page.getOptions().stream()).distinct()
+                    .toList();
+                celeritasExtra$searchIndex = OptionSearchQuery.index(options,
+                    option -> font.extractString(option.getName()) + " " + font.extractString(option.getTooltip()));
+            }
+            celeritasExtra$ranked = celeritasExtra$query.results(celeritasExtra$searchIndex)
                 .stream().<Option<?>>map(result -> result.item()).toList();
         }
         return celeritasExtra$ranked;

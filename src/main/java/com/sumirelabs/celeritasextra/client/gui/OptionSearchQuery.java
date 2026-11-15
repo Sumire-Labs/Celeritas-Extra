@@ -27,10 +27,17 @@ public final class OptionSearchQuery {
     }
 
     public <T> List<SearchResult<T>> rank(List<T> items, Function<T, String> text) {
+        return results(index(items, text));
+    }
+
+    public static <T> SearchIndex<T> index(List<T> items, Function<T, String> text) {
         return SearchIndex.builder((T item) -> clean(text.apply(item)))
             .addAll(items).foldDiacritics(true).maxResults(15).minScore(0.3)
-            .rerankWithEditDistance(true).rerankLimit(50).rerankWeight(0.1).build()
-            .newSession(query).results();
+            .rerankWithEditDistance(true).rerankLimit(50).rerankWeight(0.1).build();
+    }
+
+    public <T> List<SearchResult<T>> results(SearchIndex<T> index) {
+        return index.newSession(query).results();
     }
 
     public boolean matches(String text) {
