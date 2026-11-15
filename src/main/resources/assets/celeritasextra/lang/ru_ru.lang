@@ -199,3 +199,6 @@ celeritasextra.option.item_frame_three_faces=Отсечение граней б�
 celeritasextra.option.item_frame_three_faces.tooltip=Пропускает невидимые внешние грани поддерживаемых моделей блоков в далёких рамках. По умолчанию выключено. Диагональные повороты, особые модели и проходы теней используют обычную отрисовку.
 celeritasextra.option.item_frame_three_face_distance=Дистанция отсечения граней блоков
 celeritasextra.option.item_frame_three_face_distance.tooltip=Минимальное расстояние в блоках для отсечения граней блоков в рамках.
+
+celeritasextra.option_action.undo=Отменить это изменение
+celeritasextra.option_action.reset=Восстановить значение по умолчанию

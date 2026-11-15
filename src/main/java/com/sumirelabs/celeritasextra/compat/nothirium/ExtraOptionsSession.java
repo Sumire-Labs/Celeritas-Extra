@@ -47,6 +47,21 @@ final class ExtraOptionsSession {
     void set(IConfigElement element, Object value) {
         pending.put(element, normalized(element, value));
     }
+    void undo(IConfigElement element) {
+        set(element, initial.get(element));
+    }
+    boolean changed(IConfigElement element) {
+        return !Objects.deepEquals(pending.get(element), initial.get(element));
+    }
+    boolean canReset(IConfigElement element) {
+        return !Objects.deepEquals(pending.get(element), normalized(element,
+            element.isList() ? element.getDefaults() : element.getDefault()));
+    }
+    List<IConfigElement> properties(List<IConfigElement> entries) {
+        return entries.stream().flatMap(element -> element.isProperty()
+            ? java.util.stream.Stream.of(element)
+            : properties(children(element)).stream()).toList();
+    }
     private static Object normalized(IConfigElement element, Object value) {
         if (value instanceof Object[] array)
             return array.clone();

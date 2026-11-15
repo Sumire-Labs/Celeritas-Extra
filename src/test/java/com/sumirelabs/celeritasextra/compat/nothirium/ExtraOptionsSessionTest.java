@@ -19,6 +19,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsSessionTest {
 
     @Test
+    void perEntryUndoDiffersFromDefaultsAndDoesNotCommit() {
+        var firstProperty = new Property("distance", "8", Property.Type.INTEGER);
+        firstProperty.setDefaultValue("0");
+        var first = new ConfigElement(firstProperty);
+        var other = new ConfigElement(new Property("other", "true", Property.Type.BOOLEAN));
+        var category = new DummyCategoryElement("video", "", List.of(first, other));
+        var session = new ExtraOptionsSession(List.of(category));
+        assertEquals(List.of(first, other), session.properties(List.of(category)));
+        session.set(first, 20);
+        session.set(other, false);
+        session.undo(first);
+        assertEquals(8, session.value(first));
+        assertFalse(session.changed(first));
+        assertTrue(session.changed(other));
+        assertTrue(session.canReset(first));
+        session.reset(List.of(first));
+        assertEquals(0, session.value(first));
+        assertFalse(session.canReset(first));
+        assertEquals(8, firstProperty.getInt());
+        session.undo(first);
+        assertEquals(8, session.value(first));
+    }
+
+    @Test
     void editsAcrossChildPagesStayPendingAndOnlyCommitChangedEntries() {
         var toggleProperty = new Property("sky", "true", Property.Type.BOOLEAN);
         toggleProperty.setDefaultValue("true");

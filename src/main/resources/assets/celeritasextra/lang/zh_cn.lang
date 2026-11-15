@@ -199,3 +199,6 @@ celeritasextra.option.item_frame_three_faces=物品展示框方块面剔除
 celeritasextra.option.item_frame_three_faces.tooltip=跳过指定距离外物品展示框中受支持方块模型的不可见外表面。默认关闭。斜向旋转的展示框、特殊模型和阴影渲染通道保持正常渲染。
 celeritasextra.option.item_frame_three_face_distance=方块面剔除距离
 celeritasextra.option.item_frame_three_face_distance.tooltip=开始剔除物品展示框内方块面的最小距离（方块）。
+
+celeritasextra.option_action.undo=撤销此项更改
+celeritasextra.option_action.reset=恢复默认值

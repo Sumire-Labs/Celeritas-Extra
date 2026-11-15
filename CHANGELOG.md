@@ -13,6 +13,7 @@ and tagged commit history.
 
 ### Added
 
+- Added per-option Undo and Reset to Default controls. Celeritas controls offer defaults for Extra's own settings; the standalone Extra screen also supports list settings. Changes remain pending until Apply or Done.
 - Added optional three-face culling for supported block models in item frames, disabled by default, with a configurable minimum distance. Diagonal frame rotations, unsupported transforms, special models, and shadow passes retain normal rendering.
 
 ### Fixed

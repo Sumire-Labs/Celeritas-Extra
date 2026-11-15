@@ -182,7 +182,7 @@ public class CeleritasExtraGameOptionPages {
             builder.setImpact(impact);
         if (enabled != null)
             builder.setEnabledPredicate(enabled);
-        return builder.build();
+        return OptionDefaults.register(builder.build(), getter.apply(new CeleritasExtraGameOptions()));
     }
 
     /**
@@ -268,7 +268,7 @@ public class CeleritasExtraGameOptionPages {
             builder.setImpact(impact);
         if (flag != null)
             builder.setFlags(flag);
-        return builder.build();
+        return OptionDefaults.register(builder.build(), getter.apply(new CeleritasExtraGameOptions()));
     }
 
     private static String contextualText(OptionContext context, String key, String separator) {
@@ -397,7 +397,7 @@ public class CeleritasExtraGameOptionPages {
                         var simpleClassName = classEntry.getValue();
                         String displayName = simpleClassName + " (" + modId + ")";
 
-                        groupBuilder.add(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
+                        groupBuilder.add(OptionDefaults.register(OptionImpl.createBuilder(int.class, celeritasExtraOpts)
                             .setId(optionId("particle/" + fullClassName, int.class, OptionContext.NONE))
                             .setName(TextComponent.literal(displayName))
                             .setTooltip(TextComponent.literal(
@@ -410,7 +410,7 @@ public class CeleritasExtraGameOptionPages {
                                 (opts, value) -> registry.setSpawnPercentage(fullClassName, value),
                                 opts -> registry.getSpawnPercentage(fullClassName))
                             .setEnabledPredicate(particlesOn)
-                            .build());
+                            .build(), 100));
                     }
                     groups.add(groupBuilder.build());
                 }
@@ -511,7 +511,8 @@ public class CeleritasExtraGameOptionPages {
                 (opts, v) -> opts.renderSettings.cloudScale = v,
                 opts -> opts.renderSettings.cloudScale,
                 cloudsOn))
-            .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.CloudTranslucency.class, celeritasExtraOpts)
+            .add(OptionDefaults.register(OptionImpl
+                .createBuilder(CeleritasExtraGameOptions.CloudTranslucency.class, celeritasExtraOpts)
                 .setId(optionId("cloud_translucency", CeleritasExtraGameOptions.CloudTranslucency.class,
                     OptionContext.NONE))
                 .setName(TextComponent.literal(Translations.format("options.mode_cloud_translucency")))
@@ -525,7 +526,7 @@ public class CeleritasExtraGameOptionPages {
                 .setBinding((opts, value) -> opts.renderSettings.cloudTranslucency = value,
                     opts -> opts.renderSettings.cloudTranslucency)
                 .setEnabledPredicate(cloudsOn)
-                .build())
+                .build(), CeleritasExtraGameOptions.CloudTranslucency.DEFAULT))
             .build());
 
         return new OptionPage(CeleritasExtraOptionPages.CLOUDS,
@@ -586,7 +587,7 @@ public class CeleritasExtraGameOptionPages {
             };
             dimensionName += " (" + dimension + ")";
             var context = new OptionContext(dimensionName, "dimension/" + dimension + "/");
-            var override = OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
+            var override = OptionDefaults.register(OptionImpl.createBuilder(boolean.class, celeritasExtraOpts)
                 .setId(optionId("fog_override", boolean.class, context))
                 .setName(TextComponent
                     .literal(Translations.format("celeritasextra.option.dimension_fog_override", dimensionName)))
@@ -595,7 +596,7 @@ public class CeleritasExtraGameOptionPages {
                 .setControl(TickBoxControl::new)
                 .setBinding((opts, value) -> opts.renderSettings.dimensionFog(dimension).override = value,
                     opts -> opts.renderSettings.dimensionFog(dimension).override)
-                .build();
+                .build(), false);
             BooleanSupplier overriding = override::getValue;
             var enabled = booleanOption("sodium-extra.option.fog_type.atmospheric",
                 "sodium-extra.option.fog_type.atmospheric.tooltip",
@@ -756,7 +757,8 @@ public class CeleritasExtraGameOptionPages {
             .build());
 
         groups.add(group("groups/overlay/2")
-            .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
+            .add(OptionDefaults.register(OptionImpl
+                .createBuilder(CeleritasExtraGameOptions.OverlayCorner.class, celeritasExtraOpts)
                 .setId(optionId("overlay_corner", CeleritasExtraGameOptions.OverlayCorner.class, OptionContext.NONE))
                 .setName(TextComponent.literal(Translations.format("sodium-extra.option.overlay_corner")))
                 .setTooltip(TextComponent.literal(Translations.format("sodium-extra.option.overlay_corner.tooltip")))
@@ -769,20 +771,21 @@ public class CeleritasExtraGameOptionPages {
                     }))
                 .setBinding((opts, value) -> opts.extraSettings.overlayCorner = value,
                     opts -> opts.extraSettings.overlayCorner)
-                .build())
-            .add(OptionImpl.createBuilder(CeleritasExtraGameOptions.TextContrast.class, celeritasExtraOpts)
-                .setId(optionId("text_contrast", CeleritasExtraGameOptions.TextContrast.class, OptionContext.NONE))
-                .setName(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast")))
-                .setTooltip(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast.tooltip")))
-                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
-                    new TextComponent[]{
-                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.NONE.getLocalizedName()),
-                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.BACKGROUND.getLocalizedName()),
-                        TextComponent.literal(CeleritasExtraGameOptions.TextContrast.SHADOW.getLocalizedName())
-                    }))
-                .setBinding((opts, value) -> opts.extraSettings.textContrast = value,
-                    opts -> opts.extraSettings.textContrast)
-                .build())
+                .build(), CeleritasExtraGameOptions.OverlayCorner.TOP_LEFT))
+            .add(OptionDefaults
+                .register(OptionImpl.createBuilder(CeleritasExtraGameOptions.TextContrast.class, celeritasExtraOpts)
+                    .setId(optionId("text_contrast", CeleritasExtraGameOptions.TextContrast.class, OptionContext.NONE))
+                    .setName(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast")))
+                    .setTooltip(TextComponent.literal(Translations.format("sodium-extra.option.text_contrast.tooltip")))
+                    .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.TextContrast.class,
+                        new TextComponent[]{
+                            TextComponent.literal(CeleritasExtraGameOptions.TextContrast.NONE.getLocalizedName()),
+                            TextComponent.literal(CeleritasExtraGameOptions.TextContrast.BACKGROUND.getLocalizedName()),
+                            TextComponent.literal(CeleritasExtraGameOptions.TextContrast.SHADOW.getLocalizedName())
+                        }))
+                    .setBinding((opts, value) -> opts.extraSettings.textContrast = value,
+                        opts -> opts.extraSettings.textContrast)
+                    .build(), CeleritasExtraGameOptions.TextContrast.SHADOW))
             .build());
 
         groups.add(group("groups/overlay/3")

@@ -83,20 +83,21 @@ public class CeleritasExtraOptionsListener {
      * @return the configured screen-mode option
      */
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.ScreenMode> createScreenModeOption() {
-        return OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
-            .setId(StandardOptions.Option.FULLSCREEN.cast())
-            .setName(TextComponent.literal(Translations.format("sodium.extras.options.screen.title")))
-            .setTooltip(TextComponent.literal(
-                Translations.format("sodium.extras.options.screen.desc")))
-            .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
-                new TextComponent[]{
-                    TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.WINDOWED.getLocalizedName()),
-                    TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.BORDERLESS.getLocalizedName()),
-                    TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.FULLSCREEN.getLocalizedName())
-                }))
-            .setBinding(CeleritasExtraGameOptions.ScreenMode::apply,
-                CeleritasExtraGameOptions.ScreenMode::getCurrent)
-            .build();
+        return OptionDefaults
+            .register(OptionImpl.createBuilder(CeleritasExtraGameOptions.ScreenMode.class, celeritasExtraOpts)
+                .setId(StandardOptions.Option.FULLSCREEN.cast())
+                .setName(TextComponent.literal(Translations.format("sodium.extras.options.screen.title")))
+                .setTooltip(TextComponent.literal(
+                    Translations.format("sodium.extras.options.screen.desc")))
+                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.ScreenMode.class,
+                    new TextComponent[]{
+                        TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.WINDOWED.getLocalizedName()),
+                        TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.BORDERLESS.getLocalizedName()),
+                        TextComponent.literal(CeleritasExtraGameOptions.ScreenMode.FULLSCREEN.getLocalizedName())
+                    }))
+                .setBinding(CeleritasExtraGameOptions.ScreenMode::apply,
+                    CeleritasExtraGameOptions.ScreenMode::getCurrent)
+                .build(), CeleritasExtraGameOptions.ScreenMode.WINDOWED);
     }
 
     /**
@@ -107,21 +108,22 @@ public class CeleritasExtraOptionsListener {
      * @return the configured vertical-sync option
      */
     private static OptionImpl<CeleritasExtraGameOptions, CeleritasExtraGameOptions.VerticalSyncOption> createVSyncOption() {
-        return OptionImpl.createBuilder(CeleritasExtraGameOptions.VerticalSyncOption.class, celeritasExtraOpts)
-            .setId(StandardOptions.Option.VSYNC.cast())
-            .setName(TextComponent.translatable("options.vsync"))
-            .setTooltip(TextComponent.literal(
-                Translations.format("celeritasextra.option.vsync.tooltip")))
-            .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class,
-                new TextComponent[]{
-                    TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.OFF.getLocalizedName()),
-                    TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ON.getLocalizedName()),
-                    TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ADAPTIVE.getLocalizedName())
-                }))
-            .setBinding(CeleritasExtraGameOptions.VerticalSyncOption::apply,
-                CeleritasExtraGameOptions.VerticalSyncOption::getCurrent)
-            .setImpact(OptionImpact.VARIES)
-            .build();
+        return OptionDefaults
+            .register(OptionImpl.createBuilder(CeleritasExtraGameOptions.VerticalSyncOption.class, celeritasExtraOpts)
+                .setId(StandardOptions.Option.VSYNC.cast())
+                .setName(TextComponent.translatable("options.vsync"))
+                .setTooltip(TextComponent.literal(
+                    Translations.format("celeritasextra.option.vsync.tooltip")))
+                .setControl(option -> new CyclingControl<>(option, CeleritasExtraGameOptions.VerticalSyncOption.class,
+                    new TextComponent[]{
+                        TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.OFF.getLocalizedName()),
+                        TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ON.getLocalizedName()),
+                        TextComponent.literal(CeleritasExtraGameOptions.VerticalSyncOption.ADAPTIVE.getLocalizedName())
+                    }))
+                .setBinding(CeleritasExtraGameOptions.VerticalSyncOption::apply,
+                    CeleritasExtraGameOptions.VerticalSyncOption::getCurrent)
+                .setImpact(OptionImpact.VARIES)
+                .build(), CeleritasExtraGameOptions.VerticalSyncOption.OFF);
     }
 
 }

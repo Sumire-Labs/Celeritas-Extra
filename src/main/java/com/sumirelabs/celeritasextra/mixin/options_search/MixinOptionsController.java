@@ -26,6 +26,7 @@ import org.taumc.celeritas.api.options.structure.OptionPage;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.sumirelabs.celeritasextra.client.gui.CollapsibleTabFrame;
+import com.sumirelabs.celeritasextra.client.gui.OptionActionFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.OptionsCollapseState;
 import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
@@ -124,8 +125,9 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
                 if (page != null && tab.frameFunction() != null) {
                     if (page.getOptions().stream().noneMatch(this::celeritasExtra$matches))
                         continue;
-                    var optionTab = Tab.from(page, this::celeritasExtra$matches, optionPageScrollBarOffset);
-                    filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(), optionTab.frameFunction());
+                    filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(),
+                        dim -> OptionActionFrame.create(dim, page, this::celeritasExtra$matches,
+                            optionPageScrollBarOffset));
                 } else {
                     if (!celeritasExtra$query.isEmpty() && !celeritasExtra$query.matches(
                         font.extractString(tab.title()) + "\n" + tab.title() + "\n" + tab.id()))

@@ -199,3 +199,6 @@ celeritasextra.option.item_frame_three_faces=額縁内ブロックの面カリ�
 celeritasextra.option.item_frame_three_faces.tooltip=指定距離より遠い額縁内の対応ブロックモデルで、見えない外側の面を省略します。初期設定はOFFです。斜めに回転した額縁、特殊モデル、シャドウパスは通常どおり描画します。
 celeritasextra.option.item_frame_three_face_distance=ブロック面カリング距離
 celeritasextra.option.item_frame_three_face_distance.tooltip=額縁内ブロックの面カリングを適用し始める距離（ブロック単位）。
+
+celeritasextra.option_action.undo=この変更を取り消す
+celeritasextra.option_action.reset=初期値に戻す

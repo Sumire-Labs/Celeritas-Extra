@@ -31,6 +31,43 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsGuiIntegrationTest {
 
     @Test
+    void perOptionUndoAndResetLeaveOtherPendingValuesUntouched() {
+        var first = OptionDefaults.register(new TestOption("First", ""), 0);
+        var second = new TestOption("Second", "");
+        first.setValue(9);
+        second.setValue(12);
+        var row = new OptionActionElement<>(first, new Dim2i(0, 0, 200, 18));
+        var context = new InteractionContext() {
+        };
+        assertTrue(row.mouseClicked(context, 170, 9, 0));
+        assertEquals(3, first.getValue(), "Undo returns to the applied value, not the factory default");
+        assertEquals(12, second.getValue());
+        assertTrue(row.mouseClicked(context, 190, 9, 0));
+        assertEquals(0, first.getValue());
+        assertTrue(first.hasChanged(), "Reset remains pending until Apply");
+        assertEquals(12, second.getValue());
+        first.available = false;
+        row.mouseClicked(context, 170, 9, 0);
+        assertEquals(0, first.getValue());
+        assertFalse(OptionDefaults.known(second), "Never guess another mod's defaults");
+    }
+
+    @Test
+    void actionButtonsReceiveClicksThroughTheNativeScrollableFrame() {
+        var option = OptionDefaults.register(new TestOption("Distance", ""), 0);
+        option.setValue(9);
+        var frame = OptionActionFrame.create(new Dim2i(10, 30, 200, 100), page("actions", option),
+            value -> true, new AtomicReference<>(0));
+        var context = new InteractionContext() {
+        };
+        assertTrue(frame.mouseClicked(context, 180, 39, 0));
+        assertEquals(3, option.getValue());
+        assertTrue(frame.mouseClicked(context, 200, 39, 0));
+        assertEquals(0, option.getValue());
+    }
+
+
+    @Test
     void pageGroupsHaveOnlyNativeOptionRowsAndKeepPendingValues() throws Exception {
         var sun = new TestOption("Sun", "Render sun");
         var moon = new TestOption("Moon", "Render moon");

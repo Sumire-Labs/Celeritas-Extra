@@ -28,6 +28,7 @@ import net.minecraftforge.fml.client.config.IConfigElement;
 public final class VanillaExtraOptionsScreen extends GuiScreen {
 
     private static final int DONE = 2000, CANCEL = 2001, RESET = 2002, PREVIOUS = 2003, NEXT = 2004;
+    private static final int ACTION = 10000;
     private final GuiScreen parent;
     private final ForgeExtraConfigElements options;
     private final ExtraOptionsSession session;
@@ -68,13 +69,14 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         int rows = Math.max(1, (height - startY - 72) / 24);
         capacity = columns * rows;
         page = Math.min(page, pageCount() - 1);
-        int buttonWidth = Math.min(150, (width - 30) / columns);
-        int left = width / 2 - (columns * buttonWidth + (columns - 1) * 10) / 2;
+        int cellWidth = Math.min(190, (width - 30) / columns);
+        int left = width / 2 - (columns * cellWidth + (columns - 1) * 10) / 2;
         for (int index = page * capacity; index < Math.min(entries.size(), (page + 1) * capacity); index++) {
             var element = entries.get(index);
+            int buttonWidth = cellWidth - (element.isProperty() ? 40 : 0);
             int slot = visibleEntries.size();
             visibleEntries.add(element);
-            int x = left + (slot % columns) * (buttonWidth + 10);
+            int x = left + (slot % columns) * (cellWidth + 10);
             int y = startY + (slot / columns) * 24;
             GuiButton button;
             if (element.isProperty() && !element.isList() && element.getType() == ConfigGuiType.INTEGER
@@ -101,6 +103,14 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
                 button = new GuiButton(slot, x, y, buttonWidth, 20, buttonText(element, buttonWidth));
             }
             buttonList.add(button);
+            if (element.isProperty()) {
+                var undo = new GuiButton(ACTION + slot * 2, x + buttonWidth, y, 20, 20, "↶");
+                undo.enabled = session.changed(element);
+                buttonList.add(undo);
+                var reset = new GuiButton(ACTION + slot * 2 + 1, x + buttonWidth + 20, y, 20, 20, "↺");
+                reset.enabled = session.canReset(element);
+                buttonList.add(reset);
+            }
         }
         buttonList.add(new GuiButton(RESET, width / 2 - 50, height - 54, 100, 20,
             I18n.format("controls.reset")));
@@ -167,7 +177,14 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == DONE) {
+        if (button.id >= ACTION && (button.id - ACTION) / 2 < visibleEntries.size()) {
+            var element = visibleEntries.get((button.id - ACTION) / 2);
+            if ((button.id - ACTION) % 2 == 0)
+                session.undo(element);
+            else
+                session.reset(List.of(element));
+            initGui();
+        } else if (button.id == DONE) {
             if (root && session.changed()) {
                 session.commit();
                 options.apply();
@@ -208,6 +225,16 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
             mc.displayGuiScreen(parent);
         else
             super.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
+    public void updateScreen() {
+        for (var button : buttonList) {
+            if (button.id >= ACTION && (button.id - ACTION) / 2 < visibleEntries.size()) {
+                var element = visibleEntries.get((button.id - ACTION) / 2);
+                button.enabled = (button.id - ACTION) % 2 == 0 ? session.changed(element) : session.canReset(element);
+            }
+        }
     }
 
     @Override
