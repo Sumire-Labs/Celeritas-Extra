@@ -194,3 +194,8 @@ celeritasextra.gui.tile_entity_exemptions=Исключения дальност�
 
 celeritasextra.option.item_vertex_cache=Кэш вершин статичных предметов (экспериментально)
 celeritasextra.option.item_vertex_cache.tooltip=Экспериментальная функция (по умолчанию выключена): отрисовка поддерживаемых статичных предметов из буферов вершин GPU. В других случаях используется кэш CPU или обычная отрисовка. Сохраняет освещение Forge и LOD рамок. Не используется с Iris или встроенным кэшем рендера. До 256 записей и 4 МиБ данных вершин суммарно на CPU и GPU.
+
+celeritasextra.option.item_frame_three_faces=Отсечение граней блоков в рамках
+celeritasextra.option.item_frame_three_faces.tooltip=Пропускает невидимые внешние грани поддерживаемых моделей блоков в далёких рамках. По умолчанию выключено. Диагональные повороты, особые модели и проходы теней используют обычную отрисовку.
+celeritasextra.option.item_frame_three_face_distance=Дистанция отсечения граней блоков
+celeritasextra.option.item_frame_three_face_distance.tooltip=Минимальное расстояние в блоках для отсечения граней блоков в рамках.

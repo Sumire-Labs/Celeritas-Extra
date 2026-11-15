@@ -157,7 +157,8 @@ final class ForgeExtraConfigElements {
         fog.addAll(take(detail, "voidFog"));
         fog.add(new DummyCategoryElement("dimensionFog", "celeritasextra.option.page.dimension_fog", fogDimensions));
         var entities = take(render, "itemFrames", "armorStands", "paintings", "playerNameTag", "itemFrameNameTag",
-            "entityRenderDistance", "itemFrameLodDistance", "mapBackFaceCulling", "entityDistanceExemptions");
+            "entityRenderDistance", "itemFrameLodDistance", "itemFrameThreeFaceCulling", "itemFrameThreeFaceDistance",
+            "mapBackFaceCulling", "entityDistanceExemptions");
         var overlay = take(extra, "showFps", "showFPSExtended", "showCoords", "showMemory", "ignoreReducedDebugInfo",
             "overlayCorner", "textContrast");
         window.addAll(take(extra, "menuFpsLimit", "inactiveFpsLimit", "minimizedFpsLimit"));

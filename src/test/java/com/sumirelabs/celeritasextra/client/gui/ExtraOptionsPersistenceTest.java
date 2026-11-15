@@ -25,6 +25,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void savingRetainsSliderBoundsAndThreeFaceSettings() {
+        var file = directory.resolve("slider-ranges.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        options.renderSettings.itemFrameThreeFaceCulling = true;
+        options.renderSettings.itemFrameThreeFaceDistance = 12;
+        options.renderSettings.dimensionFog(-1);
+        options.writeChanges();
+        var config = options.forgeConfiguration();
+        var scale = config.getCategory("render").get("cloudScale");
+        assertEquals("1", scale.getMinValue());
+        assertEquals("16", scale.getMaxValue());
+        assertEquals(4, scale.getInt());
+        assertEquals("-16", config.getCategory("render").get("cloudHeight").getMinValue());
+        assertEquals("200", config.getCategory("dimension_fog_-1").get("start").getMaxValue());
+        var reloaded = CeleritasExtraGameOptions.load(file);
+        assertTrue(reloaded.renderSettings.itemFrameThreeFaceCulling);
+        assertEquals(12, reloaded.renderSettings.itemFrameThreeFaceDistance);
+    }
+
+    @Test
     void earlyOptionsUseLaunchDirectoryAndLaterCanonicalDirectoryIsHonored() throws Exception {
         var configField = CeleritasExtraClientMod.class.getDeclaredField("CONFIG");
         var directoryField = CeleritasExtraClientMod.class.getDeclaredField("configDirectory");

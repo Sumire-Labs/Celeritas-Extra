@@ -37,6 +37,7 @@ public final class ItemFrameLodState {
 
     public static void clearCache() {
         CACHE.clear();
+        ItemFrameThreeFaceState.clearCache();
     }
 
     /**
@@ -47,6 +48,8 @@ public final class ItemFrameLodState {
      */
     public static List<BakedQuad> filterLodQuads(IBakedModel model, IBlockState state, EnumFacing side, long rand) {
         List<BakedQuad> quads = model.getQuads(state, side, rand);
+        if (state == null && ItemFrameThreeFaceState.camera != null)
+            return ItemFrameThreeFaceState.filter(model, side, quads);
         if (!active || model.isGui3d() || model.isBuiltInRenderer() || quads.isEmpty()) {
             return quads;
         }

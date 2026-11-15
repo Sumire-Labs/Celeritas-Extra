@@ -627,9 +627,18 @@ public class CeleritasExtraGameOptionPages {
             (opts, v) -> opts.renderSettings.itemFrames = v,
             opts -> opts.renderSettings.itemFrames);
         BooleanSupplier itemFramesOn = () -> itemFramesOption.getValue();
+        var threeFaces = booleanOption("celeritasextra.option.item_frame_three_faces",
+            (opts, value) -> opts.renderSettings.itemFrameThreeFaceCulling = value,
+            opts -> opts.renderSettings.itemFrameThreeFaceCulling, itemFramesOn);
 
         groups.add(group("groups/entities/0")
             .add(itemFramesOption)
+            .add(threeFaces)
+            .add(sliderOption("celeritasextra.option.item_frame_three_face_distance", 2, 256, 1,
+                value -> TextComponent.literal(Translations.format("sodium-extra.units.blocks", value)),
+                (opts, value) -> opts.renderSettings.itemFrameThreeFaceDistance = value,
+                opts -> opts.renderSettings.itemFrameThreeFaceDistance,
+                () -> itemFramesOn.getAsBoolean() && threeFaces.getValue()))
             .add(sliderOption("moreculling.config.option.itemFrameLODRange",
                 0, 256, 1, quantityOrDefault("sodium-extra.units.blocks", "options.off"),
                 (opts, v) -> opts.renderSettings.itemFrameLodDistance = v,

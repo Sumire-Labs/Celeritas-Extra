@@ -11,6 +11,14 @@ and tagged commit history.
 
 ## [Unreleased]
 
+### Added
+
+- Added optional three-face culling for supported block models in item frames, disabled by default, with a configurable minimum distance. Diagonal frame rotations, unsupported transforms, special models, and shadow passes retain normal rendering.
+
+### Fixed
+
+- Preserved integer slider ranges when saving settings so standalone sliders retain their values and bounds.
+
 ## [0.10.3] - 2026-11-14
 
 ### Changed

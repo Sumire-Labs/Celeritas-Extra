@@ -100,6 +100,9 @@ public class CeleritasExtraGameOptions {
             v -> renderSettings.lightUpdates = v, () -> renderSettings.lightUpdates),
         new BooleanProperty(CAT_RENDER, "itemFrames", true, "Enable/disable item frame rendering",
             v -> renderSettings.itemFrames = v, () -> renderSettings.itemFrames),
+        new BooleanProperty(CAT_RENDER, "itemFrameThreeFaceCulling", false,
+            "Cull hidden exterior faces of supported blocks in distant item frames",
+            v -> renderSettings.itemFrameThreeFaceCulling = v, () -> renderSettings.itemFrameThreeFaceCulling),
         new BooleanProperty(CAT_RENDER, "signTextCulling", true, "Skip sign text when viewed from behind",
             v -> renderSettings.signTextCulling = v, () -> renderSettings.signTextCulling),
         new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
@@ -172,6 +175,9 @@ public class CeleritasExtraGameOptions {
             v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
         new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
             v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
+        new IntProperty(CAT_RENDER, "itemFrameThreeFaceDistance", 4, 2, 256,
+            "Minimum distance for item-frame block face culling",
+            v -> renderSettings.itemFrameThreeFaceDistance = v, () -> renderSettings.itemFrameThreeFaceDistance),
         new IntProperty(CAT_RENDER, "entityRenderDistance", 0, 0, 256, "Entity render distance in blocks (0 = vanilla)",
             v -> renderSettings.entityRenderDistance = v, () -> renderSettings.entityRenderDistance),
         new IntProperty(CAT_RENDER, "tileEntityRenderDistance", 0, 0, 256,
@@ -307,8 +313,8 @@ public class CeleritasExtraGameOptions {
             String category = "dimension_fog_" + dimension;
             config.get(category, "override", false).set(fog.override);
             config.get(category, "fog", true).set(fog.fog);
-            config.get(category, "start", 100).set(fog.start);
-            config.get(category, "distance", 0).set(fog.distance);
+            config.get(category, "start", 100, "Fog start percentage", 0, 200).set(fog.start);
+            config.get(category, "distance", 0, "Fog distance in chunks (0 = vanilla)", 0, 32).set(fog.distance);
         });
 
         // Enum properties
@@ -603,6 +609,8 @@ public class CeleritasExtraGameOptions {
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public int itemFrameLodDistance = 0;
+        public boolean itemFrameThreeFaceCulling = false;
+        public int itemFrameThreeFaceDistance = 4;
         public boolean signTextCulling = true;
         public boolean mapBackFaceCulling = true;
         public boolean itemVertexCache = false;
@@ -747,7 +755,7 @@ public class CeleritasExtraGameOptions {
          * Writes the bound field's current value into {@code config}.
          */
         void save(Configuration config) {
-            config.get(category, key, defaultValue).set(getter.get());
+            config.get(category, key, defaultValue, comment, min, max).set(getter.get());
         }
 
     }
