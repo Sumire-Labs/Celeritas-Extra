@@ -137,9 +137,11 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
             if (element.isProperty()) {
                 var undo = new GuiButton(ACTION + slot * 2, x + buttonWidth, y, 20, 20, "↶");
                 undo.enabled = session.changed(element);
+                undo.visible = undo.enabled;
                 buttonList.add(undo);
                 var reset = new GuiButton(ACTION + slot * 2 + 1, x + buttonWidth + 20, y, 20, 20, "↺");
                 reset.enabled = session.canReset(element);
+                reset.visible = reset.enabled;
                 buttonList.add(reset);
             }
         }
@@ -285,6 +287,7 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
             if (button.id >= ACTION && (button.id - ACTION) / 2 < visibleEntries.size()) {
                 var element = visibleEntries.get((button.id - ACTION) / 2);
                 button.enabled = (button.id - ACTION) % 2 == 0 ? session.changed(element) : session.canReset(element);
+                button.visible = button.enabled;
             }
         }
     }
@@ -321,7 +324,7 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
                 0xAAAAAA);
         super.drawScreen(mouseX, mouseY, partialTicks);
         GuiButton hovered = buttonList.stream()
-            .filter(b -> (b.id >= 0 && b.id < visibleEntries.size() || b.id >= ACTION) && b.isMouseOver())
+            .filter(b -> b.visible && (b.id >= 0 && b.id < visibleEntries.size() || b.id >= ACTION) && b.isMouseOver())
             .findFirst().orElse(null);
         if (hovered != hoveredButton) {
             hoveredButton = hovered;

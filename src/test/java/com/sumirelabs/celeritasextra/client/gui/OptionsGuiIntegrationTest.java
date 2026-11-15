@@ -31,6 +31,33 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsGuiIntegrationTest {
 
     @Test
+    void thirdPartyDefaultCapabilityUsesTheProvidersCurrentDefault() {
+        class Provided extends TestOption implements DefaultValueOption<Integer> {
+
+            int defaultValue = 0;
+            Provided() {
+                super("External option", "");
+            }
+            public Integer getDefaultValue() {
+                return defaultValue;
+            }
+
+        }
+        var option = new Provided();
+        assertTrue(OptionDefaults.known(option));
+        assertTrue(OptionDefaults.canReset(option));
+        OptionDefaults.reset(option);
+        assertEquals(0, option.getValue());
+        assertTrue(option.hasChanged());
+        assertFalse(OptionDefaults.canReset(option));
+        option.defaultValue = 6;
+        OptionDefaults.reset(option);
+        assertEquals(6, option.getValue());
+        option.reset();
+        assertEquals(3, option.getValue());
+    }
+
+    @Test
     void rankedSearchSpansPagesAndRetainsOriginalOptions() throws Exception {
         var description = new TestOption("Sky", "Cloud rendering");
         var exact = new TestOption("Cloud", "");
@@ -301,7 +328,7 @@ class OptionsGuiIntegrationTest {
             group.add(option);
         return new OptionPage(OptionIdentifier.create("test", id), TextComponent.literal(id), List.of(group.build()));
     }
-    private static final class TestOption implements Option<Integer> {
+    private static class TestOption implements Option<Integer> {
 
         private final String name, tooltip;
         private int value = 3;

@@ -16,37 +16,61 @@ import org.taumc.celeritas.api.options.structure.Option;
 /** Keeps native controls and reserves separate hit boxes for per-option actions. */
 public final class OptionActionElement<T> extends ControlElement<T> {
 
-    private final ControlElement<T> control;
-    private final Dim2i undo, reset;
+    private ControlElement<T> control;
+    private Dim2i undo, reset;
+    private int reservedWidth = -1;
+    private int actionMask = -1;
+    private boolean holding;
 
     public OptionActionElement(Option<T> option, Dim2i dim) {
         super(option, dim);
-        int actions = OptionDefaults.known(option) ? 36 : 18;
-        control = option.getControl()
-            .createElement(new Dim2i(dim.x(), dim.y(), Math.max(1, dim.width() - actions), dim.height()));
-        undo = new Dim2i(dim.getLimitX() - actions, dim.y(), 18, dim.height());
-        reset = actions == 36 ? new Dim2i(dim.getLimitX() - 18, dim.y(), 18, dim.height()) : null;
+        layout();
+    }
+
+    private void layout() {
+        if (holding)
+            return;
+        boolean canUndo = option.isAvailable() && option.hasChanged();
+        boolean canReset = OptionDefaults.canReset(option);
+        int mask = (canUndo ? 1 : 0) | (canReset ? 2 : 0);
+        if (mask == actionMask)
+            return;
+        actionMask = mask;
+        int actions = (canUndo ? 18 : 0) + (canReset ? 18 : 0);
+        if (actions != reservedWidth) {
+            control = option.getControl()
+                .createElement(new Dim2i(dim.x(), dim.y(), Math.max(1, dim.width() - actions), dim.height()));
+            reservedWidth = actions;
+        }
+        undo = canUndo ? new Dim2i(dim.getLimitX() - actions, dim.y(), 18, dim.height()) : null;
+        reset = canReset ? new Dim2i(dim.getLimitX() - 18, dim.y(), 18, dim.height()) : null;
     }
 
     @Override
     public void render(DrawContext context, int x, int y, float delta) {
+        layout();
         control.render(context, x, y, delta);
-        drawAction(context, undo, "↶", option.isAvailable() && option.hasChanged(), x, y);
-        if (reset != null)
+        boolean canUndo = undo != null && option.isAvailable() && option.hasChanged();
+        boolean canReset = reset != null && OptionDefaults.canReset(option);
+        if (canUndo)
+            drawAction(context, undo, "↶", true, x, y);
+        if (canReset)
             drawAction(context, reset, "↺", OptionDefaults.canReset(option), x, y);
-        String key = undo.containsCursor(x, y)
+        String key = canUndo && undo.containsCursor(x, y)
             ? "celeritasextra.option_action.undo"
-            : reset != null && reset.containsCursor(x, y) ? "celeritasextra.option_action.reset" : null;
+            : canReset && reset.containsCursor(x, y) ? "celeritasextra.option_action.reset" : null;
         if (key != null) {
             String text = Translations.format(key);
-            int left = Math.max(dim.x(), undo.x() - context.getStringWidth(text) - 8);
-            context.fill(left, dim.y(), undo.x(), dim.getLimitY(), 0xF0202020);
+            int actionStart = dim.getLimitX() - reservedWidth;
+            int left = Math.max(dim.x(), actionStart - context.getStringWidth(text) - 8);
+            context.fill(left, dim.y(), actionStart, dim.getLimitY(), 0xF0202020);
             context.drawString(text, left + 4, dim.getCenterY() - context.lineHeight() / 2, 0xFFFFFFFF);
         }
     }
 
     @Override
     public boolean isMouseOver(double x, double y) {
+        layout();
         // Native option tooltips apply to the control; action hints are drawn inside the row.
         return control.isMouseOver(x, y);
     }
@@ -60,21 +84,26 @@ public final class OptionActionElement<T> extends ControlElement<T> {
 
     @Override
     public boolean mouseClicked(InteractionContext context, double x, double y, int button) {
-        if (button == 0 && undo.containsCursor(x, y)) {
-            if (option.isAvailable() && option.hasChanged())
-                option.reset();
+        layout();
+        if (button == 0 && undo != null && undo.containsCursor(x, y) && option.isAvailable() && option.hasChanged()) {
+            option.reset();
             return true;
         }
-        if (button == 0 && reset != null && reset.containsCursor(x, y)) {
+        if (button == 0 && reset != null && reset.containsCursor(x, y) && OptionDefaults.canReset(option)) {
             OptionDefaults.reset(option);
             return true;
         }
-        return control.mouseClicked(context, x, y, button);
+        boolean consumed = control.mouseClicked(context, x, y, button);
+        holding = consumed && button == 0;
+        return consumed;
     }
 
     @Override
     public boolean mouseReleased(InteractionContext context, double x, double y, int button) {
-        return control.mouseReleased(context, x, y, button);
+        boolean consumed = control.mouseReleased(context, x, y, button);
+        if (button == 0)
+            holding = false;
+        return consumed;
     }
 
     @Override
