@@ -100,7 +100,7 @@ public class CeleritasExtraGameOptions {
             v -> renderSettings.lightUpdates = v, () -> renderSettings.lightUpdates),
         new BooleanProperty(CAT_RENDER, "itemFrames", true, "Enable/disable item frame rendering",
             v -> renderSettings.itemFrames = v, () -> renderSettings.itemFrames),
-        new BooleanProperty(CAT_RENDER, "itemFrameThreeFaceCulling", false,
+        new BooleanProperty(CAT_RENDER, "itemFrameThreeFaceCulling", true,
             "Cull hidden exterior faces of supported blocks in distant item frames",
             v -> renderSettings.itemFrameThreeFaceCulling = v, () -> renderSettings.itemFrameThreeFaceCulling),
         new BooleanProperty(CAT_RENDER, "signTextCulling", true, "Skip sign text when viewed from behind",
@@ -175,7 +175,7 @@ public class CeleritasExtraGameOptions {
             v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
         new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
             v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
-        new IntProperty(CAT_RENDER, "itemFrameThreeFaceDistance", 4, 2, 256,
+        new IntProperty(CAT_RENDER, "itemFrameThreeFaceDistance", 4, 2, 16,
             "Minimum distance for item-frame block face culling",
             v -> renderSettings.itemFrameThreeFaceDistance = v, () -> renderSettings.itemFrameThreeFaceDistance),
         new IntProperty(CAT_RENDER, "entityRenderDistance", 0, 0, 256, "Entity render distance in blocks (0 = vanilla)",
@@ -609,7 +609,7 @@ public class CeleritasExtraGameOptions {
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
         public int itemFrameLodDistance = 0;
-        public boolean itemFrameThreeFaceCulling = false;
+        public boolean itemFrameThreeFaceCulling = true;
         public int itemFrameThreeFaceDistance = 4;
         public boolean signTextCulling = true;
         public boolean mapBackFaceCulling = true;

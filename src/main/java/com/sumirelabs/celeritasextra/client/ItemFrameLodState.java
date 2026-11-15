@@ -48,7 +48,7 @@ public final class ItemFrameLodState {
      */
     public static List<BakedQuad> filterLodQuads(IBakedModel model, IBlockState state, EnumFacing side, long rand) {
         List<BakedQuad> quads = model.getQuads(state, side, rand);
-        if (state == null && ItemFrameThreeFaceState.camera != null)
+        if (state == null && ItemFrameThreeFaceState.context != null && (!active || model.isGui3d()))
             return ItemFrameThreeFaceState.filter(model, side, quads);
         if (!active || model.isGui3d() || model.isBuiltInRenderer() || quads.isEmpty()) {
             return quads;

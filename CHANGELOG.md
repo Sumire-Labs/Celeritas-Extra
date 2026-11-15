@@ -15,7 +15,7 @@ and tagged commit history.
 
 - Added per-option Undo and Reset to Default controls that appear when an action is available. Defaults are available for Extra and Celeritas settings, and other mods can supply defaults through the option capability. Changes remain pending until Apply or Done; the standalone Extra screen also supports list settings.
 - Ported the search engine from Reese's Sodium Options 2.2.5, including Unicode n-grams, IDF weighting, token coverage, and Levenshtein reranking. Search uses the upstream thresholds and 15-result default, preserves native action tabs, and is also available in the standalone Extra screen.
-- Added optional three-face culling for supported block models in item frames, disabled by default, with a configurable minimum distance. Diagonal frame rotations, unsupported transforms, special models, and shadow passes retain normal rendering.
+- Added MoreCulling-style experimental three-face selection for item-frame models. New configurations enable it at 4 blocks, with a 2–16 block range. The branch requires an unrotated model and quarter-turn frame rotation; block models within 3 blocks and shadow passes keep normal rendering. Forge perspective matrices are checked when adapting the transform condition to 1.12.2.
 
 ### Fixed
 

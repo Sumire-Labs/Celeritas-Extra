@@ -28,7 +28,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderItemFrame;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.storage.MapData;
@@ -77,33 +76,26 @@ public class MixinRenderItemFrame {
         ItemCameraTransforms.TransformType transform, Operation<Void> original,
         @Local(argsOnly = true) EntityItemFrame entity) {
         boolean previous = ItemFrameLodState.active;
-        Vec3d previousCamera = ItemFrameThreeFaceState.camera;
-        ItemFrameThreeFaceState.camera = null;
+        var previousContext = ItemFrameThreeFaceState.context;
+        ItemFrameThreeFaceState.context = null;
         int distance = CeleritasExtraClientMod.options().renderSettings.itemFrameLodDistance;
         Entity view = Minecraft.getMinecraft().getRenderManager().renderViewEntity;
         ItemFrameLodState.active = distance > 0 && view != null
             && !ShaderPassCompat.isShadowPass()
             && entity.getDistanceSq(view) > (double) distance * distance;
         var settings = CeleritasExtraClientMod.options().renderSettings;
-        if (settings.itemFrameThreeFaceCulling && view != null && stack.getItem() instanceof ItemBlock blockItem
-            && blockItem.getBlock().getDefaultState().isOpaqueCube()
-            && blockItem.getBlock().getDefaultState().isFullCube()
-            && renderer.getClass() == RenderItem.class && entity.getClass() == EntityItemFrame.class
-            && !ShaderPassCompat.isShadowPass()
-            && entity.getDistanceSq(view) > (double) settings.itemFrameThreeFaceDistance
-                * settings.itemFrameThreeFaceDistance) {
-            var center = entity.getHangingPosition();
+        if (settings.itemFrameThreeFaceCulling && view != null && !ShaderPassCompat.isShadowPass()) {
             Vec3d camera = ActiveRenderInfo.projectViewFromEntity(view,
                 Minecraft.getMinecraft().getRenderPartialTicks());
-            ItemFrameThreeFaceState.camera = ItemFrameThreeFaceState.cameraInFrame(camera,
-                center.getX() + 0.5, center.getY() + 0.5, center.getZ() + 0.5, entity.rotationYaw,
-                entity.getRotation());
+            double x = camera.x - entity.posX, y = camera.y - entity.posY, z = camera.z - entity.posZ;
+            ItemFrameThreeFaceState.context = new ItemFrameThreeFaceState.Context(entity.facingDirection,
+                entity.getRotation(), x, y, z, Math.sqrt(x * x + y * y + z * z), settings.itemFrameThreeFaceDistance);
         }
         try {
             original.call(renderer, stack, transform);
         } finally {
             ItemFrameLodState.active = previous;
-            ItemFrameThreeFaceState.camera = previousCamera;
+            ItemFrameThreeFaceState.context = previousContext;
         }
     }
 

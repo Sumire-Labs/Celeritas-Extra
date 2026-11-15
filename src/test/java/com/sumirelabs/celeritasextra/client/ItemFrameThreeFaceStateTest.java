@@ -6,10 +6,7 @@
 
 package com.sumirelabs.celeritasextra.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -18,127 +15,110 @@ import org.lwjgl.util.vector.Vector3f;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.Vec3d;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemFrameThreeFaceStateTest {
 
-    @AfterEach
-    void reset() {
-        ItemFrameThreeFaceState.camera = null;
-        ItemFrameThreeFaceState.clearCache();
+    @Test
+    void actualForgePerspectiveRotationDisablesTheUnrotatedBranch() {
+        var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
+        var model = model(quads, ItemTransformVec3f.DEFAULT);
+        ItemFrameThreeFaceState.context = frame(0, 1, 1, 1, 10, 4);
+        var matrix = new javax.vecmath.Matrix4f();
+        matrix.rotY((float) Math.PI / 4);
+        ItemFrameThreeFaceState.observePerspective(matrix, ItemTransformVec3f.DEFAULT);
+        assertSame(quads, ItemFrameThreeFaceState.filter(model, null, quads));
+        matrix.setIdentity();
+        ItemFrameThreeFaceState.observePerspective(matrix, ItemTransformVec3f.DEFAULT);
+        assertEquals(3, ItemFrameThreeFaceState.filter(model, null, quads).size());
     }
 
+    @AfterEach
+    void reset() {
+        ItemFrameThreeFaceState.context = null;
+        ItemFrameLodState.active = false;
+        ItemFrameLodState.clearCache();
+    }
+    private ItemFrameThreeFaceState.Context frame(int rotation, double x, double y, double z, double distance,
+        int range) {
+        return new ItemFrameThreeFaceState.Context(EnumFacing.NORTH, rotation, x, y, z, distance, range);
+    }
     @Test
-    void octantsSelectOnlyTheThreeVisibleFacesAndReuseGeometry() {
-        var quads = new ArrayList<>(Arrays.stream(EnumFacing.values()).map(this::quad).toList());
-        var model = model(quads, ItemTransformVec3f.DEFAULT);
+    void allOctantsKeepThreeDirectionsAndReuseFilteredLists() {
+        var source = new ArrayList<>(Arrays.stream(EnumFacing.values()).map(this::quad).toList());
+        var model = model(source, ItemTransformVec3f.DEFAULT);
         for (int x : new int[]{-1, 1})
             for (int y : new int[]{-1, 1})
                 for (int z : new int[]{-1, 1}) {
-                    ItemFrameThreeFaceState.camera = new Vec3d(x * 10, y * 10, z * 10);
-                    var result = ItemFrameThreeFaceState.filter(model, null, quads);
+                    ItemFrameThreeFaceState.context = frame(0, x, y, z, 10, 4);
+                    var result = ItemFrameThreeFaceState.filter(model, null, source);
                     assertEquals(3, result.size());
                     assertTrue(
-                        result.stream().anyMatch(q -> q.getFace() == (x < 0 ? EnumFacing.WEST : EnumFacing.EAST)));
-                    assertTrue(result.stream().anyMatch(q -> q.getFace() == (y < 0 ? EnumFacing.DOWN : EnumFacing.UP)));
+                        result.stream().anyMatch(q -> q.getFace() == (x > 0 ? EnumFacing.EAST : EnumFacing.WEST)));
+                    assertTrue(result.stream().anyMatch(q -> q.getFace() == (y > 0 ? EnumFacing.UP : EnumFacing.DOWN)));
                     assertTrue(
-                        result.stream().anyMatch(q -> q.getFace() == (z < 0 ? EnumFacing.NORTH : EnumFacing.SOUTH)));
-                    assertSame(result, ItemFrameThreeFaceState.filter(model, null, quads));
+                        result.stream().anyMatch(q -> q.getFace() == (z > 0 ? EnumFacing.SOUTH : EnumFacing.NORTH)));
+                    assertSame(result, ItemFrameThreeFaceState.filter(model, null, source));
                 }
-        assertEquals(6, quads.size());
-        quads.set(EnumFacing.SOUTH.ordinal(), quad(EnumFacing.SOUTH));
-        var changed = ItemFrameThreeFaceState.filter(model, null, quads);
-        assertSame(quads.get(EnumFacing.SOUTH.ordinal()), changed.stream()
-            .filter(q -> q.getFace() == EnumFacing.SOUTH).findFirst().orElseThrow());
+        var replacement = quad(EnumFacing.SOUTH);
+        source.set(EnumFacing.SOUTH.ordinal(), replacement);
+        assertTrue(ItemFrameThreeFaceState.filter(model, null, source).contains(replacement));
     }
-
     @Test
-    void cameraInsideAnAxisExtentKeepsBothFacesAndDisabledStateDoesNothing() {
+    void matchesUpstreamDistanceAndRotationGates() {
         var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
         var model = model(quads, ItemTransformVec3f.DEFAULT);
         assertSame(quads, ItemFrameThreeFaceState.filter(model, null, quads));
-        ItemFrameThreeFaceState.camera = new Vec3d(0, 0, 10);
-        assertEquals(5, ItemFrameThreeFaceState.filter(model, null, quads).size());
-        ItemFrameThreeFaceState.camera = Vec3d.ZERO;
-        assertSame(quads, ItemFrameThreeFaceState.filter(model, null, quads));
-    }
-
-    @Test
-    void specialTransformsAndInteriorGeometryKeepOriginalRendering() {
-        var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
-        ItemFrameThreeFaceState.camera = new Vec3d(10, 10, 10);
-        for (var transform : List.of(
-            transform(45, 1, 0), transform(0, -1, 0), transform(0, 0, 0), transform(0, 1, 0.1f)))
-            assertSame(quads, ItemFrameThreeFaceState.filter(model(quads, transform), null, quads));
-        var interior = new ArrayList<>(quads);
-        var data = quad(EnumFacing.SOUTH).getVertexData().clone();
-        data[2] = Float.floatToRawIntBits(0.5f);
-        interior.add(new BakedQuad(data, -1, EnumFacing.SOUTH, null, true, DefaultVertexFormats.ITEM));
-        assertSame(interior,
-            ItemFrameThreeFaceState.filter(model(interior, ItemTransformVec3f.DEFAULT), null, interior));
-    }
-
-    @Test
-    void vanillaFixedHalfScaleAndHalfTurnSelectOppositeDepthFace() {
-        var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
-        ItemFrameThreeFaceState.camera = new Vec3d(10, 10, 10);
-        var result = ItemFrameThreeFaceState.filter(model(quads, transform(180, 0.5f, 0)), null, quads);
-        assertEquals(List.of(EnumFacing.UP, EnumFacing.NORTH, EnumFacing.WEST),
-            result.stream().map(BakedQuad::getFace).toList());
-    }
-
-    @Test
-    void frameRotationsInvertTheActualRenderTransform() {
-        for (int yaw = 0; yaw < 360; yaw += 90) {
-            for (int rotation = 0; rotation < 8; rotation += 2) {
-                double ry = Math.toRadians(180 - yaw), rz = Math.toRadians(rotation * 45);
-                double x = 3, y = 4, z = 5;
-                double frameX = (Math.cos(rz) * x - Math.sin(rz) * y) * 0.5;
-                double frameY = (Math.sin(rz) * x + Math.cos(rz) * y) * 0.5;
-                double frameZ = z * 0.5 + 0.4375;
-                var view = new Vec3d(10 + Math.cos(ry) * frameX + Math.sin(ry) * frameZ,
-                    20 + frameY, 30 - Math.sin(ry) * frameX + Math.cos(ry) * frameZ);
-                var actual = ItemFrameThreeFaceState.cameraInFrame(view, 10, 20, 30, yaw, rotation);
-                assertEquals(x, actual.x, 0.00001);
-                assertEquals(y, actual.y, 0.00001);
-                assertEquals(z, actual.z, 0.00001);
-            }
+        for (var context : List.of(frame(0, 1, 1, 1, 3, 2), frame(0, 1, 1, 1, 4, 4), frame(1, 1, 1, 1, 10, 4))) {
+            ItemFrameThreeFaceState.context = context;
+            assertSame(quads, ItemFrameThreeFaceState.filter(model, null, quads));
         }
-        assertNull(ItemFrameThreeFaceState.cameraInFrame(Vec3d.ZERO, 0, 0, 0, 0, 1));
+        ItemFrameThreeFaceState.context = frame(2, 1, 1, 1, 10, 4);
+        assertEquals(3, ItemFrameThreeFaceState.filter(model, null, quads).size());
+        var rotated = new ItemTransformVec3f(new Vector3f(0, 180, 0), new Vector3f(), new Vector3f(1, 1, 1));
+        assertSame(quads, ItemFrameThreeFaceState.filter(model(quads, rotated), null, quads));
     }
-
-    private ItemTransformVec3f transform(float yaw, float scale, float translation) {
-        return new ItemTransformVec3f(new Vector3f(0, yaw, 0), new Vector3f(translation, 0, 0),
-            new Vector3f(scale, scale, scale));
+    @Test
+    void upstreamBranchFiltersByFaceWithoutOpaqueCubeOrExteriorPlaneRestrictions() {
+        var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
+        var unusual = new ItemTransformVec3f(new Vector3f(), new Vector3f(0.2f, 0, 0), new Vector3f(1.2f, 1.2f, 1.2f));
+        ItemFrameThreeFaceState.context = frame(0, 0, 0, 10, 10, 4);
+        assertEquals(List.of(EnumFacing.DOWN, EnumFacing.SOUTH, EnumFacing.WEST),
+            ItemFrameThreeFaceState.filter(model(quads, unusual), null, quads).stream().map(BakedQuad::getFace)
+                .toList());
     }
-
+    @Test
+    void flatItemLodTakesPriorityOverThreeFaceFiltering() {
+        var quads = Arrays.stream(EnumFacing.values()).map(this::quad).toList();
+        var faces = new EnumMap<EnumFacing, List<BakedQuad>>(EnumFacing.class);
+        for (var face : EnumFacing.values())
+            faces.put(face, List.of());
+        var flat = new SimpleBakedModel(quads, faces, false, false, null, ItemCameraTransforms.DEFAULT,
+            ItemOverrideList.NONE);
+        ItemFrameThreeFaceState.context = frame(0, 1, 1, 1, 100, 4);
+        ItemFrameLodState.active = true;
+        assertEquals(List.of(EnumFacing.SOUTH),
+            ItemFrameLodState.filterLodQuads(flat, null, null, 0).stream().map(BakedQuad::getFace).toList());
+    }
+    @Test
+    void everyFacingAndQuarterTurnProducesThreeDirections() {
+        for (var facing : EnumFacing.values())
+            for (int rotation = 0; rotation < 8; rotation += 2) {
+                var context = new ItemFrameThreeFaceState.Context(facing, rotation, 1, -1, 1, 10, 4);
+                assertEquals(3, Integer.bitCount(ItemFrameThreeFaceState.faceMask(context)));
+            }
+    }
     private IBakedModel model(List<BakedQuad> quads, ItemTransformVec3f fixed) {
         var faces = new EnumMap<EnumFacing, List<BakedQuad>>(EnumFacing.class);
         for (var face : EnumFacing.values())
             faces.put(face, List.of());
         var none = ItemTransformVec3f.DEFAULT;
         return new SimpleBakedModel(quads, faces, false, true, null,
-            new ItemCameraTransforms(none, none, none, none, none, none, none, fixed), new ItemOverrideList(List.of()));
+            new ItemCameraTransforms(none, none, none, none, none, none, none, fixed), ItemOverrideList.NONE);
     }
-
     private BakedQuad quad(EnumFacing face) {
-        int[] data = new int[DefaultVertexFormats.ITEM.getIntegerSize() * 4];
-        int axis = switch (face.getAxis()) {
-            case X -> 0;
-            case Y -> 1;
-            case Z -> 2;
-        };
-        for (int vertex = 0; vertex < 4; vertex++) {
-            float[] point = {0, 0, 0};
-            point[axis] = face.getAxisDirection() == EnumFacing.AxisDirection.POSITIVE ? 1 : 0;
-            point[(axis + 1) % 3] = vertex < 2 ? 0 : 1;
-            point[(axis + 2) % 3] = vertex == 0 || vertex == 3 ? 0 : 1;
-            for (int coordinate = 0; coordinate < 3; coordinate++)
-                data[vertex * 7 + coordinate] = Float.floatToRawIntBits(point[coordinate]);
-        }
-        return new BakedQuad(data, -1, face, null, true, DefaultVertexFormats.ITEM);
+        return new BakedQuad(new int[28], -1, face, null, true, DefaultVertexFormats.ITEM);
     }
 
 }

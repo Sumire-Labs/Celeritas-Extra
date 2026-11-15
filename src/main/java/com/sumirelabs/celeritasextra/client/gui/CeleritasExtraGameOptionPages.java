@@ -635,7 +635,7 @@ public class CeleritasExtraGameOptionPages {
         groups.add(group("groups/entities/0")
             .add(itemFramesOption)
             .add(threeFaces)
-            .add(sliderOption("celeritasextra.option.item_frame_three_face_distance", 2, 256, 1,
+            .add(sliderOption("celeritasextra.option.item_frame_three_face_distance", 2, 16, 1,
                 value -> TextComponent.literal(Translations.format("sodium-extra.units.blocks", value)),
                 (opts, value) -> opts.renderSettings.itemFrameThreeFaceDistance = value,
                 opts -> opts.renderSettings.itemFrameThreeFaceDistance,

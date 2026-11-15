@@ -10,24 +10,28 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
+
+import javax.vecmath.Matrix4f;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.block.model.SimpleBakedModel;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.model.PerspectiveMapWrapper;
-import net.minecraftforge.client.model.animation.AnimationItemOverrideList;
 
-/** Camera position in the item frame's centered, half-scale coordinate system. Render thread only. */
+/** MoreCulling's three-direction selection, connected to the 1.12.2 item render scope. */
 public final class ItemFrameThreeFaceState {
 
-    public static Vec3d camera;
-    private static final Map<IBakedModel, Boolean> FORGE_TRANSFORMS = new WeakHashMap<>();
+    public record Context(EnumFacing facing, int rotation, double x, double y, double z, double distance, int range,
+        boolean unrotated) {
+
+        public Context(EnumFacing facing, int rotation, double x, double y, double z, double distance, int range) {
+            this(facing, rotation, x, y, z, distance, range, true);
+        }
+
+    }
+
+    public static Context context;
     private static final Map<Key, Cached> CACHE = new LinkedHashMap<>(32, 0.75f, true) {
 
         @Override
@@ -41,116 +45,104 @@ public final class ItemFrameThreeFaceState {
 
     public static void clearCache() {
         CACHE.clear();
-        FORGE_TRANSFORMS.clear();
-    }
-
-    /** Inverse of RenderItemFrame's translation, Y rotation, Z rotation and 0.5 scale. */
-    public static Vec3d cameraInFrame(Vec3d view, double centerX, double centerY, double centerZ,
-        float yaw, int rotation) {
-        if ((rotation & 1) != 0 || !Float.isFinite(yaw) || yaw % 90 != 0)
-            return null;
-        double angle = Math.toRadians(180 - yaw);
-        double dx = view.x - centerX, dy = view.y - centerY, dz = view.z - centerZ;
-        double x = Math.cos(angle) * dx - Math.sin(angle) * dz;
-        double z = Math.sin(angle) * dx + Math.cos(angle) * dz - 0.4375;
-        angle = Math.toRadians(rotation * 45);
-        return new Vec3d((Math.cos(angle) * x + Math.sin(angle) * dy) * 2,
-            (-Math.sin(angle) * x + Math.cos(angle) * dy) * 2, z * 2);
     }
 
     public static List<BakedQuad> filter(IBakedModel model, EnumFacing side, List<BakedQuad> quads) {
-        if (camera == null || quads.isEmpty() || quads.size() > 1024
-            || !supportedModel(model) || !model.isGui3d() || model.isBuiltInRenderer()
-            || (model.getOverrides().getClass() != ItemOverrideList.class
-                && model.getOverrides().getClass() != AnimationItemOverrideList.class)
-            || !model.getOverrides().getOverrides().isEmpty())
+        Context frame = context;
+        if (frame == null || frame.facing() == null || !frame.unrotated() || quads.isEmpty()
+            || model.isGui3d() && frame.distance() <= 3
+            || frame.distance() <= frame.range() || (frame.rotation() & 1) != 0)
             return quads;
         var transform = model.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.FIXED);
-        if (transform.rotation.x != 0 || transform.rotation.z != 0 || !Float.isFinite(transform.rotation.y)
-            || transform.rotation.y % 90 != 0 || transform.translation.x != 0
-            || transform.translation.y != 0 || transform.translation.z != 0
-            || !validScale(transform.scale.x) || !validScale(transform.scale.y) || !validScale(transform.scale.z))
+        // Upstream's experimental 3-face branch accepts only unrotated model transforms.
+        if (transform.rotation.x != 0 || transform.rotation.y != 0 || transform.rotation.z != 0)
             return quads;
-        double angle = Math.toRadians(transform.rotation.y);
-        double x = (Math.cos(angle) * camera.x - Math.sin(angle) * camera.z) / transform.scale.x;
-        double y = camera.y / transform.scale.y;
-        double z = (Math.sin(angle) * camera.x + Math.cos(angle) * camera.z) / transform.scale.z;
-        int mask = axisMask(x, EnumFacing.WEST, EnumFacing.EAST)
-            | axisMask(y, EnumFacing.DOWN, EnumFacing.UP) | axisMask(z, EnumFacing.NORTH, EnumFacing.SOUTH);
-        // Only cull planar exterior quads. Interior, slanted and malformed geometry stays live.
-        for (var quad : quads)
-            if (!exteriorQuad(quad))
-                return quads;
+        int mask = faceMask(frame);
         var key = new Key(model, side, mask);
         var cached = CACHE.get(key);
         if (cached != null && cached.matches(quads))
             return cached.result;
         List<BakedQuad> result = new ArrayList<>(quads.size());
-        for (var quad : quads)
+        for (var quad : quads) {
+            if (quad.getFace() == null)
+                return quads;
             if ((mask & (1 << quad.getFace().ordinal())) != 0)
                 result.add(quad);
+        }
         if (result.size() == quads.size())
             return quads;
         result = List.copyOf(result);
-        CACHE.put(key, new Cached(quads.toArray(BakedQuad[]::new), result));
+        if (quads.size() <= 1024)
+            CACHE.put(key, new Cached(quads.toArray(BakedQuad[]::new), result));
         return result;
     }
 
-    private static boolean supportedModel(IBakedModel model) {
-        if (model.getClass() == SimpleBakedModel.class)
-            return true;
-        if (!model.getClass().getName().equals("net.minecraftforge.client.model.ModelLoader$VanillaModelWrapper$1"))
-            return false;
-        // Forge can supply a separate perspective matrix. Only accept the ordinary JSON fixed transform.
-        return FORGE_TRANSFORMS.computeIfAbsent(model, value -> {
-            var actual = value.handlePerspective(ItemCameraTransforms.TransformType.FIXED);
-            var expected = PerspectiveMapWrapper.handlePerspective(value,
-                PerspectiveMapWrapper.getTransforms(value.getItemCameraTransforms()),
-                ItemCameraTransforms.TransformType.FIXED);
-            return actual.getLeft() == value && (actual.getRight() == null
-                ? expected.getRight() == null
-                : expected.getRight() != null && actual.getRight().epsilonEquals(expected.getRight(), 0.00001f));
-        });
+    /** Reads the actual Forge perspective, as the modern renderer reads its layer transform. */
+    public static void observePerspective(Matrix4f matrix, ItemTransformVec3f fixed) {
+        Context frame = context;
+        if (frame == null)
+            return;
+        boolean aligned = matrix == null || (Math.abs(matrix.m01) < 0.00001f && Math.abs(matrix.m02) < 0.00001f
+            && Math.abs(matrix.m10) < 0.00001f && Math.abs(matrix.m12) < 0.00001f
+            && Math.abs(matrix.m20) < 0.00001f && Math.abs(matrix.m21) < 0.00001f
+            && matrix.m00 * fixed.scale.x >= 0 && matrix.m11 * fixed.scale.y >= 0 && matrix.m22 * fixed.scale.z >= 0);
+        context = new Context(frame.facing(), frame.rotation(), frame.x(), frame.y(), frame.z(), frame.distance(),
+            frame.range(), aligned);
     }
 
-    private static boolean validScale(float value) {
-        return Float.isFinite(value) && value > 0 && value <= 1;
+    public static int faceMask(Context frame) {
+        return bit(frame.facing(), frame.rotation(), frame.x() > 0 ? EnumFacing.EAST : EnumFacing.WEST)
+            | bit(frame.facing(), frame.rotation(), frame.y() > 0 ? EnumFacing.UP : EnumFacing.DOWN)
+            | bit(frame.facing(), frame.rotation(), frame.z() > 0 ? EnumFacing.SOUTH : EnumFacing.NORTH);
     }
 
-    private static int axisMask(double coordinate, EnumFacing negative, EnumFacing positive) {
-        if (!Double.isFinite(coordinate) || Math.abs(coordinate) <= 0.5001)
-            return (1 << negative.ordinal()) | (1 << positive.ordinal());
-        return 1 << (coordinate < 0 ? negative : positive).ordinal();
-    }
-
-    private static boolean exteriorQuad(BakedQuad quad) {
-        if (!StaticItemGeometry.isStaticQuad(quad) || quad.getFace() == null
-            || quad.getFormat() != DefaultVertexFormats.ITEM)
-            return false;
-        int[] data = quad.getVertexData();
-        int stride = DefaultVertexFormats.ITEM.getIntegerSize();
-        if (data.length != stride * 4)
-            return false;
-        int axis = switch (quad.getFace().getAxis()) {
-            case X -> 0;
-            case Y -> 1;
-            case Z -> 2;
-        };
-        float plane = quad.getFace().getAxisDirection() == EnumFacing.AxisDirection.POSITIVE ? 1 : 0;
-        for (int vertex = 0; vertex < 4; vertex++) {
-            for (int coordinate = 0; coordinate < 3; coordinate++) {
-                float value = Float.intBitsToFloat(data[vertex * stride + coordinate]);
-                if (!Float.isFinite(value) || value < 0 || value > 1
-                    || coordinate == axis && Math.abs(value - plane) > 0.0001f)
-                    return false;
+    private static int bit(EnumFacing facing, int rotation, EnumFacing worldFace) {
+        var v = worldFace.getDirectionVec();
+        int x = v.getX(), y = v.getY(), z = v.getZ();
+        int a, b, c;
+        switch (facing) {
+            case NORTH -> {
+                a = x;
+                b = y;
+                c = z;
             }
+            case SOUTH -> {
+                a = -x;
+                b = y;
+                c = -z;
+            }
+            case WEST -> {
+                a = -z;
+                b = y;
+                c = x;
+            }
+            case EAST -> {
+                a = z;
+                b = y;
+                c = -x;
+            }
+            case DOWN -> {
+                a = -x;
+                b = z;
+                c = y;
+            }
+            case UP -> {
+                a = -x;
+                b = -z;
+                c = -y;
+            }
+            default -> throw new IllegalArgumentException("Unknown frame facing");
         }
-        return true;
+        for (int i = 0; i < Math.floorMod(rotation / 2, 4); i++) {
+            int old = a;
+            a = b;
+            b = -old;
+        }
+        return 1 << EnumFacing.getFacingFromVector(a, b, c).ordinal();
     }
 
     private record Key(IBakedModel model, EnumFacing side, int mask) {
     }
-
     private record Cached(BakedQuad[] source, List<BakedQuad> result) {
 
         boolean matches(List<BakedQuad> quads) {
