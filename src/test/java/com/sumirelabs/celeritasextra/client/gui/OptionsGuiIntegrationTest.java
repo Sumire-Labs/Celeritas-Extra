@@ -31,6 +31,78 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsGuiIntegrationTest {
 
     @Test
+    void addonStorageDefaultsWorkThroughAnAvailabilityWrapperWithoutChangingLiveData() {
+        class Data {
+
+            int amount;
+            Data(int amount) {
+                this.amount = amount;
+            }
+
+        }
+        var storage = new DefaultOptionStorage<Data>() {
+
+            final Data live = new Data(3);
+            public Data getData() {
+                return live;
+            }
+            public Data getDefaultData() {
+                return new Data(0);
+            }
+            public void save() {}
+
+        };
+        class Bound extends TestOption
+            implements
+                com.sumirelabs.celeritasextra.mixin.options_search.OptionBindingAccess {
+
+            Bound() {
+                super("Add-on", "");
+            }
+            public OptionStorage<?> getStorage() {
+                return storage;
+            }
+            public org.taumc.celeritas.api.options.binding.OptionBinding<?, ?> celeritasExtra$binding() {
+                return new org.taumc.celeritas.api.options.binding.OptionBinding<Data, Integer>() {
+
+                    public void setValue(Data data, Integer value) {
+                        data.amount = value;
+                    }
+                    public Integer getValue(Data data) {
+                        return data.amount;
+                    }
+
+                };
+            }
+
+        }
+        var bound = new Bound();
+        var wrapper = new TestOption("Wrapped add-on", "") {
+
+            public OptionStorage<?> getStorage() {
+                return storage;
+            }
+            public Control<Integer> getControl() {
+                return bound.getControl();
+            }
+            public Integer getValue() {
+                return bound.getValue();
+            }
+            public void setValue(Integer value) {
+                bound.setValue(value);
+            }
+            public boolean hasChanged() {
+                return bound.hasChanged();
+            }
+
+        };
+        assertTrue(OptionDefaults.known(wrapper));
+        OptionDefaults.reset(wrapper);
+        assertEquals(0, bound.getValue());
+        assertEquals(3, storage.getData().amount);
+    }
+
+    @Test
     void thirdPartyDefaultCapabilityUsesTheProvidersCurrentDefault() {
         class Provided extends TestOption implements DefaultValueOption<Integer> {
 

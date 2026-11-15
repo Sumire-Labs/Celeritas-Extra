@@ -123,7 +123,7 @@ public class CeleritasExtraOptionsListener {
                 .setBinding(CeleritasExtraGameOptions.VerticalSyncOption::apply,
                     CeleritasExtraGameOptions.VerticalSyncOption::getCurrent)
                 .setImpact(OptionImpact.VARIES)
-                .build(), CeleritasExtraGameOptions.VerticalSyncOption.OFF);
+                .build(), CeleritasExtraGameOptions.VerticalSyncOption.ON);
     }
 
 }

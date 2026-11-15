@@ -14,6 +14,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.gui.OptionActionIcon;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.Translations;
 import com.sumirelabs.celeritasextra.client.gui.search.SearchIndex;
@@ -134,11 +135,12 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
             }
             buttonList.add(button);
             if (element.isProperty()) {
-                var undo = new GuiButton(ACTION + slot * 2, x + buttonWidth, y, 20, 20, "↶");
+                var undo = new OptionIconButton(ACTION + slot * 2, x + buttonWidth, y, OptionActionIcon.UNDO);
                 undo.enabled = session.changed(element);
                 undo.visible = undo.enabled;
                 buttonList.add(undo);
-                var reset = new GuiButton(ACTION + slot * 2 + 1, x + buttonWidth + 20, y, 20, 20, "↺");
+                var reset = new OptionIconButton(ACTION + slot * 2 + 1, x + buttonWidth + 20, y,
+                    OptionActionIcon.RESET);
                 reset.enabled = session.canReset(element);
                 reset.visible = reset.enabled;
                 buttonList.add(reset);

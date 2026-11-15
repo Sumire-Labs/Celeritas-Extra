@@ -73,7 +73,7 @@ final class ForgeExtraConfigElements {
 
         });
         var syncModes = CeleritasExtraGameOptions.VerticalSyncOption.getAvailableOptions();
-        window.add(new DummyConfigElement("vsync", "OFF", ConfigGuiType.STRING, "options.vsync",
+        window.add(new DummyConfigElement("vsync", "ON", ConfigGuiType.STRING, "options.vsync",
             Arrays.stream(syncModes).map(Enum::name).toArray(String[]::new),
             Arrays.stream(syncModes).map(CeleritasExtraGameOptions.VerticalSyncOption::getLocalizedName)
                 .toArray(String[]::new)) {

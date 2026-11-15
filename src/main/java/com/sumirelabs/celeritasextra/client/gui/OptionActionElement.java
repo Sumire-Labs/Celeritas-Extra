@@ -8,10 +8,11 @@ package com.sumirelabs.celeritasextra.client.gui;
 
 import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.gui.framework.InteractionContext;
-import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.taumc.celeritas.api.options.control.ControlElement;
 import org.taumc.celeritas.api.options.structure.Option;
+
+import net.minecraft.client.renderer.GlStateManager;
 
 /** Keeps native controls and reserves separate hit boxes for per-option actions. */
 public final class OptionActionElement<T> extends ControlElement<T> {
@@ -53,9 +54,9 @@ public final class OptionActionElement<T> extends ControlElement<T> {
         boolean canUndo = undo != null && option.isAvailable() && option.hasChanged();
         boolean canReset = reset != null && OptionDefaults.canReset(option);
         if (canUndo)
-            drawAction(context, undo, "↶", true, x, y);
+            drawAction(context, undo, OptionActionIcon.UNDO, true, x, y);
         if (canReset)
-            drawAction(context, reset, "↺", OptionDefaults.canReset(option), x, y);
+            drawAction(context, reset, OptionActionIcon.RESET, OptionDefaults.canReset(option), x, y);
         String key = canUndo && undo.containsCursor(x, y)
             ? "celeritasextra.option_action.undo"
             : canReset && reset.containsCursor(x, y) ? "celeritasextra.option_action.reset" : null;
@@ -75,11 +76,17 @@ public final class OptionActionElement<T> extends ControlElement<T> {
         return control.isMouseOver(x, y);
     }
 
-    private static void drawAction(DrawContext context, Dim2i bounds, String label, boolean enabled, int x, int y) {
+    private static void drawAction(DrawContext context, Dim2i bounds, OptionActionIcon icon, boolean enabled, int x,
+        int y) {
         context.fill(bounds.x(), bounds.y(), bounds.getLimitX(), bounds.getLimitY(),
             enabled && bounds.containsCursor(x, y) ? 0xFF555555 : 0x90303030);
-        context.drawString(TextComponent.literal(label), bounds.getCenterX() - context.getStringWidth(label) / 2,
-            bounds.getCenterY() - context.lineHeight() / 2, enabled ? 0xFFFFFFFF : 0xFF777777, false);
+        GlStateManager.color(1, 1, 1, 1);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+            GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+            GlStateManager.DestFactor.ZERO);
+        OptionActionIcons.draw(context, bounds, icon);
+        GlStateManager.disableBlend();
     }
 
     @Override

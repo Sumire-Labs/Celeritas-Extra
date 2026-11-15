@@ -13,10 +13,13 @@ import java.util.WeakHashMap;
 import org.embeddedt.embeddium.impl.gui.SodiumGameOptions;
 import org.taumc.celeritas.api.options.binding.OptionBinding;
 import org.taumc.celeritas.api.options.structure.Option;
+import org.taumc.celeritas.impl.gui.MinecraftOptionsStorage;
 
 import com.sumirelabs.celeritasextra.mixin.options_search.OptionBindingAccess;
 
-/** Only options with an explicitly registered default offer Reset; Undo uses the renderer's binding. */
+import net.minecraft.client.Minecraft;
+
+/** Adapts native defaults and add-on default capabilities to the legacy renderer options API. */
 public final class OptionDefaults {
 
     private static final Map<Option<?>, Object> DEFAULTS = new WeakHashMap<>();
@@ -31,10 +34,37 @@ public final class OptionDefaults {
     public static boolean known(Option<?> option) {
         if (option instanceof DefaultValueOption<?>)
             return true;
-        if (!DEFAULTS.containsKey(option) && option instanceof OptionBindingAccess access
-            && option.getStorage() != null && option.getStorage().getClass() == SodiumGameOptions.class)
-            registerRendererDefault(option, access);
+        if (DEFAULTS.containsKey(option))
+            return true;
+        if (!DEFAULTS.containsKey(option) && option.getStorage() != null
+            && option.getStorage().getClass() == MinecraftOptionsStorage.class) {
+            Object value = VanillaOptionDefaults.find(option.getId(), Minecraft.getMinecraft().isJava64bit());
+            if (value != null && option.getValue() != null && option.getValue().getClass() == value.getClass())
+                DEFAULTS.put(option, value);
+        }
+        if (!DEFAULTS.containsKey(option) && option.getStorage() != null
+            && option.getStorage().getClass() == SodiumGameOptions.class) {
+            var access = bindingAccess(option);
+            if (access != null)
+                registerRendererDefault(option, access);
+        }
+        if (option.getStorage() instanceof DefaultOptionStorage<?> && bindingAccess(option) != null)
+            return true;
         return DEFAULTS.containsKey(option);
+    }
+
+    private static OptionBindingAccess bindingAccess(Option<?> option) {
+        Option<?> current = option;
+        for (int depth = 0; depth < 8; depth++) {
+            if (current instanceof OptionBindingAccess access)
+                return access;
+            var control = current.getControl();
+            var next = control == null ? null : control.getOption();
+            if (next == null || next == current || next.getStorage() != option.getStorage())
+                return null;
+            current = next;
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
@@ -44,7 +74,19 @@ public final class OptionDefaults {
     }
 
     private static Object value(Option<?> option) {
-        return option instanceof DefaultValueOption<?> provider ? provider.getDefaultValue() : DEFAULTS.get(option);
+        if (option instanceof DefaultValueOption<?> provider)
+            return provider.getDefaultValue();
+        if (option.getStorage() instanceof DefaultOptionStorage<?> storage) {
+            var access = bindingAccess(option);
+            if (access != null)
+                return storageValue(access, storage);
+        }
+        return DEFAULTS.get(option);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Object storageValue(OptionBindingAccess access, DefaultOptionStorage<?> storage) {
+        return ((OptionBinding<Object, ?>) access.celeritasExtra$binding()).getValue(storage.getDefaultData());
     }
 
     public static boolean canReset(Option<?> option) {
