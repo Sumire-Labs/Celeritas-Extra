@@ -15,6 +15,37 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HudTextCacheTest {
 
+    @Test
+    void informationLinesUseCorrectDaySessionAndClockFormats() {
+        cache.beginFrame(0, "en_us", Locale.US);
+        assertTrue(cache.worldDay(23999).endsWith("[0]"));
+        String day = cache.worldDay(24000);
+        assertTrue(day.endsWith("[1]"));
+        assertSame(day, cache.worldDay(47999));
+        assertTrue(cache.session(3661).endsWith("[1, 1, 1]"));
+        assertTrue(cache.entityCount(7, false).endsWith("[7]"));
+        assertTrue(cache.entityCount(3, true).endsWith("[3]"));
+        var midnight = java.time.LocalDateTime.of(2026, 11, 16, 0, 5);
+        assertEquals("00:05", HudTextCache.formatLocalTime(midnight, false, Locale.US));
+        assertEquals("12:05 AM", HudTextCache.formatLocalTime(midnight, true, Locale.US));
+        assertEquals("01:05 PM", HudTextCache.formatLocalTime(midnight.plusHours(13), true, Locale.US));
+    }
+
+    @Test
+    void biomeRefreshesOnWorldChangesAndAtTheRefreshBoundary() {
+        var firstWorld = new Object();
+        cache.beginFrame(0, "en_us", Locale.US);
+        assertTrue(cache.needsBiome(firstWorld));
+        cache.biome("Plains");
+        assertFalse(cache.needsBiome(firstWorld));
+        cache.beginFrame(499_999_999, "en_us", Locale.US);
+        assertEquals("Plains", cache.biome());
+        cache.beginFrame(500_000_000, "en_us", Locale.US);
+        assertTrue(cache.needsBiome(firstWorld));
+        cache.biome("Forest");
+        assertTrue(cache.needsBiome(new Object()));
+    }
+
     private final HudTextCache cache = new HudTextCache((key, args) -> key + Arrays.toString(args));
 
     @Test

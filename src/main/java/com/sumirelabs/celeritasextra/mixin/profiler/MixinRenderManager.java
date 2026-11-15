@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.sumirelabs.celeritasextra.client.HudInformation;
 import com.sumirelabs.celeritasextra.client.ProfilerHelper;
 
 import net.minecraft.client.renderer.entity.Render;
@@ -27,6 +28,7 @@ public abstract class MixinRenderManager {
     @WrapMethod(method = "renderEntity")
     private void celeritasExtra$profile(Entity entity, double x, double y, double z, float yaw,
         float partialTicks, boolean debug, Operation<Void> original) {
+        HudInformation.recordRendered(entity);
         var profiler = entity.world == null ? null : entity.world.profiler;
         if (profiler == null || !profiler.profilingEnabled) {
             original.call(entity, x, y, z, yaw, partialTicks, debug);

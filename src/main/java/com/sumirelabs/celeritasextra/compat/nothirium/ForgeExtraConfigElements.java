@@ -159,8 +159,37 @@ final class ForgeExtraConfigElements {
         var entities = take(render, "itemFrames", "armorStands", "paintings", "playerNameTag", "itemFrameNameTag",
             "entityRenderDistance", "itemFrameLodDistance", "itemFrameThreeFaceCulling", "itemFrameThreeFaceDistance",
             "mapBackFaceCulling", "entityDistanceExemptions");
-        var overlay = take(extra, "showFps", "showFPSExtended", "showCoords", "showMemory", "ignoreReducedDebugInfo",
-            "overlayCorner", "textContrast");
+        var overlay = take(extra, "showFps", "showFPSExtended", "showCoords", "showMemory", "showMemoryExtended",
+            "showLocalTime", "use12HourClock", "showWorldDay", "showSessionTime", "showEntityCount",
+            "showRenderedEntities", "showBiome", "ignoreReducedDebugInfo", "overlayCorner", "textContrast");
+        var colorPages = new ArrayList<IConfigElement>();
+        for (var line : CeleritasExtraGameOptions.HudLine.values()) {
+            var category = options.forgeConfiguration().getCategory(line.category());
+            category.setPropertyOrder(List.of(CeleritasExtraGameOptions.HudLine.CHANNELS));
+            var channels = new ArrayList<IConfigElement>();
+            for (int channel = 0; channel < 3; channel++) {
+                String key = CeleritasExtraGameOptions.HudLine.CHANNEL_LABELS[channel];
+                var property = category.get(CeleritasExtraGameOptions.HudLine.CHANNELS[channel]);
+                channels.add(new ConfigElement(property) {
+
+                    @Override
+                    public String getLanguageKey() {
+                        return "";
+                    }
+                    @Override
+                    public String getName() {
+                        return Translations.format(line.labelKey()) + " · " + Translations.format(key);
+                    }
+                    @Override
+                    public String getComment() {
+                        return Translations.format(Translations.tooltipKey(key));
+                    }
+
+                });
+            }
+            colorPages.add(new DummyCategoryElement(line.name(), line.labelKey(), channels));
+        }
+        overlay.add(new DummyCategoryElement("hudColors", "celeritasextra.gui.hud_colors", colorPages));
         window.addAll(take(extra, "menuFpsLimit", "inactiveFpsLimit", "minimizedFpsLimit"));
         extra.addAll(take(render, "preventShaders"));
         if (!particles.isEmpty())

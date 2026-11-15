@@ -14,6 +14,7 @@ and tagged commit history.
 ### Added
 
 - Added rain/snow frustum culling, enabled by default. It reuses the terrain camera and skips off-screen precipitation columns before generating vertices, including above the build limit. Custom weather renderers and shadow passes keep their normal rendering.
+- Added optional HUD lines for local time (12/24-hour), world age, session duration excluding pauses, loaded/rendered entity counts, and the current biome. Added RGB controls for each HUD line and a toggle for memory details, with cached clock, biome, and heap text.
 - Added per-option Undo and Reset to Default controls that appear when an action is available. Defaults are available for Extra and Celeritas settings, and other mods can supply defaults through the option capability. Changes remain pending until Apply or Done; the standalone Extra screen also supports list settings.
 - Ported the search engine from Reese's Sodium Options 2.2.5, including Unicode n-grams, IDF weighting, token coverage, and Levenshtein reranking. Search uses the upstream thresholds and 15-result default, preserves native action tabs, and is also available in the standalone Extra screen.
 - Added MoreCulling-style experimental three-face selection for item-frame models. New configurations enable it at 4 blocks, with a 2–16 block range. The branch requires an unrotated model and quarter-turn frame rotation; block models within 3 blocks and shadow passes keep normal rendering. Forge perspective matrices are checked when adapting the transform condition to 1.12.2.

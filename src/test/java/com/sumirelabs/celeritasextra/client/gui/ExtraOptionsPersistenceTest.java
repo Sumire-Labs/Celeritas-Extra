@@ -25,6 +25,31 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void informationFlagsAndPerLineColorsSurviveReload() {
+        var file = directory.resolve("hud.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        var extra = options.extraSettings;
+        extra.showLocalTime = extra.use12HourClock = extra.showWorldDay = extra.showSessionTime = true;
+        extra.showEntityCount = extra.showRenderedEntities = extra.showBiome = true;
+        extra.showMemoryExtended = false;
+        extra.setHudColor(CeleritasExtraGameOptions.HudLine.BIOME, 0, 17);
+        extra.setHudColor(CeleritasExtraGameOptions.HudLine.BIOME, 1, -10);
+        extra.setHudColor(CeleritasExtraGameOptions.HudLine.BIOME, 2, 300);
+        options.detailSettings.rainSnowCulling = false;
+        options.writeChanges();
+        var reloaded = CeleritasExtraGameOptions.load(file);
+        assertTrue(reloaded.extraSettings.showLocalTime && reloaded.extraSettings.use12HourClock
+            && reloaded.extraSettings.showWorldDay && reloaded.extraSettings.showSessionTime
+            && reloaded.extraSettings.showEntityCount && reloaded.extraSettings.showRenderedEntities
+            && reloaded.extraSettings.showBiome);
+        assertFalse(reloaded.extraSettings.showMemoryExtended);
+        assertFalse(reloaded.detailSettings.rainSnowCulling);
+        assertEquals(0x1100FF, reloaded.extraSettings.hudColor(CeleritasExtraGameOptions.HudLine.BIOME));
+        assertEquals(0xFFFFFF, reloaded.extraSettings.hudColor(CeleritasExtraGameOptions.HudLine.FPS));
+        assertEquals("255", reloaded.forgeConfiguration().getCategory("hud_color_biome").get("blue").getMaxValue());
+    }
+
+    @Test
     void savingRetainsSliderBoundsAndThreeFaceSettings() {
         var file = directory.resolve("slider-ranges.cfg").toFile();
         var options = CeleritasExtraGameOptions.load(file);

@@ -727,6 +727,11 @@ public class CeleritasExtraGameOptionPages {
     public static OptionPage overlay() {
         List<OptionGroup> groups = new ArrayList<>();
 
+        var showMemory = booleanOption("celeritasextra.option.show_memory",
+            (opts, value) -> opts.extraSettings.showMemory = value, opts -> opts.extraSettings.showMemory);
+        var showClock = booleanOption("celeritasextra.option.show_local_time",
+            (opts, value) -> opts.extraSettings.showLocalTime = value, opts -> opts.extraSettings.showLocalTime);
+
         OptionImpl<CeleritasExtraGameOptions, Boolean> showFpsOption = booleanOption("sodium-extra.option.show_fps",
             (opts, v) -> opts.extraSettings.showFps = v,
             opts -> opts.extraSettings.showFps);
@@ -744,9 +749,31 @@ public class CeleritasExtraGameOptionPages {
                 (opts, v) -> opts.extraSettings.showFPSExtended = v,
                 opts -> opts.extraSettings.showFPSExtended,
                 fpsOn))
-            .add(booleanOption("celeritasextra.option.show_memory",
-                (opts, v) -> opts.extraSettings.showMemory = v,
-                opts -> opts.extraSettings.showMemory))
+            .add(showMemory)
+            .add(booleanOption("celeritasextra.option.show_memory_extended",
+                (opts, value) -> opts.extraSettings.showMemoryExtended = value,
+                opts -> opts.extraSettings.showMemoryExtended,
+                showMemory::getValue))
+            .build());
+
+        groups.add(group("groups/overlay/information")
+            .add(showClock)
+            .add(booleanOption("celeritasextra.option.use_12_hour_clock",
+                (opts, value) -> opts.extraSettings.use12HourClock = value, opts -> opts.extraSettings.use12HourClock,
+                showClock::getValue))
+            .add(booleanOption("celeritasextra.option.show_world_day",
+                (opts, value) -> opts.extraSettings.showWorldDay = value, opts -> opts.extraSettings.showWorldDay))
+            .add(booleanOption("celeritasextra.option.show_session_time",
+                (opts, value) -> opts.extraSettings.showSessionTime = value,
+                opts -> opts.extraSettings.showSessionTime))
+            .add(booleanOption("celeritasextra.option.show_entity_count",
+                (opts, value) -> opts.extraSettings.showEntityCount = value,
+                opts -> opts.extraSettings.showEntityCount))
+            .add(booleanOption("celeritasextra.option.show_rendered_entities",
+                (opts, value) -> opts.extraSettings.showRenderedEntities = value,
+                opts -> opts.extraSettings.showRenderedEntities))
+            .add(booleanOption("celeritasextra.option.show_biome",
+                (opts, value) -> opts.extraSettings.showBiome = value, opts -> opts.extraSettings.showBiome))
             .build());
 
         groups.add(group("groups/overlay/1")
@@ -801,6 +828,19 @@ public class CeleritasExtraGameOptionPages {
                 steadyHudOn))
             .build());
 
+        for (var line : CeleritasExtraGameOptions.HudLine.values()) {
+            var colors = group("groups/overlay/colors/" + line.name().toLowerCase(Locale.ROOT));
+            var context = new OptionContext(Translations.format(line.labelKey()), line.category() + "/");
+            for (int channel = 0; channel < 3; channel++) {
+                int component = channel;
+                colors.add(sliderOption(
+                    CeleritasExtraGameOptions.HudLine.CHANNEL_LABELS[channel],
+                    0, 255, 1, ControlValueFormatter.number(),
+                    (opts, value) -> opts.extraSettings.setHudColor(line, component, value),
+                    opts -> opts.extraSettings.hudColor(line, component), null, null, null, context));
+            }
+            groups.add(colors.build());
+        }
         return new OptionPage(CeleritasExtraOptionPages.OVERLAY,
             TextComponent.literal(Translations.format("celeritasextra.option.page.overlay")),
             ImmutableList.copyOf(groups));

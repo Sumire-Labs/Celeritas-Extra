@@ -8,6 +8,7 @@ package com.sumirelabs.celeritasextra.client.gui;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -139,6 +140,24 @@ public class CeleritasExtraGameOptions {
             v -> extraSettings.showCoords = v, () -> extraSettings.showCoords),
         new BooleanProperty(CAT_EXTRA, "showMemory", false, "Show JVM heap usage overlay (used/max MiB)",
             v -> extraSettings.showMemory = v, () -> extraSettings.showMemory),
+        new BooleanProperty(CAT_EXTRA, "showMemoryExtended", true,
+            "Show used and maximum heap alongside its percentage",
+            v -> extraSettings.showMemoryExtended = v, () -> extraSettings.showMemoryExtended),
+        new BooleanProperty(CAT_EXTRA, "showLocalTime", false, "Show local clock time",
+            v -> extraSettings.showLocalTime = v, () -> extraSettings.showLocalTime),
+        new BooleanProperty(CAT_EXTRA, "use12HourClock", false, "Use a 12-hour local clock",
+            v -> extraSettings.use12HourClock = v, () -> extraSettings.use12HourClock),
+        new BooleanProperty(CAT_EXTRA, "showWorldDay", false, "Show world age in days",
+            v -> extraSettings.showWorldDay = v, () -> extraSettings.showWorldDay),
+        new BooleanProperty(CAT_EXTRA, "showSessionTime", false,
+            "Show time in the current world session, excluding pauses",
+            v -> extraSettings.showSessionTime = v, () -> extraSettings.showSessionTime),
+        new BooleanProperty(CAT_EXTRA, "showEntityCount", false, "Show the loaded entity count",
+            v -> extraSettings.showEntityCount = v, () -> extraSettings.showEntityCount),
+        new BooleanProperty(CAT_EXTRA, "showRenderedEntities", false, "Show unique entity render submissions per frame",
+            v -> extraSettings.showRenderedEntities = v, () -> extraSettings.showRenderedEntities),
+        new BooleanProperty(CAT_EXTRA, "showBiome", false, "Show the current biome",
+            v -> extraSettings.showBiome = v, () -> extraSettings.showBiome),
         new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
             v -> extraSettings.ignoreReducedDebugInfo = v, () -> extraSettings.ignoreReducedDebugInfo),
         new BooleanProperty(CAT_EXTRA, "steadyDebugHud", ExtraSettings.STEADY_DEBUG_HUD_DEFAULT,
@@ -247,6 +266,10 @@ public class CeleritasExtraGameOptions {
     private void loadFromConfig() {
         booleanProperties.forEach(p -> p.load(config));
         intProperties.forEach(p -> p.load(config));
+        for (var line : HudLine.values())
+            for (int channel = 0; channel < 3; channel++)
+                extraSettings.setHudColor(line, channel, config.getInt(HudLine.CHANNELS[channel], line.category(),
+                    255, 0, 255, "HUD text color channel"));
 
         detailSettings.sun = config.getBoolean("sun", CAT_DETAIL, true, "Render the sun");
         detailSettings.moon = config.getBoolean("moon", CAT_DETAIL, true, "Render the moon");
@@ -306,6 +329,10 @@ public class CeleritasExtraGameOptions {
         renderSettings.invalidateExemptions();
         booleanProperties.forEach(p -> p.save(config));
         intProperties.forEach(p -> p.save(config));
+        for (var line : HudLine.values())
+            for (int channel = 0; channel < 3; channel++)
+                config.get(line.category(), HudLine.CHANNELS[channel], 255, "HUD text color channel", 0, 255)
+                    .set(extraSettings.hudColor(line, channel));
         config.get(CAT_DETAIL, "sun", true).set(detailSettings.sun);
         config.get(CAT_DETAIL, "moon", true).set(detailSettings.moon);
         config.get(CAT_RENDER, "entityDistanceExemptions", new String[0]).set(renderSettings.entityDistanceExemptions);
@@ -695,6 +722,28 @@ public class CeleritasExtraGameOptions {
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
         public boolean showMemory = false;
+        public boolean showMemoryExtended = true;
+        public boolean showLocalTime = false;
+        public boolean use12HourClock = false;
+        public boolean showWorldDay = false;
+        public boolean showSessionTime = false;
+        public boolean showEntityCount = false;
+        public boolean showRenderedEntities = false;
+        public boolean showBiome = false;
+        private final Map<HudLine, int[]> hudColors = new EnumMap<>(HudLine.class);
+
+        public int hudColor(HudLine line, int channel) {
+            var rgb = hudColors.get(line);
+            return rgb == null ? 255 : rgb[channel];
+        }
+
+        public void setHudColor(HudLine line, int channel, int value) {
+            hudColors.computeIfAbsent(line, key -> new int[]{255, 255, 255})[channel] = Math.clamp(value, 0, 255);
+        }
+
+        public int hudColor(HudLine line) {
+            return hudColor(line, 0) << 16 | hudColor(line, 1) << 8 | hudColor(line, 2);
+        }
         public boolean ignoreReducedDebugInfo = false;
         public boolean useAdaptiveSync = false;
         public int menuFpsLimit;
@@ -710,6 +759,31 @@ public class CeleritasExtraGameOptions {
         public boolean toastTutorial = true;
         public boolean toastSystem = true;
         public boolean modNameTooltip = false;
+
+    }
+
+    public enum HudLine {
+
+        FPS("sodium-extra.option.show_fps"), COORDINATES("sodium-extra.option.show_coordinates"), MEMORY(
+            "celeritasextra.option.show_memory"), LOCAL_TIME("celeritasextra.option.show_local_time"), WORLD_DAY(
+                "celeritasextra.option.show_world_day"), SESSION_TIME(
+                    "celeritasextra.option.show_session_time"), ENTITY_COUNT(
+                        "celeritasextra.option.show_entity_count"), RENDERED_ENTITIES(
+                            "celeritasextra.option.show_rendered_entities"), BIOME("celeritasextra.option.show_biome");
+
+        public static final String[] CHANNELS = {"red", "green", "blue"};
+        public static final String[] CHANNEL_LABELS = {"celeritasextra.option.hud_color.red",
+            "celeritasextra.option.hud_color.green", "celeritasextra.option.hud_color.blue"};
+        private final String label;
+        HudLine(String label) {
+            this.label = label;
+        }
+        public String labelKey() {
+            return label;
+        }
+        public String category() {
+            return "hud_color_" + name().toLowerCase(java.util.Locale.ROOT);
+        }
 
     }
 
