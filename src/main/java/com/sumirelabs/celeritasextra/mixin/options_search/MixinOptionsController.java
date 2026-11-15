@@ -97,11 +97,14 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
 
     @Unique
     private boolean celeritasExtra$matches(Option<?> option) {
-        if (celeritasExtra$query.isEmpty())
-            return true;
-        return celeritasExtra$query.matches(font.extractString(option.getName()) + "\n"
-            + font.extractString(option.getTooltip()) + "\n" + option.getName()
-            + "\n" + (option.getId() == null ? "" : option.getId()));
+        return celeritasExtra$score(option) > 0;
+    }
+
+    @Unique
+    private int celeritasExtra$score(Option<?> option) {
+        return celeritasExtra$query.score(font.extractString(option.getName()),
+            font.extractString(option.getTooltip()) + "\n" + option.getName()
+                + "\n" + (option.getId() == null ? "" : option.getId()));
     }
 
     @Inject(method = "parentBasicFrameBuilder", at = @At("HEAD"))
@@ -117,12 +120,30 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
             return original;
         Map<String, List<Tab<?>>> tabs = new LinkedHashMap<>();
         celeritasExtra$actionResults = 0;
+        boolean searching = !celeritasExtra$query.isEmpty();
+        if (searching) {
+            var ranked = pages.stream().flatMap(page -> page.getOptions().stream())
+                .distinct().<Map.Entry<Option<?>, Integer>>map(
+                    option -> Map.entry(option, celeritasExtra$score(option)))
+                .filter(entry -> entry.getValue() > 0)
+                .sorted(Map.Entry.<Option<?>, Integer>comparingByValue().reversed())
+                .map(Map.Entry::getKey).toList();
+            if (!ranked.isEmpty()) {
+                var filter = new OptionActionFrame.Ranked(ranked);
+                tabs.put("celeritasextra", new ArrayList<>(List.of(new Tab<>(
+                    org.taumc.celeritas.api.options.OptionIdentifier.create("celeritasextra", "search_results"),
+                    TextComponent.translatable("celeritasextra.search.results_page"), null,
+                    dim -> OptionActionFrame.create(dim, pages.getFirst(), filter, optionPageScrollBarOffset)))));
+            }
+        }
         for (var group : access.celeritasExtra$nativeTabs().entrySet()) {
             for (Tab<?> tab : group.getValue()) {
                 var page = pages.stream().filter(candidate -> candidate.getId().equals(tab.id())).findFirst()
                     .orElse(null);
                 Tab<?> filtered;
                 if (page != null && tab.frameFunction() != null) {
+                    if (searching)
+                        continue;
                     if (page.getOptions().stream().noneMatch(this::celeritasExtra$matches))
                         continue;
                     filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(),

@@ -31,6 +31,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsGuiIntegrationTest {
 
     @Test
+    void rankedSearchSpansPagesAndRetainsOriginalOptions() throws Exception {
+        var description = new TestOption("Sky", "Cloud rendering");
+        var exact = new TestOption("Cloud", "");
+        var partial = new TestOption("Cloud height", "");
+        var typo = new TestOption("Cluod", "");
+        var controller = controller(List.of(page("first", description, typo), page("second", partial, exact)));
+        partial.setValue(9);
+        controller.celeritasExtra$search("cloud");
+        assertEquals(List.of(exact, partial, description, typo),
+            controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
+        assertEquals(4, controller.celeritasExtra$resultCount());
+        assertEquals(9, partial.getValue());
+        controller.celeritasExtra$search("");
+        assertEquals(List.of(description, typo),
+            controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
+    }
+
+    @Test
     void perOptionUndoAndResetLeaveOtherPendingValuesUntouched() {
         var first = OptionDefaults.register(new TestOption("First", ""), 0);
         var second = new TestOption("Second", "");
@@ -65,7 +83,6 @@ class OptionsGuiIntegrationTest {
         assertTrue(frame.mouseClicked(context, 200, 39, 0));
         assertEquals(0, option.getValue());
     }
-
 
     @Test
     void pageGroupsHaveOnlyNativeOptionRowsAndKeepPendingValues() throws Exception {

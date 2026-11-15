@@ -13,6 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionSearchQueryTest {
 
     @Test
+    void ranksNamesAboveDescriptionsAndTypos() {
+        var query = new OptionSearchQuery("cloud");
+        assertTrue(query.score("Cloud", "") > query.score("Cloud Height", ""));
+        assertTrue(query.score("Cloud Height", "") > query.score("Sky", "Cloud controls"));
+        assertTrue(query.score("Sky", "Cloud controls") > query.score("Cluod", ""));
+        assertTrue(new OptionSearchQuery("cluod").matches("Cloud height"));
+        assertTrue(new OptionSearchQuery("rendring").matches("Rendering distance"));
+        assertFalse(new OptionSearchQuery("fg").matches("Fog"));
+        assertFalse(new OptionSearchQuery("月光").matches("日光"));
+        assertFalse(new OptionSearchQuery("cloud missing").matches("Cloud height"));
+    }
+
+    @Test
     void blankQueriesRestoreAllOptions() {
         assertTrue(new OptionSearchQuery("　 \t").isEmpty());
         assertTrue(new OptionSearchQuery("").matches("anything"));

@@ -195,10 +195,10 @@ celeritasextra.gui.tile_entity_exemptions=Block Entity Distance Exemptions
 celeritasextra.option.item_vertex_cache=Static Item Vertex Cache (Experimental)
 celeritasextra.option.item_vertex_cache.tooltip=Experimental (default off): draw supported static items from cached GPU vertex buffers. Other render paths fall back to CPU vertex reuse or normal rendering. Preserves Forge lighting and item-frame LOD. Bypassed with Iris or a native item cache. Up to 256 entries and 4 MiB of vertex data across CPU and GPU.
 
+celeritasextra.option_action.undo=Undo this change
+celeritasextra.option_action.reset=Reset to default
+celeritasextra.search.results_page=Search results
 celeritasextra.option.item_frame_three_faces=Item Frame Block Face Culling
 celeritasextra.option.item_frame_three_faces.tooltip=Skip hidden exterior faces of supported block models in item frames beyond the selected distance. Default off. Diagonally rotated frames, special models and shadow passes keep normal rendering.
 celeritasextra.option.item_frame_three_face_distance=Block Face Culling Distance
 celeritasextra.option.item_frame_three_face_distance.tooltip=Minimum distance in blocks before item-frame block face culling applies.
-
-celeritasextra.option_action.undo=Undo this change
-celeritasextra.option_action.reset=Reset to default

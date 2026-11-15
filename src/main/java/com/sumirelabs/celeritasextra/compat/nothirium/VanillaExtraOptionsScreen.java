@@ -8,18 +8,22 @@ package com.sumirelabs.celeritasextra.compat.nothirium;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.Translations;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlider;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.ConfigGuiType;
 import net.minecraftforge.fml.client.config.IConfigElement;
@@ -40,6 +44,9 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     private final List<IConfigElement> visibleEntries = new ArrayList<>();
     private GuiButton hoveredButton;
     private long hoverStarted;
+    private GuiTextField search;
+    private List<IConfigElement> displayed;
+    private boolean repeatBefore, opened;
 
     public VanillaExtraOptionsScreen(GuiScreen parent) {
         this(parent, new ForgeExtraConfigElements(CeleritasExtraClientMod.options()));
@@ -64,15 +71,39 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     public void initGui() {
         buttonList.clear();
         visibleEntries.clear();
-        int startY = Math.max(38, height / 6);
+        String query = search == null ? "" : search.getText();
+        boolean focused = search != null && search.isFocused();
+        int cursor = search == null ? 0 : search.getCursorPosition();
+        int selection = search == null ? 0 : search.getSelectionEnd();
+        search = new GuiTextField(3000, fontRenderer, Math.max(10, width / 2 - 150), 34, Math.min(300, width - 20), 20);
+        search.setMaxStringLength(128);
+        search.setText(query);
+        search.setCursorPosition(cursor);
+        search.setSelectionPos(selection);
+        search.setFocused(focused);
+        if (!opened) {
+            repeatBefore = Keyboard.areRepeatEventsEnabled();
+            opened = true;
+        }
+        Keyboard.enableRepeatEvents(true);
+        var matcher = new OptionSearchQuery(query);
+        displayed = matcher.isEmpty()
+            ? entries
+            : session.properties(entries).stream()
+                .map(element -> Map.entry(element, matcher.score(label(element),
+                    String.valueOf(element.getComment()) + "\n" + element.getName())))
+                .filter(entry -> entry.getValue() > 0)
+                .sorted(Map.Entry.<IConfigElement, Integer>comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey).toList();
+        int startY = Math.max(62, height / 6);
         int columns = width >= 320 ? 2 : 1;
         int rows = Math.max(1, (height - startY - 72) / 24);
         capacity = columns * rows;
         page = Math.min(page, pageCount() - 1);
         int cellWidth = Math.min(190, (width - 30) / columns);
         int left = width / 2 - (columns * cellWidth + (columns - 1) * 10) / 2;
-        for (int index = page * capacity; index < Math.min(entries.size(), (page + 1) * capacity); index++) {
-            var element = entries.get(index);
+        for (int index = page * capacity; index < Math.min(displayed.size(), (page + 1) * capacity); index++) {
+            var element = displayed.get(index);
             int buttonWidth = cellWidth - (element.isProperty() ? 40 : 0);
             int slot = visibleEntries.size();
             visibleEntries.add(element);
@@ -127,7 +158,8 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     }
 
     private int pageCount() {
-        return Math.max(1, (entries.size() + Math.max(1, capacity) - 1) / Math.max(1, capacity));
+        return Math.max(1,
+            ((displayed == null ? entries : displayed).size() + Math.max(1, capacity) - 1) / Math.max(1, capacity));
     }
 
     private String integerLabel(IConfigElement element, float value) {
@@ -221,19 +253,47 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        if (keyCode == Keyboard.KEY_ESCAPE)
+        if (isCtrlKeyDown() && keyCode == Keyboard.KEY_F) {
+            search.setFocused(true);
+        } else if (keyCode == Keyboard.KEY_ESCAPE && !search.getText().isEmpty()) {
+            search.setText("");
+            page = 0;
+            initGui();
+        } else if (keyCode == Keyboard.KEY_ESCAPE)
             mc.displayGuiScreen(parent);
-        else
+        else if (search.isFocused()) {
+            String before = search.getText();
+            search.textboxKeyTyped(typedChar, keyCode);
+            if (!before.equals(search.getText())) {
+                page = 0;
+                initGui();
+            }
+        } else
             super.keyTyped(typedChar, keyCode);
     }
 
     @Override
+    protected void mouseClicked(int x, int y, int button) throws IOException {
+        search.mouseClicked(x, y, button);
+        super.mouseClicked(x, y, button);
+    }
+
+    @Override
     public void updateScreen() {
+        search.updateCursorCounter();
         for (var button : buttonList) {
             if (button.id >= ACTION && (button.id - ACTION) / 2 < visibleEntries.size()) {
                 var element = visibleEntries.get((button.id - ACTION) / 2);
                 button.enabled = (button.id - ACTION) % 2 == 0 ? session.changed(element) : session.canReset(element);
             }
+        }
+    }
+
+    @Override
+    public void onGuiClosed() {
+        if (opened) {
+            Keyboard.enableRepeatEvents(repeatBefore);
+            opened = false;
         }
     }
 
@@ -251,20 +311,31 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         drawCenteredString(fontRenderer, title, width / 2, 18, 0xFFFFFF);
+        search.drawTextBox();
+        if (search.getText().isEmpty() && !search.isFocused())
+            fontRenderer.drawString(Translations.format("rso.search_bar_empty"), search.x + 4, search.y + 6, 0x888888);
         if (pageCount() > 1)
-            drawCenteredString(fontRenderer, (page + 1) + " / " + pageCount(), width / 2, 29, 0xAAAAAA);
+            drawCenteredString(fontRenderer, (page + 1) + " / " + pageCount(), width / 2, height - 66, 0xAAAAAA);
+        if (displayed.isEmpty())
+            drawCenteredString(fontRenderer, Translations.format("celeritasextra.search.no_results"), width / 2, 66,
+                0xAAAAAA);
         super.drawScreen(mouseX, mouseY, partialTicks);
         GuiButton hovered = buttonList.stream()
-            .filter(b -> b.id >= 0 && b.id < visibleEntries.size() && b.isMouseOver())
+            .filter(b -> (b.id >= 0 && b.id < visibleEntries.size() || b.id >= ACTION) && b.isMouseOver())
             .findFirst().orElse(null);
         if (hovered != hoveredButton) {
             hoveredButton = hovered;
             hoverStarted = System.currentTimeMillis();
         }
         if (hovered != null && System.currentTimeMillis() - hoverStarted >= 600) {
-            var element = visibleEntries.get(hovered.id);
+            boolean action = hovered.id >= ACTION;
+            var element = visibleEntries.get(action ? (hovered.id - ACTION) / 2 : hovered.id);
             var tooltip = new ArrayList<String>();
             tooltip.add(label(element));
+            if (action)
+                tooltip.add(Translations.format((hovered.id - ACTION) % 2 == 0
+                    ? "celeritasextra.option_action.undo"
+                    : "celeritasextra.option_action.reset"));
             String key = Translations.tooltipKey(element.getLanguageKey());
             String comment = I18n.hasKey(key) ? Translations.format(key) : element.getComment();
             if (comment != null && !comment.isBlank()) {
