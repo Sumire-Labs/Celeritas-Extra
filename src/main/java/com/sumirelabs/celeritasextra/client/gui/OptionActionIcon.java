@@ -12,7 +12,7 @@ public enum OptionActionIcon {
     UNDO("celeritasextra:textures/gui/undo_to_unmodified.png"), RESET(
         "celeritasextra:textures/gui/reset_to_default.png");
 
-    public static final int DRAW_SIZE = 13;
+    public static final int DRAW_SIZE = 11;
 
     private final String texture;
     OptionActionIcon(String texture) {

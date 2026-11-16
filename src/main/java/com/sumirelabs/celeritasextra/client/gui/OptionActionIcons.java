@@ -9,7 +9,7 @@ package com.sumirelabs.celeritasextra.client.gui;
 import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 
-/** Centers 13-pixel image icons independently of font glyph metrics. */
+/** Centers image icons independently of font glyph metrics. */
 public final class OptionActionIcons {
 
     private OptionActionIcons() {}
