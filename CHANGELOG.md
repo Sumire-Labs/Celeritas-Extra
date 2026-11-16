@@ -30,23 +30,17 @@ and tagged commit history.
 
 ### Changed
 
-- Updated the development environment to Sumire-Labs/CleanroomDevEnv `6b24e5c` and migrated the Gradle build and project-specific scripts to Kotlin DSL.
-- Updated Gradle to 9.9.0 and GitHub Actions setup-java to 6.2.0.
-- Enabled parallel builds and configuration caching, including production JAR verification.
-- Moved Spotless configuration to `gradle/spotless/` and removed Felt, following the template update. The project's LGPLv3 license and source notices remain in place.
-- Updated release-note extraction to handle BOMs, CRLF line endings, and headings inside code fences. Stable-stage handling, MCP artifact filtering, and Windows CI coverage remain supported.
-- Resolved the optional Iris shadow-pass API independently of renderer development dependencies. Camera-based optimizations stay disabled when the API cannot report the shadow-pass state.
+- Updated DevEnv.
+- Camera-based optimizations stay disabled when the Iris shadow-pass state cannot be determined, preventing incorrect rendering during shadow passes.
 
 ### Removed
 
-- Removed Actinium integration, generated option adapters, its fast-item LOD hook, and the development dependency. Actinium supports Cleanroom 0.6.x; Celeritas Extra requires 0.7.x. Celeritas and Nothirium integrations remain supported.
+- Removed Actinium support. Actinium supports Cleanroom 0.6.x; Celeritas Extra requires 0.7.x. Celeritas and Nothirium remain supported.
 
 ### Fixed
 
 - Fixed background FPS limits below 20 falling short of the selected rate. For example, a 15 FPS limit could produce about 10 FPS. The scheduler now carries timing remainders forward and avoids catch-up bursts after stalls.
 - Fixed a crash when the block-entity dispatcher receives a null tile. Profiling also respects the dispatcher's invalid-tile check.
-- Applied TokenEnvoy replacements to all compiled Mod classes, including renamed entry points.
-- Fixed false unresolved-token reports by checking class constant-pool text, and selected runtime JAR variants for embedded and shaded dependencies.
 - Fixed Shift+Tab starting at the wrong field when no field is focused in the standalone list editor. It now selects the last field.
 - Fixed VSync showing as enabled when the vanilla VSync setting is off and the saved adaptive-sync preference is on.
 - Moved both item-frame LOD and vertex-cache invalidation to the render thread when models are rebaked, preventing concurrent cache access during asynchronous model baking.
@@ -61,7 +55,6 @@ and tagged commit history.
 ### Fixed
 
 - Lowered the optional AssetMover requirement to 2.5 so Modern Clouds works with the version available on CurseForge.
-- Fixed release-type selection for automated CurseForge and Modrinth publishing.
 
 ## [0.10.1] - 2026-11-03
 
@@ -71,15 +64,7 @@ and tagged commit history.
 
 ### Changed
 
-- Replaced the development template with Sumire-Labs/CleanroomDevEnv (`1ccd9f6`), retaining renderer integrations and additional production JAR checks.
-- Updated the development environment to Cleanroom 0.7.14-alpha, CleanroomGradle 0.23.0, AssetMover 3.0.1, and JUnit 6.1.3. CleanMix and MixinExtras now follow the selected loader automatically.
-- Adopted the template's Spotless formatter and import-order rules, and formatted existing Java sources and tests.
-- Adopted the template's Gradle Wrapper, native SRG access-transformer configuration, publishing tasks, Windows/Linux CI, and weekly Renovate configuration.
-- Retained curated changelog release notes and exclusion of MCP development JARs from release uploads.
-
-### Fixed
-
-- Fixed the development-only StripLatestForgeRequirements Mixin preparation error with Cleanroom 0.7.14. Forge requirement filtering now runs after JAR/directory candidate discovery, preserving the helper's behavior without targeting an already-loaded class. The compatibility helper is excluded from release artifacts.
+- Updated DevEnv.
 
 ## [0.10.0] - 2026-10-23
 
@@ -95,8 +80,7 @@ and tagged commit history.
 
 ### Changed
 
-- Migrated the build to CleanroomGradle 0.22.1 and Cleanroom 0.7.11-alpha USERDEV, adapting Sumire-Labs/ModTemplate's cleanroom branch while retaining renderer adapters and release checks.
-- Updated Gradle to 9.8.2, Cleanroom Versioning to 3.4.0, CleanMix to 0.7.4, and MixinExtras to 0.5.5.
+- Updated DevEnv.
 - Use Cleanroom's SDL APIs directly for window controls and IME integration.
 - Cache sprite animation categories, unchanged HUD text, and render-distance exemption checks.
 - Reuse frame-statistics buffers and select the slowest percentile without sorting the full sample history.
@@ -113,8 +97,6 @@ and tagged commit history.
 ### Fixed
 
 - Preserve vertex-buffer position and limit when capturing experimental item-cache entries, preventing corrupted item rendering.
-- Verify production Mixin mappings, the supported loader range, and the absence of references to the removed GLFW backend in release artifacts.
-- Exclude development MCP JARs from GitHub release uploads.
 
 ## [0.9.3]
 
@@ -132,19 +114,9 @@ and tagged commit history.
 
 ## [0.9.2]
 
-### Added
-
-- Added a complete historical changelog covering releases from 0.1.0 through 0.9.1.
-
 ### Changed
 
-- Updated the build to CleanroomModTemplate's current Mixin branch while retaining renderer adapters and release artifact checks.
-- Updated Gradle to 9.8.0, Unimined to 1.4.43-kappa, and Shadow to 9.6.1.
-- Updated the development loader to Cleanroom 0.6.13-alpha.
-- Replaced Blossom with TokenEnvoy 3.0.0 for compile-time constant and resource token replacement. Moved `Reference.java`, `mcmod.info`, and `pack.mcmeta` from template directories into the standard source and resource directories.
-- Adopted Cleanroom Versioning 3.3.0 to derive versions from Git tags and branch history instead of the manual `mod_version` property.
-- Updated GitHub Actions to fetch full history and tags for version calculation.
-- Extended release Jar verification to check resource-pack metadata, compiled build constants, and the inlined Forge `@Mod` annotation against the computed version.
+- Updated DevEnv.
 
 ### Fixed
 
@@ -168,7 +140,6 @@ and tagged commit history.
 ### Changed
 
 - Modern Clouds override resource-pack cloud textures while enabled; disabling the option restores the resource-pack texture.
-- Moved Java packages to `com.sumirelabs`; existing configuration files remain compatible.
 
 ### Fixed
 
@@ -244,10 +215,6 @@ and tagged commit history.
 - Backported Minecraft 1.21.6-style Modern Clouds, with custom circular cloud rendering and distance fade.
 - Optional AssetMover integration to acquire the modern cloud texture.
 
-### Changed
-
-- Refactored the implementation and rewrote the README.
-
 ### Removed
 
 - Removed the HEI hide-until-search feature.
@@ -315,19 +282,13 @@ and tagged commit history.
 - Group discovered particles by owning mod, cache them between sessions, and prune the cache when a mod is removed.
 - Retain first-spawn discovery as a fallback for lambda and anonymously registered particle factories.
 - Guard repeated per-particle work by class identity, avoiding repeated reflection and string allocation for known classes.
-- Switched Gradle scripts to native property access and removed `helpers.gradle`.
-- Updated Gradle to 9.6.1.
+- Updated DevEnv.
 
 ### Fixed
 
 - Fixed missing per-class controls, especially for modded particles.
 - Corrected particle mod attribution instead of grouping all particles under "unknown".
 - Prevented particle-page construction failures from breaking the rest of the settings screen.
-
-### Removed
-
-- Removed the redundant firework particle Mixin.
-- Stopped generating sources and Javadoc Jars.
 
 ## [0.4.6] - 2026-07-01
 
@@ -342,10 +303,6 @@ and tagged commit history.
 - Fixed a crash on devices that do not support adaptive VSync ([#12](https://github.com/Sumire-Labs/Celeritas-Extra/issues/12)).
 
 ## [0.4.4] - 2026-04-09
-
-### Changed
-
-- Updated the Maven URL.
 
 ### Fixed
 
@@ -392,13 +349,12 @@ and tagged commit history.
 
 ### Changed
 
-- Simplified particle detection to ASM-only scanning, removing the multi-strategy `scanFactories()` implementation and `IMixinParticleManager`.
 - Particle display names use the `ParticleFlame (minecraft)` format.
-- Migrated the toolchain and source/target compatibility to Java 25 and Cleanroom 0.5.x.
-- Updated Unimined from 1.4.15-kappa to 1.4.17-kappa and Cleanroom Loader from 0.3.35-alpha to 0.5.6-alpha.
-- Added HEI as an optional compile-time dependency for Mixin compatibility.
-- Modernized Java code with switch expressions, records, `var`, and pattern matching.
-- Refactored FPS tracking, option helpers, constants, and screen-mode/VSync state handling.
+- Updated DevEnv.
+
+### Requirements
+
+- Requires Java 25 and Cleanroom Loader 0.5.6-alpha.
 
 ### Fixed
 
@@ -414,8 +370,7 @@ and tagged commit history.
 
 ### Changed
 
-- Updated Gradle to 9.4.1, Unimined to 1.4.15-kappa, Shadow to 9.4.0, and JUnit Jupiter to 6.0.3.
-- Updated Actions checkout to 6.0.2, setup-java to 5.2.0, setup-gradle to 5.0.2, upload-artifact to 7.0.0, and release-action to 1.21.0.
+- Updated DevEnv.
 
 ## [0.3.1] - 2026-03-14
 
@@ -431,13 +386,7 @@ and tagged commit history.
 
 ### Changed
 
-- Unified configuration reading and writing through `BooleanProperty` and `IntProperty` bindings.
-- Extracted option-page boilerplate into `booleanOption` and `sliderOption` helpers.
-- Replaced biome color magic numbers with named constants.
-- Shared profiler logic through `ProfilerHelper`.
-- Renamed ambiguous entity renderer Mixins to distinguish weather rendering and shader prevention.
-- Consolidated mod ID, name, and version into `Reference`.
-- Migrated to the updated CleanroomModTemplate Mixin branch and pinned Cleanroom Loader to 0.3.35-alpha.
+- Updated DevEnv.
 
 ### Fixed
 
@@ -445,16 +394,13 @@ and tagged commit history.
 
 ## [0.2.4] - 2026-02-02
 
-### Changed
-
-- Refactored the codebase and cleaned up imports.
+No user-facing changes.
 
 ## [0.2.3] - 2026-01-31
 
 ### Changed
 
-- Updated Unimined to 1.4.10 and Cleanroom Loader to 0.3.34.
-- Enabled Javadoc Jar generation.
+- Updated Cleanroom Loader to 0.3.34.
 
 ### Removed
 
@@ -487,7 +433,7 @@ and tagged commit history.
 ### Changed
 
 - Migrated configuration storage from JSON to Forge `.cfg` files.
-- Optimized the icon size and Maven configuration.
+- Adjusted the mod icon size.
 
 ## [0.1.14] - 2026-01-05
 
@@ -499,7 +445,6 @@ and tagged commit history.
 
 ### Removed
 
-- Removed unused files.
 - Removed the Instant Sneak option because it is redundant in Minecraft 1.12.
 
 ## [0.1.12] - 2026-01-02
@@ -535,16 +480,13 @@ and tagged commit history.
 
 ### Changed
 
-- Updated Shadow to 9.3.0 and Blossom to 2.2.0.
-- Minor code cleanup.
+- Updated DevEnv.
 
 ## [0.1.7] - 2025-12-03
 
 ### Changed
 
-- Updated Gradle to 9.2.1 and sponge-mixin to `0.20.12+mixin.0.8.7`.
-- Updated Actions checkout to 6.0.0, upload-artifact to 5.0.0, and release-action to 1.20.0.
-- Updated the Mixin property name.
+- Updated DevEnv.
 
 ## [0.1.6] - 2025-11-23
 
@@ -557,21 +499,11 @@ and tagged commit history.
 ### Added
 
 - Russian localization by @Ar2t1e ([#3](https://github.com/Sumire-Labs/Celeritas-Extra/pull/3)), their first contribution.
-- Access Transformer configuration and support.
 
 ### Changed
 
 - Enabled the LWJGL2 compatibility layer (`lwjglx`).
-- Updated Gradle to 9.2.0, Shadow to 9.2.2, Unimined to 1.4.7-kappa, and the Foojay toolchain resolver to 1.0.0.
-- Updated Actions setup-java, setup-gradle, and checkout to 5.0.0.
-
-### Fixed
-
-- Fixed `modRuntimeOnly` using the CleanroomModTemplate fix.
-
-### Removed
-
-- Removed the obsolete template `Mixin.json` file.
+- Updated DevEnv.
 
 ## [0.1.4] - 2025-10-28
 
@@ -579,15 +511,11 @@ and tagged commit history.
 
 - Chinese localization by @DHJComical ([#1](https://github.com/Sumire-Labs/Celeritas-Extra/pull/1)), their first contribution.
 
-### Fixed
-
-- Fixed the GitHub Actions build using the CleanroomModTemplate fix, contributed by @s12kuma01 ([#2](https://github.com/Sumire-Labs/Celeritas-Extra/pull/2)), their first pull request contribution.
-
 ## [0.1.3] - 2025-10-07
 
 ### Changed
 
-- Updated Gradle from 9.0.0 to 9.1.0.
+- Updated DevEnv.
 
 ## [0.1.2] - 2025-10-07
 
