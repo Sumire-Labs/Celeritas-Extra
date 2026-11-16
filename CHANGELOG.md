@@ -11,15 +11,16 @@ and tagged commit history.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-11-16
+
 ### Added
 
-- Integrated Extra settings directly into Pintonium's older independent video GUI, including native search, Apply/Undo, and per-option Undo/Reset icons. Its shader controls remain available; newer controller-based Pintonium builds keep the Celeritas integration.
-- Added rain/snow frustum culling, enabled by default. It reuses the terrain camera and skips off-screen precipitation columns before generating vertices, including above the build limit. Custom weather renderers and shadow passes keep their normal rendering.
-- Added optional HUD lines for local time (12/24-hour), world age, session duration excluding pauses, loaded/rendered entity counts, and the current biome. Added RGB controls for each HUD line and a toggle for memory details, with cached clock, biome, and heap text.
-- Replaced the small Undo/Reset glyphs with image icons that fill the action buttons. Extended reset support to vanilla-backed Celeritas settings and add-on default storages, including availability wrappers; Undo remains available for ordinary add-on options.
-- Added per-option Undo and Reset to Default controls that appear when an action is available. Defaults are available for Extra and Celeritas settings, and other mods can supply defaults through the option capability. Changes remain pending until Apply or Done; the standalone Extra screen also supports list settings.
-- Ported the search engine from Reese's Sodium Options 2.2.5, including Unicode n-grams, IDF weighting, token coverage, and Levenshtein reranking. Search uses the upstream thresholds and 15-result default, preserves native action tabs, and is also available in the standalone Extra screen.
-- Added MoreCulling-style experimental three-face selection for item-frame models. New configurations enable it at 4 blocks, with a 2–16 block range. The branch requires an unrotated model and quarter-turn frame rotation; block models within 3 blocks and shadow passes keep normal rendering. Forge perspective matrices are checked when adapting the transform condition to 1.12.2.
+- Added per-option Undo and Reset to Default buttons with 11px image icons. Changes stay pending until Apply or Done. Reset supports Extra, Celeritas, vanilla-backed settings, and add-ons that supply defaults; other add-on options retain Undo. The standalone Extra screen also supports list settings.
+- Ported the search engine from Reese's Sodium Options 2.2.5. Search tolerates typos, ranks results by relevance, and shows up to 15 results using the upstream thresholds. It preserves native action tabs, reuses its index across queries, and works in the standalone Extra screen.
+- Integrated Extra settings into Pintonium's older video GUI, including its search and Apply/Undo controls. Per-option Undo/Reset buttons are available, and shader controls remain accessible. Newer Pintonium builds keep the Celeritas GUI integration.
+- Added rain and snow frustum culling, enabled by default. It skips off-screen precipitation columns before generating vertices, including above the build limit. Custom weather renderers and shadow passes keep their normal rendering.
+- Added optional HUD lines for local time (12/24-hour), world age, session duration excluding pauses, loaded/rendered entity counts, and biome. Each line has RGB controls, and memory usage has an optional details display. Clock, biome, and heap text are cached between updates.
+- Added experimental MoreCulling-style three-face culling for blocks in item frames. New configurations enable it at 4 blocks, adjustable from 2 to 16 blocks. It requires an unrotated model and quarter-turn frame rotation. Block models within 3 blocks and shadow passes keep normal rendering, and Forge perspective transforms are checked before culling.
 
 ### Fixed
 
@@ -611,6 +612,7 @@ and tagged commit history.
 - Initial public release of Celeritas Extra for Minecraft 1.12.2 with Cleanroom Loader and Celeritas.
 - Animation and particle toggles, graphics and rendering options, and quality-of-life features backported from Embeddium/Rubidium Extra.
 
-[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...HEAD
+[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.0-release...HEAD
+[0.11.0]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...0.11.0-release
 [0.10.3]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.2-release...0.10.3-release
 [0.10.2]: https://github.com/Sumire-Labs/Celeritas-Extra/releases/tag/0.10.2-release
