@@ -176,7 +176,7 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         return Integer.toString(rounded);
     }
 
-    static String label(IConfigElement element) {
+    public static String label(IConfigElement element) {
         String key = element.getLanguageKey();
         return key != null && !key.isEmpty() && I18n.hasKey(key) ? Translations.format(key) : element.getName();
     }

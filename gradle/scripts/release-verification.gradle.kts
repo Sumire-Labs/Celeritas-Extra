@@ -91,6 +91,8 @@ val verifyReleaseJar = tasks.register("verifyReleaseJar") {
                 requireEntry(("${config["package"]}.$it").replace('.', '/') + ".class")
             }
             requireEntry((config["plugin"] as String).replace('.', '/') + ".class")
+            listOf("PintoniumGuiIntegration", "PintoniumOption", "PintoniumControl", "PintoniumActionElement")
+                .forEach { requireEntry("$pkg/compat/pintonium/$it.class") }
             listOf("en_us", "ja_jp", "ru_ru", "zh_cn").forEach { text("assets/$id/lang/$it.lang") }
             requireEntry("META-INF/LICENSE.md")
             if (jar.manifest.mainAttributes.getValue("MixinConfigs") != "$id.mixin.json")

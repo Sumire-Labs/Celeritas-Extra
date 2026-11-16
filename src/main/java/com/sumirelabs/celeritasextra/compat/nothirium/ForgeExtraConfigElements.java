@@ -25,16 +25,16 @@ import net.minecraftforge.fml.client.config.DummyConfigElement.DummyCategoryElem
 import net.minecraftforge.fml.client.config.IConfigElement;
 
 /** Adapts the existing Forge configuration to renderer-independent video option pages. */
-final class ForgeExtraConfigElements {
+public final class ForgeExtraConfigElements {
 
     private final CeleritasExtraGameOptions options;
     private final List<IConfigElement> categories = new ArrayList<>();
     private CeleritasExtraGameOptions.ScreenMode screenMode;
     private CeleritasExtraGameOptions.VerticalSyncOption vsync;
-    private final CeleritasExtraGameOptions.ScreenMode originalScreenMode;
-    private final CeleritasExtraGameOptions.VerticalSyncOption originalVsync;
+    private CeleritasExtraGameOptions.ScreenMode originalScreenMode;
+    private CeleritasExtraGameOptions.VerticalSyncOption originalVsync;
 
-    ForgeExtraConfigElements(CeleritasExtraGameOptions options) {
+    public ForgeExtraConfigElements(CeleritasExtraGameOptions options) {
         this.options = options;
         var mc = Minecraft.getMinecraft();
         var registry = ParticleClassRegistry.getInstance();
@@ -256,7 +256,7 @@ final class ForgeExtraConfigElements {
         categories.add(new DummyCategoryElement(category, languageKey, children));
     }
 
-    List<IConfigElement> categories() {
+    public List<IConfigElement> categories() {
         return categories;
     }
 
@@ -297,7 +297,7 @@ final class ForgeExtraConfigElements {
         };
     }
 
-    void apply() {
+    public void apply() {
         boolean oldModernClouds = options.renderSettings.modernClouds;
         boolean oldSky = options.detailSettings.sky;
         boolean oldStars = options.detailSettings.stars;
@@ -308,6 +308,8 @@ final class ForgeExtraConfigElements {
             CeleritasExtraGameOptions.VerticalSyncOption.apply(options, vsync);
         if (screenMode != originalScreenMode)
             CeleritasExtraGameOptions.ScreenMode.apply(options, screenMode);
+        originalScreenMode = screenMode;
+        originalVsync = vsync;
         options.writeChanges();
         var mc = Minecraft.getMinecraft();
         if (oldModernClouds != options.renderSettings.modernClouds) {

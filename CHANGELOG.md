@@ -13,6 +13,7 @@ and tagged commit history.
 
 ### Added
 
+- Integrated Extra settings directly into Pintonium's older independent video GUI, including native search, Apply/Undo, and per-option Undo/Reset icons. Its shader controls remain available; newer controller-based Pintonium builds keep the Celeritas integration.
 - Added rain/snow frustum culling, enabled by default. It reuses the terrain camera and skips off-screen precipitation columns before generating vertices, including above the build limit. Custom weather renderers and shadow passes keep their normal rendering.
 - Added optional HUD lines for local time (12/24-hour), world age, session duration excluding pauses, loaded/rendered entity counts, and the current biome. Added RGB controls for each HUD line and a toggle for memory details, with cached clock, biome, and heap text.
 - Replaced the small Undo/Reset glyphs with image icons that fill the action buttons. Extended reset support to vanilla-backed Celeritas settings and add-on default storages, including availability wrappers; Undo remains available for ordinary add-on options.

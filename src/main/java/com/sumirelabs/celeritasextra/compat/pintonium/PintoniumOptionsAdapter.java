@@ -11,6 +11,7 @@ import java.util.WeakHashMap;
 
 import org.lwjgl.input.Mouse;
 
+import com.sumirelabs.celeritasextra.CeleritasExtraMod;
 import com.sumirelabs.celeritasextra.client.gui.Translations;
 import com.sumirelabs.celeritasextra.compat.nothirium.VanillaExtraOptionsScreen;
 
@@ -21,13 +22,22 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/** Adds Extra settings using Forge events, without linking Pintonium's private GUI API. */
+/** Loads the separately compiled Pintonium API adapter, retaining a fallback for unknown forks. */
 public final class PintoniumOptionsAdapter {
 
     private final Map<GuiScreen, GuiButton> buttons = new WeakHashMap<>();
     private PintoniumOptionsAdapter() {}
 
     public static void register() {
+        try {
+            Class.forName("com.sumirelabs.celeritasextra.compat.pintonium.PintoniumGuiIntegration")
+                .getMethod("register").invoke(null);
+            CeleritasExtraMod.LOGGER.info("Registered native Pintonium Extra settings pages");
+            return;
+        } catch (ReflectiveOperationException | LinkageError exception) {
+            CeleritasExtraMod.LOGGER.warn("Pintonium GUI integration unavailable; using standalone Extra settings",
+                exception);
+        }
         MinecraftForge.EVENT_BUS.register(new PintoniumOptionsAdapter());
     }
 

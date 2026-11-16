@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
 
@@ -22,10 +23,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.IConfigElement;
 
 /** Vanilla text fields for class exemption lists; edits remain local until Done. */
-final class VanillaExtraTextScreen extends GuiScreen {
+public final class VanillaExtraTextScreen extends GuiScreen {
 
     private final GuiScreen parent;
-    private final ExtraOptionsSession session;
+    private final Consumer<Object> accept;
     private final IConfigElement element;
     private final List<String> draft = new ArrayList<>();
     private final List<GuiTextField> fields = new ArrayList<>();
@@ -34,10 +35,13 @@ final class VanillaExtraTextScreen extends GuiScreen {
     private int firstRow;
 
     VanillaExtraTextScreen(GuiScreen parent, ExtraOptionsSession session, IConfigElement element) {
+        this(parent, element, session.value(element), value -> session.set(element, value));
+    }
+
+    public VanillaExtraTextScreen(GuiScreen parent, IConfigElement element, Object value, Consumer<Object> accept) {
         this.parent = parent;
-        this.session = session;
+        this.accept = accept;
         this.element = element;
-        Object value = session.value(element);
         if (element.isList())
             Arrays.stream((Object[]) value).map(Object::toString).forEach(draft::add);
         else
@@ -91,9 +95,9 @@ final class VanillaExtraTextScreen extends GuiScreen {
         captureFields();
         if (button.id == 2000) {
             if (element.isList())
-                session.set(element, draft.stream().map(String::trim).filter(s -> !s.isEmpty()).toArray(String[]::new));
+                accept.accept(draft.stream().map(String::trim).filter(s -> !s.isEmpty()).toArray(String[]::new));
             else
-                session.set(element, draft.getFirst());
+                accept.accept(draft.getFirst());
             mc.displayGuiScreen(parent);
         } else if (button.id == 2001) {
             mc.displayGuiScreen(parent);

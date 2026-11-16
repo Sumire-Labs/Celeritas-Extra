@@ -28,8 +28,8 @@ class PintoniumIntegrationTest {
     }
 
     @Test
-    void selectsTheIndependentScreenForTheReportedMissingControllerAndChangedFieldTypes() throws Exception {
-        // Pintonium owns a SearchTextFieldModel and has no CeleritasVideoOptionsController.
+    void selectsTheIndependentAdapterForTheReportedMissingControllerAndChangedFieldTypes() throws Exception {
+        // Older Pintonium owns a SearchTextFieldModel and has no CeleritasVideoOptionsController.
         assertFalse(CeleritasGuiCompatibility.hasControllerGui(new ByteArrayInputStream(screenWithField(
             "searchTextModel", "Lorg/taumc/celeritas/impl/gui/frame/components/SearchTextFieldModel;"))));
         assertFalse(CeleritasGuiCompatibility.hasControllerGui(new ByteArrayInputStream(screenWithField(
