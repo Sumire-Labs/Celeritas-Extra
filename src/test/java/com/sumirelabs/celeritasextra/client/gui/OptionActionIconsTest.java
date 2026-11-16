@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionActionIconsTest {
 
     @Test
-    void imageIconsFillTheButtonWithOnePixelOfPadding() throws Exception {
+    void imageIconsUseThirteenPixelsAndStayCentered() throws Exception {
         var call = new AtomicReference<Object[]>();
         var context = (DrawContext) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{DrawContext.class},
             (proxy, method, args) -> {
@@ -28,7 +28,7 @@ class OptionActionIconsTest {
             });
         for (var icon : OptionActionIcon.values()) {
             OptionActionIcons.draw(context, new Dim2i(10, 20, 18, 18), icon);
-            assertArrayEquals(new Object[]{icon.texture(), 11, 21, 16, 16}, call.get());
+            assertArrayEquals(new Object[]{icon.texture(), 13, 23, 13, 13}, call.get());
             String resource = "assets/" + icon.texture().replace(':', '/');
             try (var input = getClass().getClassLoader().getResourceAsStream(resource)) {
                 assertNotNull(input);

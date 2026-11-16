@@ -33,7 +33,7 @@ final class OptionIconButton extends GuiButton {
             GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
             GlStateManager.DestFactor.ZERO);
         mc.getTextureManager().bindTexture(texture);
-        int size = Math.min(width, height) - 2;
+        int size = Math.min(OptionActionIcon.DRAW_SIZE, Math.min(width, height) - 2);
         drawModalRectWithCustomSizedTexture(this.x + (width - size) / 2, this.y + (height - size) / 2,
             0, 0, size, size, size, size);
         GlStateManager.disableBlend();
