@@ -890,6 +890,12 @@ public class CeleritasExtraGameOptionPages {
             .build());
 
         groups.add(group("groups/misc/2")
+            .add(booleanOption("celeritasextra.option.show_undo_button",
+                (opts, value) -> opts.extraSettings.showUndoButton = value,
+                opts -> opts.extraSettings.showUndoButton))
+            .add(booleanOption("celeritasextra.option.show_reset_button",
+                (opts, value) -> opts.extraSettings.showResetButton = value,
+                opts -> opts.extraSettings.showResetButton))
             .addConditionally(com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasNativeSearch(),
                 () -> booleanOption("celeritasextra.option.replace_search_with_rso",
                     (opts, value) -> opts.extraSettings.replaceSearchWithRso = value,

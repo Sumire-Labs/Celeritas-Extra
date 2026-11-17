@@ -11,6 +11,10 @@ and tagged commit history.
 
 ## [Unreleased]
 
+### Added
+
+- Added separate settings for showing per-option Undo and Reset to Default buttons, both enabled by default. These settings work with either search engine and in the Pintonium and standalone Extra screens. Screen-wide Apply/Undo and Reset controls remain available.
+
 ### Fixed
 
 - Fixed overlapping search bars with newer Celeritas builds. Added "Replace search engine with RSO", enabled by default, to switch between Extra's search and Celeritas's built-in search after Apply. Per-option Undo/Reset remains available in both modes.

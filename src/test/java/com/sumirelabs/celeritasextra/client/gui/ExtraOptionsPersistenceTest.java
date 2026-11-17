@@ -25,6 +25,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void perOptionButtonPreferencesDefaultOnAndPersistIndependently() {
+        var file = directory.resolve("action-buttons.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        assertTrue(options.extraSettings.showUndoButton);
+        assertTrue(options.extraSettings.showResetButton);
+        options.extraSettings.showUndoButton = false;
+        options.writeChanges();
+        options = CeleritasExtraGameOptions.load(file);
+        assertFalse(options.extraSettings.showUndoButton);
+        assertTrue(options.extraSettings.showResetButton);
+        options.extraSettings.showUndoButton = true;
+        options.extraSettings.showResetButton = false;
+        options.writeChanges();
+        options = CeleritasExtraGameOptions.load(file);
+        assertTrue(options.extraSettings.showUndoButton);
+        assertFalse(options.extraSettings.showResetButton);
+    }
+
+    @Test
     void rsoSearchDefaultsOnAndCanBePersistentlyDisabled() {
         var file = directory.resolve("search.cfg").toFile();
         var options = CeleritasExtraGameOptions.load(file);

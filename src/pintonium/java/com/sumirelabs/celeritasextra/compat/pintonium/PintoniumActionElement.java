@@ -10,6 +10,7 @@ import org.taumc.celeritas.api.options.control.ControlElement;
 import org.taumc.celeritas.impl.gui.compat.GuiGraphics;
 import org.taumc.celeritas.impl.util.Dim2i;
 
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.gui.OptionActionIcon;
 import com.sumirelabs.celeritasextra.client.gui.Translations;
 
@@ -38,7 +39,9 @@ final class PintoniumActionElement extends ControlElement<Object> {
     private void layout() {
         if (holding)
             return;
-        int next = (extra.isAvailable() && extra.hasChanged() ? 1 : 0) | (extra.canReset() ? 2 : 0);
+        var settings = CeleritasExtraClientMod.options().extraSettings;
+        int next = (settings.showUndoButton && extra.isAvailable() && extra.hasChanged() ? 1 : 0)
+            | (settings.showResetButton && extra.canReset() ? 2 : 0);
         if (next == mask)
             return;
         mask = next;

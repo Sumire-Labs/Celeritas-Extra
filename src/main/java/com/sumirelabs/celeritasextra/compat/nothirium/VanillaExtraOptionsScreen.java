@@ -101,10 +101,13 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         capacity = columns * rows;
         page = Math.min(page, pageCount() - 1);
         int cellWidth = Math.min(190, (width - 30) / columns);
+        var actionSettings = CeleritasExtraClientMod.options().extraSettings;
+        boolean showUndo = actionSettings.showUndoButton;
+        boolean showReset = actionSettings.showResetButton;
         int left = width / 2 - (columns * cellWidth + (columns - 1) * 10) / 2;
         for (int index = page * capacity; index < Math.min(displayed.size(), (page + 1) * capacity); index++) {
             var element = displayed.get(index);
-            int buttonWidth = cellWidth - (element.isProperty() ? 40 : 0);
+            int buttonWidth = cellWidth - (element.isProperty() ? (showUndo ? 20 : 0) + (showReset ? 20 : 0) : 0);
             int slot = visibleEntries.size();
             visibleEntries.add(element);
             int x = left + (slot % columns) * (cellWidth + 10);
@@ -135,15 +138,19 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
             }
             buttonList.add(button);
             if (element.isProperty()) {
-                var undo = new OptionIconButton(ACTION + slot * 2, x + buttonWidth, y, OptionActionIcon.UNDO);
-                undo.enabled = session.changed(element);
-                undo.visible = undo.enabled;
-                buttonList.add(undo);
-                var reset = new OptionIconButton(ACTION + slot * 2 + 1, x + buttonWidth + 20, y,
-                    OptionActionIcon.RESET);
-                reset.enabled = session.canReset(element);
-                reset.visible = reset.enabled;
-                buttonList.add(reset);
+                if (showUndo) {
+                    var undo = new OptionIconButton(ACTION + slot * 2, x + buttonWidth, y, OptionActionIcon.UNDO);
+                    undo.enabled = session.changed(element);
+                    undo.visible = undo.enabled;
+                    buttonList.add(undo);
+                }
+                if (showReset) {
+                    var reset = new OptionIconButton(ACTION + slot * 2 + 1,
+                        x + buttonWidth + (showUndo ? 20 : 0), y, OptionActionIcon.RESET);
+                    reset.enabled = session.canReset(element);
+                    reset.visible = reset.enabled;
+                    buttonList.add(reset);
+                }
             }
         }
         buttonList.add(new GuiButton(RESET, width / 2 - 50, height - 54, 100, 20,

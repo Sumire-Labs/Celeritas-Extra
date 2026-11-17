@@ -12,6 +12,8 @@ import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.taumc.celeritas.api.options.control.ControlElement;
 import org.taumc.celeritas.api.options.structure.Option;
 
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
+
 import net.minecraft.client.renderer.GlStateManager;
 
 /** Keeps native controls and reserves separate hit boxes for per-option actions. */
@@ -31,8 +33,9 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     private void layout() {
         if (holding)
             return;
-        boolean canUndo = option.isAvailable() && option.hasChanged();
-        boolean canReset = OptionDefaults.canReset(option);
+        var settings = CeleritasExtraClientMod.options().extraSettings;
+        boolean canUndo = settings.showUndoButton && option.isAvailable() && option.hasChanged();
+        boolean canReset = settings.showResetButton && OptionDefaults.canReset(option);
         int mask = (canUndo ? 1 : 0) | (canReset ? 2 : 0);
         if (mask == actionMask)
             return;

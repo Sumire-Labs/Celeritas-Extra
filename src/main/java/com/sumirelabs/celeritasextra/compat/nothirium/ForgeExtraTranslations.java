@@ -63,6 +63,8 @@ final class ForgeExtraTranslations {
         Map.entry("render.lightUpdates", "sodium-extra.option.light_updates"),
         Map.entry("extra.showFps", "sodium-extra.option.show_fps"),
         Map.entry("extra.replaceSearchWithRso", "celeritasextra.option.replace_search_with_rso"),
+        Map.entry("extra.showUndoButton", "celeritasextra.option.show_undo_button"),
+        Map.entry("extra.showResetButton", "celeritasextra.option.show_reset_button"),
         Map.entry("extra.steadyDebugHud", "sodium-extra.option.steady_debug_hud"),
         Map.entry("extra.showFPSExtended", "sodium-extra.option.show_fps_extended"),
         Map.entry("extra.showMemory", "celeritasextra.option.show_memory"),

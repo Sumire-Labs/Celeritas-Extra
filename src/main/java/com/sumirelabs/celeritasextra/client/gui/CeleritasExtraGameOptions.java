@@ -135,6 +135,10 @@ public class CeleritasExtraGameOptions {
         new BooleanProperty(CAT_RENDER, "preventShaders", false, "Prevent accidental shader activation",
             v -> renderSettings.preventShaders = v, () -> renderSettings.preventShaders),
         // Extra settings
+        new BooleanProperty(CAT_EXTRA, "showUndoButton", true, "Show per-option Undo buttons",
+            v -> extraSettings.showUndoButton = v, () -> extraSettings.showUndoButton),
+        new BooleanProperty(CAT_EXTRA, "showResetButton", true, "Show per-option Reset to Default buttons",
+            v -> extraSettings.showResetButton = v, () -> extraSettings.showResetButton),
         new BooleanProperty(CAT_EXTRA, "showFps", false, "Show FPS overlay",
             v -> extraSettings.showFps = v, () -> extraSettings.showFps),
         new BooleanProperty(CAT_EXTRA, "showFPSExtended", true, "Show extended FPS info (average/1% low/0.1% low)",
@@ -723,6 +727,8 @@ public class CeleritasExtraGameOptions {
 
         public boolean showFps = false;
         public boolean replaceSearchWithRso = true;
+        public boolean showUndoButton = true;
+        public boolean showResetButton = true;
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
         public boolean showMemory = false;

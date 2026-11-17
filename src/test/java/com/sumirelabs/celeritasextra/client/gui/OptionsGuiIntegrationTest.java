@@ -16,11 +16,14 @@ import org.embeddedt.embeddium.impl.gui.frame.tab.Tab;
 import org.embeddedt.embeddium.impl.gui.frame.tab.TabFrame;
 import org.embeddedt.embeddium.impl.gui.framework.*;
 import org.embeddedt.embeddium.impl.util.Dim2i;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.taumc.celeritas.api.options.OptionIdentifier;
 import org.taumc.celeritas.api.options.control.*;
 import org.taumc.celeritas.api.options.structure.*;
 
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.mixin.options_search.MixinOptionsController;
 import com.sumirelabs.celeritasextra.mixin.options_search.MixinSliderScroll;
 import com.sumirelabs.celeritasextra.mixin.options_search.TabFrameAccess;
@@ -29,6 +32,55 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Exercises Celeritas's real TabFrame/OptionPageFrame builders without an OpenGL window. */
 class OptionsGuiIntegrationTest {
+
+    private Field configField;
+    private Object previousConfig;
+
+    @BeforeEach
+    void initializeActionPreferences() throws Exception {
+        configField = CeleritasExtraClientMod.class.getDeclaredField("CONFIG");
+        configField.setAccessible(true);
+        previousConfig = configField.get(null);
+        configField.set(null, new CeleritasExtraGameOptions());
+    }
+
+    @AfterEach
+    void restoreActionPreferences() throws Exception {
+        configField.set(null, previousConfig);
+    }
+
+    @Test
+    void hidingEachActionKeepsTheOtherActionAndRestoresControlWidth() throws Exception {
+        var option = OptionDefaults.register(new TestOption("Distance", ""), 0);
+        var settings = CeleritasExtraClientMod.options().extraSettings;
+        var context = new InteractionContext() {
+        };
+        settings.showUndoButton = false;
+        option.setValue(9);
+        var resetOnly = new OptionActionElement<>(option, new Dim2i(0, 0, 200, 18));
+        assertTrue(resetOnly.mouseClicked(context, 190, 9, 0));
+        assertEquals(0, option.getValue(), "Remaining Reset button must not invoke Undo");
+        settings.showUndoButton = true;
+        settings.showResetButton = false;
+        option.setValue(9);
+        var undoOnly = new OptionActionElement<>(option, new Dim2i(0, 0, 200, 18));
+        assertTrue(undoOnly.mouseClicked(context, 190, 9, 0));
+        assertEquals(3, option.getValue(), "Remaining Undo button must not reset to defaults");
+        option.setValue(9);
+        settings.showUndoButton = false;
+        var hidden = undoOnly;
+        hidden.isMouseOver(10, 9);
+        for (String name : List.of("undo", "reset")) {
+            var field = OptionActionElement.class.getDeclaredField(name);
+            field.setAccessible(true);
+            assertNull(field.get(hidden));
+        }
+        var field = OptionActionElement.class.getDeclaredField("control");
+        field.setAccessible(true);
+        assertEquals(200, ((ControlElement<?>) field.get(hidden)).getDimensions().width());
+        assertTrue(hidden.mouseClicked(context, 190, 9, 0));
+        assertEquals(12, option.getValue(), "Former action area must belong to the native slider");
+    }
 
     @Test
     void addonStorageDefaultsWorkThroughAnAvailabilityWrapperWithoutChangingLiveData() {
