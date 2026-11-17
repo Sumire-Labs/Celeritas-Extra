@@ -18,6 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PintoniumIntegrationTest {
 
+    @Test
+    void detectsControllerSearchWithoutConfusingItWithPintoniumsIndependentSearch() throws Exception {
+        assertTrue(CeleritasGuiCompatibility.hasNativeSearch(new ByteArrayInputStream(screenWithField(
+            "searchTextModel", "Lorg/embeddedt/embeddium/impl/gui/frame/components/SearchTextFieldModel;"))));
+        assertFalse(CeleritasGuiCompatibility.hasNativeSearch(new ByteArrayInputStream(screenWithField(
+            "searchTextModel", "Lorg/taumc/celeritas/impl/gui/frame/components/SearchTextFieldModel;"))));
+        assertFalse(CeleritasGuiCompatibility.hasNativeSearch());
+    }
+
     private static byte[] screenWithField(String name, String descriptor) {
         var writer = new ClassWriter(0);
         writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, "org/taumc/celeritas/impl/gui/CeleritasVideoOptionsScreen",

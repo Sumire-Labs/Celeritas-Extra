@@ -890,6 +890,10 @@ public class CeleritasExtraGameOptionPages {
             .build());
 
         groups.add(group("groups/misc/2")
+            .addConditionally(com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasNativeSearch(),
+                () -> booleanOption("celeritasextra.option.replace_search_with_rso",
+                    (opts, value) -> opts.extraSettings.replaceSearchWithRso = value,
+                    opts -> opts.extraSettings.replaceSearchWithRso))
             .add(booleanOption("celeritasextra.option.mod_name_tooltip",
                 (opts, v) -> opts.extraSettings.modNameTooltip = v,
                 opts -> opts.extraSettings.modNameTooltip))

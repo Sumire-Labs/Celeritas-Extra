@@ -17,5 +17,6 @@ public interface SearchableOptionsController {
     int celeritasExtra$optionCount();
     boolean celeritasExtra$hasChanges();
     DrawContext celeritasExtra$drawContext();
+    boolean celeritasExtra$usesRsoSearch();
 
 }

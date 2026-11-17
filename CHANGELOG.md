@@ -11,6 +11,10 @@ and tagged commit history.
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed overlapping search bars with newer Celeritas builds. Added "Replace search engine with RSO", enabled by default, to switch between Extra's search and Celeritas's built-in search after Apply. Per-option Undo/Reset remains available in both modes.
+
 ## [0.11.0] - 2026-11-16
 
 ### Added

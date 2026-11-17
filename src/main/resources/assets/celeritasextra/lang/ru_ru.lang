@@ -234,3 +234,5 @@ celeritasextra.overlay.world_day=День мира: %s
 celeritasextra.overlay.session_time=%sч %sм %sс
 celeritasextra.overlay.entity_count=Загружено сущностей: %s
 celeritasextra.overlay.rendered_entities=Отрисовано сущностей: %s
+celeritasextra.option.replace_search_with_rso=Заменить поисковую систему на RSO
+celeritasextra.option.replace_search_with_rso.tooltip=Использовать поиск Reese's Sodium Options с сортировкой по релевантности и поиском по описаниям. Отключите для встроенного поиска Celeritas. Изменения вступают в силу после нажатия «Применить».

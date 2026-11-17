@@ -33,4 +33,22 @@ public final class CeleritasGuiCompatibility {
             && field.desc.equals("Lorg/embeddedt/embeddium/impl/gui/CeleritasVideoOptionsController;"));
     }
 
+    public static boolean hasNativeSearch() {
+        try (InputStream input = CeleritasGuiCompatibility.class.getClassLoader().getResourceAsStream(
+            "org/embeddedt/embeddium/impl/gui/CeleritasVideoOptionsController.class")) {
+            if (input == null)
+                return false;
+            return hasNativeSearch(input);
+        } catch (IOException | RuntimeException exception) {
+            return false;
+        }
+    }
+
+    static boolean hasNativeSearch(InputStream input) throws IOException {
+        var node = new ClassNode();
+        new ClassReader(input).accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        return node.fields.stream().anyMatch(field -> field.name.equals("searchTextModel")
+            && field.desc.equals("Lorg/embeddedt/embeddium/impl/gui/frame/components/SearchTextFieldModel;"));
+    }
+
 }

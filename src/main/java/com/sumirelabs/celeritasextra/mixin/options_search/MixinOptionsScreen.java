@@ -43,6 +43,16 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
 
     @Inject(method = "initGui", at = @At("RETURN"), remap = true)
     private void celeritasExtra$initSearch(CallbackInfo ci) {
+        celeritasExtra$setupSearch();
+    }
+
+    @Unique
+    private void celeritasExtra$setupSearch() {
+        if (!celeritasExtra$searchController().celeritasExtra$usesRsoSearch()) {
+            celeritasExtra$field = null;
+            celeritasExtra$bar = null;
+            return;
+        }
         String text = celeritasExtra$field == null ? "" : celeritasExtra$field.getText();
         boolean focused = celeritasExtra$field != null && celeritasExtra$field.isFocused();
         int cursor = celeritasExtra$field == null ? 0 : celeritasExtra$field.getCursorPosition();
@@ -84,6 +94,13 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
 
     @Inject(method = "drawScreen", at = @At("RETURN"), remap = true)
     private void celeritasExtra$drawSearch(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+        if (!celeritasExtra$searchController().celeritasExtra$usesRsoSearch()) {
+            celeritasExtra$field = null;
+            celeritasExtra$bar = null;
+            return;
+        }
+        if (celeritasExtra$field == null)
+            celeritasExtra$setupSearch();
         if (celeritasExtra$field == null)
             return;
         celeritasExtra$updateBar();
@@ -107,7 +124,7 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true, remap = true)
     private void celeritasExtra$clickSearch(int mouseX, int mouseY, int button, CallbackInfo ci) {
-        if (celeritasExtra$field == null)
+        if (!celeritasExtra$searchController().celeritasExtra$usesRsoSearch() || celeritasExtra$field == null)
             return;
         celeritasExtra$updateBar();
         if (celeritasExtra$bar.clickClear(VintageInteractionContext.INSTANCE, mouseX, mouseY, button)) {
@@ -128,7 +145,7 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
 
     @Override
     public boolean celeritasExtra$searchKey(char character, int key) {
-        if (celeritasExtra$field == null)
+        if (!celeritasExtra$searchController().celeritasExtra$usesRsoSearch() || celeritasExtra$field == null)
             return false;
         if (GuiScreen.isCtrlKeyDown() && key == Keyboard.KEY_F) {
             celeritasExtra$field.setFocused(true);

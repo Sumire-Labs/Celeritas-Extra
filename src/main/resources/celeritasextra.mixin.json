@@ -19,6 +19,7 @@
     "item_cache.MixinRenderItemVertexCache",
     "nothirium.MixinRenderLibEntityDistance",
     "options_search.MixinOptionsController",
+    "options_search.MixinNativeSearchComponent",
     "options_search.TabFrameAccess",
     "options_search.OptionBindingAccess",
     "options_search.MixinOptionsScreen",

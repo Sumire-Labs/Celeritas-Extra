@@ -234,3 +234,5 @@ celeritasextra.overlay.world_day=World day: %s
 celeritasextra.overlay.session_time=%sh %sm %ss
 celeritasextra.overlay.entity_count=Loaded entities: %s
 celeritasextra.overlay.rendered_entities=Rendered entities: %s
+celeritasextra.option.replace_search_with_rso=Replace search engine with RSO
+celeritasextra.option.replace_search_with_rso.tooltip=Use Reese's Sodium Options search with relevance ranking and tooltip search. Disable to use Celeritas's built-in search. Changes take effect after Apply.

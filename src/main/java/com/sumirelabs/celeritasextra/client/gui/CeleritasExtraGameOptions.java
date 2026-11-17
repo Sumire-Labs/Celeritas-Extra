@@ -76,6 +76,9 @@ public class CeleritasExtraGameOptions {
             v -> particleSettings.blockBreak = v, () -> particleSettings.blockBreak),
         new BooleanProperty(CAT_PARTICLE, "blockBreaking", true, "Enable/disable block breaking particles",
             v -> particleSettings.blockBreaking = v, () -> particleSettings.blockBreaking),
+        new BooleanProperty(CAT_EXTRA, "replaceSearchWithRso", true,
+            "Replace Celeritas's built-in search with Reese's Sodium Options search",
+            v -> extraSettings.replaceSearchWithRso = v, () -> extraSettings.replaceSearchWithRso),
         // Detail settings
         new BooleanProperty(CAT_DETAIL, "sky", true, "Enable/disable sky rendering",
             v -> detailSettings.sky = v, () -> detailSettings.sky),
@@ -719,6 +722,7 @@ public class CeleritasExtraGameOptions {
         public static final int STEADY_DEBUG_HUD_REFRESH_MAX = 20;
 
         public boolean showFps = false;
+        public boolean replaceSearchWithRso = true;
         public boolean showFPSExtended = true;
         public boolean showCoords = false;
         public boolean showMemory = false;

@@ -25,12 +25,14 @@ import org.taumc.celeritas.api.options.structure.Option;
 import org.taumc.celeritas.api.options.structure.OptionPage;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.gui.CollapsibleTabFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionActionFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.OptionsCollapseState;
 import com.sumirelabs.celeritasextra.client.gui.SearchableOptionsController;
 import com.sumirelabs.celeritasextra.client.gui.search.SearchIndex;
+import com.sumirelabs.celeritasextra.compat.NativeOptionsSearch;
 
 @Mixin(value = CeleritasVideoOptionsController.class, remap = false)
 public abstract class MixinOptionsController implements SearchableOptionsController {
@@ -57,11 +59,35 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique private List<Option<?>> celeritasExtra$ranked;
     @Unique private SearchIndex<Option<?>> celeritasExtra$searchIndex;
     @Unique private final OptionsCollapseState celeritasExtra$collapse = new OptionsCollapseState();
+    @Unique private boolean celeritasExtra$rso = true;
+
+    @Override
+    public boolean celeritasExtra$usesRsoSearch() {
+        return celeritasExtra$rso;
+    }
+
+    @Unique
+    private boolean celeritasExtra$requestedRso() {
+        return !NativeOptionsSearch.available(this)
+            || CeleritasExtraClientMod.options().extraSettings.replaceSearchWithRso;
+    }
 
     @Inject(method = "init", at = @At("HEAD"))
     private void celeritasExtra$refreshCount(int width, int height, CallbackInfo ci) {
+        celeritasExtra$rso = celeritasExtra$requestedRso();
         celeritasExtra$results = -1;
         celeritasExtra$ranked = null;
+    }
+
+    @Inject(method = "applyChanges", at = @At("RETURN"))
+    private void celeritasExtra$applySearchMode(CallbackInfo ci) {
+        if (celeritasExtra$rso == celeritasExtra$requestedRso())
+            return;
+        NativeOptionsSearch.clear(this);
+        celeritasExtra$query = new OptionSearchQuery("");
+        optionPageScrollBarOffset.set(0);
+        tabFrameScrollBarOffset.set(0);
+        init(width, height);
     }
 
     @Override
@@ -133,8 +159,12 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
             return original;
         Map<String, List<Tab<?>>> tabs = new LinkedHashMap<>();
         celeritasExtra$actionResults = 0;
-        boolean searching = !celeritasExtra$query.isEmpty();
-        if (searching) {
+        boolean rsoSearching = celeritasExtra$rso && !celeritasExtra$query.isEmpty();
+        boolean searching = rsoSearching || (!celeritasExtra$rso && NativeOptionsSearch.hasQuery(this));
+        java.util.function.Predicate<Option<?>> predicate = celeritasExtra$rso
+            ? this::celeritasExtra$matches
+            : NativeOptionsSearch.predicate(this);
+        if (rsoSearching) {
             var ranked = celeritasExtra$rankedOptions();
             if (!ranked.isEmpty()) {
                 var filter = new OptionActionFrame.Ranked(ranked);
@@ -150,15 +180,15 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
                     .orElse(null);
                 Tab<?> filtered;
                 if (page != null && tab.frameFunction() != null) {
-                    if (searching)
+                    if (rsoSearching)
                         continue;
-                    if (page.getOptions().stream().noneMatch(this::celeritasExtra$matches))
+                    if (page.getOptions().stream().noneMatch(predicate))
                         continue;
                     filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(),
-                        dim -> OptionActionFrame.create(dim, page, this::celeritasExtra$matches,
+                        dim -> OptionActionFrame.create(dim, page, predicate,
                             optionPageScrollBarOffset));
                 } else {
-                    if (!celeritasExtra$query.isEmpty() && !celeritasExtra$query.matches(
+                    if (rsoSearching && !celeritasExtra$query.matches(
                         font.extractString(tab.title()) + "\n" + tab.title() + "\n" + tab.id()))
                         continue;
                     filtered = tab;
@@ -169,7 +199,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
         }
         celeritasExtra$results = -1;
         return new CollapsibleTabFrame(bounds, font, tabs, celeritasExtra$collapse,
-            !celeritasExtra$query.isEmpty(), tabFrameSelectedTab, tabFrameScrollBarOffset,
+            searching, tabFrameSelectedTab, tabFrameScrollBarOffset,
             () -> optionPageScrollBarOffset.set(0), () -> init(width, height));
     }
 

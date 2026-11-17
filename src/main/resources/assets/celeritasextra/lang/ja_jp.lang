@@ -234,3 +234,5 @@ celeritasextra.overlay.world_day=経過日数: %s日
 celeritasextra.overlay.session_time=%s時間 %s分 %s秒
 celeritasextra.overlay.entity_count=読み込み済み: %s体
 celeritasextra.overlay.rendered_entities=描画対象: %s体
+celeritasextra.option.replace_search_with_rso=検索エンジンをRSOに置き換える
+celeritasextra.option.replace_search_with_rso.tooltip=関連度順の結果表示と説明文検索に対応したReese's Sodium Options由来の検索を使用します。無効にするとCeleritas標準の検索を使用します。変更は「適用」後に反映されます。

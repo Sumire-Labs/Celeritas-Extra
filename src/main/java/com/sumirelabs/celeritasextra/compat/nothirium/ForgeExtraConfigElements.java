@@ -232,6 +232,9 @@ public final class ForgeExtraConfigElements {
         var source = options.forgeConfiguration().getCategory(category);
         var children = new ArrayList<IConfigElement>();
         for (Property property : source.getOrderedValues()) {
+            if (property.getName().equals("replaceSearchWithRso")
+                && !com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasNativeSearch())
+                continue;
             if (property.getName().equals("useAdaptiveSync"))
                 continue;
             String key = ForgeExtraTranslations.key(category, property.getName());

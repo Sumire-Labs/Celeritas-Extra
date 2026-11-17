@@ -25,6 +25,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void rsoSearchDefaultsOnAndCanBePersistentlyDisabled() {
+        var file = directory.resolve("search.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        assertTrue(options.extraSettings.replaceSearchWithRso);
+        options.extraSettings.replaceSearchWithRso = false;
+        options.writeChanges();
+        assertFalse(CeleritasExtraGameOptions.load(file).extraSettings.replaceSearchWithRso);
+    }
+
+    @Test
     void informationFlagsAndPerLineColorsSurviveReload() {
         var file = directory.resolve("hud.cfg").toFile();
         var options = CeleritasExtraGameOptions.load(file);
