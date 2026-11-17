@@ -11,6 +11,8 @@ and tagged commit history.
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-11-17
+
 ### Added
 
 - Added separate settings for showing per-option Undo and Reset to Default buttons, both enabled by default. These settings work with either search engine and in the Pintonium and standalone Extra screens. Screen-wide Apply/Undo and Reset controls remain available.
@@ -548,7 +550,8 @@ No user-facing changes.
 - Initial public release of Celeritas Extra for Minecraft 1.12.2 with Cleanroom Loader and Celeritas.
 - Animation and particle toggles, graphics and rendering options, and quality-of-life features backported from Embeddium/Rubidium Extra.
 
-[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.0-release...HEAD
+[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.1-release...HEAD
+[0.11.1]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.0-release...0.11.1-release
 [0.11.0]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...0.11.0-release
 [0.10.3]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.2-release...0.10.3-release
 [0.10.2]: https://github.com/Sumire-Labs/Celeritas-Extra/releases/tag/0.10.2-release
