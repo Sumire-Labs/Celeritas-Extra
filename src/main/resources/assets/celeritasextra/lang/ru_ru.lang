@@ -65,7 +65,7 @@ sodium-extra.option.light_updates=Обновления света
 sodium-extra.option.light_updates.tooltip=Обработка обновлений света. Отключение может привести к ошибкам освещения в новых чанках. Не трогайте, если не знаете, что делаете.
 sodium-extra.option.item_frames.tooltip=Переключение видимости рамок.
 moreculling.config.option.itemFrameLODRange=Дальность упрощения рамки
-moreculling.config.option.itemFrameLODRange.tooltip=На расстоянии дальше указанного (в блоках) обычные предметы отображаются без боковых граней. Карты и 3D-блоки остаются видимыми. 0 = Выкл.
+moreculling.config.option.itemFrameLODRange.tooltip=На расстоянии дальше указанного (в блоках) обычные предметы отображаются без боковых граней. Карты и 3D-блоки остаются видимыми. 0 = Выкл. По умолчанию: 3 блока.
 sodium-extra.option.armor_stands.tooltip=Переключение видимости стоек для брони.
 sodium-extra.option.paintings.tooltip=Переключение видимости картин.
 sodium-extra.option.piston.tooltip=Переключение анимации поршня.
@@ -193,7 +193,7 @@ celeritasextra.gui.entity_exemptions=Исключения дальности с�
 celeritasextra.gui.tile_entity_exemptions=Исключения дальности блок-сущностей
 
 celeritasextra.option.item_vertex_cache=Кэш вершин статичных предметов (экспериментально)
-celeritasextra.option.item_vertex_cache.tooltip=Экспериментальная функция (по умолчанию выключена): отрисовка поддерживаемых статичных предметов из буферов вершин GPU. В других случаях используется кэш CPU или обычная отрисовка. Сохраняет освещение Forge и LOD рамок. Не используется с Iris или встроенным кэшем рендера. До 256 записей и 4 МиБ данных вершин суммарно на CPU и GPU.
+celeritasextra.option.item_vertex_cache.tooltip=Экспериментальная функция (по умолчанию включена): отрисовка поддерживаемых статичных предметов из буферов вершин GPU. В других случаях используется кэш CPU или обычная отрисовка. Сохраняет освещение Forge и LOD рамок. Не используется с Iris или встроенным кэшем рендера. До 256 записей и 4 МиБ данных вершин суммарно на CPU и GPU.
 
 celeritasextra.option_action.undo=Отменить это изменение
 celeritasextra.option_action.reset=Восстановить значение по умолчанию

@@ -65,7 +65,7 @@ sodium-extra.option.light_updates=光の状態更新
 sodium-extra.option.light_updates.tooltip=有効にした場合、光の状態更新の処理は実行されます。これを無効にした場合、新しいチャンクを生成したときの光の状態に影響を与える可能性があります。自分が何をしているのかを分かっている場合にのみ、無効にしてください。
 sodium-extra.option.item_frames.tooltip=有効にした場合、額縁は描画されます。
 moreculling.config.option.itemFrameLODRange=額縁のLODの距離
-moreculling.config.option.itemFrameLODRange.tooltip=この距離（ブロック）を超えると、通常アイテムの側面を省略して正面を表示します。地図と3Dブロックは表示を維持します。0 = オフ。
+moreculling.config.option.itemFrameLODRange.tooltip=この距離（ブロック）を超えると、通常アイテムの側面を省略して正面を表示します。地図と3Dブロックは表示を維持します。0 = オフ。 初期値: 3ブロック。
 sodium-extra.option.armor_stands.tooltip=有効にした場合、防具立ては描画されます。
 sodium-extra.option.paintings.tooltip=有効にした場合、絵画は描画されます。
 sodium-extra.option.piston.tooltip=有効にした場合、ピストンの伸びるアニメーションは描画されます。
@@ -193,7 +193,7 @@ celeritasextra.gui.entity_exemptions=エンティティ距離制限の除外
 celeritasextra.gui.tile_entity_exemptions=ブロックエンティティ距離制限の除外
 
 celeritasextra.option.item_vertex_cache=静的アイテム頂点キャッシュ（実験的）
-celeritasextra.option.item_vertex_cache.tooltip=実験的機能（初期OFF）: 対応する静的アイテムをGPUの頂点バッファから描画します。非対応の描画経路では従来どおり処理します。Forgeのライティングと額縁LODを維持し、Irisやレンダラー内蔵のキャッシュがある場合は無効になります。最大256件・CPUとGPUで合計4 MiBの頂点データ。
+celeritasextra.option.item_vertex_cache.tooltip=実験的機能（初期ON）: 対応する静的アイテムをGPUの頂点バッファから描画します。非対応の描画経路では従来どおり処理します。Forgeのライティングと額縁LODを維持し、Irisやレンダラー内蔵のキャッシュがある場合は無効になります。最大256件・CPUとGPUで合計4 MiBの頂点データ。
 
 celeritasextra.option_action.undo=この変更を取り消す
 celeritasextra.option_action.reset=初期値に戻す

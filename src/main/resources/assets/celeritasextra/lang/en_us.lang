@@ -65,7 +65,7 @@ sodium-extra.option.light_updates=Light Updates
 sodium-extra.option.light_updates.tooltip=Processes lighting updates. Disabling this may cause incorrect lighting when generating chunks. Only disable if you understand the impact.
 sodium-extra.option.item_frames.tooltip=Renders item frames.
 moreculling.config.option.itemFrameLODRange=Frame LOD Range
-moreculling.config.option.itemFrameLODRange.tooltip=Beyond this distance (in blocks), non-block items retain their front face instead of sprite edges. Maps and 3D blocks stay visible. 0 = Off.
+moreculling.config.option.itemFrameLODRange.tooltip=Beyond this distance (in blocks), non-block items retain their front face instead of sprite edges. Maps and 3D blocks stay visible. 0 = Off. Default: 3 blocks.
 sodium-extra.option.armor_stands.tooltip=Renders armor stands.
 sodium-extra.option.paintings.tooltip=Renders paintings.
 sodium-extra.option.piston.tooltip=Renders piston extension animations.
@@ -193,7 +193,7 @@ celeritasextra.gui.entity_exemptions=Entity Distance Exemptions
 celeritasextra.gui.tile_entity_exemptions=Block Entity Distance Exemptions
 
 celeritasextra.option.item_vertex_cache=Static Item Vertex Cache (Experimental)
-celeritasextra.option.item_vertex_cache.tooltip=Experimental (default off): draw supported static items from cached GPU vertex buffers. Other render paths fall back to CPU vertex reuse or normal rendering. Preserves Forge lighting and item-frame LOD. Bypassed with Iris or a native item cache. Up to 256 entries and 4 MiB of vertex data across CPU and GPU.
+celeritasextra.option.item_vertex_cache.tooltip=Experimental (default on): draw supported static items from cached GPU vertex buffers. Other render paths fall back to CPU vertex reuse or normal rendering. Preserves Forge lighting and item-frame LOD. Bypassed with Iris or a native item cache. Up to 256 entries and 4 MiB of vertex data across CPU and GPU.
 
 celeritasextra.option_action.undo=Undo this change
 celeritasextra.option_action.reset=Reset to default

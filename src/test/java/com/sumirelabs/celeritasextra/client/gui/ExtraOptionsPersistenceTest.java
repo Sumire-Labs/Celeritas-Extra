@@ -25,6 +25,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void itemCacheAndFrameLodDefaultsChangeWithoutOverwritingSavedChoices() {
+        var file = directory.resolve("item-defaults.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        assertTrue(options.renderSettings.itemVertexCache);
+        assertEquals(3, options.renderSettings.itemFrameLodDistance);
+        options.renderSettings.itemVertexCache = false;
+        options.renderSettings.itemFrameLodDistance = 0;
+        options.writeChanges();
+        var reloaded = CeleritasExtraGameOptions.load(file);
+        assertFalse(reloaded.renderSettings.itemVertexCache);
+        assertEquals(0, reloaded.renderSettings.itemFrameLodDistance);
+    }
+
+    @Test
     void perOptionButtonPreferencesDefaultOnAndPersistIndependently() {
         var file = directory.resolve("action-buttons.cfg").toFile();
         var options = CeleritasExtraGameOptions.load(file);

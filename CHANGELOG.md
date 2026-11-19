@@ -13,6 +13,7 @@ and tagged commit history.
 
 ### Changed
 
+- Enabled the experimental static item vertex cache by default and set the default item-frame LOD distance to 3 blocks. Existing saved choices are preserved.
 - Reorganized Extra settings into Sodium Extra's five categories: Animations, Particles, Details, Render, and Extras. Sky/weather settings are under Details; fog, dimension fog, entity and block rendering are under Render; cloud, HUD and interface settings are under Extras. Existing configuration values are preserved, and the same categories are used in Celeritas, Pintonium and the standalone screen.
 - Ported the new Reese's Sodium Options GUI to Celeritas, including its wider layout, mod icon/version headers, tab styling, scroll bars and tooltips. Search results stay in their original mod pages; Enter/Shift+Enter or Tab/Shift+Tab navigate ranked results. Add-on controls, shader-pack actions, search-engine selection and per-option Undo/Reset settings remain supported.
 

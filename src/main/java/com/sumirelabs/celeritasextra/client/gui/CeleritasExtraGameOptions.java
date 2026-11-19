@@ -113,8 +113,8 @@ public class CeleritasExtraGameOptions {
             v -> renderSettings.signTextCulling = v, () -> renderSettings.signTextCulling),
         new BooleanProperty(CAT_RENDER, "mapBackFaceCulling", true, "Skip framed maps when viewed from behind",
             v -> renderSettings.mapBackFaceCulling = v, () -> renderSettings.mapBackFaceCulling),
-        new BooleanProperty(CAT_RENDER, "itemVertexCache", false,
-            "Experimental: reuse static item vertices, drawing from GPU buffers when supported (default off; bypassed for native caches, Iris and dynamic/tinted geometry)",
+        new BooleanProperty(CAT_RENDER, "itemVertexCache", true,
+            "Experimental: reuse static item vertices, drawing from GPU buffers when supported (default on; bypassed for native caches, Iris and dynamic/tinted geometry)",
             v -> renderSettings.itemVertexCache = v, () -> renderSettings.itemVertexCache),
         new BooleanProperty(CAT_RENDER, "armorStands", true, "Enable/disable armor stand rendering",
             v -> renderSettings.armorStands = v, () -> renderSettings.armorStands),
@@ -201,7 +201,8 @@ public class CeleritasExtraGameOptions {
             RenderSettings.CLOUD_SCALE_MIN, RenderSettings.CLOUD_SCALE_MAX,
             "Cloud scale (1 = 0.25x, 4 = vanilla, 16 = 4.00x)",
             v -> renderSettings.cloudScale = v, () -> renderSettings.cloudScale),
-        new IntProperty(CAT_RENDER, "itemFrameLodDistance", 0, 0, 256, "Item frame LOD distance in blocks (0 = off)",
+        new IntProperty(CAT_RENDER, "itemFrameLodDistance", 3, 0, 256,
+            "Item frame LOD distance in blocks (0 = off; default 3)",
             v -> renderSettings.itemFrameLodDistance = v, () -> renderSettings.itemFrameLodDistance),
         new IntProperty(CAT_RENDER, "itemFrameThreeFaceDistance", 4, 2, 16,
             "Minimum distance for item-frame block face culling",
@@ -645,12 +646,12 @@ public class CeleritasExtraGameOptions {
         public int cloudScale = CLOUD_SCALE_VANILLA;
         public boolean lightUpdates = true;
         public boolean itemFrames = true;
-        public int itemFrameLodDistance = 0;
+        public int itemFrameLodDistance = 3;
         public boolean itemFrameThreeFaceCulling = true;
         public int itemFrameThreeFaceDistance = 4;
         public boolean signTextCulling = true;
         public boolean mapBackFaceCulling = true;
-        public boolean itemVertexCache = false;
+        public boolean itemVertexCache = true;
         public int entityRenderDistance;
         public int tileEntityRenderDistance;
         public String[] entityDistanceExemptions = {"net.minecraft.entity.boss.EntityDragon"};

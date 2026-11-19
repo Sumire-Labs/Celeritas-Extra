@@ -82,8 +82,8 @@ The following settings and features are added by Celeritas Extra. Individual par
 - Limit entity render distance (0 keeps normal behavior)
 - Limit tile entity render distance (0 keeps normal behavior)
 - Specify classes exempt from render distance limits in the configuration file, using fully qualified class names or `package.*`
-- Item frame LOD (0 disables it)
-- Experimental static item vertex cache (disabled by default). Reuses supported static item geometry;
+- Item frame LOD (default: 3 blocks; 0 disables it)
+- Experimental static item vertex cache (enabled by default). Reuses supported static item geometry;
   performance gains vary by system and scene. Dynamic or tinted geometry, Iris, and detected native
   renderer item caches use the normal rendering path. Limited to 256 entries and 4 MiB of vertex data.
 

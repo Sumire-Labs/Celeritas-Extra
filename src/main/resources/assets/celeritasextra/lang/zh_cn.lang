@@ -65,7 +65,7 @@ sodium-extra.option.light_updates=光照更新
 sodium-extra.option.light_updates.tooltip=处理光照更新。若禁用，可能会导致新区块的光照不正确。只有在了解其影响的情况下才能禁用。
 sodium-extra.option.item_frames.tooltip=渲染物品展示框。
 moreculling.config.option.itemFrameLODRange=展示框多层次细节范围
-moreculling.config.option.itemFrameLODRange.tooltip=超过此距离（方块）后，普通物品省略侧面并保留正面。地图和 3D 方块保持显示。0 = 关闭。
+moreculling.config.option.itemFrameLODRange.tooltip=超过此距离（方块）后，普通物品省略侧面并保留正面。地图和 3D 方块保持显示。0 = 关闭。 默认值：3 格。
 sodium-extra.option.armor_stands.tooltip=渲染盔甲架。
 sodium-extra.option.paintings.tooltip=渲染画。
 sodium-extra.option.piston.tooltip=渲染活塞伸缩动画。
@@ -193,7 +193,7 @@ celeritasextra.gui.entity_exemptions=实体距离限制排除列表
 celeritasextra.gui.tile_entity_exemptions=方块实体距离限制排除列表
 
 celeritasextra.option.item_vertex_cache=静态物品顶点缓存（实验性）
-celeritasextra.option.item_vertex_cache.tooltip=实验功能（默认关闭）：使用 GPU 顶点缓冲区绘制受支持的静态物品。其他绘制路径使用 CPU 顶点缓存或常规绘制。保留 Forge 光照和物品展示框 LOD。存在 Iris 或渲染器内置物品缓存时停用。最多 256 项，CPU 与 GPU 顶点数据合计不超过 4 MiB。
+celeritasextra.option.item_vertex_cache.tooltip=实验功能（默认开启）：使用 GPU 顶点缓冲区绘制受支持的静态物品。其他绘制路径使用 CPU 顶点缓存或常规绘制。保留 Forge 光照和物品展示框 LOD。存在 Iris 或渲染器内置物品缓存时停用。最多 256 项，CPU 与 GPU 顶点数据合计不超过 4 MiB。
 
 celeritasextra.option_action.undo=撤销此项更改
 celeritasextra.option_action.reset=恢复默认值
