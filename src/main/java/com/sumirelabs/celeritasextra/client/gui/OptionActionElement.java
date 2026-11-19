@@ -24,6 +24,11 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     private int reservedWidth = -1;
     private int actionMask = -1;
     private boolean holding;
+    private boolean searchSelected;
+    private final com.sumirelabs.celeritasextra.client.gui.rso.theme.RowDrawContext rowContext = new com.sumirelabs.celeritasextra.client.gui.rso.theme.RowDrawContext();
+    public void setSearchSelected(boolean selected) {
+        searchSelected = selected;
+    }
 
     public OptionActionElement(Option<T> option, Dim2i dim) {
         super(option, dim);
@@ -53,7 +58,11 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     @Override
     public void render(DrawContext context, int x, int y, float delta) {
         layout();
-        control.render(context, x, y, delta);
+        control.render(rowContext.bind(context, control.getDimensions(), searchSelected || control.isMouseOver(x, y)),
+            x, y, delta);
+        if (searchSelected)
+            context.drawBorder(control.getDimensions().x(), dim.y(), control.getDimensions().getLimitX(),
+                dim.getLimitY(), 0xFFFFFFFF);
         boolean canUndo = undo != null && option.isAvailable() && option.hasChanged();
         boolean canReset = reset != null && OptionDefaults.canReset(option);
         if (canUndo)
@@ -82,7 +91,7 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     private static void drawAction(DrawContext context, Dim2i bounds, OptionActionIcon icon, boolean enabled, int x,
         int y) {
         context.fill(bounds.x(), bounds.y(), bounds.getLimitX(), bounds.getLimitY(),
-            enabled && bounds.containsCursor(x, y) ? 0xFF555555 : 0x90303030);
+            enabled && bounds.containsCursor(x, y) ? 0xA0000000 : enabled ? 0x66000000 : 0x33000000);
         GlStateManager.color(1, 1, 1, 1);
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,

@@ -165,6 +165,11 @@ public abstract class MixinOptionsScreen extends GuiScreen implements OptionsSea
         }
         if (!celeritasExtra$field.isFocused())
             return false;
+        if ((key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER || key == Keyboard.KEY_TAB)
+            && !celeritasExtra$field.getText().isBlank()) {
+            celeritasExtra$searchController().celeritasExtra$nextSearchResult(GuiScreen.isShiftKeyDown());
+            return true;
+        }
         celeritasExtra$cursorTicks = 0;
         String before = celeritasExtra$field.getText();
         celeritasExtra$field.textboxKeyTyped(character, key);

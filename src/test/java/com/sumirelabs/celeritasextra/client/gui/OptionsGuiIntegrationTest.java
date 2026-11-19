@@ -33,6 +33,127 @@ import static org.junit.jupiter.api.Assertions.*;
 /** Exercises Celeritas's real TabFrame/OptionPageFrame builders without an OpenGL window. */
 class OptionsGuiIntegrationTest {
 
+    @Test
+    void customAddonControlsRetainTheirRenderingAndCallbacksInsideRsoRows() {
+        var clicks = new AtomicInteger();
+        var colors = new ArrayList<Integer>();
+        var option = new TestOption("Custom add-on", "Original tooltip") {
+
+            @Override
+            public Control<Integer> getControl() {
+                TestOption owner = this;
+                return new Control<>() {
+
+                    public Option<Integer> getOption() {
+                        return owner;
+                    }
+                    public int getMaxWidth() {
+                        return 30;
+                    }
+                    public ControlElement<Integer> createElement(Dim2i bounds) {
+                        return new ControlElement<>(owner, bounds) {
+
+                            @Override
+                            public void render(DrawContext context, int x, int y, float delta) {
+                                context.fill(bounds.x(), bounds.y(), bounds.getLimitX(), bounds.getLimitY(),
+                                    0xFFAA0000);
+                            }
+                            @Override
+                            public boolean mouseClicked(InteractionContext c, double x, double y, int button) {
+                                if (button != 0 || !bounds.containsCursor(x, y))
+                                    return false;
+                                clicks.incrementAndGet();
+                                owner.setValue(5);
+                                return true;
+                            }
+
+                        };
+                    }
+
+                };
+            }
+
+        };
+        var prefs = CeleritasExtraClientMod.options().extraSettings;
+        prefs.showUndoButton = false;
+        prefs.showResetButton = false;
+        var row = new OptionActionElement<>(option, new Dim2i(10, 20, 200, 18));
+        var drawing = (DrawContext) Proxy.newProxyInstance(DrawContext.class.getClassLoader(),
+            new Class[]{DrawContext.class}, (p, m, a) -> {
+                if (m.getName().equals("fill"))
+                    colors.add((Integer) a[4]);
+                return m.getReturnType() == int.class ? 0 : null;
+            });
+        row.render(drawing, 30, 25, 0);
+        assertEquals(List.of(0xFFAA0000), colors, "Custom status backgrounds must not be replaced by RSO's theme");
+        assertTrue(row.mouseClicked(new InteractionContext() {
+        }, 30, 25, 0));
+        assertEquals(1, clicks.get());
+        assertEquals(5, option.getValue());
+    }
+
+    @Test
+    void duplicateAddonPageNamesKeepSelectionByIdentifierAcrossRebuilds() throws Exception {
+        var one = page("one", new TestOption("One", ""));
+        var two = page("two", new TestOption("Two", ""));
+        var first = new OptionPage(one.getId(), TextComponent.literal("Settings"), one.getGroups());
+        var second = new OptionPage(two.getId(), TextComponent.literal("Settings"), two.getGroups());
+        var controller = controller(List.of(first, second));
+        var frame = (CollapsibleTabFrame) filteredFrame(controller);
+        assertTrue(frame.selectTab(second.getId()));
+        assertEquals("Two", controls(frame).getFirst().getOption().getName().toString());
+        assertEquals("Two", controls(filteredFrame(controller)).getFirst().getOption().getName().toString());
+    }
+
+    @Test
+    void inactiveNativeAndRsoFramesNeverOverwriteTheActivePageScrollOffset() throws Exception {
+        var options = java.util.stream.IntStream.range(0, 30).mapToObj(i -> new TestOption("Long " + i, ""))
+            .toArray(TestOption[]::new);
+        var controller = controller(List.of(page("long", options), page("short", new TestOption("Short", ""))));
+        var offsetField = MixinOptionsController.class.getDeclaredField("optionPageScrollBarOffset");
+        offsetField.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        var offset = (AtomicReference<Integer>) offsetField.get(controller);
+        offset.set(60);
+        var save = MixinOptionsController.class.getDeclaredMethod("celeritasExtra$savePageOffset", Dim2i.class,
+            org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable.class);
+        save.setAccessible(true);
+        save.invoke(controller, new Dim2i(0, 30, 400, 200), null);
+        offset.set(0); // Simulate the native inactive-page warm-up before our return hook.
+        filteredFrame(controller);
+        assertEquals(60, offset.get());
+    }
+
+    @Test
+    void rsoTooltipDrawsWithoutAViewportScissorAndClearsWhenTheHoveredRowDisappears() throws Exception {
+        var option = new TestOption("Tooltip", "Original add-on description");
+        var row = option.getControl().createElement(new Dim2i(10, 210, 200, 18));
+        var tooltip = new com.sumirelabs.celeritasextra.client.gui.rso.frame.OptionTooltipController();
+        tooltip.update(row);
+        var started = tooltip.getClass().getDeclaredField("started");
+        started.setAccessible(true);
+        started.setLong(tooltip, System.nanoTime() - 600_000_000L);
+        var calls = new ArrayList<String>();
+        var context = (DrawContext) Proxy.newProxyInstance(DrawContext.class.getClassLoader(),
+            new Class[]{DrawContext.class}, (p, m, a) -> {
+                calls.add(m.getName());
+                return switch (m.getName()) {
+                    case "split" -> List.of(a[0]);
+                    case "extractString", "substrByWidth" -> a[0].toString();
+                    case "getStringWidth" -> 100;
+                    case "lineHeight" -> 9;
+                    default -> m.getReturnType() == int.class ? 0 : null;
+                };
+            });
+        tooltip.render(context, page("tooltips", option), new Dim2i(10, 30, 200, 100), 180);
+        assertTrue(calls.contains("fill") && calls.contains("drawBorder") && calls.contains("drawString"));
+        assertFalse(calls.contains("enableScissor"), "Tooltip must render after the scrolled content's scissor ends");
+        calls.clear();
+        tooltip.update(null);
+        tooltip.render(context, page("tooltips", option), new Dim2i(10, 30, 200, 100), 180);
+        assertTrue(calls.isEmpty());
+    }
+
     private Field configField;
     private Object previousConfig;
 
@@ -190,7 +311,14 @@ class OptionsGuiIntegrationTest {
         var controller = controller(List.of(page("first", description, typo), page("second", partial, exact)));
         partial.setValue(9);
         controller.celeritasExtra$search("cloud");
-        assertEquals(List.of(exact, partial, description),
+        assertEquals(List.of(description),
+            controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
+        controller.celeritasExtra$nextSearchResult(false);
+        assertEquals(List.of(exact, partial),
+            controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
+        controller.celeritasExtra$nextSearchResult(false);
+        controller.celeritasExtra$nextSearchResult(false);
+        assertEquals(List.of(description),
             controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
         assertEquals(3, controller.celeritasExtra$resultCount());
         assertEquals(9, partial.getValue());
@@ -339,7 +467,7 @@ class OptionsGuiIntegrationTest {
         nativeTabs.put("iris", List.of(shader));
         AbstractFrame frame = filteredFrame(controller, nativeTabs);
         assertTrue(frame.mouseClicked(new InteractionContext() {
-        }, 10, 89, 0));
+        }, 10, 67, 0));
         assertEquals(1, opens.get(), "The retained native callback must open the shader pack screen");
         assertEquals(1, controls(frame).size(), "Opening a separate screen must not replace the selected option page");
         controller.celeritasExtra$search("shader packs");
@@ -347,7 +475,7 @@ class OptionsGuiIntegrationTest {
         assertEquals(1, controller.celeritasExtra$resultCount(), "Matching action tabs count as search results");
         assertTrue(controls(frame).isEmpty(), "An action-only result has no option controls");
         assertTrue(frame.mouseClicked(new InteractionContext() {
-        }, 10, 53, 0));
+        }, 10, 40, 0));
         assertEquals(2, opens.get());
         assertSame(shader, nativeTabs.get("iris").getFirst(), "Filtering must not mutate Celeritas's native tabs");
         controller.celeritasExtra$search("unmatched");

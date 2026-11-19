@@ -13,6 +13,13 @@ import java.util.Set;
 public final class OptionsCollapseState {
 
     private final Set<String> collapsedMods = new HashSet<>();
+    private String selectedTabId;
+    public String selectedTabId() {
+        return selectedTabId;
+    }
+    public void selectTab(String id) {
+        selectedTabId = id;
+    }
 
     public boolean modCollapsed(String id, boolean searching) {
         return !searching && collapsedMods.contains(id);

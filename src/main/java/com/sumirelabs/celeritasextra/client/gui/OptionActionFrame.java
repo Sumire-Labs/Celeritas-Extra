@@ -12,15 +12,27 @@ import java.util.function.Predicate;
 
 import org.embeddedt.embeddium.impl.gui.frame.OptionPageFrame;
 import org.embeddedt.embeddium.impl.gui.frame.ScrollableFrame;
+import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.taumc.celeritas.api.options.control.ControlElement;
 import org.taumc.celeritas.api.options.structure.Option;
 import org.taumc.celeritas.api.options.structure.OptionPage;
 
-/** Reuses native layout and tooltip behavior, including a flat ranked search view. */
-public final class OptionActionFrame extends OptionPageFrame {
+import com.sumirelabs.celeritasextra.client.gui.rso.frame.OptionTooltipController;
+import com.sumirelabs.celeritasextra.client.gui.rso.frame.PageLayout;
+import com.sumirelabs.celeritasextra.client.gui.rso.frame.TooltipFrame;
 
-    public record Ranked(List<Option<?>> options) implements Predicate<Option<?>> {
+/** Reuses native layout and tooltip behavior, including a flat ranked search view. */
+public final class OptionActionFrame extends OptionPageFrame implements TooltipFrame {
+
+    private final OptionTooltipController tooltip = new OptionTooltipController();
+    private final boolean deferredTooltip;
+
+    public record Ranked(List<Option<?>> options, Option<?> selected) implements Predicate<Option<?>> {
+
+        public Ranked(List<Option<?>> options) {
+            this(options, null);
+        }
 
         public Ranked {
             options = List.copyOf(options);
@@ -33,7 +45,11 @@ public final class OptionActionFrame extends OptionPageFrame {
     }
 
     private OptionActionFrame(Dim2i dim, OptionPage page, Predicate<Option<?>> filter) {
+        this(dim, page, filter, false);
+    }
+    private OptionActionFrame(Dim2i dim, OptionPage page, Predicate<Option<?>> filter, boolean deferredTooltip) {
         super(dim, false, page, filter);
+        this.deferredTooltip = deferredTooltip;
     }
 
     public static ScrollableFrame create(Dim2i dim, OptionPage page, Predicate<Option<?>> filter,
@@ -42,38 +58,31 @@ public final class OptionActionFrame extends OptionPageFrame {
             .setFrame(new OptionActionFrame(dim, page, filter)).setVerticalScrollBarOffset(offset).build();
     }
 
+    public static com.sumirelabs.celeritasextra.client.gui.rso.frame.ScrollableFrame createRso(Dim2i dim,
+        OptionPage page, Predicate<Option<?>> filter, AtomicReference<Integer> offset) {
+        var layout = layout(page, filter);
+        return new com.sumirelabs.celeritasextra.client.gui.rso.frame.ScrollableFrame(dim, layout.contentHeight(),
+            offset,
+            content -> new OptionActionFrame(content, page, filter, true));
+    }
+
+    private static PageLayout layout(OptionPage page, Predicate<Option<?>> filter) {
+        return PageLayout.create(page, filter, filter instanceof Ranked ranked ? ranked.options() : null);
+    }
+
     @Override
     public void setupFrame() {
-        if (optionFilter instanceof Ranked ranked)
-            dim = dim.withHeight(ranked.options().size() * 18);
-        else
-            super.setupFrame();
+        dim = dim.withHeight(layout(page, optionFilter).contentHeight());
     }
 
     @Override
     public void buildFrame() {
-        if (optionFilter instanceof Ranked ranked) {
-            children.clear();
-            int y = 0;
-            for (var option : ranked.options()) {
-                children.add(new OptionActionElement<>(option, new Dim2i(dim.x(), dim.y() + y, dim.width(), 18)));
-                y += 18;
-            }
-        } else {
-            children.clear();
-            int y = 0;
-            for (var group : page.getGroups()) {
-                boolean added = false;
-                for (var option : group.getOptions()) {
-                    if (!optionFilter.test(option))
-                        continue;
-                    children.add(new OptionActionElement<>(option, new Dim2i(dim.x(), dim.y() + y, dim.width(), 18)));
-                    y += 18;
-                    added = true;
-                }
-                if (added)
-                    y += 4;
-            }
+        children.clear();
+        for (var row : layout(page, optionFilter).rows()) {
+            var element = new OptionActionElement<>(row.option(),
+                new Dim2i(dim.x(), dim.y() + row.y(), dim.width(), 18));
+            element.setSearchSelected(optionFilter instanceof Ranked ranked && ranked.selected() == row.option());
+            children.add(element);
         }
         drawable.clear();
         controlElements.clear();
@@ -82,6 +91,21 @@ public final class OptionActionFrame extends OptionPageFrame {
             if (child instanceof ControlElement<?> element)
                 controlElements.add(element);
         }
+    }
+
+    @Override
+    public void render(DrawContext context, int x, int y, float delta) {
+        for (var child : children)
+            child.render(context, x, y, delta);
+        tooltip.update(controlElements.stream().filter(row -> row.isMouseOver(x, y)).findFirst().orElse(null));
+        if (!deferredTooltip)
+            tooltip.render(context, page, dim, 0);
+    }
+
+    @Override
+    public void renderTooltip(DrawContext context, Dim2i viewport,
+        int offset) {
+        tooltip.render(context, page, viewport, offset);
     }
 
 }

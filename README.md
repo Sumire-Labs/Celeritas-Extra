@@ -123,7 +123,11 @@ The following settings and features are added by Celeritas Extra. Individual par
 
 ### Settings Screen and Controls
 
+- Reese's Sodium Options GUI adapted for Celeritas, with a wide layout, mod icons/version labels, scrolling tabs, and tooltips
 - Search settings
+- Keep search results in their original mod pages and cycle through ranked results with `Enter` / `Shift+Enter` or `Tab` / `Shift+Tab`
+- Use RSO search by default, or switch to Celeritas's built-in search when available
+- Per-option Undo and Reset to Default buttons, with separate visibility settings
 - Display the number of search results
 - Focus the search field with `Ctrl+F`
 - Clear the search with `Esc` or the clear button

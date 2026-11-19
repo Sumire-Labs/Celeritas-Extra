@@ -27,8 +27,8 @@ public final class CeleritasSearchBar extends AbstractWidget {
 
     public CeleritasSearchBar(Dim2i bounds, Runnable clear) {
         this.bounds = bounds;
-        clearButton = new FlatButtonWidget(new Dim2i(bounds.getLimitX() - 20, bounds.y(), 20, bounds.height()),
-            TextComponent.literal("×"), clear);
+        clearButton = new FlatButtonWidget(new Dim2i(bounds.getLimitX() - 16, bounds.getCenterY() - 6, 12, 12),
+            TextComponent.literal("x"), clear);
         var clearStyle = FlatButtonWidget.Style.defaults();
         clearStyle.bgDefault = 0; // The shared panel already supplies the background.
         clearStyle.bgDisabled = 0;
@@ -72,7 +72,7 @@ public final class CeleritasSearchBar extends AbstractWidget {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fill(bounds.x(), bounds.y(), bounds.getLimitX(), bounds.getLimitY(), style.bgDefault);
+        context.fill(bounds.x(), bounds.y(), bounds.getLimitX(), bounds.getLimitY(), focused ? 0xE0000000 : 0x90000000);
         int baseline = bounds.getCenterY() - context.lineHeight() / 2;
         int left = bounds.x() + 6;
         int right = textRight(context);
@@ -101,7 +101,7 @@ public final class CeleritasSearchBar extends AbstractWidget {
         }
         if (focused)
             context.fill(bounds.x(), bounds.getLimitY() - 1, bounds.getLimitX(), bounds.getLimitY(),
-                DefaultColors.ELEMENT_ACTIVATED);
+                com.sumirelabs.celeritasextra.client.gui.rso.theme.GuiThemes.SELECTED_UNDERLINE);
         if (!text.isEmpty()) {
             String counter = context.substrByWidth(results, Math.max(0, bounds.width() / 3));
             context.drawString(TextComponent.literal(counter),

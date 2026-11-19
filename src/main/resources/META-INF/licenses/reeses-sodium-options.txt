@@ -1,5 +1,6 @@
-Reese's Sodium Options search engine and option action icons
+Reese's Sodium Options GUI, search engine and option action icons
 https://github.com/FlashyReese/reeses-sodium-options/tree/mc26.3-2.2.5
+GUI source: https://github.com/FlashyReese/reeses-sodium-options/tree/97fff483846c7a162aeebffd48373c903d730c38
 
 The MIT License (MIT)
 

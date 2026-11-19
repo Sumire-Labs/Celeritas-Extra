@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.gui.framework.InteractionContext;
-import org.embeddedt.embeddium.impl.gui.theme.DefaultColors;
 import org.embeddedt.embeddium.impl.gui.widgets.FlatButtonWidget;
 import org.embeddedt.embeddium.impl.util.Dim2i;
 import org.junit.jupiter.api.Test;
@@ -36,14 +35,15 @@ class CeleritasSearchBarTest {
     }
 
     @Test
-    void focusedSearchUsesCeleritasAccentAndNativeClearButton() {
+    void focusedSearchUsesRsoAccentAndCompactClearButton() {
         var drawing = new RecordingContext();
         var clears = new AtomicInteger();
         var bar = new CeleritasSearchBar(new Dim2i(0, 0, 300, 20), clears::incrementAndGet);
         bar.update("fps", 3, 3, true, true, "Search options...", "2 results");
         bar.render(drawing.context, -1, -1, 0);
-        assertTrue(drawing.labels.containsAll(List.of("fps", "2 results", "×")));
-        assertTrue(drawing.fills.stream().anyMatch(fill -> fill[4] == DefaultColors.ELEMENT_ACTIVATED));
+        assertTrue(drawing.labels.containsAll(List.of("fps", "2 results", "x")));
+        assertTrue(drawing.fills.stream().anyMatch(
+            fill -> fill[4] == com.sumirelabs.celeritasextra.client.gui.rso.theme.GuiThemes.SELECTED_UNDERLINE));
         assertTrue(bar.clickClear(new InteractionContext() {
         }, 290, 10, 0));
         assertEquals(1, clears.get());

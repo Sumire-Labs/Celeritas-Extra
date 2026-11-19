@@ -11,6 +11,10 @@ and tagged commit history.
 
 ## [Unreleased]
 
+### Changed
+
+- Ported the new Reese's Sodium Options GUI to Celeritas, including its wider layout, mod icon/version headers, tab styling, scroll bars and tooltips. Search results stay in their original mod pages; Enter/Shift+Enter or Tab/Shift+Tab navigate ranked results. Add-on controls, shader-pack actions, search-engine selection and per-option Undo/Reset settings remain supported.
+
 ## [0.11.1] - 2026-11-17
 
 ### Added
