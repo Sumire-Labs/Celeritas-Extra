@@ -13,6 +13,7 @@ import java.util.Locale;
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.FrameCounter;
 import com.sumirelabs.celeritasextra.client.HudInformation;
+import com.sumirelabs.celeritasextra.client.ServerTickRateEstimator;
 import com.sumirelabs.celeritasextra.client.gui.CeleritasExtraGameOptions.HudLine;
 
 import net.minecraft.client.Minecraft;
@@ -66,7 +67,7 @@ public class CeleritasExtraHud {
         boolean warnLightUpdates = !CeleritasExtraClientMod.options().renderSettings.lightUpdates;
         if (!settings.showFps && !settings.showCoords && !settings.showMemory && !warnLightUpdates
             && !settings.showLocalTime && !settings.showWorldDay && !settings.showSessionTime
-            && !settings.showEntityCount && !settings.showRenderedEntities && !settings.showBiome)
+            && !settings.showEntityCount && !settings.showRenderedEntities && !settings.showBiome && !settings.showTps)
             return;
 
         TEXT.beginFrame(System.nanoTime(), mc.gameSettings.language, Locale.getDefault());
@@ -91,6 +92,14 @@ public class CeleritasExtraHud {
         if (settings.showLocalTime)
             add(TEXT.localTime(settings.use12HourClock), HudLine.LOCAL_TIME);
         if (mc.world != null) {
+            if (settings.showTps) {
+                var connection = mc.getConnection();
+                if (mc.isGamePaused() && connection != null)
+                    ServerTickRateEstimator.INSTANCE.reset(connection.getNetworkManager());
+                double tps = ServerTickRateEstimator.INSTANCE.estimate(
+                    connection == null ? null : connection.getNetworkManager(), System.nanoTime());
+                add(TEXT.tps(tps, mc.isGamePaused()), HudLine.TPS);
+            }
             if (settings.showWorldDay)
                 add(TEXT.worldDay(mc.world.getTotalWorldTime()), HudLine.WORLD_DAY);
             if (settings.showSessionTime)

@@ -103,6 +103,7 @@ The following settings and features are added by Celeritas Extra. Individual par
 - Display coordinates
 - Option to display coordinates even when debug information is restricted
 - Display memory usage percentage
+- Display estimated server TPS (optional, with a separate text color; no server-side mod required)
 - Select the overlay position (top left, top right, bottom left, or bottom right)
 - Select overlay text contrast (plain, background, or shadow)
 

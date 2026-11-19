@@ -163,6 +163,8 @@ public class CeleritasExtraGameOptions {
             v -> extraSettings.showEntityCount = v, () -> extraSettings.showEntityCount),
         new BooleanProperty(CAT_EXTRA, "showRenderedEntities", false, "Show unique entity render submissions per frame",
             v -> extraSettings.showRenderedEntities = v, () -> extraSettings.showRenderedEntities),
+        new BooleanProperty(CAT_EXTRA, "showTps", false, "Show estimated server TPS from time packets",
+            v -> extraSettings.showTps = v, () -> extraSettings.showTps),
         new BooleanProperty(CAT_EXTRA, "showBiome", false, "Show the current biome",
             v -> extraSettings.showBiome = v, () -> extraSettings.showBiome),
         new BooleanProperty(CAT_EXTRA, "ignoreReducedDebugInfo", false, "Ignore reduced debug info gamerule",
@@ -741,6 +743,7 @@ public class CeleritasExtraGameOptions {
         public boolean showEntityCount = false;
         public boolean showRenderedEntities = false;
         public boolean showBiome = false;
+        public boolean showTps = false;
         private final Map<HudLine, int[]> hudColors = new EnumMap<>(HudLine.class);
 
         public int hudColor(HudLine line, int channel) {
@@ -780,7 +783,8 @@ public class CeleritasExtraGameOptions {
                 "celeritasextra.option.show_world_day"), SESSION_TIME(
                     "celeritasextra.option.show_session_time"), ENTITY_COUNT(
                         "celeritasextra.option.show_entity_count"), RENDERED_ENTITIES(
-                            "celeritasextra.option.show_rendered_entities"), BIOME("celeritasextra.option.show_biome");
+                            "celeritasextra.option.show_rendered_entities"), BIOME(
+                                "celeritasextra.option.show_biome"), TPS("celeritasextra.option.show_tps");
 
         public static final String[] CHANNELS = {"red", "green", "blue"};
         public static final String[] CHANNEL_LABELS = {"celeritasextra.option.hud_color.red",
@@ -803,6 +807,7 @@ public class CeleritasExtraGameOptions {
                 case ENTITY_COUNT -> "celeritasextra.hud_line.entity_count";
                 case RENDERED_ENTITIES -> "celeritasextra.hud_line.rendered_entities";
                 case BIOME -> "celeritasextra.hud_line.biome";
+                case TPS -> "celeritasextra.hud_line.tps";
             };
         }
         public String category() {

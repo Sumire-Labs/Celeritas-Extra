@@ -261,3 +261,9 @@ celeritasextra.hud_line.session_time=Время сеанса
 celeritasextra.hud_line.entity_count=Загруженные сущности
 celeritasextra.hud_line.rendered_entities=Отрисованные сущности
 celeritasextra.hud_line.biome=Биом
+
+celeritasextra.option.show_tps=Показывать оценку TPS
+celeritasextra.option.show_tps.tooltip=Оценка TPS сервера по последним пяти интервалам пакетов времени (не более 20 TPS). Это не точное измерение сервера. До получения данных и при задержке соединения отображается --.
+celeritasextra.hud_line.tps=Оценка TPS
+celeritasextra.overlay.tps=Оценка TPS: %s
+celeritasextra.overlay.tps_paused=Оценка TPS: Пауза

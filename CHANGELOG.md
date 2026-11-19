@@ -11,6 +11,10 @@ and tagged commit history.
 
 ## [Unreleased]
 
+### Added
+
+- Added an optional estimated TPS HUD line with its own RGB controls. It averages five time-packet intervals, displays unavailable or paused states, and works without a server-side mod.
+
 ### Changed
 
 - Split sky/cloud settings from weather/fog, added a dedicated HUD page with FPS, coordinates, memory, time, world information, appearance and F3 sections, and grouped interface settings separately. HUD colors, dimension fog and per-mod particle controls now fold without discarding edits; both search engines include hidden settings and section names.

@@ -28,6 +28,8 @@ public final class HudTextCache {
     private long dayValue, sessionValue, heapUsed = -1, heapMax;
     private int entityValue, renderedValue;
     private boolean twelveHour;
+    private String tps;
+    private long tpsValue;
     private WeakReference<Object> biomeWorld = new WeakReference<>(null);
 
     public HudTextCache() {
@@ -46,6 +48,7 @@ public final class HudTextCache {
             nextRefresh = now + REFRESH_NS;
             fps = coordinates = memory = lightWarning = null;
             clock = worldDay = session = entities = rendered = biome = memoryPercent = memoryAmount = null;
+            tps = null;
             heapUsed = -1;
         }
     }
@@ -156,6 +159,20 @@ public final class HudTextCache {
             entities = formatter.format("celeritasextra.overlay.entity_count", count);
         }
         return entities;
+    }
+
+    public String tps(double estimate, boolean paused) {
+        long value = paused
+            ? -2
+            : Double.isFinite(estimate) ? Math.round(Math.max(0, Math.min(20, estimate)) * 100) : -1;
+        if (tps == null || tpsValue != value) {
+            tpsValue = value;
+            tps = value == -2
+                ? formatter.format("celeritasextra.overlay.tps_paused")
+                : formatter.format("celeritasextra.overlay.tps",
+                    value == -1 ? "--" : String.format(Locale.ROOT, "%.2f", value / 100.0));
+        }
+        return tps;
     }
 
     public boolean needsBiome(Object world) {

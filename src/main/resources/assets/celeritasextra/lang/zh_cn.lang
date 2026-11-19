@@ -261,3 +261,9 @@ celeritasextra.hud_line.session_time=会话时间
 celeritasextra.hud_line.entity_count=已加载实体
 celeritasextra.hud_line.rendered_entities=已渲染实体
 celeritasextra.hud_line.biome=生物群系
+
+celeritasextra.option.show_tps=显示估算 TPS
+celeritasextra.option.show_tps.tooltip=根据最近五次时间更新数据包的接收间隔估算服务器 TPS（最高 20）。这不是服务器的精确测量值。等待样本或连接停滞时显示 --。
+celeritasextra.hud_line.tps=估算 TPS
+celeritasextra.overlay.tps=估算 TPS: %s
+celeritasextra.overlay.tps_paused=估算 TPS: 已暂停

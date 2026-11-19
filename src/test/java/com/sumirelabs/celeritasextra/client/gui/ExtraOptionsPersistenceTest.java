@@ -73,7 +73,9 @@ class ExtraOptionsPersistenceTest {
         var options = CeleritasExtraGameOptions.load(file);
         var extra = options.extraSettings;
         extra.showLocalTime = extra.use12HourClock = extra.showWorldDay = extra.showSessionTime = true;
-        extra.showEntityCount = extra.showRenderedEntities = extra.showBiome = true;
+        assertFalse(extra.showTps);
+        extra.showEntityCount = extra.showRenderedEntities = extra.showBiome = extra.showTps = true;
+        extra.setHudColor(CeleritasExtraGameOptions.HudLine.TPS, 0, 32);
         extra.showMemoryExtended = false;
         extra.setHudColor(CeleritasExtraGameOptions.HudLine.BIOME, 0, 17);
         extra.setHudColor(CeleritasExtraGameOptions.HudLine.BIOME, 1, -10);
@@ -84,7 +86,8 @@ class ExtraOptionsPersistenceTest {
         assertTrue(reloaded.extraSettings.showLocalTime && reloaded.extraSettings.use12HourClock
             && reloaded.extraSettings.showWorldDay && reloaded.extraSettings.showSessionTime
             && reloaded.extraSettings.showEntityCount && reloaded.extraSettings.showRenderedEntities
-            && reloaded.extraSettings.showBiome);
+            && reloaded.extraSettings.showBiome && reloaded.extraSettings.showTps);
+        assertEquals(0x20FFFF, reloaded.extraSettings.hudColor(CeleritasExtraGameOptions.HudLine.TPS));
         assertFalse(reloaded.extraSettings.showMemoryExtended);
         assertFalse(reloaded.detailSettings.rainSnowCulling);
         assertEquals(0x1100FF, reloaded.extraSettings.hudColor(CeleritasExtraGameOptions.HudLine.BIOME));
