@@ -62,6 +62,7 @@ final class ForgeExtraTranslations {
         Map.entry("render.enchantingTableBooks", "sodium-extra.option.enchanting_table_book"),
         Map.entry("render.lightUpdates", "sodium-extra.option.light_updates"),
         Map.entry("extra.showFps", "sodium-extra.option.show_fps"),
+        Map.entry("extra.useNewGui", "celeritasextra.option.use_new_gui"),
         Map.entry("extra.replaceSearchWithRso", "celeritasextra.option.replace_search_with_rso"),
         Map.entry("extra.showUndoButton", "celeritasextra.option.show_undo_button"),
         Map.entry("extra.showResetButton", "celeritasextra.option.show_reset_button"),

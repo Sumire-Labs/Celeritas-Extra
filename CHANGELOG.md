@@ -11,6 +11,12 @@ and tagged commit history.
 
 ## [Unreleased]
 
+## [0.11.3-beta] - 2026-11-19
+
+### Added
+
+- Added "Use New GUI", enabled by default, to switch between the original Celeritas GUI and the new RSO-style GUI after Apply. Search engine selection remains independent, and both layouts retain per-option Undo/Reset and add-on tabs.
+
 ## [0.11.2-beta] - 2026-11-19
 
 ### Changed
@@ -559,7 +565,8 @@ No user-facing changes.
 - Initial public release of Celeritas Extra for Minecraft 1.12.2 with Cleanroom Loader and Celeritas.
 - Animation and particle toggles, graphics and rendering options, and quality-of-life features backported from Embeddium/Rubidium Extra.
 
-[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.2-beta...HEAD
+[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.3-beta...HEAD
+[0.11.3-beta]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.2-beta...0.11.3-beta
 [0.11.2-beta]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.1-release...0.11.2-beta
 [0.11.1]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.0-release...0.11.1-release
 [0.11.0]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...0.11.0-release

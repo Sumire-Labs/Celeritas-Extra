@@ -25,13 +25,19 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     private int actionMask = -1;
     private boolean holding;
     private boolean searchSelected;
+    private final boolean rsoStyle;
     private final com.sumirelabs.celeritasextra.client.gui.rso.theme.RowDrawContext rowContext = new com.sumirelabs.celeritasextra.client.gui.rso.theme.RowDrawContext();
     public void setSearchSelected(boolean selected) {
         searchSelected = selected;
     }
 
     public OptionActionElement(Option<T> option, Dim2i dim) {
+        this(option, dim, true);
+    }
+
+    public OptionActionElement(Option<T> option, Dim2i dim, boolean rsoStyle) {
         super(option, dim);
+        this.rsoStyle = rsoStyle;
         layout();
     }
 
@@ -58,7 +64,9 @@ public final class OptionActionElement<T> extends ControlElement<T> {
     @Override
     public void render(DrawContext context, int x, int y, float delta) {
         layout();
-        control.render(rowContext.bind(context, control.getDimensions(), searchSelected || control.isMouseOver(x, y)),
+        control.render(rsoStyle
+            ? rowContext.bind(context, control.getDimensions(), searchSelected || control.isMouseOver(x, y))
+            : context,
             x, y, delta);
         if (searchSelected)
             context.drawBorder(control.getDimensions().x(), dim.y(), control.getDimensions().getLimitX(),

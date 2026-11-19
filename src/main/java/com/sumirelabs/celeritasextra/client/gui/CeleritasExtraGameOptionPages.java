@@ -1015,6 +1015,10 @@ public class CeleritasExtraGameOptionPages {
             .add(booleanOption("celeritasextra.option.show_reset_button",
                 (opts, value) -> opts.extraSettings.showResetButton = value,
                 opts -> opts.extraSettings.showResetButton))
+            .addConditionally(com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasControllerGui(),
+                () -> booleanOption("celeritasextra.option.use_new_gui",
+                    (opts, value) -> opts.extraSettings.useNewGui = value,
+                    opts -> opts.extraSettings.useNewGui))
             .addConditionally(com.sumirelabs.celeritasextra.compat.CeleritasGuiCompatibility.hasNativeSearch(),
                 () -> booleanOption("celeritasextra.option.replace_search_with_rso",
                     (opts, value) -> opts.extraSettings.replaceSearchWithRso = value,

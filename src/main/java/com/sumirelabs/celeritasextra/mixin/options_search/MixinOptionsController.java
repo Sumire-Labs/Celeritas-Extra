@@ -13,6 +13,7 @@ import org.embeddedt.embeddium.impl.gui.CeleritasVideoOptionsController;
 import org.embeddedt.embeddium.impl.gui.frame.AbstractFrame;
 import org.embeddedt.embeddium.impl.gui.frame.BasicFrame;
 import org.embeddedt.embeddium.impl.gui.frame.tab.Tab;
+import org.embeddedt.embeddium.impl.gui.frame.tab.TabFrame;
 import org.embeddedt.embeddium.impl.gui.framework.DrawContext;
 import org.embeddedt.embeddium.impl.gui.framework.TextComponent;
 import org.embeddedt.embeddium.impl.gui.widgets.FlatButtonWidget;
@@ -30,6 +31,7 @@ import org.taumc.celeritas.api.options.structure.OptionPage;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.sumirelabs.celeritasextra.client.CeleritasExtraClientMod;
 import com.sumirelabs.celeritasextra.client.gui.CollapsibleTabFrame;
+import com.sumirelabs.celeritasextra.client.gui.NativeOptionActionFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionActionFrame;
 import com.sumirelabs.celeritasextra.client.gui.OptionSearchQuery;
 import com.sumirelabs.celeritasextra.client.gui.OptionsCollapseState;
@@ -68,6 +70,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Unique private SearchIndex<Option<?>> celeritasExtra$searchIndex;
     @Unique private final OptionsCollapseState celeritasExtra$collapse = new OptionsCollapseState();
     @Unique private boolean celeritasExtra$rso = true;
+    @Unique private boolean celeritasExtra$newGui = true;
     @Unique private int celeritasExtra$searchCursor = -1;
     @Unique private Option<?> celeritasExtra$selectedResult;
     @Unique private int celeritasExtra$pageHeight;
@@ -80,12 +83,12 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
 
     @ModifyConstant(method = "parentFrameBuilder", constant = @Constant(floatValue = 1.25F))
     private float celeritasExtra$wideLayout(float original) {
-        return ScreenLayout.ASPECT_RATIO;
+        return celeritasExtra$newGui ? ScreenLayout.ASPECT_RATIO : original;
     }
 
     @ModifyConstant(method = "parentFrameBuilder", constant = @Constant(intValue = 550))
     private int celeritasExtra$allowWideLayoutAtSmallScales(int original) {
-        return 0;
+        return celeritasExtra$newGui ? 0 : original;
     }
 
     @Override
@@ -102,16 +105,21 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     @Inject(method = "init", at = @At("HEAD"))
     private void celeritasExtra$refreshCount(int width, int height, CallbackInfo ci) {
         celeritasExtra$rso = celeritasExtra$requestedRso();
+        celeritasExtra$newGui = CeleritasExtraClientMod.options().extraSettings.useNewGui;
         celeritasExtra$results = -1;
         celeritasExtra$ranked = null;
     }
 
     @Inject(method = "applyChanges", at = @At("RETURN"))
     private void celeritasExtra$applySearchMode(CallbackInfo ci) {
-        if (celeritasExtra$rso == celeritasExtra$requestedRso())
+        if (celeritasExtra$rso == celeritasExtra$requestedRso()
+            && celeritasExtra$newGui == CeleritasExtraClientMod.options().extraSettings.useNewGui)
             return;
-        NativeOptionsSearch.clear(this);
-        celeritasExtra$query = new OptionSearchQuery("");
+        if (celeritasExtra$rso != celeritasExtra$requestedRso()) {
+            NativeOptionsSearch.clear(this);
+            celeritasExtra$query = new OptionSearchQuery("");
+        }
+        celeritasExtra$collapse.selectTab(null);
         optionPageScrollBarOffset.set(0);
         tabFrameScrollBarOffset.set(0);
         init(width, height);
@@ -203,6 +211,8 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
     private void celeritasExtra$searchLayout(Dim2i parent, Dim2i tabs, CallbackInfoReturnable<BasicFrame.Builder> cir) {
         celeritasExtra$pageHeight = tabs.height();
         celeritasExtra$bounds = new Dim2i(tabs.x(), Math.max(2, tabs.y() - 26), tabs.width(), 20);
+        if (!celeritasExtra$newGui)
+            return;
         applyButton.setStyle(GuiThemes.buttonStyle());
         closeButton.setStyle(GuiThemes.buttonStyle());
         undoButton.setStyle(GuiThemes.buttonStyle());
@@ -235,8 +245,11 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
                             .filter(page.getOptions()::contains).toList(), celeritasExtra$selectedResult)
                         : predicate;
                     filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(),
-                        dim -> OptionActionFrame.createRso(dim, page, pageFilter,
-                            optionPageScrollBarOffset, celeritasExtra$collapse, searching, () -> init(width, height)));
+                        dim -> celeritasExtra$newGui
+                            ? OptionActionFrame.createRso(dim, page, pageFilter,
+                                optionPageScrollBarOffset, celeritasExtra$collapse, searching,
+                                () -> init(width, height))
+                            : NativeOptionActionFrame.create(dim, page, pageFilter, optionPageScrollBarOffset));
                 } else {
                     if (rsoSearching && !celeritasExtra$query.matches(
                         font.extractString(tab.title()) + "\n" + tab.title() + "\n" + tab.id()))
@@ -248,6 +261,9 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
             }
         }
         celeritasExtra$results = -1;
+        if (!celeritasExtra$newGui)
+            return new TabFrame(font, bounds, false, tabs, () -> optionPageScrollBarOffset.set(0),
+                tabFrameSelectedTab, tabFrameScrollBarOffset);
         return new CollapsibleTabFrame(bounds, font, tabs, celeritasExtra$collapse,
             searching, tabFrameSelectedTab, tabFrameScrollBarOffset,
             () -> optionPageScrollBarOffset.set(0), () -> init(width, height), optionPageScrollBarOffset);

@@ -261,3 +261,6 @@ celeritasextra.hud_line.session_time=Session Time
 celeritasextra.hud_line.entity_count=Loaded Entities
 celeritasextra.hud_line.rendered_entities=Rendered Entities
 celeritasextra.hud_line.biome=Biome
+
+celeritasextra.option.use_new_gui=Use New GUI
+celeritasextra.option.use_new_gui.tooltip=Uses the new RSO-style GUI instead of the original Celeritas GUI. Enabled by default. Takes effect after Apply. Search engine selection is independent.

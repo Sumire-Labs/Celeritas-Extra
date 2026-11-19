@@ -261,3 +261,6 @@ celeritasextra.hud_line.session_time=Время сеанса
 celeritasextra.hud_line.entity_count=Загруженные сущности
 celeritasextra.hud_line.rendered_entities=Отрисованные сущности
 celeritasextra.hud_line.biome=Биом
+
+celeritasextra.option.use_new_gui=Использовать новый интерфейс
+celeritasextra.option.use_new_gui.tooltip=Использует новый интерфейс в стиле RSO вместо исходного интерфейса Celeritas. По умолчанию включён. Вступает в силу после применения. Поисковая система выбирается отдельно.

@@ -25,6 +25,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtraOptionsPersistenceTest {
 
     @Test
+    void guiAndSearchPreferencesDefaultOnAndPersistIndependently() {
+        var file = directory.resolve("gui.cfg").toFile();
+        var options = CeleritasExtraGameOptions.load(file);
+        assertTrue(options.extraSettings.useNewGui);
+        assertTrue(options.extraSettings.replaceSearchWithRso);
+        for (boolean gui : new boolean[]{false, true}) {
+            for (boolean search : new boolean[]{false, true}) {
+                options.extraSettings.useNewGui = gui;
+                options.extraSettings.replaceSearchWithRso = search;
+                options.writeChanges();
+                options = CeleritasExtraGameOptions.load(file);
+                assertEquals(gui, options.extraSettings.useNewGui);
+                assertEquals(search, options.extraSettings.replaceSearchWithRso);
+            }
+        }
+    }
+
+    @Test
     void itemCacheAndFrameLodDefaultsChangeWithoutOverwritingSavedChoices() {
         var file = directory.resolve("item-defaults.cfg").toFile();
         var options = CeleritasExtraGameOptions.load(file);

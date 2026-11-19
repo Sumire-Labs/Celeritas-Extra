@@ -261,3 +261,6 @@ celeritasextra.hud_line.session_time=セッション時間
 celeritasextra.hud_line.entity_count=読み込み済みエンティティ数
 celeritasextra.hud_line.rendered_entities=描画エンティティ数
 celeritasextra.hud_line.biome=バイオーム
+
+celeritasextra.option.use_new_gui=新しいGUIを使用
+celeritasextra.option.use_new_gui.tooltip=元のCeleritas GUIの代わりに、RSO風の新しいGUIを使用します。初期値は有効です。「適用」後に切り替わります。検索エンジンは別の設定で選択できます。

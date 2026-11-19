@@ -76,6 +76,8 @@ public class CeleritasExtraGameOptions {
             v -> particleSettings.blockBreak = v, () -> particleSettings.blockBreak),
         new BooleanProperty(CAT_PARTICLE, "blockBreaking", true, "Enable/disable block breaking particles",
             v -> particleSettings.blockBreaking = v, () -> particleSettings.blockBreaking),
+        new BooleanProperty(CAT_EXTRA, "useNewGui", true, "Use the new RSO-style Celeritas GUI",
+            v -> extraSettings.useNewGui = v, () -> extraSettings.useNewGui),
         new BooleanProperty(CAT_EXTRA, "replaceSearchWithRso", true,
             "Replace Celeritas's built-in search with Reese's Sodium Options search",
             v -> extraSettings.replaceSearchWithRso = v, () -> extraSettings.replaceSearchWithRso),
@@ -728,6 +730,7 @@ public class CeleritasExtraGameOptions {
 
         public boolean showFps = false;
         public boolean replaceSearchWithRso = true;
+        public boolean useNewGui = true;
         public boolean showUndoButton = true;
         public boolean showResetButton = true;
         public boolean showFPSExtended = true;

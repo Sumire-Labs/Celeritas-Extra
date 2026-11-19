@@ -261,3 +261,6 @@ celeritasextra.hud_line.session_time=会话时间
 celeritasextra.hud_line.entity_count=已加载实体
 celeritasextra.hud_line.rendered_entities=已渲染实体
 celeritasextra.hud_line.biome=生物群系
+
+celeritasextra.option.use_new_gui=使用新界面
+celeritasextra.option.use_new_gui.tooltip=使用 RSO 风格的新界面替代原版 Celeritas 界面，默认开启。点击应用后生效。搜索引擎可独立选择。
