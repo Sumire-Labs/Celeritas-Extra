@@ -14,7 +14,6 @@
   "setSourceFile": true,
   "server": [],
   "client": [
-    "hud.MixinNetworkManager",
     "item_cache.BufferBuilderOffsets",
     "item_cache.ItemColorsAccess",
     "item_cache.MixinRenderItemVertexCache",

@@ -896,8 +896,6 @@ public class CeleritasExtraGameOptionPages {
             .add(booleanOption("celeritasextra.option.show_rendered_entities",
                 (opts, value) -> opts.extraSettings.showRenderedEntities = value,
                 opts -> opts.extraSettings.showRenderedEntities))
-            .add(booleanOption("celeritasextra.option.show_tps",
-                (opts, value) -> opts.extraSettings.showTps = value, opts -> opts.extraSettings.showTps))
             .add(booleanOption("celeritasextra.option.show_biome",
                 (opts, value) -> opts.extraSettings.showBiome = value, opts -> opts.extraSettings.showBiome))
             .build());

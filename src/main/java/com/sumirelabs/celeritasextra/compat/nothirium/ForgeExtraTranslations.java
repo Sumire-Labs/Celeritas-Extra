@@ -75,7 +75,6 @@ final class ForgeExtraTranslations {
         Map.entry("extra.showSessionTime", "celeritasextra.option.show_session_time"),
         Map.entry("extra.showEntityCount", "celeritasextra.option.show_entity_count"),
         Map.entry("extra.showRenderedEntities", "celeritasextra.option.show_rendered_entities"),
-        Map.entry("extra.showTps", "celeritasextra.option.show_tps"),
         Map.entry("extra.showBiome", "celeritasextra.option.show_biome"),
         Map.entry("extra.showCoords", "sodium-extra.option.show_coordinates"),
         Map.entry("extra.ignoreReducedDebugInfo", "celeritasextra.option.ignore_reduced_debug_info"),

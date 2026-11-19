@@ -164,7 +164,7 @@ public final class ForgeExtraConfigElements {
             "mapBackFaceCulling", "entityDistanceExemptions");
         var overlay = take(extra, "showFps", "showFPSExtended", "showCoords", "showMemory", "showMemoryExtended",
             "showLocalTime", "use12HourClock", "showWorldDay", "showSessionTime", "showEntityCount",
-            "showRenderedEntities", "showBiome", "showTps", "ignoreReducedDebugInfo", "overlayCorner", "textContrast",
+            "showRenderedEntities", "showBiome", "ignoreReducedDebugInfo", "overlayCorner", "textContrast",
             "steadyDebugHud", "steadyDebugHudRefreshInterval");
         var colorPages = new ArrayList<IConfigElement>();
         for (var line : CeleritasExtraGameOptions.HudLine.values()) {
@@ -204,7 +204,7 @@ public final class ForgeExtraConfigElements {
         hud.add(new DummyCategoryElement("time", "celeritasextra.group.time",
             take(overlay, "showLocalTime", "use12HourClock", "showWorldDay", "showSessionTime")));
         hud.add(new DummyCategoryElement("world", "celeritasextra.group.world",
-            take(overlay, "showEntityCount", "showRenderedEntities", "showBiome", "showTps")));
+            take(overlay, "showEntityCount", "showRenderedEntities", "showBiome")));
         hud.add(new DummyCategoryElement("appearance", "celeritasextra.group.appearance",
             take(overlay, "overlayCorner", "textContrast", "hudColors")));
         hud.add(new DummyCategoryElement("debug", "celeritasextra.group.debug",

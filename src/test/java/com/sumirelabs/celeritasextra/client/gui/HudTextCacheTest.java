@@ -16,19 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class HudTextCacheTest {
 
     @Test
-    void tpsDistinguishesUnavailablePausedAndRoundedValues() {
-        cache.beginFrame(0, "en_us", Locale.US);
-        assertTrue(cache.tps(Double.NaN, false).endsWith("[--]"));
-        assertTrue(cache.tps(19.456, false).endsWith("[19.46]"));
-        String text = cache.tps(19.456, false);
-        assertSame(text, cache.tps(19.459, false));
-        assertTrue(cache.tps(19.456, true).contains("tps_paused"));
-        assertEquals(text, cache.tps(19.456, false));
-        cache.beginFrame(1, "ja_jp", Locale.JAPAN);
-        assertNotSame(text, cache.tps(19.456, false));
-    }
-
-    @Test
     void informationLinesUseCorrectDaySessionAndClockFormats() {
         cache.beginFrame(0, "en_us", Locale.US);
         assertTrue(cache.worldDay(23999).endsWith("[0]"));

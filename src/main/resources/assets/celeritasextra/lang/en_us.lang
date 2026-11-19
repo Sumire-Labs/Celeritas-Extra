@@ -261,9 +261,3 @@ celeritasextra.hud_line.session_time=Session Time
 celeritasextra.hud_line.entity_count=Loaded Entities
 celeritasextra.hud_line.rendered_entities=Rendered Entities
 celeritasextra.hud_line.biome=Biome
-
-celeritasextra.option.show_tps=Show Estimated TPS
-celeritasextra.option.show_tps.tooltip=Estimates server ticks per second from the last five time-packet intervals (maximum 20 TPS). This is not an exact server measurement. Shows -- while waiting for samples or after a connection stall.
-celeritasextra.hud_line.tps=Estimated TPS
-celeritasextra.overlay.tps=Estimated TPS: %s
-celeritasextra.overlay.tps_paused=Estimated TPS: Paused

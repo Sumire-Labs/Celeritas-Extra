@@ -261,9 +261,3 @@ celeritasextra.hud_line.session_time=セッション時間
 celeritasextra.hud_line.entity_count=読み込み済みエンティティ数
 celeritasextra.hud_line.rendered_entities=描画エンティティ数
 celeritasextra.hud_line.biome=バイオーム
-
-celeritasextra.option.show_tps=推定TPSを表示
-celeritasextra.option.show_tps.tooltip=直近5回の時刻更新パケットの受信間隔からサーバーのTPSを推定します（最大20）。正確なサーバー計測値ではありません。測定前や通信が途絶えた場合は -- を表示します。
-celeritasextra.hud_line.tps=推定TPS
-celeritasextra.overlay.tps=推定TPS: %s
-celeritasextra.overlay.tps_paused=推定TPS: 一時停止
