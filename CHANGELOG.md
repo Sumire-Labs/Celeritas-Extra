@@ -11,6 +11,8 @@ and tagged commit history.
 
 ## [Unreleased]
 
+## [0.11.2-beta] - 2026-11-19
+
 ### Changed
 
 - Split sky/cloud settings from weather/fog, added a dedicated HUD page with FPS, coordinates, memory, time, world information, appearance and F3 sections, and grouped interface settings separately. HUD colors, dimension fog and per-mod particle controls now fold without discarding edits; both search engines include hidden settings and section names.
@@ -557,7 +559,8 @@ No user-facing changes.
 - Initial public release of Celeritas Extra for Minecraft 1.12.2 with Cleanroom Loader and Celeritas.
 - Animation and particle toggles, graphics and rendering options, and quality-of-life features backported from Embeddium/Rubidium Extra.
 
-[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.1-release...HEAD
+[Unreleased]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.2-beta...HEAD
+[0.11.2-beta]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.1-release...0.11.2-beta
 [0.11.1]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.11.0-release...0.11.1-release
 [0.11.0]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.3-release...0.11.0-release
 [0.10.3]: https://github.com/Sumire-Labs/Celeritas-Extra/compare/0.10.2-release...0.10.3-release
