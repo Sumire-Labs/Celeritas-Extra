@@ -240,3 +240,24 @@ celeritasextra.option.show_undo_button.tooltip=Показывать кнопки
 celeritasextra.option.show_reset_button=Показывать кнопки сброса
 celeritasextra.option.show_reset_button.tooltip=Показывать кнопки сброса возле настроек, отличающихся от значений по умолчанию. Общие кнопки экрана не затрагиваются. Изменения вступают в силу после нажатия «Применить» или «Готово».
 celeritasextra.option.replace_search_with_rso.tooltip=Использовать поиск Reese's Sodium Options с сортировкой по релевантности и поиском по описаниям. Отключите для встроенного поиска Celeritas. Изменения вступают в силу после нажатия «Применить».
+
+# Settings categories and collapsible sections
+celeritasextra.page.sky_clouds=Небо и облака
+celeritasextra.page.weather_fog=Погода и туман
+celeritasextra.page.render_optimization=Отрисовка и оптимизация
+celeritasextra.page.hud=HUD и информация
+celeritasextra.page.interface=Экран и управление
+celeritasextra.group.fps=FPS
+celeritasextra.group.coordinates=Координаты
+celeritasextra.group.memory=Память
+celeritasextra.group.time=Время
+celeritasextra.group.world=Информация о мире
+celeritasextra.group.appearance=Оформление
+celeritasextra.group.debug=Отладочный экран F3
+celeritasextra.group.color=Цвет: %s
+celeritasextra.hud_line.local_time=Местное время
+celeritasextra.hud_line.world_day=Возраст мира
+celeritasextra.hud_line.session_time=Время сеанса
+celeritasextra.hud_line.entity_count=Загруженные сущности
+celeritasextra.hud_line.rendered_entities=Отрисованные сущности
+celeritasextra.hud_line.biome=Биом

@@ -13,9 +13,9 @@ and tagged commit history.
 
 ### Changed
 
+- Split sky/cloud settings from weather/fog, added a dedicated HUD page with FPS, coordinates, memory, time, world information, appearance and F3 sections, and grouped interface settings separately. HUD colors, dimension fog and per-mod particle controls now fold without discarding edits; both search engines include hidden settings and section names.
 - Aligned translated labels and descriptions with upstream projects across English, Japanese, Russian and Simplified Chinese, while retaining accurate 1.12.2-specific explanations and localized text where upstream translations are incomplete.
 - Enabled the experimental static item vertex cache by default and set the default item-frame LOD distance to 3 blocks. Existing saved choices are preserved.
-- Reorganized Extra settings into Sodium Extra's five categories: Animations, Particles, Details, Render, and Extras. Sky/weather settings are under Details; fog, dimension fog, entity and block rendering are under Render; cloud, HUD and interface settings are under Extras. Existing configuration values are preserved, and the same categories are used in Celeritas, Pintonium and the standalone screen.
 - Ported the new Reese's Sodium Options GUI to Celeritas, including its wider layout, mod icon/version headers, tab styling, scroll bars and tooltips. Search results stay in their original mod pages; Enter/Shift+Enter or Tab/Shift+Tab navigate ranked results. Add-on controls, shader-pack actions, search-engine selection and per-option Undo/Reset settings remain supported.
 
 ## [0.11.1] - 2026-11-17

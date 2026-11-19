@@ -240,3 +240,24 @@ celeritasextra.option.show_undo_button.tooltip=在更改的选项上显示撤消
 celeritasextra.option.show_reset_button=显示重置按钮
 celeritasextra.option.show_reset_button.tooltip=在当前设置与默认设置不同的选项上显示重置为默认设置按钮
 celeritasextra.option.replace_search_with_rso.tooltip=使用 Reese's Sodium Options 搜索，支持按相关度排序和搜索选项说明。禁用后使用 Celeritas 内置搜索。更改在点击“应用”后生效。
+
+# Settings categories and collapsible sections
+celeritasextra.page.sky_clouds=天空与云
+celeritasextra.page.weather_fog=天气与雾
+celeritasextra.page.render_optimization=渲染与优化
+celeritasextra.page.hud=HUD 与信息
+celeritasextra.page.interface=界面与操作
+celeritasextra.group.fps=FPS
+celeritasextra.group.coordinates=坐标
+celeritasextra.group.memory=内存
+celeritasextra.group.time=时间
+celeritasextra.group.world=世界信息
+celeritasextra.group.appearance=外观
+celeritasextra.group.debug=F3 调试信息
+celeritasextra.group.color=%s颜色
+celeritasextra.hud_line.local_time=当地时间
+celeritasextra.hud_line.world_day=世界天数
+celeritasextra.hud_line.session_time=会话时间
+celeritasextra.hud_line.entity_count=已加载实体
+celeritasextra.hud_line.rendered_entities=已渲染实体
+celeritasextra.hud_line.biome=生物群系

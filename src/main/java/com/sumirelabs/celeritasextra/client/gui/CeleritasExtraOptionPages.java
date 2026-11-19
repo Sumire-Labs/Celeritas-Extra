@@ -15,13 +15,16 @@ import org.taumc.celeritas.api.options.OptionIdentifier;
  * Each identifier pairs the {@code celeritasextra} namespace with a page key and
  * serves as a stable handle for the extra pages when they are registered into the
  * Celeritas options GUI by {@link CeleritasExtraOptionsListener}. The pages cover
- * animations, particles, details, rendering, and extras. Legacy page identifiers remain available
+ * animations, particles, sky/clouds, weather/fog, rendering, HUD and interface settings. Legacy page identifiers remain available
  * for callers of the individual page factories.
  */
 public class CeleritasExtraOptionPages {
 
     public static final OptionIdentifier<Void> ANIMATION = OptionIdentifier.create("celeritasextra", "animation");
     public static final OptionIdentifier<Void> PARTICLE = OptionIdentifier.create("celeritasextra", "particle");
+    public static final OptionIdentifier<Void> SKY_CLOUDS = OptionIdentifier.create("celeritasextra", "sky_clouds");
+    public static final OptionIdentifier<Void> WEATHER_FOG = OptionIdentifier.create("celeritasextra", "weather_fog");
+    public static final OptionIdentifier<Void> HUD = OptionIdentifier.create("celeritasextra", "hud");
     public static final OptionIdentifier<Void> DETAILS = OptionIdentifier.create("celeritasextra", "details");
     public static final OptionIdentifier<Void> RENDER = OptionIdentifier.create("celeritasextra", "render");
     public static final OptionIdentifier<Void> EXTRAS = OptionIdentifier.create("celeritasextra", "extra");

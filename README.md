@@ -123,7 +123,8 @@ The following settings and features are added by Celeritas Extra. Individual par
 
 ### Settings Screen and Controls
 
-- Five Extra categories based on Sodium Extra: Animations, Particles, Details, Render, and Extras
+- Extra categories for Animations, Particles, Sky & Clouds, Weather & Fog, Rendering & Optimization, HUD & Information, and Screen & Controls
+- Collapsible HUD color settings, dimension fog, and per-mod particle controls; hidden settings remain searchable
 - Reese's Sodium Options GUI adapted for Celeritas, with a wide layout, mod icons/version labels, scrolling tabs, and tooltips
 - Search settings
 - Keep search results in their original mod pages and cycle through ranked results with `Enter` / `Shift+Enter` or `Tab` / `Shift+Tab`

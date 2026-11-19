@@ -792,6 +792,19 @@ public class CeleritasExtraGameOptions {
         public String labelKey() {
             return label;
         }
+        public String colorLabelKey() {
+            return switch (this) {
+                case FPS -> "celeritasextra.group.fps";
+                case COORDINATES -> "celeritasextra.group.coordinates";
+                case MEMORY -> "celeritasextra.group.memory";
+                case LOCAL_TIME -> "celeritasextra.hud_line.local_time";
+                case WORLD_DAY -> "celeritasextra.hud_line.world_day";
+                case SESSION_TIME -> "celeritasextra.hud_line.session_time";
+                case ENTITY_COUNT -> "celeritasextra.hud_line.entity_count";
+                case RENDERED_ENTITIES -> "celeritasextra.hud_line.rendered_entities";
+                case BIOME -> "celeritasextra.hud_line.biome";
+            };
+        }
         public String category() {
             return "hud_color_" + name().toLowerCase(java.util.Locale.ROOT);
         }

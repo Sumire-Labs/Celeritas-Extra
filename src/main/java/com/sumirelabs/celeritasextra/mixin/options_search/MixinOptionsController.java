@@ -190,7 +190,8 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
                 List<Option<?>> options = pages.stream().flatMap(page -> page.getOptions().stream()).distinct()
                     .toList();
                 celeritasExtra$searchIndex = OptionSearchQuery.index(options,
-                    option -> font.extractString(option.getName()) + " " + font.extractString(option.getTooltip()));
+                    option -> font.extractString(option.getName()) + " " + font.extractString(option.getTooltip())
+                        + com.sumirelabs.celeritasextra.client.gui.OptionSections.searchTerms(option, font));
             }
             celeritasExtra$ranked = celeritasExtra$query.results(celeritasExtra$searchIndex)
                 .stream().<Option<?>>map(result -> result.item()).toList();
@@ -235,7 +236,7 @@ public abstract class MixinOptionsController implements SearchableOptionsControl
                         : predicate;
                     filtered = new Tab<>(tab.id(), tab.title(), tab.onSelectFunction(),
                         dim -> OptionActionFrame.createRso(dim, page, pageFilter,
-                            optionPageScrollBarOffset));
+                            optionPageScrollBarOffset, celeritasExtra$collapse, searching, () -> init(width, height)));
                 } else {
                     if (rsoSearching && !celeritasExtra$query.matches(
                         font.extractString(tab.title()) + "\n" + tab.title() + "\n" + tab.id()))

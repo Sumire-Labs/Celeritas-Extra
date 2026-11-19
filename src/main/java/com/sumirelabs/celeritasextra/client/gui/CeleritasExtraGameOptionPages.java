@@ -37,9 +37,9 @@ import net.minecraftforge.common.DimensionManager;
  */
 public class CeleritasExtraGameOptionPages {
 
-    /** Sodium Extra's five-page organization. Legacy factories remain available to integrations. */
+    /** User-facing categories. Legacy factories remain available to integrations. */
     public static List<OptionPage> registeredPages() {
-        return List.of(animation(), particle(), details(), render(), extras());
+        return List.of(animation(), particle(), skyAndClouds(), weatherAndFog(), render(), hud(), interfaceOptions());
     }
 
     public static OptionPage details() {
@@ -50,12 +50,11 @@ public class CeleritasExtraGameOptionPages {
 
     public static OptionPage render() {
         var groups = new ArrayList<OptionGroup>();
-        groups.addAll(fogGroups());
-        groups.addAll(dimensionFogGroups());
         groups.addAll(entitiesGroups());
         groups.addAll(blocksGroups());
         return new OptionPage(CeleritasExtraOptionPages.RENDER,
-            TextComponent.literal(Translations.format("sodium-extra.option.render")), ImmutableList.copyOf(groups));
+            TextComponent.literal(Translations.format("celeritasextra.page.render_optimization")),
+            ImmutableList.copyOf(groups));
     }
 
     public static OptionPage extras() {
@@ -67,8 +66,53 @@ public class CeleritasExtraGameOptionPages {
             TextComponent.literal(Translations.format("sodium-extra.option.extras")), ImmutableList.copyOf(groups));
     }
 
+    public static OptionPage skyAndClouds() {
+        var groups = new ArrayList<OptionGroup>(skyOnlyGroups());
+        groups.addAll(cloudsGroups());
+        return new OptionPage(CeleritasExtraOptionPages.SKY_CLOUDS,
+            TextComponent.translatable("celeritasextra.page.sky_clouds"), ImmutableList.copyOf(groups));
+    }
+    public static OptionPage weatherAndFog() {
+        var groups = new ArrayList<OptionGroup>(weatherGroups());
+        groups.addAll(fogGroups());
+        groups.addAll(dimensionFogGroups());
+        return new OptionPage(CeleritasExtraOptionPages.WEATHER_FOG,
+            TextComponent.translatable("celeritasextra.page.weather_fog"), ImmutableList.copyOf(groups));
+    }
+    public static OptionPage hud() {
+        return new OptionPage(CeleritasExtraOptionPages.HUD, TextComponent.translatable("celeritasextra.page.hud"),
+            ImmutableList.copyOf(overlayGroups()));
+    }
+    public static OptionPage interfaceOptions() {
+        return new OptionPage(CeleritasExtraOptionPages.EXTRAS,
+            TextComponent.translatable("celeritasextra.page.interface"), ImmutableList.copyOf(miscGroups()));
+    }
+    private static List<OptionGroup> skyGroups() {
+        var groups = new ArrayList<OptionGroup>(skyOnlyGroups());
+        groups.addAll(weatherGroups());
+        return groups;
+    }
+    private static List<OptionGroup> weatherGroups() {
+        var groups = new ArrayList<OptionGroup>();
+        groups.add(group("groups/sky/1")
+            .add(booleanOption("soundCategory.weather",
+                (opts, v) -> opts.detailSettings.rainSnow = v,
+                opts -> opts.detailSettings.rainSnow))
+            .add(booleanOption("celeritasextra.option.rain_snow_culling",
+                (opts, v) -> opts.detailSettings.rainSnowCulling = v, opts -> opts.detailSettings.rainSnowCulling))
+            .build());
+        return groups;
+    }
+
     private static OptionGroup.Builder group(String id) {
-        return OptionGroup.createBuilder().setId(OptionIdentifier.create("celeritasextra", id));
+        return new OptionGroup.Builder() {
+
+            @Override
+            public OptionGroup build() {
+                return OptionSections.annotate(super.build(), OptionSections.forId(id));
+            }
+
+        }.setId(OptionIdentifier.create("celeritasextra", id));
     }
 
     private record OptionContext(String label, String scope) {
@@ -460,7 +504,7 @@ public class CeleritasExtraGameOptionPages {
             ImmutableList.copyOf(groups));
     }
 
-    private static List<OptionGroup> skyGroups() {
+    private static List<OptionGroup> skyOnlyGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> starsOption = booleanOption("sodium-extra.option.stars",
@@ -488,19 +532,10 @@ public class CeleritasExtraGameOptionPages {
                 starsOn, OptionImpact.MEDIUM, OptionFlag.REQUIRES_RENDERER_RELOAD))
             .build());
 
-        groups.add(group("groups/sky/1")
-            .add(booleanOption("soundCategory.weather",
-                (opts, v) -> opts.detailSettings.rainSnow = v,
-                opts -> opts.detailSettings.rainSnow))
-            .add(booleanOption("celeritasextra.option.rain_snow_culling",
-                (opts, v) -> opts.detailSettings.rainSnowCulling = v, opts -> opts.detailSettings.rainSnowCulling))
+        groups.add(group("groups/sky/colors")
             .add(booleanOption("sodium-extra.option.sky_colors",
                 (opts, v) -> opts.detailSettings.skyColors = v,
                 opts -> opts.detailSettings.skyColors))
-            .add(booleanOption("sodium-extra.option.biome_colors",
-                (opts, v) -> opts.detailSettings.biomeColors = v,
-                opts -> opts.detailSettings.biomeColors,
-                OptionFlag.REQUIRES_RENDERER_RELOAD))
             .build());
 
         return groups;
@@ -657,7 +692,7 @@ public class CeleritasExtraGameOptionPages {
                 (opts, value) -> opts.renderSettings.dimensionFog(dimension).fog = value,
                 opts -> opts.renderSettings.dimensionFog(dimension).fog, null, null, overriding, context);
             BooleanSupplier customFogOn = () -> override.getValue() && enabled.getValue();
-            groups.add(group("groups/dimension_fog/" + dimension).add(override).add(enabled)
+            var dimensionGroup = group("groups/dimension_fog/" + dimension).add(override).add(enabled)
                 .add(sliderOption("sodium-extra.option.fog_start", 0, 200, 10, ControlValueFormatter.percentage(),
                     (opts, value) -> opts.renderSettings.dimensionFog(dimension).start = value,
                     opts -> opts.renderSettings.dimensionFog(dimension).start, customFogOn, null, null, context))
@@ -665,7 +700,10 @@ public class CeleritasExtraGameOptionPages {
                     quantityOrDefault("options.chunks", "generator.default"),
                     (opts, value) -> opts.renderSettings.dimensionFog(dimension).distance = value,
                     opts -> opts.renderSettings.dimensionFog(dimension).distance, customFogOn, null, null, context))
-                .build());
+                .build();
+            OptionSections.annotate(dimensionGroup, new OptionSections.Section("dimension/" + dimension,
+                TextComponent.literal(dimensionName), true, true, OptionSections.DIMENSIONS));
+            groups.add(dimensionGroup);
         }
         return groups;
     }
@@ -781,6 +819,10 @@ public class CeleritasExtraGameOptionPages {
                 OptionImpact.HIGH))
             .build());
 
+        groups.add(group("groups/blocks/colors").add(booleanOption("sodium-extra.option.biome_colors",
+            (opts, v) -> opts.detailSettings.biomeColors = v,
+            opts -> opts.detailSettings.biomeColors,
+            OptionFlag.REQUIRES_RENDERER_RELOAD)).build());
         return groups;
     }
 
@@ -816,6 +858,18 @@ public class CeleritasExtraGameOptionPages {
                 (opts, v) -> opts.extraSettings.showFPSExtended = v,
                 opts -> opts.extraSettings.showFPSExtended,
                 fpsOn))
+            .build());
+
+        groups.add(group("groups/overlay/1")
+            .add(booleanOption("sodium-extra.option.show_coordinates",
+                (opts, v) -> opts.extraSettings.showCoords = v,
+                opts -> opts.extraSettings.showCoords))
+            .add(booleanOption("celeritasextra.option.ignore_reduced_debug_info",
+                (opts, v) -> opts.extraSettings.ignoreReducedDebugInfo = v,
+                opts -> opts.extraSettings.ignoreReducedDebugInfo))
+            .build());
+
+        groups.add(group("groups/overlay/memory")
             .add(showMemory)
             .add(booleanOption("celeritasextra.option.show_memory_extended",
                 (opts, value) -> opts.extraSettings.showMemoryExtended = value,
@@ -833,6 +887,9 @@ public class CeleritasExtraGameOptionPages {
             .add(booleanOption("celeritasextra.option.show_session_time",
                 (opts, value) -> opts.extraSettings.showSessionTime = value,
                 opts -> opts.extraSettings.showSessionTime))
+            .build());
+
+        groups.add(group("groups/overlay/world")
             .add(booleanOption("celeritasextra.option.show_entity_count",
                 (opts, value) -> opts.extraSettings.showEntityCount = value,
                 opts -> opts.extraSettings.showEntityCount))
@@ -841,15 +898,6 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.extraSettings.showRenderedEntities))
             .add(booleanOption("celeritasextra.option.show_biome",
                 (opts, value) -> opts.extraSettings.showBiome = value, opts -> opts.extraSettings.showBiome))
-            .build());
-
-        groups.add(group("groups/overlay/1")
-            .add(booleanOption("sodium-extra.option.show_coordinates",
-                (opts, v) -> opts.extraSettings.showCoords = v,
-                opts -> opts.extraSettings.showCoords))
-            .add(booleanOption("celeritasextra.option.ignore_reduced_debug_info",
-                (opts, v) -> opts.extraSettings.ignoreReducedDebugInfo = v,
-                opts -> opts.extraSettings.ignoreReducedDebugInfo))
             .build());
 
         groups.add(group("groups/overlay/2")
@@ -884,6 +932,19 @@ public class CeleritasExtraGameOptionPages {
                     .build(), CeleritasExtraGameOptions.TextContrast.SHADOW))
             .build());
 
+        for (var line : CeleritasExtraGameOptions.HudLine.values()) {
+            var colors = group("groups/overlay/colors/" + line.name().toLowerCase(Locale.ROOT));
+            var context = new OptionContext("", line.category() + "/");
+            for (int channel = 0; channel < 3; channel++) {
+                int component = channel;
+                colors.add(sliderOption(
+                    CeleritasExtraGameOptions.HudLine.CHANNEL_LABELS[channel],
+                    0, 255, 1, ControlValueFormatter.number(),
+                    (opts, value) -> opts.extraSettings.setHudColor(line, component, value),
+                    opts -> opts.extraSettings.hudColor(line, component), null, null, null, context));
+            }
+            groups.add(colors.build());
+        }
         groups.add(group("groups/overlay/3")
             .add(steadyHudOption)
             .add(sliderOption("sodium-extra.option.steady_debug_hud_refresh_interval",
@@ -895,19 +956,6 @@ public class CeleritasExtraGameOptionPages {
                 steadyHudOn))
             .build());
 
-        for (var line : CeleritasExtraGameOptions.HudLine.values()) {
-            var colors = group("groups/overlay/colors/" + line.name().toLowerCase(Locale.ROOT));
-            var context = new OptionContext(Translations.format(line.labelKey()), line.category() + "/");
-            for (int channel = 0; channel < 3; channel++) {
-                int component = channel;
-                colors.add(sliderOption(
-                    CeleritasExtraGameOptions.HudLine.CHANNEL_LABELS[channel],
-                    0, 255, 1, ControlValueFormatter.number(),
-                    (opts, value) -> opts.extraSettings.setHudColor(line, component, value),
-                    opts -> opts.extraSettings.hudColor(line, component), null, null, null, context));
-            }
-            groups.add(colors.build());
-        }
         return groups;
     }
 

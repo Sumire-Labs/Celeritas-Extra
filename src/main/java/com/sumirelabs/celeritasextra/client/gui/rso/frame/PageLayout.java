@@ -34,12 +34,24 @@ import java.util.function.Predicate;
 import org.taumc.celeritas.api.options.structure.Option;
 import org.taumc.celeritas.api.options.structure.OptionPage;
 
-/** RSO page/search row layout adapted to Celeritas groups, which have no display-label API. */
+import com.sumirelabs.celeritasextra.client.gui.OptionSections;
+import com.sumirelabs.celeritasextra.client.gui.OptionsCollapseState;
+
+/** RSO page/search rows with Extra-owned section metadata for the legacy Celeritas API. */
 public record PageLayout(List<Row> rows, int contentHeight) {
 
-    public record Row(Option<?> option, int y) {
+    public record Row(Option<?> option, OptionSections.Section section, int y) {
+
+        public Row(Option<?> option, int y) {
+            this(option, null, y);
+        }
+
     }
     public static PageLayout create(OptionPage page, Predicate<Option<?>> filter, List<Option<?>> ranked) {
+        return create(page, filter, ranked, new OptionsCollapseState(), ranked != null);
+    }
+    public static PageLayout create(OptionPage page, Predicate<Option<?>> filter, List<Option<?>> ranked,
+        OptionsCollapseState state, boolean searching) {
         var rows = new ArrayList<Row>();
         int y = 0;
         if (ranked != null) {
@@ -48,18 +60,37 @@ public record PageLayout(List<Row> rows, int contentHeight) {
                 y += 18;
             }
         } else {
-            var groups = page.getGroups().stream().map(group -> group.getOptions().stream().filter(filter).toList())
-                .filter(options -> !options.isEmpty()).toList();
-            for (int i = 0; i < groups.size(); i++) {
-                for (Option<?> option : groups.get(i)) {
-                    rows.add(new Row(option, y));
-                    y += 18;
-                }
-                if (i < groups.size() - 1)
-                    y += 4;
+            var emitted = new java.util.HashSet<String>();
+            int[] position = {0};
+            for (var group : page.getGroups()) {
+                var options = group.getOptions().stream().filter(filter).toList();
+                if (options.isEmpty())
+                    continue;
+                int before = rows.size(), oldY = position[0];
+                if (before > 0)
+                    position[0] += 4;
+                var section = OptionSections.of(group);
+                if (section == null || emit(section, rows, position, emitted, state, searching))
+                    for (var option : options) {
+                        rows.add(new Row(option, position[0]));
+                        position[0] += 18;
+                    }
+                if (rows.size() == before)
+                    position[0] = oldY;
             }
+            y = position[0];
         }
         return new PageLayout(List.copyOf(rows), y);
+    }
+    private static boolean emit(OptionSections.Section section, List<Row> rows, int[] y, java.util.Set<String> emitted,
+        OptionsCollapseState state, boolean searching) {
+        if (section.parent() != null && !emit(section.parent(), rows, y, emitted, state, searching))
+            return false;
+        if (emitted.add(section.id())) {
+            rows.add(new Row(null, section, y[0]));
+            y[0] += 18;
+        }
+        return searching || !state.groupCollapsed(section);
     }
 
 }

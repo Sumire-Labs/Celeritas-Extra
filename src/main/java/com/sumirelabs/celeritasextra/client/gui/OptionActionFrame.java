@@ -27,6 +27,10 @@ public final class OptionActionFrame extends OptionPageFrame implements TooltipF
 
     private final OptionTooltipController tooltip = new OptionTooltipController();
     private final boolean deferredTooltip;
+    private OptionsCollapseState sections;
+    private boolean searching;
+    private Runnable rebuild = () -> {
+    };
 
     public record Ranked(List<Option<?>> options, Option<?> selected) implements Predicate<Option<?>> {
 
@@ -46,6 +50,10 @@ public final class OptionActionFrame extends OptionPageFrame implements TooltipF
 
     private OptionActionFrame(Dim2i dim, OptionPage page, Predicate<Option<?>> filter) {
         this(dim, page, filter, false);
+        sections = new OptionsCollapseState();
+        searching = true;
+        setupFrame();
+        buildFrame();
     }
     private OptionActionFrame(Dim2i dim, OptionPage page, Predicate<Option<?>> filter, boolean deferredTooltip) {
         super(dim, false, page, filter);
@@ -60,25 +68,58 @@ public final class OptionActionFrame extends OptionPageFrame implements TooltipF
 
     public static com.sumirelabs.celeritasextra.client.gui.rso.frame.ScrollableFrame createRso(Dim2i dim,
         OptionPage page, Predicate<Option<?>> filter, AtomicReference<Integer> offset) {
-        var layout = layout(page, filter);
+        // Callers without a root rebuild callback must not get inaccessible collapsed controls.
+        return createRso(dim, page, filter, offset, new OptionsCollapseState(), true, () -> {
+        });
+    }
+    public static com.sumirelabs.celeritasextra.client.gui.rso.frame.ScrollableFrame createRso(Dim2i dim,
+        OptionPage page, Predicate<Option<?>> filter, AtomicReference<Integer> offset, OptionsCollapseState state,
+        boolean searching, Runnable rebuild) {
+        var layout = PageLayout.create(page, filter, filter instanceof Ranked ranked ? ranked.options() : null, state,
+            searching);
         return new com.sumirelabs.celeritasextra.client.gui.rso.frame.ScrollableFrame(dim, layout.contentHeight(),
             offset,
-            content -> new OptionActionFrame(content, page, filter, true));
+            content -> {
+                var frame = new OptionActionFrame(content, page, filter, true);
+                frame.sections = state;
+                frame.searching = searching;
+                frame.rebuild = rebuild;
+                frame.setupFrame();
+                frame.buildFrame();
+                return frame;
+            });
     }
 
     private static PageLayout layout(OptionPage page, Predicate<Option<?>> filter) {
-        return PageLayout.create(page, filter, filter instanceof Ranked ranked ? ranked.options() : null);
+        return PageLayout.create(page, filter, filter instanceof Ranked ranked ? ranked.options() : null,
+            new OptionsCollapseState(), true);
+    }
+    private PageLayout currentLayout() {
+        return sections == null
+            ? layout(page, optionFilter)
+            : PageLayout.create(page, optionFilter,
+                optionFilter instanceof Ranked ranked ? ranked.options() : null, sections, searching);
     }
 
     @Override
     public void setupFrame() {
-        dim = dim.withHeight(layout(page, optionFilter).contentHeight());
+        dim = dim.withHeight(currentLayout().contentHeight());
     }
 
     @Override
     public void buildFrame() {
         children.clear();
-        for (var row : layout(page, optionFilter).rows()) {
+        for (var row : currentLayout().rows()) {
+            if (row.section() != null) {
+                var state = sections == null ? new OptionsCollapseState() : sections;
+                children
+                    .add(new OptionSectionHeader(new Dim2i(dim.x(), dim.y() + row.y(), dim.width(), 18), row.section(),
+                        state.groupCollapsed(row.section()), searching, () -> {
+                            state.toggleGroup(row.section());
+                            rebuild.run();
+                        }));
+                continue;
+            }
             var element = new OptionActionElement<>(row.option(),
                 new Dim2i(dim.x(), dim.y() + row.y(), dim.width(), 18));
             element.setSearchSelected(optionFilter instanceof Ranked ranked && ranked.selected() == row.option());

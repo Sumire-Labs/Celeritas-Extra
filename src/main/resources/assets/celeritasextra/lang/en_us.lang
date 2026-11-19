@@ -240,3 +240,24 @@ celeritasextra.option.show_undo_button.tooltip=Shows an undo button on changed o
 celeritasextra.option.show_reset_button=Reset Button Overlay
 celeritasextra.option.show_reset_button.tooltip=Shows the reset-to-default button on options whose current value differs from the default.
 celeritasextra.option.replace_search_with_rso.tooltip=Use Reese's Sodium Options search with relevance ranking and tooltip search. Disable to use Celeritas's built-in search. Changes take effect after Apply.
+
+# Settings categories and collapsible sections
+celeritasextra.page.sky_clouds=Sky & Clouds
+celeritasextra.page.weather_fog=Weather & Fog
+celeritasextra.page.render_optimization=Rendering & Optimization
+celeritasextra.page.hud=HUD & Information
+celeritasextra.page.interface=Screen & Controls
+celeritasextra.group.fps=FPS
+celeritasextra.group.coordinates=Coordinates
+celeritasextra.group.memory=Memory
+celeritasextra.group.time=Time
+celeritasextra.group.world=World Information
+celeritasextra.group.appearance=Appearance
+celeritasextra.group.debug=F3 Debug Display
+celeritasextra.group.color=%s Color
+celeritasextra.hud_line.local_time=Local Time
+celeritasextra.hud_line.world_day=World Age
+celeritasextra.hud_line.session_time=Session Time
+celeritasextra.hud_line.entity_count=Loaded Entities
+celeritasextra.hud_line.rendered_entities=Rendered Entities
+celeritasextra.hud_line.biome=Biome

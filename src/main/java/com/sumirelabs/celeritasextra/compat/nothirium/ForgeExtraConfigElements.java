@@ -154,6 +154,9 @@ public final class ForgeExtraConfigElements {
         var clouds = take(render, "clouds", "modernClouds", "cloudHeight", "cloudDistance", "cloudScale",
             "cloudTranslucency");
         var fog = take(render, "fog", "fogStart", "fogDistance");
+        var weather = take(detail, "rainSnow", "rainSnowCulling");
+        weather.addAll(fog);
+        fog = weather;
         fog.addAll(take(detail, "voidFog"));
         fog.add(new DummyCategoryElement("dimensionFog", "celeritasextra.option.page.dimension_fog", fogDimensions));
         var entities = take(render, "itemFrames", "armorStands", "paintings", "playerNameTag", "itemFrameNameTag",
@@ -161,7 +164,8 @@ public final class ForgeExtraConfigElements {
             "mapBackFaceCulling", "entityDistanceExemptions");
         var overlay = take(extra, "showFps", "showFPSExtended", "showCoords", "showMemory", "showMemoryExtended",
             "showLocalTime", "use12HourClock", "showWorldDay", "showSessionTime", "showEntityCount",
-            "showRenderedEntities", "showBiome", "ignoreReducedDebugInfo", "overlayCorner", "textContrast");
+            "showRenderedEntities", "showBiome", "ignoreReducedDebugInfo", "overlayCorner", "textContrast",
+            "steadyDebugHud", "steadyDebugHudRefreshInterval");
         var colorPages = new ArrayList<IConfigElement>();
         for (var line : CeleritasExtraGameOptions.HudLine.values()) {
             var category = options.forgeConfiguration().getCategory(line.category());
@@ -178,7 +182,7 @@ public final class ForgeExtraConfigElements {
                     }
                     @Override
                     public String getName() {
-                        return Translations.format(line.labelKey()) + " · " + Translations.format(key);
+                        return Translations.format(key);
                     }
                     @Override
                     public String getComment() {
@@ -187,26 +191,45 @@ public final class ForgeExtraConfigElements {
 
                 });
             }
-            colorPages.add(new DummyCategoryElement(line.name(), line.labelKey(), channels));
+            colorPages.add(new DummyCategoryElement(line.name(), line.colorLabelKey(), channels));
         }
         overlay.add(new DummyCategoryElement("hudColors", "celeritasextra.gui.hud_colors", colorPages));
+        var hud = new ArrayList<IConfigElement>();
+        hud.add(
+            new DummyCategoryElement("fps", "celeritasextra.group.fps", take(overlay, "showFps", "showFPSExtended")));
+        hud.add(new DummyCategoryElement("coordinates", "celeritasextra.group.coordinates",
+            take(overlay, "showCoords", "ignoreReducedDebugInfo")));
+        hud.add(new DummyCategoryElement("memory", "celeritasextra.group.memory",
+            take(overlay, "showMemory", "showMemoryExtended")));
+        hud.add(new DummyCategoryElement("time", "celeritasextra.group.time",
+            take(overlay, "showLocalTime", "use12HourClock", "showWorldDay", "showSessionTime")));
+        hud.add(new DummyCategoryElement("world", "celeritasextra.group.world",
+            take(overlay, "showEntityCount", "showRenderedEntities", "showBiome")));
+        hud.add(new DummyCategoryElement("appearance", "celeritasextra.group.appearance",
+            take(overlay, "overlayCorner", "textContrast", "hudColors")));
+        hud.add(new DummyCategoryElement("debug", "celeritasextra.group.debug",
+            take(overlay, "steadyDebugHud", "steadyDebugHudRefreshInterval")));
+        hud.addAll(overlay);
         window.addAll(take(extra, "menuFpsLimit", "inactiveFpsLimit", "minimizedFpsLimit"));
         extra.addAll(take(render, "preventShaders"));
         if (!particles.isEmpty())
             particle.add(new DummyCategoryElement("particleClasses", "celeritasextra.gui.particle_classes", particles));
-        var drawing = new ArrayList<IConfigElement>(fog);
+        var drawing = new ArrayList<IConfigElement>();
+        drawing.addAll(take(detail, "biomeColors"));
         drawing.addAll(entities);
         drawing.addAll(render);
-        var extras = new ArrayList<IConfigElement>(overlay);
-        extras.addAll(clouds);
+        detail.addAll(clouds);
+        var extras = new ArrayList<IConfigElement>();
         extras.addAll(extra);
         extras.addAll(window);
         categories.clear();
         page("animation", "sodium-extra.option.animations", animation);
         page("particle", "options.particles", particle);
-        page("details", "sodium-extra.option.details", detail);
-        page("render", "sodium-extra.option.render", drawing);
-        page("extra", "sodium-extra.option.extras", extras);
+        page("sky_clouds", "celeritasextra.page.sky_clouds", detail);
+        page("weather_fog", "celeritasextra.page.weather_fog", fog);
+        page("render", "celeritasextra.page.render_optimization", drawing);
+        page("hud", "celeritasextra.page.hud", hud);
+        page("extra", "celeritasextra.page.interface", extras);
     }
 
     private List<IConfigElement> categoryEntries(String name) {

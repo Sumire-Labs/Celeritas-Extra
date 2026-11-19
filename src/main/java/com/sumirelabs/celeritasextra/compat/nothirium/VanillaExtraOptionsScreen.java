@@ -88,9 +88,13 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
         }
         Keyboard.enableRepeatEvents(true);
         var matcher = new OptionSearchQuery(query);
-        if (searchIndex == null)
+        if (searchIndex == null) {
+            var contexts = new java.util.IdentityHashMap<IConfigElement, String>();
+            searchContexts(entries, "", contexts);
             searchIndex = OptionSearchQuery.index(session.properties(entries), element -> label(element) + " "
-                + (element.getComment() == null ? "" : element.getComment()));
+                + (element.getComment() == null ? "" : element.getComment()) + " "
+                + contexts.getOrDefault(element, ""));
+        }
         displayed = matcher.isEmpty()
             ? entries
             : matcher.results(searchIndex)
@@ -186,6 +190,16 @@ public final class VanillaExtraOptionsScreen extends GuiScreen {
     public static String label(IConfigElement element) {
         String key = element.getLanguageKey();
         return key != null && !key.isEmpty() && I18n.hasKey(key) ? Translations.format(key) : element.getName();
+    }
+
+    private void searchContexts(List<IConfigElement> entries, String context,
+        java.util.Map<IConfigElement, String> paths) {
+        for (var entry : entries) {
+            if (entry.isProperty())
+                paths.put(entry, context);
+            else
+                searchContexts(session.children(entry), context + " " + label(entry), paths);
+        }
     }
 
     private String buttonText(IConfigElement element, int buttonWidth) {

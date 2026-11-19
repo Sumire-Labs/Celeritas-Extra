@@ -240,3 +240,24 @@ celeritasextra.option.show_undo_button.tooltip=未適用の変更がある設定
 celeritasextra.option.show_reset_button=初期値に戻すボタンを表示
 celeritasextra.option.show_reset_button.tooltip=初期値と異なる設定項目に、初期値に戻すボタンを表示します。画面全体の操作ボタンには影響しません。変更は「適用」または「完了」後に反映されます。
 celeritasextra.option.replace_search_with_rso.tooltip=関連度順の結果表示と説明文検索に対応したReese's Sodium Options由来の検索を使用します。無効にするとCeleritas標準の検索を使用します。変更は「適用」後に反映されます。
+
+# Settings categories and collapsible sections
+celeritasextra.page.sky_clouds=空・雲
+celeritasextra.page.weather_fog=天候・霧
+celeritasextra.page.render_optimization=描画・最適化
+celeritasextra.page.hud=HUD・情報表示
+celeritasextra.page.interface=画面・操作
+celeritasextra.group.fps=FPS
+celeritasextra.group.coordinates=座標
+celeritasextra.group.memory=メモリ
+celeritasextra.group.time=時間
+celeritasextra.group.world=ワールド情報
+celeritasextra.group.appearance=見た目
+celeritasextra.group.debug=F3デバッグ表示
+celeritasextra.group.color=%sの色
+celeritasextra.hud_line.local_time=現地時間
+celeritasextra.hud_line.world_day=ワールド経過日数
+celeritasextra.hud_line.session_time=セッション時間
+celeritasextra.hud_line.entity_count=読み込み済みエンティティ数
+celeritasextra.hud_line.rendered_entities=描画エンティティ数
+celeritasextra.hud_line.biome=バイオーム

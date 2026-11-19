@@ -34,6 +34,74 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsGuiIntegrationTest {
 
     @Test
+    void nestedSectionsFoldOnlyTheirRowsAndSearchRevealsHiddenPendingValues() {
+        var option = new TestOption("Red", "Color channel");
+        option.setValue(9);
+        var parent = new OptionSections.Section("test/colors", TextComponent.literal("Colors"), true, true, null);
+        var child = new OptionSections.Section("test/colors/fps", TextComponent.literal("FPS color"), true, true,
+            parent);
+        var group = OptionSections.annotate(OptionGroup.createBuilder().add(option).build(), child);
+        var page = new OptionPage(OptionIdentifier.create("test", "colors"), TextComponent.literal("HUD"),
+            List.of(group));
+        var state = new OptionsCollapseState();
+        var closed = com.sumirelabs.celeritasextra.client.gui.rso.frame.PageLayout.create(page, o -> true, null, state,
+            false);
+        assertEquals(1, closed.rows().size());
+        assertNull(closed.rows().getFirst().option());
+        state.toggleGroup(parent);
+        var children = com.sumirelabs.celeritasextra.client.gui.rso.frame.PageLayout.create(page, o -> true, null,
+            state, false);
+        assertEquals(2, children.rows().size());
+        assertTrue(children.rows().stream().noneMatch(row -> row.option() != null));
+        state.toggleGroup(child);
+        var open = com.sumirelabs.celeritasextra.client.gui.rso.frame.PageLayout.create(page, o -> true, null, state,
+            false);
+        assertEquals(List.of(option), open.rows().stream().map(row -> row.option()).filter(Objects::nonNull).toList());
+        state.toggleGroup(parent);
+        var search = com.sumirelabs.celeritasextra.client.gui.rso.frame.PageLayout.create(page, o -> true, null, state,
+            true);
+        assertEquals(1, search.rows().stream().filter(row -> row.option() != null).count());
+        assertTrue(state.groupCollapsed(parent));
+        assertEquals(9, option.getValue());
+        assertTrue(option.hasChanged());
+    }
+
+    @Test
+    void sectionHeaderUsesTheRootRebuildCallbackWithoutChangingAnyOption() {
+        var option = new TestOption("Red", "Color channel");
+        var section = new OptionSections.Section("test/fold", TextComponent.literal("Color"), true, true, null);
+        var group = OptionSections.annotate(OptionGroup.createBuilder().add(option).build(), section);
+        var page = new OptionPage(OptionIdentifier.create("test", "fold"), TextComponent.literal("HUD"),
+            List.of(group));
+        var state = new OptionsCollapseState();
+        var rebuilds = new AtomicInteger();
+        var frame = OptionActionFrame.createRso(new Dim2i(10, 30, 200, 100), page, o -> true, new AtomicReference<>(0),
+            state, false, rebuilds::incrementAndGet);
+        assertTrue(frame.mouseClicked(new InteractionContext() {
+        }, 20, 39, 0));
+        assertFalse(state.groupCollapsed(section));
+        assertEquals(1, rebuilds.get());
+        assertEquals(3, option.getValue());
+    }
+
+    @Test
+    void rsoSearchIndexesParentSectionNamesAndIncludesFoldedOptions() throws Exception {
+        var option = new TestOption("Red", "Channel");
+        var section = new OptionSections.Section("test/color-search", TextComponent.literal("Tint palette"), true, true,
+            null);
+        var group = OptionSections.annotate(OptionGroup.createBuilder().add(option).build(), section);
+        var page = new OptionPage(OptionIdentifier.create("test", "color_search"), TextComponent.literal("HUD"),
+            List.of(group));
+        var controller = controller(List.of(page));
+        assertTrue(controls(filteredFrame(controller)).isEmpty());
+        controller.celeritasExtra$search("tint palette");
+        assertEquals(List.of(option),
+            controls(filteredFrame(controller)).stream().map(ControlElement::getOption).toList());
+        controller.celeritasExtra$search("");
+        assertTrue(controls(filteredFrame(controller)).isEmpty());
+    }
+
+    @Test
     void customAddonControlsRetainTheirRenderingAndCallbacksInsideRsoRows() {
         var clicks = new AtomicInteger();
         var colors = new ArrayList<Integer>();
