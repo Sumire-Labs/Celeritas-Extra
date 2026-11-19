@@ -15,13 +15,16 @@ import org.taumc.celeritas.api.options.OptionIdentifier;
  * Each identifier pairs the {@code celeritasextra} namespace with a page key and
  * serves as a stable handle for the extra pages when they are registered into the
  * Celeritas options GUI by {@link CeleritasExtraOptionsListener}. The pages cover
- * animation, particles, sky/weather, clouds, fog, dimension fog, entities, block rendering,
- * overlays, and miscellaneous settings.
+ * animations, particles, details, rendering, and extras. Legacy page identifiers remain available
+ * for callers of the individual page factories.
  */
 public class CeleritasExtraOptionPages {
 
     public static final OptionIdentifier<Void> ANIMATION = OptionIdentifier.create("celeritasextra", "animation");
     public static final OptionIdentifier<Void> PARTICLE = OptionIdentifier.create("celeritasextra", "particle");
+    public static final OptionIdentifier<Void> DETAILS = OptionIdentifier.create("celeritasextra", "details");
+    public static final OptionIdentifier<Void> RENDER = OptionIdentifier.create("celeritasextra", "render");
+    public static final OptionIdentifier<Void> EXTRAS = OptionIdentifier.create("celeritasextra", "extra");
     public static final OptionIdentifier<Void> SKY = OptionIdentifier.create("celeritasextra", "sky");
     public static final OptionIdentifier<Void> CLOUDS = OptionIdentifier.create("celeritasextra", "clouds");
     public static final OptionIdentifier<Void> FOG = OptionIdentifier.create("celeritasextra", "fog");
@@ -30,6 +33,6 @@ public class CeleritasExtraOptionPages {
     public static final OptionIdentifier<Void> ENTITIES = OptionIdentifier.create("celeritasextra", "entities");
     public static final OptionIdentifier<Void> BLOCKS = OptionIdentifier.create("celeritasextra", "blocks");
     public static final OptionIdentifier<Void> OVERLAY = OptionIdentifier.create("celeritasextra", "overlay");
-    public static final OptionIdentifier<Void> MISC = OptionIdentifier.create("celeritasextra", "extra");
+    public static final OptionIdentifier<Void> MISC = EXTRAS;
 
 }

@@ -123,6 +123,7 @@ The following settings and features are added by Celeritas Extra. Individual par
 
 ### Settings Screen and Controls
 
+- Five Extra categories based on Sodium Extra: Animations, Particles, Details, Render, and Extras
 - Reese's Sodium Options GUI adapted for Celeritas, with a wide layout, mod icons/version labels, scrolling tabs, and tooltips
 - Search settings
 - Keep search results in their original mod pages and cycle through ranked results with `Enter` / `Shift+Enter` or `Tab` / `Shift+Tab`

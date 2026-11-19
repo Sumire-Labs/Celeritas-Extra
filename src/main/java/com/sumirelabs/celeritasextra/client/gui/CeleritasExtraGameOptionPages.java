@@ -37,6 +37,36 @@ import net.minecraftforge.common.DimensionManager;
  */
 public class CeleritasExtraGameOptionPages {
 
+    /** Sodium Extra's five-page organization. Legacy factories remain available to integrations. */
+    public static List<OptionPage> registeredPages() {
+        return List.of(animation(), particle(), details(), render(), extras());
+    }
+
+    public static OptionPage details() {
+        return new OptionPage(CeleritasExtraOptionPages.DETAILS,
+            TextComponent.literal(Translations.format("sodium-extra.option.details")),
+            ImmutableList.copyOf(skyGroups()));
+    }
+
+    public static OptionPage render() {
+        var groups = new ArrayList<OptionGroup>();
+        groups.addAll(fogGroups());
+        groups.addAll(dimensionFogGroups());
+        groups.addAll(entitiesGroups());
+        groups.addAll(blocksGroups());
+        return new OptionPage(CeleritasExtraOptionPages.RENDER,
+            TextComponent.literal(Translations.format("sodium-extra.option.render")), ImmutableList.copyOf(groups));
+    }
+
+    public static OptionPage extras() {
+        var groups = new ArrayList<OptionGroup>();
+        groups.addAll(overlayGroups());
+        groups.addAll(cloudsGroups());
+        groups.addAll(miscGroups());
+        return new OptionPage(CeleritasExtraOptionPages.EXTRAS,
+            TextComponent.literal(Translations.format("sodium-extra.option.extras")), ImmutableList.copyOf(groups));
+    }
+
     private static OptionGroup.Builder group(String id) {
         return OptionGroup.createBuilder().setId(OptionIdentifier.create("celeritasextra", id));
     }
@@ -424,6 +454,13 @@ public class CeleritasExtraGameOptionPages {
     }
 
     public static OptionPage sky() {
+        var groups = skyGroups();
+        return new OptionPage(CeleritasExtraOptionPages.SKY,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.sky_weather")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> skyGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> starsOption = booleanOption("sodium-extra.option.stars",
@@ -466,12 +503,17 @@ public class CeleritasExtraGameOptionPages {
                 OptionFlag.REQUIRES_RENDERER_RELOAD))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.SKY,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.sky_weather")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage clouds() {
+        var groups = cloudsGroups();
+        return new OptionPage(CeleritasExtraOptionPages.CLOUDS,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.clouds")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> cloudsGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> cloudsOption = booleanOption("options.renderClouds",
@@ -531,12 +573,16 @@ public class CeleritasExtraGameOptionPages {
                 .build(), CeleritasExtraGameOptions.CloudTranslucency.DEFAULT))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.CLOUDS,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.clouds")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage fog() {
+        var groups = fogGroups();
+        return new OptionPage(CeleritasExtraOptionPages.FOG,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.fog")), ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> fogGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> fogOption = booleanOption(
@@ -565,11 +611,17 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.detailSettings.voidFog))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.FOG,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.fog")), ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage dimensionFog() {
+        var groups = dimensionFogGroups();
+        return new OptionPage(CeleritasExtraOptionPages.DIMENSION_FOG,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.dimension_fog")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> dimensionFogGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         // Include vanilla, registered mod dimensions, saved overrides, and the current server dimension.
@@ -615,12 +667,17 @@ public class CeleritasExtraGameOptionPages {
                     opts -> opts.renderSettings.dimensionFog(dimension).distance, customFogOn, null, null, context))
                 .build());
         }
-        return new OptionPage(CeleritasExtraOptionPages.DIMENSION_FOG,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.dimension_fog")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage entities() {
+        var groups = entitiesGroups();
+        return new OptionPage(CeleritasExtraOptionPages.ENTITIES,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.entities")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> entitiesGroups() {
         List<OptionGroup> groups = new ArrayList<>();
         groups.add(OptionGroup.createBuilder().add(booleanOption("celeritasextra.option.item_vertex_cache",
             (opts, v) -> opts.renderSettings.itemVertexCache = v, opts -> opts.renderSettings.itemVertexCache))
@@ -672,12 +729,17 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.renderSettings.playerNameTag))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.ENTITIES,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.entities")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage blocks() {
+        var groups = blocksGroups();
+        return new OptionPage(CeleritasExtraOptionPages.BLOCKS,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.block_rendering")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> blocksGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> beaconsOption = booleanOption("sodium-extra.option.beacon_beam",
@@ -719,12 +781,17 @@ public class CeleritasExtraGameOptionPages {
                 OptionImpact.HIGH))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.BLOCKS,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.block_rendering")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage overlay() {
+        var groups = overlayGroups();
+        return new OptionPage(CeleritasExtraOptionPages.OVERLAY,
+            TextComponent.literal(Translations.format("celeritasextra.option.page.overlay")),
+            ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> overlayGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         var showMemory = booleanOption("celeritasextra.option.show_memory",
@@ -841,12 +908,16 @@ public class CeleritasExtraGameOptionPages {
             }
             groups.add(colors.build());
         }
-        return new OptionPage(CeleritasExtraOptionPages.OVERLAY,
-            TextComponent.literal(Translations.format("celeritasextra.option.page.overlay")),
-            ImmutableList.copyOf(groups));
+        return groups;
     }
 
     public static OptionPage misc() {
+        var groups = miscGroups();
+        return new OptionPage(CeleritasExtraOptionPages.MISC,
+            TextComponent.literal(Translations.format("sodium-extra.option.extras")), ImmutableList.copyOf(groups));
+    }
+
+    private static List<OptionGroup> miscGroups() {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<CeleritasExtraGameOptions, Boolean> toastsOption = booleanOption("sodium-extra.option.toasts",
@@ -908,8 +979,7 @@ public class CeleritasExtraGameOptionPages {
                 opts -> opts.renderSettings.preventShaders))
             .build());
 
-        return new OptionPage(CeleritasExtraOptionPages.MISC,
-            TextComponent.literal(Translations.format("sodium-extra.option.extras")), ImmutableList.copyOf(groups));
+        return groups;
     }
 
 }

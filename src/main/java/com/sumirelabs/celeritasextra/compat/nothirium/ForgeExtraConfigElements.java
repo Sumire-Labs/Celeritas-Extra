@@ -194,17 +194,19 @@ public final class ForgeExtraConfigElements {
         extra.addAll(take(render, "preventShaders"));
         if (!particles.isEmpty())
             particle.add(new DummyCategoryElement("particleClasses", "celeritasextra.gui.particle_classes", particles));
+        var drawing = new ArrayList<IConfigElement>(fog);
+        drawing.addAll(entities);
+        drawing.addAll(render);
+        var extras = new ArrayList<IConfigElement>(overlay);
+        extras.addAll(clouds);
+        extras.addAll(extra);
+        extras.addAll(window);
         categories.clear();
         page("animation", "sodium-extra.option.animations", animation);
         page("particle", "options.particles", particle);
-        page("sky", "celeritasextra.option.page.sky_weather", detail);
-        page("clouds", "celeritasextra.option.page.clouds", clouds);
-        page("fog", "celeritasextra.option.page.fog", fog);
-        page("entities", "celeritasextra.option.page.entities", entities);
-        page("blocks", "celeritasextra.option.page.block_rendering", render);
-        page("overlay", "celeritasextra.option.page.overlay", overlay);
-        page("misc", "celeritasextra.gui.misc_settings", extra);
-        page("window", "celeritasextra.gui.window_settings", window);
+        page("details", "sodium-extra.option.details", detail);
+        page("render", "sodium-extra.option.render", drawing);
+        page("extra", "sodium-extra.option.extras", extras);
     }
 
     private List<IConfigElement> categoryEntries(String name) {

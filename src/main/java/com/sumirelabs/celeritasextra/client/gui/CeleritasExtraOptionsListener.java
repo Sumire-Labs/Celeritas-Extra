@@ -38,11 +38,7 @@ public class CeleritasExtraOptionsListener {
     public static void onCeleritasOptionsConstruct(OptionGUIConstructionEvent event) {
         CeleritasExtraMod.LOGGER.info("Registering Celeritas Extra options pages");
 
-        var pages = List.of(CeleritasExtraGameOptionPages.animation(), CeleritasExtraGameOptionPages.particle(),
-            CeleritasExtraGameOptionPages.sky(), CeleritasExtraGameOptionPages.clouds(),
-            CeleritasExtraGameOptionPages.fog(), CeleritasExtraGameOptionPages.dimensionFog(),
-            CeleritasExtraGameOptionPages.entities(), CeleritasExtraGameOptionPages.blocks(),
-            CeleritasExtraGameOptionPages.overlay(), CeleritasExtraGameOptionPages.misc());
+        var pages = CeleritasExtraGameOptionPages.registeredPages();
         pages.forEach(event::addPage);
         CeleritasExtraMod.LOGGER.info("Successfully registered {} Celeritas Extra option pages", pages.size());
     }
