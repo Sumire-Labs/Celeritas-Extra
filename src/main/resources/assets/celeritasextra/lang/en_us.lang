@@ -1,4 +1,4 @@
-# Upstream-aligned translation keys; see translations/upstream-keys.json.
+# Upstream terminology; descriptions retain Minecraft 1.12.2-specific behavior where needed.
 # Celeritas Extra - English Translation
 # Based on Embeddium Extra translations
 
@@ -87,7 +87,7 @@ sodium-extra.option.show_fps_extended=Show FPS Extended
 sodium-extra.option.show_fps_extended.tooltip=Displays additional information (average, 1%% low, and 0.1%% low FPS) alongside current FPS on the overlay.
 sodium-extra.option.show_coordinates=Show Coordinates
 sodium-extra.option.show_coordinates.tooltip=Shows player coordinates on the overlay.
-celeritasextra.option.show_memory=Show Memory Usage
+celeritasextra.option.show_memory=Memory usage
 celeritasextra.option.show_memory.tooltip=Displays JVM heap usage as a percentage and used/max MiB.
 celeritasextra.option.ignore_reduced_debug_info=Ignore Reduced Debug Info
 celeritasextra.option.ignore_reduced_debug_info.tooltip=If enabled, coordinates will be shown even when reduced debug info is active (e.g., on servers with reducedDebugInfo gamerule).
@@ -198,26 +198,26 @@ celeritasextra.option.item_vertex_cache.tooltip=Experimental (default on): draw 
 celeritasextra.option_action.undo=Undo this change
 celeritasextra.option_action.reset=Reset to default
 celeritasextra.search.results_page=Search results
-celeritasextra.option.item_frame_three_faces=Item Frame 3-Face Culling
+celeritasextra.option.item_frame_three_faces=3-Face Frame Culling
 celeritasextra.option.item_frame_three_faces.tooltip=Experimental: use MoreCulling's three-direction selection beyond the selected distance. Enabled by default, starting at 4 blocks. Diagonal frame rotations and rotated model transforms do not use this branch. Shadow passes keep normal rendering.
-celeritasextra.option.item_frame_three_face_distance=Block Face Culling Distance
+celeritasextra.option.item_frame_three_face_distance=3-Face Frame Culling Range
 celeritasextra.option.item_frame_three_face_distance.tooltip=Minimum distance in blocks before item-frame block face culling applies.
 
-celeritasextra.option.rain_snow_culling=Rain/Snow Frustum Culling
+celeritasextra.option.rain_snow_culling=Rain/Snow Culling
 celeritasextra.option.rain_snow_culling.tooltip=Skip rain and snow columns outside the camera view. Custom weather renderers and shadow passes retain normal rendering.
-celeritasextra.option.show_memory_extended=Show Detailed Memory
+celeritasextra.option.show_memory_extended=Memory usage extended
 celeritasextra.option.show_memory_extended.tooltip=Show used and maximum heap in MiB below the percentage.
-celeritasextra.option.show_local_time=Show Local Time
+celeritasextra.option.show_local_time=Local Time
 celeritasextra.option.show_local_time.tooltip=Show the current local clock time.
-celeritasextra.option.use_12_hour_clock=12-Hour Clock
+celeritasextra.option.use_12_hour_clock=Use 12-hour time
 celeritasextra.option.use_12_hour_clock.tooltip=Use a 12-hour clock with AM/PM instead of 24-hour time.
 celeritasextra.option.show_world_day=Show World Age
 celeritasextra.option.show_world_day.tooltip=Show total world age divided into 24000-tick days. Changing the time of day does not change this value.
-celeritasextra.option.show_session_time=Show Session Time
+celeritasextra.option.show_session_time=Session time
 celeritasextra.option.show_session_time.tooltip=Show time in the current world session. Pauses do not count, and leaving the world resets the timer.
 celeritasextra.option.show_entity_count=Show Loaded Entity Count
 celeritasextra.option.show_entity_count.tooltip=Show the number of entities loaded in the client world.
-celeritasextra.option.show_rendered_entities=Show Rendered Entity Count
+celeritasextra.option.show_rendered_entities=Show Rendered Entities
 celeritasextra.option.show_rendered_entities.tooltip=Count unique entity render submissions per frame. Repeated Forge passes count once; shadow passes are excluded.
 celeritasextra.option.show_biome=Show Biome
 celeritasextra.option.show_biome.tooltip=Show the current biome. Modded biomes use their registry identifier.
@@ -235,8 +235,8 @@ celeritasextra.overlay.session_time=%sh %sm %ss
 celeritasextra.overlay.entity_count=Loaded entities: %s
 celeritasextra.overlay.rendered_entities=Rendered entities: %s
 celeritasextra.option.replace_search_with_rso=Replace search engine with RSO
-celeritasextra.option.show_undo_button=Show Undo buttons
-celeritasextra.option.show_undo_button.tooltip=Show Undo buttons beside settings with unapplied changes. Only affects per-option buttons. Changes take effect after Apply or Done.
-celeritasextra.option.show_reset_button=Show Reset to Default buttons
-celeritasextra.option.show_reset_button.tooltip=Show Reset to Default buttons beside settings that differ from their defaults. Only affects per-option buttons. Changes take effect after Apply or Done.
+celeritasextra.option.show_undo_button=Undo Button Overlay
+celeritasextra.option.show_undo_button.tooltip=Shows an undo button on changed options to restore their applied value.
+celeritasextra.option.show_reset_button=Reset Button Overlay
+celeritasextra.option.show_reset_button.tooltip=Shows the reset-to-default button on options whose current value differs from the default.
 celeritasextra.option.replace_search_with_rso.tooltip=Use Reese's Sodium Options search with relevance ranking and tooltip search. Disable to use Celeritas's built-in search. Changes take effect after Apply.

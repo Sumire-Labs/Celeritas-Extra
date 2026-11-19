@@ -1,4 +1,4 @@
-# Upstream-aligned translation keys; see translations/upstream-keys.json.
+# Upstream terminology; descriptions retain Minecraft 1.12.2-specific behavior where needed.
 # Celeritas Extra - 日本語翻訳
 # Based on Embeddium Extra translations
 
@@ -87,7 +87,7 @@ sodium-extra.option.show_fps_extended=FPSの拡張表示
 sodium-extra.option.show_fps_extended.tooltip=オーバーレイのFPSの表示の横に追加の情報 (平均、1%% Low、0.1%% LowのFPS) を表示します。
 sodium-extra.option.show_coordinates=座標の表示
 sodium-extra.option.show_coordinates.tooltip=オーバーレイにプレイヤーの座標を表示します。
-celeritasextra.option.show_memory=メモリ使用量の表示
+celeritasextra.option.show_memory=メモリ使用量
 celeritasextra.option.show_memory.tooltip=JVMヒープの使用率と使用量/最大容量をMiBで表示します。
 celeritasextra.option.ignore_reduced_debug_info=デバッグ情報制限を無視
 celeritasextra.option.ignore_reduced_debug_info.tooltip=有効にした場合、デバッグ情報が制限されている場合（例：reducedDebugInfoゲームルールが有効なサーバー）でも座標が表示されます。
@@ -198,28 +198,28 @@ celeritasextra.option.item_vertex_cache.tooltip=実験的機能（初期ON）: �
 celeritasextra.option_action.undo=この変更を取り消す
 celeritasextra.option_action.reset=初期値に戻す
 celeritasextra.search.results_page=検索結果
-celeritasextra.option.item_frame_three_faces=額縁内アイテムの3面カリング
+celeritasextra.option.item_frame_three_faces=額縁の3面カリング
 celeritasextra.option.item_frame_three_faces.tooltip=実験的機能：指定距離より遠い額縁で、MoreCullingと同じ判定により3方向の面を描画します。初期値はON、適用距離は4ブロックです。斜め45度の額縁や回転したモデルはこの処理の対象外です。シャドウパスは通常描画を維持します。
-celeritasextra.option.item_frame_three_face_distance=ブロック面カリング距離
+celeritasextra.option.item_frame_three_face_distance=額縁の3面カリングの距離
 celeritasextra.option.item_frame_three_face_distance.tooltip=額縁内ブロックの面カリングを適用し始める距離（ブロック単位）。
 
-celeritasextra.option.rain_snow_culling=雨雪の視錐台カリング
+celeritasextra.option.rain_snow_culling=雨/雪のカリング
 celeritasextra.option.rain_snow_culling.tooltip=カメラの視界外にある雨雪の列の描画を省略します。Mod独自の天候描画とシャドウパスは通常の描画を維持します。
 celeritasextra.option.show_memory_extended=メモリ使用量の詳細を表示
 celeritasextra.option.show_memory_extended.tooltip=使用率の下に、使用量と最大ヒープ容量をMiB単位で表示します。
-celeritasextra.option.show_local_time=現在時刻を表示
+celeritasextra.option.show_local_time=現地時間
 celeritasextra.option.show_local_time.tooltip=端末の現在時刻を表示します。
 celeritasextra.option.use_12_hour_clock=12時間表記
 celeritasextra.option.use_12_hour_clock.tooltip=現在時刻を午前・午後付きの12時間表記で表示します。
 celeritasextra.option.show_world_day=ワールドの経過日数を表示
 celeritasextra.option.show_world_day.tooltip=ワールドの総経過時間を24000ティックごとの日数として表示します。時刻変更コマンドでは変化しません。
-celeritasextra.option.show_session_time=セッション時間を表示
+celeritasextra.option.show_session_time=セッション時間
 celeritasextra.option.show_session_time.tooltip=今回ワールドに入ってからの時間を表示します。一時停止中は加算せず、ワールドから退出するとリセットします。
 celeritasextra.option.show_entity_count=読み込み済みエンティティ数を表示
 celeritasextra.option.show_entity_count.tooltip=クライアント側で読み込まれているエンティティの数を表示します。
-celeritasextra.option.show_rendered_entities=描画対象エンティティ数を表示
+celeritasextra.option.show_rendered_entities=レンダリングされたエンティティを表示
 celeritasextra.option.show_rendered_entities.tooltip=1フレームで描画処理に渡されたエンティティを重複なしで数えます。Forgeの複数パスは1回として数え、シャドウパスは除外します。
-celeritasextra.option.show_biome=バイオームを表示
+celeritasextra.option.show_biome=バイオームを表示する
 celeritasextra.option.show_biome.tooltip=現在地のバイオームを表示します。Modのバイオームは登録IDで表示します。
 celeritasextra.option.hud_color.red=赤
 celeritasextra.option.hud_color.red.tooltip=このHUD行の赤成分（0～255）を設定します。

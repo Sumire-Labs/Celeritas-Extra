@@ -19,6 +19,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TranslationIntegrityTest {
 
+    @Test
+    void upstreamEnglishFallbacksDoNotReplaceLocalizedCoreDescriptions() throws Exception {
+        var scripts = Map.of("ja_jp", "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}]",
+            "ru_ru", "\\p{IsCyrillic}", "zh_cn", "\\p{IsHan}");
+        for (var entry : scripts.entrySet()) {
+            var language = readLanguage(LANG.resolve(entry.getKey() + ".lang"));
+            var localized = Pattern.compile(entry.getValue());
+            for (var key : List.of("sodium-extra.option.sky.tooltip", "sodium-extra.option.animations_all.tooltip",
+                "celeritasextra.option.show_memory.tooltip"))
+                assertTrue(localized.matcher(language.get(key)).find(), entry.getKey() + ": untranslated " + key);
+        }
+    }
+
     private static final Path LANG = Path.of("src/main/resources/assets/celeritasextra/lang");
     private static final Pattern FORMAT = Pattern.compile("%(?:[0-9]+\\$)?[-#+ 0,(]*[0-9]*(?:\\.[0-9]+)?[a-zA-Z%]");
 

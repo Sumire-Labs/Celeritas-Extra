@@ -139,6 +139,7 @@ The following settings and features are added by Celeritas Extra. Individual par
 - FlashyReese — Creator of Sodium Extra and Reese's Sodium Options
 - dima_dencep — Creator of Rubidium/Embeddium Extra
 - Txni — Creator of Sodium Extras
+- anviaan — Creator of Sodium Extra Information
 - FxMorin — Creator of MoreCulling
 - 1foxy2 — Maintainer of MoreCulling
 - GTNHteam — Maintainers of Angelica

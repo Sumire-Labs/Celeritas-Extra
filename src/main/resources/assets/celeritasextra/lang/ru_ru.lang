@@ -1,4 +1,4 @@
-# Upstream-aligned translation keys; see translations/upstream-keys.json.
+# Upstream terminology; descriptions retain Minecraft 1.12.2-specific behavior where needed.
 # Celeritas Extra - Российская Локализация 🪆
 # Based on Embeddium Extra translations
 
@@ -87,7 +87,7 @@ sodium-extra.option.show_fps_extended=Расширенный счётчик FPS
 sodium-extra.option.show_fps_extended.tooltip=Если включено, показывает средний, 1%% Low и 0.1%% Low FPS в дополнение к текущему.
 sodium-extra.option.show_coordinates=Показывать координаты
 sodium-extra.option.show_coordinates.tooltip=Показывать координаты в углу экрана.
-celeritasextra.option.show_memory=Показывать использование памяти
+celeritasextra.option.show_memory=Использование памяти
 celeritasextra.option.show_memory.tooltip=Показывает использование кучи JVM: процент и занято/максимум в МиБ.
 celeritasextra.option.ignore_reduced_debug_info=Игнорировать сокращённую отладочную информацию
 celeritasextra.option.ignore_reduced_debug_info.tooltip=Если включено, координаты будут отображаться даже при активной сокращённой отладочной информации (например, на серверах с игровым правилом reducedDebugInfo).
@@ -133,7 +133,7 @@ sodium-extra.option.use_adaptive_sync.name=Адаптивная
 
 # Overlay Text
 sodium-extra.overlay.fps=%s FPS
-sodium-extra.overlay.fps_extended=(Сред: %s, 1%% Low: %s, 0.1%% Low: %s)
+sodium-extra.overlay.fps_extended=(сред. %s / 1%% низкий %s / 0.1%% низкий %s)
 sodium-extra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=Память: %s%% (%s / %s МиБ)
 sodium-extra.overlay.light_updates=Обновления света отключены
@@ -205,11 +205,11 @@ celeritasextra.option.item_frame_three_face_distance.tooltip=Минимальн�
 
 celeritasextra.option.rain_snow_culling=Отсечение дождя и снега
 celeritasextra.option.rain_snow_culling.tooltip=Пропускает столбцы осадков вне поля зрения. Особые погодные рендереры и проходы теней сохраняют обычную отрисовку.
-celeritasextra.option.show_memory_extended=Подробная память
+celeritasextra.option.show_memory_extended=Подробные сведения о памяти
 celeritasextra.option.show_memory_extended.tooltip=Показывает используемый и максимальный размер кучи в МиБ под процентом.
 celeritasextra.option.show_local_time=Местное время
 celeritasextra.option.show_local_time.tooltip=Показывает местное время компьютера.
-celeritasextra.option.use_12_hour_clock=12-часовой формат
+celeritasextra.option.use_12_hour_clock=Используйте 12-часовое время
 celeritasextra.option.use_12_hour_clock.tooltip=Показывает время в 12-часовом формате с AM/PM.
 celeritasextra.option.show_world_day=Возраст мира
 celeritasextra.option.show_world_day.tooltip=Показывает возраст мира в днях по 24000 тактов. Изменение времени суток не меняет это значение.
@@ -219,7 +219,7 @@ celeritasextra.option.show_entity_count=Число загруженных сущ
 celeritasextra.option.show_entity_count.tooltip=Показывает число сущностей, загруженных в клиентском мире.
 celeritasextra.option.show_rendered_entities=Число отрисованных сущностей
 celeritasextra.option.show_rendered_entities.tooltip=Считает уникальные сущности, переданные на отрисовку за кадр. Повторные проходы Forge считаются один раз; тени исключены.
-celeritasextra.option.show_biome=Показывать биом
+celeritasextra.option.show_biome=Показать биом
 celeritasextra.option.show_biome.tooltip=Показывает текущий биом. Для модовых биомов используется идентификатор реестра.
 celeritasextra.option.hud_color.red=Красный
 celeritasextra.option.hud_color.red.tooltip=Красный канал этой строки HUD, от 0 до 255.

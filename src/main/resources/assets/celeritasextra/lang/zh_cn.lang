@@ -1,4 +1,4 @@
-# Upstream-aligned translation keys; see translations/upstream-keys.json.
+# Upstream terminology; descriptions retain Minecraft 1.12.2-specific behavior where needed.
 # Celeritas Extra - 简体中文翻译
 # 基于 Embeddium Extra 的翻译
 
@@ -87,7 +87,7 @@ sodium-extra.option.show_fps_extended=显示FPS拓展
 sodium-extra.option.show_fps_extended.tooltip=若启用，除当前 FPS 外，还会显示平均、1%% Low 和 0.1%% Low FPS。
 sodium-extra.option.show_coordinates=显示坐标
 sodium-extra.option.show_coordinates.tooltip=在叠加层上显示坐标。
-celeritasextra.option.show_memory=显示内存使用量
+celeritasextra.option.show_memory=内存使用情况
 celeritasextra.option.show_memory.tooltip=显示 JVM 堆内存使用率和已用/最大容量（MiB）。
 celeritasextra.option.ignore_reduced_debug_info=忽略精简调试信息
 celeritasextra.option.ignore_reduced_debug_info.tooltip=若启用，即使精简调试信息处于活动状态（例如在启用 reducedDebugInfo 游戏规则的服务器上），也会显示坐标。
@@ -132,8 +132,8 @@ sodium-extra.option.text_contrast.shadow=阴影
 sodium-extra.option.use_adaptive_sync.name=自适应
 
 # 界面文本
-sodium-extra.overlay.fps=%d FPS
-sodium-extra.overlay.fps_extended=(平均: %d, 1%% Low: %d, 0.1%% Low: %d)
+sodium-extra.overlay.fps=%s FPS
+sodium-extra.overlay.fps_extended=(平均 %s / 1%%最低 %s / 0.1%%最低 %s)
 sodium-extra.overlay.coordinates=X: %s, Y: %s, Z: %s
 celeritasextra.overlay.memory=内存: %s%% (%s / %s MiB)
 sodium-extra.overlay.light_updates=光照更新已禁用
@@ -198,26 +198,26 @@ celeritasextra.option.item_vertex_cache.tooltip=实验功能（默认开启）�
 celeritasextra.option_action.undo=撤销此项更改
 celeritasextra.option_action.reset=恢复默认值
 celeritasextra.search.results_page=搜索结果
-celeritasextra.option.item_frame_three_faces=物品展示框三面剔除
+celeritasextra.option.item_frame_three_faces=三面展示框剔除
 celeritasextra.option.item_frame_three_faces.tooltip=实验性功能：在指定距离外使用 MoreCulling 的三方向面选择。默认开启，起始距离为 4 格。斜向旋转的展示框和带旋转变换的模型不使用此分支。阴影通道保持正常渲染。
-celeritasextra.option.item_frame_three_face_distance=方块面剔除距离
+celeritasextra.option.item_frame_three_face_distance=三面展示框剔除范围
 celeritasextra.option.item_frame_three_face_distance.tooltip=开始剔除物品展示框内方块面的最小距离（方块）。
 
-celeritasextra.option.rain_snow_culling=雨雪视锥剔除
+celeritasextra.option.rain_snow_culling=雨雪剔除
 celeritasextra.option.rain_snow_culling.tooltip=跳过摄像机视野外的雨雪柱。自定义天气渲染器和阴影通道保持正常渲染。
-celeritasextra.option.show_memory_extended=显示详细内存
+celeritasextra.option.show_memory_extended=内存使用扩展
 celeritasextra.option.show_memory_extended.tooltip=在百分比下方显示已用和最大堆内存（MiB）。
-celeritasextra.option.show_local_time=显示本地时间
+celeritasextra.option.show_local_time=当地时间
 celeritasextra.option.show_local_time.tooltip=显示设备的当前本地时间。
-celeritasextra.option.use_12_hour_clock=12 小时制
+celeritasextra.option.use_12_hour_clock=使用12小时时间
 celeritasextra.option.use_12_hour_clock.tooltip=使用带上午/下午的 12 小时制。
 celeritasextra.option.show_world_day=显示世界天数
 celeritasextra.option.show_world_day.tooltip=按每天 24000 游戏刻显示世界总时长。修改昼夜时间不会改变此值。
-celeritasextra.option.show_session_time=显示会话时长
+celeritasextra.option.show_session_time=会议时间
 celeritasextra.option.show_session_time.tooltip=显示本次进入世界后的时长，不计暂停时间，退出世界后重置。
 celeritasextra.option.show_entity_count=显示已加载实体数
 celeritasextra.option.show_entity_count.tooltip=显示客户端世界中已加载的实体数量。
-celeritasextra.option.show_rendered_entities=显示渲染实体数
+celeritasextra.option.show_rendered_entities=显示渲染的实体
 celeritasextra.option.show_rendered_entities.tooltip=统计每帧提交渲染的唯一实体数量。Forge 的重复通道只计一次，不计阴影通道。
 celeritasextra.option.show_biome=显示生物群系
 celeritasextra.option.show_biome.tooltip=显示当前位置的生物群系。模组生物群系使用注册标识符。
@@ -235,8 +235,8 @@ celeritasextra.overlay.session_time=%s小时 %s分 %s秒
 celeritasextra.overlay.entity_count=已加载实体：%s
 celeritasextra.overlay.rendered_entities=渲染实体：%s
 celeritasextra.option.replace_search_with_rso=将搜索引擎替换为 RSO
-celeritasextra.option.show_undo_button=显示撤销按钮
-celeritasextra.option.show_undo_button.tooltip=在有未应用更改的选项旁显示撤销按钮。不影响整个设置界面的操作按钮。更改在点击“应用”或“完成”后生效。
-celeritasextra.option.show_reset_button=显示恢复默认值按钮
-celeritasextra.option.show_reset_button.tooltip=在与默认值不同的选项旁显示恢复默认值按钮。不影响整个设置界面的操作按钮。更改在点击“应用”或“完成”后生效。
+celeritasextra.option.show_undo_button=显示撤消按钮
+celeritasextra.option.show_undo_button.tooltip=在更改的选项上显示撤消按钮以恢复其应用的值
+celeritasextra.option.show_reset_button=显示重置按钮
+celeritasextra.option.show_reset_button.tooltip=在当前设置与默认设置不同的选项上显示重置为默认设置按钮
 celeritasextra.option.replace_search_with_rso.tooltip=使用 Reese's Sodium Options 搜索，支持按相关度排序和搜索选项说明。禁用后使用 Celeritas 内置搜索。更改在点击“应用”后生效。
